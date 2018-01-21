@@ -8,12 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 
 public abstract class HowdyActivity extends AppCompatActivity {
 
+    public static final int NO_ID = -1;
+
     abstract protected @LayoutRes
     int getLayoutResId();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResId());
+
+        if (getLayoutResId() != NO_ID) {
+            setContentView(getLayoutResId());
+        }
     }
 }

@@ -11,7 +11,7 @@ public final class MainActivity extends HowdyActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_main;
+        return NO_ID;
     }
 
     @Override
@@ -20,7 +20,7 @@ public final class MainActivity extends HowdyActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, LandingFragment.newInstance())
+                .replace(android.R.id.content, LandingFragment.newInstance())
                 .commit();
     }
 }

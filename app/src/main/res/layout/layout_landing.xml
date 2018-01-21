@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:foreground="@color/semi_black"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_landing" />
+        app:srcCompat="@drawable/image_people" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/landing_icon"

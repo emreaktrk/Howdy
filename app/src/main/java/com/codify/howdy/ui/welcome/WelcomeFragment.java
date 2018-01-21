@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.landing;
+package com.codify.howdy.ui.welcome;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,23 +8,24 @@ import android.view.View;
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.ui.login.LoginFragment;
-import com.codify.howdy.ui.welcome.WelcomeFragment;
+import com.codify.howdy.ui.register.RegisterFragment;
 
-public final class LandingFragment extends HowdyFragment implements LandingView {
 
-    private LandingPresenter mPresenter = new LandingPresenter();
+public final class WelcomeFragment extends HowdyFragment implements WelcomeView {
+
+    private WelcomePresenter mPresenter = new WelcomePresenter();
+
+    public static WelcomeFragment newInstance() {
+        Bundle args = new Bundle();
+
+        WelcomeFragment fragment = new WelcomeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_landing;
-    }
-
-    public static LandingFragment newInstance() {
-        Bundle args = new Bundle();
-
-        LandingFragment fragment = new LandingFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return R.layout.layout_welcome;
     }
 
     @Override
@@ -42,6 +43,23 @@ public final class LandingFragment extends HowdyFragment implements LandingView 
     }
 
     @Override
+    public void onRegisterWithEmailClicked() {
+        if (getActivity() != null) {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(android.R.id.content, RegisterFragment.newInstance())
+                    .commit();
+        }
+    }
+
+    @Override
+    public void onRegisterWithFacebookClicked() {
+
+    }
+
+    @Override
     public void onLoginClicked() {
         if (getActivity() != null) {
             getActivity()
@@ -49,18 +67,6 @@ public final class LandingFragment extends HowdyFragment implements LandingView 
                     .beginTransaction()
                     .addToBackStack(null)
                     .replace(android.R.id.content, LoginFragment.newInstance())
-                    .commit();
-        }
-    }
-
-    @Override
-    public void onRegisterClicked() {
-        if (getActivity() != null) {
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(android.R.id.content, WelcomeFragment.newInstance())
                     .commit();
         }
     }

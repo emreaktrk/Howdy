@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/dark_orange</item>
         <item name="colorAccent">@color/orange</item>
@@ -18,9 +18,31 @@
         <item name="android:background">@drawable/button_orange</item>
     </style>
 
+    <style name="Button.Facebook">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_facebook</item>
+        <item name="android:drawableStart">@drawable/ic_facebook</item>
+    </style>
+
     <style name="Button.Transparent">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/button_transparent</item>
+    </style>
+
+    <style name="Button.Transparent.Reverse">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text.Title" parent="@style/TextAppearance.AppCompat.Display1">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text.Caption" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
 </resources>

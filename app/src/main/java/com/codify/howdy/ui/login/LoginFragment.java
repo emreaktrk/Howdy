@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.landing;
+package com.codify.howdy.ui.login;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,24 +7,25 @@ import android.view.View;
 
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
-import com.codify.howdy.ui.login.LoginFragment;
+import com.codify.howdy.model.Credential;
 import com.codify.howdy.ui.welcome.WelcomeFragment;
 
-public final class LandingFragment extends HowdyFragment implements LandingView {
 
-    private LandingPresenter mPresenter = new LandingPresenter();
+public final class LoginFragment extends HowdyFragment implements LoginView {
+
+    private LoginPresenter mPresenter = new LoginPresenter();
+
+    public static LoginFragment newInstance() {
+        Bundle args = new Bundle();
+
+        LoginFragment fragment = new LoginFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_landing;
-    }
-
-    public static LandingFragment newInstance() {
-        Bundle args = new Bundle();
-
-        LandingFragment fragment = new LandingFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return R.layout.layout_login;
     }
 
     @Override
@@ -42,15 +43,18 @@ public final class LandingFragment extends HowdyFragment implements LandingView 
     }
 
     @Override
-    public void onLoginClicked() {
-        if (getActivity() != null) {
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .addToBackStack(null)
-                    .replace(android.R.id.content, LoginFragment.newInstance())
-                    .commit();
-        }
+    public void onLoginClicked(Credential credential) {
+
+    }
+
+    @Override
+    public void onConnectWithFacebookClicked() {
+
+    }
+
+    @Override
+    public void onForgotPasswordClicked() {
+
     }
 
     @Override
