@@ -15,7 +15,7 @@ final class WelcomePresenter extends BasePresenter<WelcomeView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.welcome_register_with_email))
+                        .clicks(findViewById(R.id.welcome_register_with_email))
                         .subscribe(o -> {
                             Logcat.v("Register with email clicked");
                             view.onRegisterWithEmailClicked();
@@ -23,7 +23,7 @@ final class WelcomePresenter extends BasePresenter<WelcomeView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.welcome_register_with_facebook))
+                        .clicks(findViewById(R.id.welcome_register_with_facebook))
                         .subscribe(o -> {
                             Logcat.v("Register with facebook clicked");
                             view.onRegisterWithFacebookClicked();
@@ -31,7 +31,7 @@ final class WelcomePresenter extends BasePresenter<WelcomeView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.welcome_login))
+                        .clicks(findViewById(R.id.welcome_login))
                         .subscribe(o -> {
                             Logcat.v("Login clicked");
                             view.onLoginClicked();

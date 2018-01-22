@@ -4,6 +4,10 @@
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/dark_orange</item>
         <item name="colorAccent">@color/orange</item>
+
+        <item name="colorControlNormal">@color/orange</item>
+        <item name="colorControlActivated">@color/orange</item>
+        <item name="colorControlHighlight">@color/orange</item>
     </style>
 
     <style name="Button">
@@ -44,5 +48,10 @@
     <style name="Text.Caption" parent="@style/TextAppearance.AppCompat.Medium">
         <item name="android:fontFamily">sans-serif-thin</item>
     </style>
+
+    <style name="Input">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 
 </resources>

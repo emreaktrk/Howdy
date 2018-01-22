@@ -17,5 +17,34 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".account.AccountService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator"/>
+        </service>
+
+        <service
+            android:name=".account.sync.profile.ProfileSyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync"/>
+        </service>
+
+        <provider
+            android:name=".account.sync.profile.ProfileProvider"
+            android:authorities="com.kocsistem.buserviskacmaz.profile"
+            android:exported="false"
+            android:label="Profile"
+            android:syncable="true"/>
     </application>
 </manifest>

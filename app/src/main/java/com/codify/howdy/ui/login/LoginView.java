@@ -12,4 +12,6 @@ interface LoginView extends MvpView {
     void onForgotPasswordClicked();
 
     void onRegisterClicked();
+
+    void onCloseClicked();
 }

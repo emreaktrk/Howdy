@@ -68,4 +68,12 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
                     .commit();
         }
     }
+
+    @Override public void onCloseClicked() {
+        if (getActivity() != null) {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .popBackStack();
+        }
+    }
 }

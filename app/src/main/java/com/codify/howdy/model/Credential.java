@@ -2,10 +2,10 @@ package com.codify.howdy.model;
 
 public final class Credential {
 
-    public final String mUsername;
-    public final String mPassword;
+    public final CharSequence mUsername;
+    public final CharSequence mPassword;
 
-    public Credential(String username, String password) {
+    public Credential(CharSequence username, CharSequence password) {
         this.mUsername = username;
         this.mPassword = password;
     }

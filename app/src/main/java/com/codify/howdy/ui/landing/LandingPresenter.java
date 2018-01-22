@@ -15,7 +15,7 @@ final class LandingPresenter extends BasePresenter<LandingView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.landing_login))
+                        .clicks(findViewById(R.id.landing_login))
                         .subscribe(o -> {
                             Logcat.v("Login clicked");
                             view.onLoginClicked();
@@ -23,7 +23,7 @@ final class LandingPresenter extends BasePresenter<LandingView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.landing_register))
+                        .clicks(findViewById(R.id.landing_register))
                         .subscribe(o -> {
                             Logcat.v("Register clicked");
                             view.onRegisterClicked();

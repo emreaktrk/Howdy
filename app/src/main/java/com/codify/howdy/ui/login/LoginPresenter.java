@@ -17,10 +17,10 @@ final class LoginPresenter extends BasePresenter<LoginView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.login_login))
+                        .clicks(findViewById(R.id.login_login))
                         .subscribe(o -> {
-                            AppCompatEditText username = root.findViewById(R.id.login_username);
-                            AppCompatEditText password = root.findViewById(R.id.login_password);
+                            AppCompatEditText username = findViewById(R.id.login_username);
+                            AppCompatEditText password = findViewById(R.id.login_password);
                             Credential credential = new Credential(username.getText().toString(), password.getText().toString());
 
                             Logcat.v("Login clicked with credentials " + credential.toString());
@@ -29,7 +29,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.login_connect_with_facebook))
+                        .clicks(findViewById(R.id.login_connect_with_facebook))
                         .subscribe(o -> {
                             Logcat.v("Connect with facebook clicked");
                             view.onConnectWithFacebookClicked();
@@ -37,7 +37,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.login_forgot_password))
+                        .clicks(findViewById(R.id.login_forgot_password))
                         .subscribe(o -> {
                             Logcat.v("Forgot password clicked");
                             view.onConnectWithFacebookClicked();
@@ -45,7 +45,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(root.findViewById(R.id.login_register))
+                        .clicks(findViewById(R.id.login_register))
                         .subscribe(o -> {
                             Logcat.v("Register clicked");
                             view.onRegisterClicked();
