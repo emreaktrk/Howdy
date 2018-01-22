@@ -7,6 +7,7 @@
     <color name="semi_white">#ddffffff</color>
     <color name="black">#000</color>
     <color name="semi_black">#48000000</color>
+    <color name="grey">#ebebec</color>
     <color name="facebook">#3b5998</color>
     <color name="dark_facebook">#293e6a</color>
 </resources>

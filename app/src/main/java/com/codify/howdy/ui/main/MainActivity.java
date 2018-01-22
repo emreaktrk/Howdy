@@ -1,29 +1,25 @@
 package com.codify.howdy.ui.main;
 
-import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.codify.howdy.HowdyActivity;
-import com.codify.howdy.ui.landing.LandingFragment;
+import com.codify.howdy.R;
+import com.codify.howdy.ui.home.HomeFragment;
 
-public final class MainActivity extends HowdyActivity {
 
-    public static Bundle bundle(Context context, AccountAuthenticatorResponse response) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+public final class MainActivity extends HowdyActivity implements MainView {
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(AccountManager.KEY_INTENT, intent);
-        return bundle;
+    public static void start(Context context) {
+        Intent starter = new Intent(context, MainActivity.class);
+        context.startActivity(starter);
     }
 
     @Override
     protected int getLayoutResId() {
-        return NO_ID;
+        return R.layout.layout_main;
     }
 
     @Override
@@ -32,7 +28,32 @@ public final class MainActivity extends HowdyActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(android.R.id.content, LandingFragment.newInstance())
+                .replace(R.id.home_frame, HomeFragment.newInstance())
                 .commit();
+    }
+
+    @Override
+    public void onHomeClicked() {
+
+    }
+
+    @Override
+    public void onStatisticClicked() {
+
+    }
+
+    @Override
+    public void onComposeClicked() {
+
+    }
+
+    @Override
+    public void onNotificationClicked() {
+
+    }
+
+    @Override
+    public void onProfileClicked() {
+
     }
 }

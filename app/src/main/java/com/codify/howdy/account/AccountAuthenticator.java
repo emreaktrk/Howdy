@@ -6,7 +6,7 @@ import android.accounts.AccountAuthenticatorResponse;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.codify.howdy.ui.main.MainActivity;
+import com.codify.howdy.ui.auth.AuthActivity;
 
 public final class AccountAuthenticator extends AbstractAccountAuthenticator {
 
@@ -23,7 +23,7 @@ public final class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options) {
-        return MainActivity.bundle(mContext, response);
+        return AuthActivity.bundle(mContext, response);
     }
 
     @Override public Bundle confirmCredentials(AccountAuthenticatorResponse response, Account account, Bundle options) {

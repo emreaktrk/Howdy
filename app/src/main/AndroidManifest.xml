@@ -1,5 +1,4 @@
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codify.howdy">
 
     <application
@@ -11,33 +10,41 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.auth.AuthActivity" />
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/MainTheme" />
 
         <service
             android:name=".account.AccountService"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator"/>
+                android:resource="@xml/authenticator" />
         </service>
 
         <service
             android:name=".account.sync.profile.ProfileSyncService"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
+                <action android:name="android.content.SyncAdapter" />
             </intent-filter>
             <meta-data
                 android:name="android.content.SyncAdapter"
-                android:resource="@xml/sync"/>
+                android:resource="@xml/sync" />
         </service>
 
         <provider
@@ -45,6 +52,6 @@
             android:authorities="com.kocsistem.buserviskacmaz.profile"
             android:exported="false"
             android:label="Profile"
-            android:syncable="true"/>
+            android:syncable="true" />
     </application>
 </manifest>
