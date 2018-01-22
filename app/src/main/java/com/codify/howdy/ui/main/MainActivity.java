@@ -12,6 +12,8 @@ import com.codify.howdy.ui.home.HomeFragment;
 
 public final class MainActivity extends HowdyActivity implements MainView {
 
+    private MainPresenter mPresenter = new MainPresenter();
+
     public static void start(Context context) {
         Intent starter = new Intent(context, MainActivity.class);
         context.startActivity(starter);
@@ -30,6 +32,15 @@ public final class MainActivity extends HowdyActivity implements MainView {
                 .beginTransaction()
                 .replace(R.id.home_frame, HomeFragment.newInstance())
                 .commit();
+
+        mPresenter.attachView(this, getWindow().getDecorView().getRootView());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mPresenter.detachView();
     }
 
     @Override

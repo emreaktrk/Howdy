@@ -1,6 +1,8 @@
 package com.codify.howdy.ui.main;
 
-public interface MainView {
+import com.codify.howdy.ui.base.MvpView;
+
+public interface MainView extends MvpView {
 
     void onHomeClicked();
 

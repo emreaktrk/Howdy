@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/blue" />
+                    <size android:width="48dp" android:height="48dp" />
+                </shape>
+            </item>
+
+            <item android:bottom="18dp" android:drawable="@drawable/ic_compose" android:left="18dp" android:right="18dp" android:top="18dp" />
+        </layer-list>
+    </item>
+
+    <item>
+        <layer-list>
+            <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
+                <shape android:shape="oval">
+                    <solid android:color="@color/blue" />
+                    <size android:width="48dp" android:height="48dp" />
+                </shape>
+            </item>
+
+            <item android:bottom="18dp" android:drawable="@drawable/ic_compose" android:left="18dp" android:right="18dp" android:top="18dp" />
+        </layer-list>
+    </item>
+</selector>
