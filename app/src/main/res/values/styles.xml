@@ -49,12 +49,6 @@
         <item name="android:textColor">@color/orange</item>
     </style>
 
-    <style name="Button.Compose">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button_transparent</item>
-        <item name="android:src">@drawable/button_compose</item>
-    </style>
-
     <style name="Text">
         <item name="android:textColor">@color/black</item>
     </style>

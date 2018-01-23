@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,68 +9,7 @@
         android:id="@+id/home_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
-    <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/main_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="-24dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@drawable/background_navigation"
-        android:gravity="bottom">
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/main_home"
-            style="@style/Button.Transparent"
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/main_statistic"
-            style="@style/Button.Transparent"
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/main_compose"
-            style="@style/Button.Compose"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="center" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/main_notification"
-            style="@style/Button.Transparent"
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/main_profile"
-            style="@style/Button.Transparent"
-            android:layout_width="48dp"
-            android:layout_height="48dp" />
-    </android.support.v7.widget.LinearLayoutCompat>
+    <include layout="@layout/layout_navigation"/>
 </android.support.v7.widget.LinearLayoutCompat>
