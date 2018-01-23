@@ -12,6 +12,11 @@ import com.codify.howdy.ui.landing.LandingFragment;
 
 public final class AuthActivity extends HowdyActivity {
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, AuthActivity.class);
+        context.startActivity(starter);
+    }
+
     public static Bundle bundle(Context context, AccountAuthenticatorResponse response) {
         Intent intent = new Intent(context, AuthActivity.class);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);

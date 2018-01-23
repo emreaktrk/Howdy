@@ -12,8 +12,8 @@ import io.reactivex.disposables.Disposable;
 public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     protected ArrayList<Disposable> mDisposables;
-    private V mView;
-    private View mRoot;
+    protected V mView;
+    protected View mRoot;
 
     @Override
     public void attachView(V view, View root) {

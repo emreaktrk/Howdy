@@ -13,4 +13,12 @@ public final class Logcat {
     public static void d(String message) {
         Log.d(TAG, message);
     }
+
+    public static void e(Throwable throwable) {
+        Log.e(TAG, throwable.getMessage());
+    }
+
+    public static void e(String message) {
+        Log.e(TAG, message);
+    }
 }
