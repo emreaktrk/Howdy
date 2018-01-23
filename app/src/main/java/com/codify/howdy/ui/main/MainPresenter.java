@@ -21,8 +21,6 @@ final class MainPresenter extends BasePresenter<MainView> {
                         .clicks(findViewById(R.id.navigation_home))
                         .doOnEach(notification -> setSelected(Navigation.HOME))
                         .subscribe(o -> {
-                            setSelected(Navigation.HOME);
-
                             Logcat.v("Home clicked");
                             view.onHomeClicked();
                         }));
