@@ -67,17 +67,16 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         .getInstance()
                         .login(request)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(Logcat::e)
                         .subscribe(new ServiceConsumer<LoginResponse>() {
                             @Override
                             protected void success(LoginResponse response) {
-                                // TODO Pass user model taken by response to onLogin
+                                // FIXME Pass user model taken by response to onLogin
                                 mView.onLogin(null);
                             }
 
                             @Override
                             protected void error(ApiError error) {
-                                Logcat.e(error.message);
+                                Logcat.e(error);
 
                                 mView.onError(error);
                             }

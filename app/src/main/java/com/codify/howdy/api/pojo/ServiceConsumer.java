@@ -5,12 +5,17 @@ import android.text.TextUtils;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.api.pojo.response.BaseResponse;
 
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.BiConsumer;
 
-public abstract class ServiceConsumer<T extends BaseResponse<?>> implements Consumer<T> {
+public abstract class ServiceConsumer<T extends BaseResponse<?>> implements BiConsumer<T, Throwable> {
 
     @Override
-    public void accept(T t) {
+    public void accept(T t, Throwable throwable) {
+        if (throwable != null) {
+            error(new ApiError(throwable.getMessage()));
+            return;
+        }
+
         if (!TextUtils.isEmpty(t.err) || !TextUtils.isEmpty(t.errMes)) {
             error(new ApiError(t.errMes));
             return;
@@ -22,4 +27,5 @@ public abstract class ServiceConsumer<T extends BaseResponse<?>> implements Cons
     protected abstract void success(T response);
 
     protected abstract void error(ApiError error);
+
 }

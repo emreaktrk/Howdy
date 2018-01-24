@@ -12,7 +12,4 @@ public abstract class BaseResponse<T> {
 
     @Expose
     public String errMes;
-
-    public BaseResponse() {
-    }
 }

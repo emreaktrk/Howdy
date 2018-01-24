@@ -7,6 +7,11 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.codify.howdy.R;
+import com.codify.howdy.api.ApiManager;
+import com.codify.howdy.api.pojo.ServiceConsumer;
+import com.codify.howdy.api.pojo.request.RegisterRequest;
+import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.api.pojo.response.RegisterResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Email;
 import com.codify.howdy.model.Gender;
@@ -15,6 +20,8 @@ import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.Calendar;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class RegisterPresenter extends BasePresenter<RegisterView> {
 
@@ -64,7 +71,7 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                         .subscribe(o -> {
                             RegisterForm form = new RegisterForm();
                             form.mFullname = findViewById(R.id.register_fullname, TextInputEditText.class).getText();
-                            form.mGender = Gender.valueOf(findViewById(R.id.register_gender, TextInputEditText.class).getText());
+                            form.mGender = Gender.MALE; // FIXME Call Gender.
                             form.mBirthday = findViewById(R.id.register_birthday, TextInputEditText.class).getText();
                             form.mEmail = new Email(findViewById(R.id.register_email, TextInputEditText.class).getText());
                             form.mUsername = findViewById(R.id.register_username, TextInputEditText.class).getText();
@@ -73,6 +80,30 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
 
                             Logcat.v("Register clicked");
                             view.onRegisterClicked(form);
+                        }));
+    }
+
+    public void register(RegisterForm form) {
+        RegisterRequest request = new RegisterRequest(form);
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .register(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<RegisterResponse>() {
+                            @Override
+                            protected void success(RegisterResponse response) {
+                                // FIXME Pass user model taken by response to onLogin
+                                mView.onRegister(null);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
                         }));
     }
 }

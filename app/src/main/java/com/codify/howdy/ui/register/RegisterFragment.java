@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
+import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.RegisterForm;
+import com.codify.howdy.model.User;
 
 
 public final class RegisterFragment extends HowdyFragment implements RegisterView {
@@ -27,19 +30,22 @@ public final class RegisterFragment extends HowdyFragment implements RegisterVie
         return R.layout.layout_register;
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, view);
     }
 
-    @Override public void onDestroyView() {
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
 
         mPresenter.detachView();
     }
 
-    @Override public void onCloseClicked() {
+    @Override
+    public void onCloseClicked() {
         if (getActivity() != null) {
             getActivity()
                     .getSupportFragmentManager()
@@ -47,7 +53,18 @@ public final class RegisterFragment extends HowdyFragment implements RegisterVie
         }
     }
 
-    @Override public void onRegisterClicked(RegisterForm form) {
+    @Override
+    public void onRegisterClicked(RegisterForm form) {
+        mPresenter.register(form);
+    }
 
+    @Override
+    public void onRegister(User user) {
+
+    }
+
+    @Override
+    public void onError(ApiError error) {
+        Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
     }
 }
