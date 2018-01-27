@@ -5,6 +5,8 @@ import android.os.Message;
 
 import com.codify.howdy.api.pojo.response.ApiError;
 
+import java.lang.reflect.Method;
+
 public final class Logcat {
 
     private static LogQueue sQueue = new LogQueue();
@@ -19,6 +21,27 @@ public final class Logcat {
     public static void d(String log) {
         Message message = new Message();
         message.obj = new DebugLog(log);
+
+        sQueue.sendMessage(message);
+    }
+
+    public static void method(String method) {
+        Message message = new Message();
+        message.obj = new MethodLog(method);
+
+        sQueue.sendMessage(message);
+    }
+
+    public static void request(String json) {
+        Message message = new Message();
+        message.obj = new RequestLog(json);
+
+        sQueue.sendMessage(message);
+    }
+
+    public static void response(String json) {
+        Message message = new Message();
+        message.obj = new ResponseLog(json);
 
         sQueue.sendMessage(message);
     }
