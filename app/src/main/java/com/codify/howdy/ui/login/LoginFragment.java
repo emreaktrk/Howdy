@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
+import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Credential;
 import com.codify.howdy.model.User;
+import com.codify.howdy.ui.main.MainActivity;
 import com.codify.howdy.ui.welcome.WelcomeFragment;
 
 
@@ -83,7 +85,9 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
 
     @Override
     public void onLogin(User user) {
+        AccountUtils.login(getContext(), user);
 
+        MainActivity.start(getActivity());
     }
 
     @Override

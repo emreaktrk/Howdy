@@ -48,9 +48,9 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                                 birthday.setText(
                                         new StringBuilder()
                                                 .append(year)
-                                                .append(".")
+                                                .append("-")
                                                 .append(month + 1)
-                                                .append(".")
+                                                .append("-")
                                                 .append(day));
                             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                             dialog.show();
@@ -71,7 +71,7 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                         .subscribe(o -> {
                             RegisterForm form = new RegisterForm();
                             form.mFullname = findViewById(R.id.register_fullname, TextInputEditText.class).getText();
-                            form.mGender = Gender.MALE; // FIXME Call Gender.
+                            form.mGender = Gender.MALE;
                             form.mBirthday = findViewById(R.id.register_birthday, TextInputEditText.class).getText();
                             form.mEmail = new Email(findViewById(R.id.register_email, TextInputEditText.class).getText());
                             form.mUsername = findViewById(R.id.register_username, TextInputEditText.class).getText();
@@ -94,8 +94,7 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                         .subscribe(new ServiceConsumer<RegisterResponse>() {
                             @Override
                             protected void success(RegisterResponse response) {
-                                // FIXME Pass user model taken by response to onLogin
-                                mView.onRegister(null);
+                                mView.onRegister(response.data);
                             }
 
                             @Override

@@ -1,12 +1,13 @@
 package com.codify.howdy.ui.main;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
+import com.codify.howdy.ui.compose.ComposeActivity;
 import com.codify.howdy.ui.home.HomeFragment;
 
 
@@ -14,9 +15,11 @@ public final class MainActivity extends HowdyActivity implements MainView {
 
     private MainPresenter mPresenter = new MainPresenter();
 
-    public static void start(Context context) {
-        Intent starter = new Intent(context, MainActivity.class);
-        context.startActivity(starter);
+    public static void start(Activity activity) {
+        Intent starter = new Intent(activity, MainActivity.class);
+        activity.startActivity(starter);
+
+        activity.finish();
     }
 
     @Override
@@ -33,7 +36,7 @@ public final class MainActivity extends HowdyActivity implements MainView {
                 .replace(R.id.home_frame, HomeFragment.newInstance())
                 .commit();
 
-        mPresenter.attachView(this, getWindow().getDecorView().getRootView());
+        mPresenter.attachView(this, this);
     }
 
     @Override
@@ -55,7 +58,7 @@ public final class MainActivity extends HowdyActivity implements MainView {
 
     @Override
     public void onComposeClicked() {
-
+        ComposeActivity.start(this);
     }
 
     @Override

@@ -61,8 +61,19 @@
         <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
+    <style name="Text.Toolbar" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Normal" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Input">
         <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
 

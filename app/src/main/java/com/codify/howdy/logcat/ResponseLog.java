@@ -20,7 +20,7 @@ public class ResponseLog extends AbstractLog {
             String formatted = json.toString(3);
             if (formatted.length() > 4000) {
                 for (String line : formatted.split("\n", 4000)) {
-                    Log.d(TAG, line);
+                    Log.i(TAG, line);
                 }
             } else {
                 Log.i(TAG, formatted);

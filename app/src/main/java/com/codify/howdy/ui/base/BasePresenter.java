@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -21,6 +22,10 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         mRoot = root;
 
         mDisposables = new ArrayList<>();
+    }
+
+    public void attachView(V view, Activity activity) {
+        attachView(view, activity.getWindow().getDecorView().getRootView());
     }
 
     @Override
@@ -55,7 +60,8 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         return clazz.cast(mRoot.findViewById(id));
     }
 
-    protected final @NonNull Context getContext() {
+    protected final @NonNull
+    Context getContext() {
         assertViewAttached();
 
         return mRoot.getContext();

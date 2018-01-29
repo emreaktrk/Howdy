@@ -26,9 +26,13 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                 RxView
                         .clicks(findViewById(R.id.login_login))
                         .subscribe(o -> {
-                            AppCompatEditText username = findViewById(R.id.login_username);
+                            AppCompatEditText username = findViewById(R.id.login_email);
                             AppCompatEditText password = findViewById(R.id.login_password);
-                            Credential credential = new Credential(username.getText().toString(), password.getText().toString());
+                            Credential credential = new Credential(username
+                                    .getText()
+                                    .toString(), password
+                                    .getText()
+                                    .toString());
 
                             Logcat.v("Login clicked with credentials " + credential.toString());
                             view.onLoginClicked(credential);
@@ -70,8 +74,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         .subscribe(new ServiceConsumer<LoginResponse>() {
                             @Override
                             protected void success(LoginResponse response) {
-                                // FIXME Pass user model taken by response to onLogin
-                                mView.onLogin(null);
+                                mView.onLogin(response.data);
                             }
 
                             @Override

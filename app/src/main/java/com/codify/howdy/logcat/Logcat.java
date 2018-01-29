@@ -1,11 +1,10 @@
 package com.codify.howdy.logcat;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import com.codify.howdy.api.pojo.response.ApiError;
-
-import java.lang.reflect.Method;
 
 public final class Logcat {
 
@@ -68,6 +67,10 @@ public final class Logcat {
     }
 
     private static class LogQueue extends Handler {
+
+        private LogQueue() {
+            super(Looper.getMainLooper());
+        }
 
         @Override
         public void handleMessage(Message msg) {

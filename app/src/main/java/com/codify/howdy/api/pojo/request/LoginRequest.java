@@ -13,7 +13,7 @@ public final class LoginRequest {
     }
 
     public LoginRequest(Credential credential) {
-        this.email = credential.mUsername;
+        this.email = credential.mEmail;
         this.pass = credential.mPassword;
     }
 }

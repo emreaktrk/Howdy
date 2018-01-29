@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
+import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.RegisterForm;
 import com.codify.howdy.model.User;
+import com.codify.howdy.ui.main.MainActivity;
 
 
 public final class RegisterFragment extends HowdyFragment implements RegisterView {
@@ -60,7 +62,9 @@ public final class RegisterFragment extends HowdyFragment implements RegisterVie
 
     @Override
     public void onRegister(User user) {
+        AccountUtils.login(getContext(), user);
 
+        MainActivity.start(getActivity());
     }
 
     @Override
