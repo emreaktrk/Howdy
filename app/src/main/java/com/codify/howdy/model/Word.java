@@ -1,6 +1,8 @@
 package com.codify.howdy.model;
 
-public final class Word {
+import java.io.Serializable;
+
+public final class Word implements Serializable {
 
     public long idwords;
     public String words_word;

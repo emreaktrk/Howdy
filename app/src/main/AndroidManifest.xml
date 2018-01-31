@@ -43,6 +43,10 @@
             android:name=".ui.compose.ComposeActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.category.WordActivity"
+            android:theme="@style/MainTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">

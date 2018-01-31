@@ -47,7 +47,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         }));
     }
 
-    @SuppressLint({"MissingPermission", "CheckResult"})
+    @SuppressLint({"MissingPermission"})
     public void getWall(Context context) {
         LocationServices
                 .getFusedLocationProviderClient(context)

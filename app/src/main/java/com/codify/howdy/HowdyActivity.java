@@ -1,9 +1,12 @@
 package com.codify.howdy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import java.io.Serializable;
 
 
 public abstract class HowdyActivity extends AppCompatActivity {
@@ -20,5 +23,20 @@ public abstract class HowdyActivity extends AppCompatActivity {
         if (getLayoutResId() != NO_ID) {
             setContentView(getLayoutResId());
         }
+    }
+
+    protected final <T extends Serializable> T getSerializable(Class<? extends T> clazz) {
+        String key = clazz.getSimpleName();
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(key)) {
+            return clazz.cast(getIntent().getExtras().getSerializable(key));
+        }
+
+        return null;
+    }
+
+    protected final void setResult(int resultCode, Serializable data) {
+        Intent intent = new Intent();
+        intent.putExtra(data.getClass().getSimpleName(), data);
+        setResult(resultCode, intent);
     }
 }
