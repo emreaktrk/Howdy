@@ -50,7 +50,7 @@ public final class WordActivity extends HowdyActivity implements WordView {
 
     @Override
     public void onWordySearched(String query) {
-
+        mPresenter.filter(query);
     }
 
     @Override

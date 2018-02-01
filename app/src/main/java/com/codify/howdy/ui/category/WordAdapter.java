@@ -8,16 +8,16 @@ import android.view.ViewGroup;
 import com.codify.howdy.R;
 import com.codify.howdy.model.Word;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
 
 final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
 
-    private ArrayList<Word> mList;
+    private List<Word> mList;
     private PublishSubject<Word> mPublish = PublishSubject.create();
 
-    WordAdapter(ArrayList<Word> list) {
+    WordAdapter(List<Word> list) {
         this.mList = list;
     }
 
@@ -39,6 +39,10 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
 
     PublishSubject<Word> itemClicks() {
         return mPublish;
+    }
+
+    List<Word> getWords() {
+        return mList;
     }
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
