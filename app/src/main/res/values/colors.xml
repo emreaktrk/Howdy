@@ -9,6 +9,8 @@
     <color name="black">#000</color>
     <color name="semi_black">#48000000</color>
     <color name="grey">#ebebec</color>
+    <color name="stone">#dcdcdc</color>
+    <color name="rock">#b4b4b4</color>
     <color name="facebook">#3b5998</color>
     <color name="dark_facebook">#293e6a</color>
 </resources>

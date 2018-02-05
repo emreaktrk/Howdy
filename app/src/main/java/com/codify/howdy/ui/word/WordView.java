@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.category;
+package com.codify.howdy.ui.word;
 
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.MvpView;

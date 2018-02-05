@@ -44,7 +44,7 @@
             android:theme="@style/MainTheme" />
 
         <activity
-            android:name=".ui.category.WordActivity"
+            android:name=".ui.word.WordActivity"
             android:theme="@style/MainTheme" />
 
         <service

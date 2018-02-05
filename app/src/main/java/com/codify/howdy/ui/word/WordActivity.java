@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.category;
+package com.codify.howdy.ui.word;
 
 import android.app.Activity;
 import android.content.Intent;

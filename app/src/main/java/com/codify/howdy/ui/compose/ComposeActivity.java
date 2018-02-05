@@ -10,7 +10,7 @@ import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.Emotion;
-import com.codify.howdy.ui.category.WordActivity;
+import com.codify.howdy.ui.word.WordActivity;
 
 import java.util.ArrayList;
 

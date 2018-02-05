@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.category;
+package com.codify.howdy.ui.word;
 
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -36,9 +36,9 @@ final class WordPresenter extends BasePresenter<WordView> {
         mDisposables.add(
                 RxTextView
                         .textChanges(findViewById(R.id.word_search))
-                        .subscribe(o -> {
+                        .subscribe(word -> {
                             Logcat.v("Word searched : " + findViewById(R.id.word_search, AppCompatEditText.class).getText().toString());
-                            view.onBackClicked();
+                            view.onWordySearched(word.toString());
                         }));
     }
 
@@ -52,7 +52,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                             mView.onWordSelected(word);
                         }));
 
-        findViewById(R.id.word_reycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.word_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
     void bind(Category category) {
@@ -75,7 +75,7 @@ final class WordPresenter extends BasePresenter<WordView> {
     }
 
     void filter(String query) {
-        RecyclerView.Adapter adapter = findViewById(R.id.word_reycler, RecyclerView.class).getAdapter();
+        RecyclerView.Adapter adapter = findViewById(R.id.word_recycler, RecyclerView.class).getAdapter();
         if (adapter != null && adapter instanceof WordAdapter) {
             List<Word> words = ((WordAdapter) adapter).getWords();
             filter(query, words);

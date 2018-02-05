@@ -35,14 +35,17 @@
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/word_search"
+        style="@style/Input.Search"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@id/word_recycler"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/word_toolbar" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/word_reycler"
+        android:id="@+id/word_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

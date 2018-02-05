@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.category;
+package com.codify.howdy.ui.word;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
