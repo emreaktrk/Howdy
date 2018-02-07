@@ -8,11 +8,13 @@
     android:padding="16dp">
 
     <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/word_image"
         android:layout_width="36dp"
         android:layout_height="36dp"
         tools:src="@mipmap/ic_launcher_round" />
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/word_text"
         style="@style/Text.Normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
