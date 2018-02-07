@@ -4,7 +4,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.codify.howdy.R;
@@ -17,6 +16,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -39,10 +39,12 @@ final class WordPresenter extends BasePresenter<WordView> {
         mDisposables.add(
                 RxTextView
                         .textChanges(findViewById(R.id.word_search))
+                        .debounce(200, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
+                        .skip(1)
                         .subscribe(word -> {
                             Logcat.v("Word searched : " + findViewById(R.id.word_search, AppCompatEditText.class).getText().toString());
-                            view.onWordySearched(word.toString());
+                            view.onWordSearched(word.toString());
                         }));
     }
 

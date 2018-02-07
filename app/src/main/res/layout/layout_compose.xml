@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,4 +32,50 @@
             android:src="@drawable/button_send" />
     </FrameLayout>
 
+    <android.support.constraint.Guideline
+        android:id="@+id/home_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
+
+    <FrameLayout
+        android:id="@+id/home_search_container"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/background_search_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_guideline">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:text="Durumlar" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/compose_search"
+            style="@style/Button.Transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/button_filter" />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/compose_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_search_container"
+        tools:listitem="@layout/cell_category" />
 </android.support.constraint.ConstraintLayout>

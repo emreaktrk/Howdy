@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.Emotion;
 import com.codify.howdy.model.Wall;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -88,5 +89,10 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
     @Override
     public void onError(ApiError error) {
         Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEmotionClicked(Emotion emotion) {
+
     }
 }

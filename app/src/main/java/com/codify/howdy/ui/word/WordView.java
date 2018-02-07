@@ -6,7 +6,7 @@ import com.codify.howdy.ui.base.MvpView;
 
 interface WordView extends MvpView {
 
-    void onWordySearched(String query);
+    void onWordSearched(String query);
 
     void onWordSelected(Word word);
 

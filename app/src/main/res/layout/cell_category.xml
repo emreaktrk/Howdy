@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="96dp"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/category_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        tools:src="@mipmap/ic_launcher_round" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/category_text"
+        style="@style/Text.Normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Duygu" />
+
+</android.support.v7.widget.LinearLayoutCompat>

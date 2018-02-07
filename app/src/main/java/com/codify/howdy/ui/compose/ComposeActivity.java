@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Category;
-import com.codify.howdy.model.Emotion;
 import com.codify.howdy.ui.word.WordActivity;
 
 import java.util.ArrayList;
@@ -45,22 +45,27 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     }
 
     @Override
-    public void onEmotionClicked(Emotion emotion) {
-
-    }
-
-    @Override
     public void onSendClicked() {
 
     }
 
     @Override
+    public void onSearchClicked() {
+
+    }
+
+    @Override
     public void onLoaded(ArrayList<Category> categories) {
-        WordActivity.start(this, categories.get(0));
+        mPresenter.bind(categories);
     }
 
     @Override
     public void onError(ApiError error) {
+        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onCategoryClicked(Category category) {
+        WordActivity.start(this, category);
     }
 }

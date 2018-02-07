@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.compose;
+package com.codify.howdy.ui.home;
 
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,8 +16,8 @@ import io.reactivex.subjects.PublishSubject;
 
 class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
 
-    private PublishSubject<Emotion> mPublish = PublishSubject.create();
-    private ArrayList<Emotion> mList;
+    private final PublishSubject<Emotion> mPublish = PublishSubject.create();
+    private final ArrayList<Emotion> mList;
 
     EmotionAdapter(ArrayList<Emotion> list) {
         this.mList = list;
