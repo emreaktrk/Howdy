@@ -13,6 +13,7 @@ import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Credential;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -25,6 +26,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.login_login))
+                        .mergeWith(RxTextView.editorActions(findViewById(R.id.login_password)))
                         .subscribe(o -> {
                             AppCompatEditText username = findViewById(R.id.login_email);
                             AppCompatEditText password = findViewById(R.id.login_password);

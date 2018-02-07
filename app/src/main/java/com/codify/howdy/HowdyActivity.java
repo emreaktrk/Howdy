@@ -39,4 +39,18 @@ public abstract class HowdyActivity extends AppCompatActivity {
         intent.putExtra(data.getClass().getSimpleName(), data);
         setResult(resultCode, intent);
     }
+
+    @SuppressWarnings("unchecked")
+    public @Nullable
+    <T extends Serializable> T resolveResult(int requestCode, int resultCode, Intent data, Class<? extends T> clazz, int waitingRequestCode) {
+        if (requestCode != waitingRequestCode ||
+                data == null ||
+                resultCode == RESULT_CANCELED ||
+                data.getExtras() == null ||
+                !data.getExtras().containsKey(clazz.getSimpleName())) {
+            return null;
+        }
+
+        return (T) data.getExtras().getSerializable(clazz.getSimpleName());
+    }
 }

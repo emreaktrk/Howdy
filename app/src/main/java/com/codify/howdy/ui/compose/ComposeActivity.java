@@ -10,6 +10,7 @@ import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Category;
+import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.word.WordActivity;
 
 import java.util.ArrayList;
@@ -67,5 +68,16 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     @Override
     public void onCategoryClicked(Category category) {
         WordActivity.start(this, category);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Word word = resolveResult(requestCode, resultCode, data, Word.class, WordActivity.REQUEST_CODE);
+        if (word != null) {
+            mPresenter.addSelectedWord(word);
+            mPresenter.getWordsWithFilter();
+        }
     }
 }

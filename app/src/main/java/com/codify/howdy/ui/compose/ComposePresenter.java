@@ -13,16 +13,18 @@ import com.codify.howdy.api.pojo.response.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Category;
+import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class ComposePresenter extends BasePresenter<ComposeView> {
+
+    private final List<Long> mSelecteds = new ArrayList<>();
 
     @Override
     public void attachView(ComposeView view, View root) {
@@ -70,20 +72,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         }));
     }
 
-    void getWords(Category... selecteds) {
-        getWords(0, Arrays.asList(selecteds));
-    }
-
-    void getWords(long activityId, Category... selecteds) {
-        getWords(activityId, Arrays.asList(selecteds));
-    }
-
-    void getWords(List<Category> selecteds) {
-        getWords(0, selecteds);
-    }
-
-    void getWords(long activityId, List<Category> selecteds) {
-        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(activityId, selecteds);
+    void getWordsWithFilter(long activityId) {
+        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(activityId, mSelecteds);
 
         mDisposables.add(
                 ApiManager
@@ -93,7 +83,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(new ServiceConsumer<GetWordsWithFilterResponse>() {
                             @Override
                             protected void success(GetWordsWithFilterResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onLoaded(response.data.topCategories);
                             }
 
                             @Override
@@ -103,6 +93,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void getWordsWithFilter() {
+        getWordsWithFilter(0);
     }
 
     public void bind(ArrayList<Category> list) {
@@ -116,5 +110,13 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             mView.onCategoryClicked(emotion);
                         }));
         findViewById(R.id.compose_recycler, RecyclerView.class).setAdapter(adapter);
+    }
+
+    public void addSelectedWord(Word word) {
+        mSelecteds.add(word.words_top_category_id);
+    }
+
+    public void removeSelectedWord(Word word) {
+        mSelecteds.remove(word.words_top_category_id);
     }
 }
