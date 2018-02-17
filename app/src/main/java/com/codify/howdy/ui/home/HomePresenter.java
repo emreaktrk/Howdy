@@ -13,13 +13,10 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.api.pojo.response.GetWallRequest;
 import com.codify.howdy.api.pojo.response.GetWallResponse;
 import com.codify.howdy.logcat.Logcat;
-import com.codify.howdy.model.Emotion;
 import com.codify.howdy.model.Wall;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
-
-import java.util.ArrayList;
 
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
@@ -87,17 +84,5 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
     void bind(Wall wall) {
 
-    }
-
-    void bind(ArrayList<Emotion> list) {
-        EmotionAdapter adapter = new EmotionAdapter(list);
-        mDisposables.add(
-                adapter
-                        .itemClicks()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(emotion -> {
-                            Logcat.v("Emotion clicked");
-                            mView.onEmotionClicked(emotion);
-                        }));
     }
 }

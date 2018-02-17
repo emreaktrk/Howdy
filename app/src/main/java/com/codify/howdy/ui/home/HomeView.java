@@ -14,6 +14,4 @@ interface HomeView extends MvpView {
     void onLoaded(Wall wall);
 
     void onError(ApiError error);
-
-    void onEmotionClicked(Emotion emotion);
 }

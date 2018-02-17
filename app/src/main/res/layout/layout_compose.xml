@@ -32,6 +32,15 @@
             android:src="@drawable/button_send" />
     </FrameLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/compose_selected_word_recycler"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        tools:listitem="@layout/cell_selected_word" />
+
     <android.support.constraint.Guideline
         android:id="@+id/home_guideline"
         android:layout_width="0dp"
@@ -69,7 +78,7 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/compose_recycler"
+        android:id="@+id/compose_category_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"

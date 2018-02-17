@@ -37,7 +37,8 @@ final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder>
 
         Picasso
                 .with(holder.mImage.getContext())
-                .load(BuildConfig.API_URL + category.words_top_category_icon);
+                .load(BuildConfig.URL + category.words_top_category_icon)
+                .into(holder.mImage);
         holder.mText.setText(category.words_top_category_text);
     }
 

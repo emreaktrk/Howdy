@@ -7,7 +7,7 @@
     android:gravity="center">
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/emotion_remove"
+        android:id="@+id/selected_word_remove"
         style="@style/Button.Transparent"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -17,7 +17,7 @@
         android:src="@drawable/button_close" />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/emotion_text"
+        android:id="@+id/selected_word_text"
         style="@style/Text.Normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

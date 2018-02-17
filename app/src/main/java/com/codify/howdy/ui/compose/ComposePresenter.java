@@ -24,7 +24,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class ComposePresenter extends BasePresenter<ComposeView> {
 
-    private final List<Long> mSelecteds = new ArrayList<>();
+    private final List<Word> mSelecteds = new ArrayList<>();
+    private final SelectedWordAdapter mAdapter = new SelectedWordAdapter(mSelecteds);
 
     @Override
     public void attachView(ComposeView view, View root) {
@@ -48,7 +49,18 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             view.onSearchClicked();
                         }));
 
-        findViewById(R.id.compose_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(root.getContext()));
+        mDisposables.add(
+                mAdapter
+                        .removeClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(word -> {
+                            Logcat.v("Selected word remove clicked");
+                            mView.onWordRemoved(word);
+                        }));
+
+        findViewById(R.id.compose_category_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(root.getContext()));
+        findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setAdapter(mAdapter);
     }
 
     void getWords() {
@@ -99,7 +111,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         getWordsWithFilter(0);
     }
 
-    public void bind(ArrayList<Category> list) {
+    void bind(ArrayList<Category> list) {
         CategoryAdapter adapter = new CategoryAdapter(list);
         mDisposables.add(
                 adapter
@@ -109,14 +121,16 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             Logcat.v("Category clicked");
                             mView.onCategoryClicked(emotion);
                         }));
-        findViewById(R.id.compose_recycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.compose_category_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
     public void addSelectedWord(Word word) {
-        mSelecteds.add(word.words_top_category_id);
+        mSelecteds.add(word);
+        mAdapter.notifyDataSetChanged(mSelecteds);
     }
 
     public void removeSelectedWord(Word word) {
-        mSelecteds.remove(word.words_top_category_id);
+        mSelecteds.remove(word);
+        mAdapter.notifyDataSetChanged(mSelecteds);
     }
 }

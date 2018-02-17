@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.home;
+package com.codify.howdy.ui.compose;
 
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
@@ -8,31 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codify.howdy.R;
-import com.codify.howdy.model.Emotion;
+import com.codify.howdy.model.Word;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
 
-class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
+final class SelectedWordAdapter extends RecyclerView.Adapter<SelectedWordAdapter.Holder> {
 
-    private final PublishSubject<Emotion> mPublish = PublishSubject.create();
-    private final ArrayList<Emotion> mList;
+    private final PublishSubject<Word> mPublish = PublishSubject.create();
+    private List<Word> mList;
 
-    EmotionAdapter(ArrayList<Emotion> list) {
-        this.mList = list;
+    SelectedWordAdapter(List<Word> list) {
+        mList = list;
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cell = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_emotion, parent, false);
+        View cell = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_selected_word, parent, false);
         return new Holder(cell);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Emotion emotion = mList.get(position);
-        holder.mText.setText(emotion.post_emoji_word);
+        Word word = mList.get(position);
+        holder.mText.setText(word.words_word);
     }
 
     @Override
@@ -40,8 +40,13 @@ class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
         return mList.size();
     }
 
-    PublishSubject<Emotion> itemClicks() {
+    PublishSubject<Word> removeClicks() {
         return mPublish;
+    }
+
+    public void notifyDataSetChanged(List<Word> list) {
+        mList = list;
+        notifyDataSetChanged();
     }
 
 
@@ -53,16 +58,16 @@ class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
         Holder(View itemView) {
             super(itemView);
 
-            mText = itemView.findViewById(R.id.emotion_text);
-            mRemove = itemView.findViewById(R.id.emotion_remove);
+            mText = itemView.findViewById(R.id.selected_word_text);
+            mRemove = itemView.findViewById(R.id.selected_word_remove);
 
             mRemove.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Emotion emotion = mList.get(getAdapterPosition());
-            mPublish.onNext(emotion);
+            Word word = mList.get(getAdapterPosition());
+            mPublish.onNext(word);
         }
     }
 }

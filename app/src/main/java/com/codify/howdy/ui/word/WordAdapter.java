@@ -41,7 +41,7 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
 
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.API_URL + word.words_emoji_url)
+                .load(BuildConfig.URL + word.words_emoji_url)
                 .into(holder.mImage);
         holder.mText.setText(word.words_word);
     }

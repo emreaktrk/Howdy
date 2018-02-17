@@ -90,9 +90,4 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
     public void onError(ApiError error) {
         Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    public void onEmotionClicked(Emotion emotion) {
-
-    }
 }
