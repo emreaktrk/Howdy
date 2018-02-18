@@ -14,6 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/compose_close"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <android.support.v7.widget.AppCompatTextView
             style="@style/Text.Toolbar"
             android:layout_width="wrap_content"

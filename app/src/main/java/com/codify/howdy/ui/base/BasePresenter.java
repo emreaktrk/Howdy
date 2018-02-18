@@ -24,7 +24,7 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         mDisposables = new ArrayList<>();
     }
 
-    public void attachView(V view, Activity activity) {
+    public final void attachView(V view, Activity activity) {
         attachView(view, activity.getWindow().getDecorView().getRootView());
     }
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public final class ComposeActivity extends HowdyActivity implements ComposeView {
 
-    private ComposePresenter mPresenter = new ComposePresenter();
+    private final ComposePresenter mPresenter = new ComposePresenter();
 
     public static void start(Context context) {
         Intent starter = new Intent(context, ComposeActivity.class);
@@ -49,6 +49,11 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     @Override
     public void onSendClicked() {
 
+    }
+
+    @Override
+    public void onCloseClicked() {
+        finish();
     }
 
     @Override

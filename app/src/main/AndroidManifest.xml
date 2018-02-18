@@ -47,6 +47,10 @@
             android:name=".ui.word.WordActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/MainTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">

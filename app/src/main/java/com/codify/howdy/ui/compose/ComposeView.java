@@ -13,6 +13,8 @@ interface ComposeView extends MvpView {
 
     void onSendClicked();
 
+    void onCloseClicked();
+
     void onSearchClicked();
 
     void onLoaded(ArrayList<Category> categories, ArrayList<Activity> activities);

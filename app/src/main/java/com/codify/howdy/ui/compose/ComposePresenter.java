@@ -44,6 +44,15 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.compose_close))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Close clicked");
+                            view.onCloseClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.compose_search))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
