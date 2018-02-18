@@ -3,6 +3,11 @@
     <words>
       <w>darray</w>
       <w>emoji</w>
+      <w>getwall</w>
+      <w>getwords</w>
+      <w>getwordswithfilter</w>
+      <w>namesurname</w>
+      <w>searchuser</w>
     </words>
   </dictionary>
 </component>

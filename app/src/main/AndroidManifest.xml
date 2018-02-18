@@ -48,7 +48,7 @@
             android:theme="@style/MainTheme" />
 
         <activity
-            android:name=".ui.search.SearchActivity"
+            android:name=".ui.search.UserSearchActivity"
             android:theme="@style/MainTheme" />
 
         <service

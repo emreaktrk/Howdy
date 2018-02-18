@@ -1,4 +1,4 @@
-package com.codify.howdy.api.pojo.response;
+package com.codify.howdy.api.pojo.request;
 
 import com.codify.howdy.model.Word;
 

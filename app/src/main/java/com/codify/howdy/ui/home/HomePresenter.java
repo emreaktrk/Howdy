@@ -10,7 +10,7 @@ import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.GetWallRequest;
+import com.codify.howdy.api.pojo.request.GetWallRequest;
 import com.codify.howdy.api.pojo.response.GetWallResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Wall;

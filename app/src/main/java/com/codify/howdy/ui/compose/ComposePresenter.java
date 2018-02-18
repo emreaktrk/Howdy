@@ -10,7 +10,7 @@ import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.api.pojo.response.GetWordsResponse;
-import com.codify.howdy.api.pojo.response.GetWordsWithFilterRequest;
+import com.codify.howdy.api.pojo.request.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Activity;

@@ -11,7 +11,7 @@ import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Wall;
-import com.codify.howdy.ui.search.SearchActivity;
+import com.codify.howdy.ui.search.UserSearchActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -73,7 +73,7 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
 
     @Override
     public void onSearchClicked() {
-        SearchActivity.start(getContext());
+        UserSearchActivity.start(getContext());
     }
 
     @Override
