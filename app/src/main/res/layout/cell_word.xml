@@ -20,5 +20,4 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         tools:text="Amerikan Futbolu" />
-
 </android.support.v7.widget.LinearLayoutCompat>

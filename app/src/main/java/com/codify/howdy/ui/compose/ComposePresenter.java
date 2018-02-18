@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.compose;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.codify.howdy.api.pojo.response.GetWordsResponse;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.logcat.Logcat;
+import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.BasePresenter;
@@ -84,8 +86,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         }));
     }
 
-    void getWordsWithFilter(long activityId) {
-        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(activityId, mSelecteds);
+    void getWordsWithFilter(@Nullable Activity activity) {
+        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(activity == null ? 0 : activity.id, mSelecteds);
 
         mDisposables.add(
                 ApiManager
@@ -95,7 +97,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(new ServiceConsumer<GetWordsWithFilterResponse>() {
                             @Override
                             protected void success(GetWordsWithFilterResponse response) {
-                                mView.onLoaded(response.data.topCategories);
+                                mView.onLoaded(response.data.topCategories, response.data.activities);
                             }
 
                             @Override
@@ -108,7 +110,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     }
 
     void getWordsWithFilter() {
-        getWordsWithFilter(0);
+        getWordsWithFilter(null);
     }
 
     void bind(ArrayList<Category> list) {
@@ -117,9 +119,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                 adapter
                         .itemClicks()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(emotion -> {
+                        .subscribe(category -> {
                             Logcat.v("Category clicked");
-                            mView.onCategoryClicked(emotion);
+                            mView.onCategoryClicked(category);
                         }));
         findViewById(R.id.compose_category_recycler, RecyclerView.class).setAdapter(adapter);
     }

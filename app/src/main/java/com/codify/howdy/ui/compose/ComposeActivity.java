@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.word.WordActivity;
@@ -56,8 +57,13 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     }
 
     @Override
-    public void onLoaded(ArrayList<Category> categories) {
+    public void onLoaded(ArrayList<Category> categories, ArrayList<Activity> activities) {
         mPresenter.bind(categories);
+    }
+
+    @Override
+    public void onLoaded(ArrayList<Category> filtered) {
+        mPresenter.bind(filtered);
     }
 
     @Override

@@ -41,6 +41,30 @@
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         tools:listitem="@layout/cell_selected_word" />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/compose_now"
+        style="@style/Text.Normal"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical|start"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="Şu Anki Etkinlikler"
+        app:layout_constraintBottom_toTopOf="@id/compose_activity_recycler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/compose_activity_recycler"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
+        app:layout_constraintBottom_toTopOf="@id/home_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/cell_activity" />
+
     <android.support.constraint.Guideline
         android:id="@+id/home_guideline"
         android:layout_width="0dp"
