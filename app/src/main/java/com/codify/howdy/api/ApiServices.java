@@ -1,10 +1,12 @@
 package com.codify.howdy.api;
 
+import com.codify.howdy.api.pojo.request.GetUserChatWallRequest;
 import com.codify.howdy.api.pojo.request.GetWallRequest;
 import com.codify.howdy.api.pojo.request.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.request.LoginRequest;
 import com.codify.howdy.api.pojo.request.RegisterRequest;
 import com.codify.howdy.api.pojo.request.SearchUserRequest;
+import com.codify.howdy.api.pojo.response.GetUserChatWallResponse;
 import com.codify.howdy.api.pojo.response.GetWallResponse;
 import com.codify.howdy.api.pojo.response.GetWordsResponse;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
@@ -35,4 +37,7 @@ public interface ApiServices {
 
     @POST("searchuser")
     Single<SearchUserResponse> searchUser(@Body SearchUserRequest request);
+
+    @POST("getuserchatwall")
+    Single<GetUserChatWallResponse> getUserChatWall(@Body GetUserChatWallRequest request);
 }

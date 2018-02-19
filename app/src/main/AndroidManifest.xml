@@ -51,6 +51,10 @@
             android:name=".ui.search.UserSearchActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.messages.UserMessagesActivity"
+            android:theme="@style/MainTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">

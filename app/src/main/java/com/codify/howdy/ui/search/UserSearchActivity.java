@@ -24,7 +24,7 @@ public final class UserSearchActivity extends HowdyActivity implements UserSearc
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_user_earch;
+        return R.layout.layout_user_search;
     }
 
     @Override
