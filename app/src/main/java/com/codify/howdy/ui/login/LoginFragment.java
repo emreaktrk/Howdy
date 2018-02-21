@@ -87,7 +87,7 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
     public void onLogin(User user) {
         AccountUtils.login(getContext(), user);
 
-        MainActivity.start(getActivity());
+        MainActivity.start();
     }
 
     @Override

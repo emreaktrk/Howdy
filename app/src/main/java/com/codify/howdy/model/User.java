@@ -2,7 +2,9 @@ package com.codify.howdy.model;
 
 import com.google.gson.Gson;
 
-public final class User {
+import java.io.Serializable;
+
+public final class User implements Serializable {
 
     public long iduser;
     public String username;
@@ -21,7 +23,8 @@ public final class User {
     public Gender gender;
     public String birthDate;
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return new Gson().toJson(this);
     }
 }

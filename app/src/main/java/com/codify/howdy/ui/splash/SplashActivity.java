@@ -21,9 +21,9 @@ public final class SplashActivity extends HowdyActivity {
         super.onCreate(savedInstanceState);
 
         if (AccountUtils.has(this)) {
-            MainActivity.start(this);
+            MainActivity.start();
         } else {
-            AuthActivity.start(this);
+            AuthActivity.start();
         }
     }
 

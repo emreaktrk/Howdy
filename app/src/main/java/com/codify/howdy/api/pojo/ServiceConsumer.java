@@ -1,7 +1,6 @@
 package com.codify.howdy.api.pojo;
 
-import android.text.TextUtils;
-
+import com.blankj.utilcode.util.StringUtils;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.api.pojo.response.BaseResponse;
 
@@ -16,7 +15,7 @@ public abstract class ServiceConsumer<T extends BaseResponse<?>> implements BiCo
             return;
         }
 
-        if (!TextUtils.isEmpty(t.err) || !TextUtils.isEmpty(t.errMes)) {
+        if (!StringUtils.isEmpty(t.err) || !StringUtils.isEmpty(t.errMes)) {
             error(new ApiError(t.errMes));
             return;
         }

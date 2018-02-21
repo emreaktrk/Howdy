@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
+import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.word.WordActivity;
 
@@ -21,9 +24,11 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     private final ComposePresenter mPresenter = new ComposePresenter();
 
-    public static void start(Context context) {
+    public static void start() {
+        Context context = Utils.getApp().getApplicationContext();
+
         Intent starter = new Intent(context, ComposeActivity.class);
-        context.startActivity(starter);
+        ActivityUtils.startActivity(starter);
     }
 
     @Override
@@ -78,7 +83,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onCategoryClicked(Category category) {
-        WordActivity.start(this, category);
+        WordActivity.start(category, ResultTo.ACTIVITY);
     }
 
     @Override

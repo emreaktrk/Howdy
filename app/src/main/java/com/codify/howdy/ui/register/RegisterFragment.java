@@ -64,7 +64,7 @@ public final class RegisterFragment extends HowdyFragment implements RegisterVie
     public void onRegister(User user) {
         AccountUtils.login(getContext(), user);
 
-        MainActivity.start(getActivity());
+        MainActivity.start();
     }
 
     @Override

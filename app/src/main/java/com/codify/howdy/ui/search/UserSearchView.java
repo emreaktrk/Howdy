@@ -12,6 +12,8 @@ interface UserSearchView extends MvpView {
 
     void onUserSearched(String query);
 
+    void onUserClicked(User user);
+
     void onLoaded(ArrayList<User> users);
 
     void onError(ApiError error);

@@ -1,6 +1,7 @@
 package com.codify.howdy.ui.home;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,10 @@ import android.widget.Toast;
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.ResultTo;
+import com.codify.howdy.model.User;
 import com.codify.howdy.model.Wall;
+import com.codify.howdy.ui.messages.UserMessagesActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -58,7 +62,7 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-
+                        // Empty block
                     }
                 })
                 .check();
@@ -73,12 +77,12 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
 
     @Override
     public void onSearchClicked() {
-        UserSearchActivity.start(getContext());
+        UserSearchActivity.start(ResultTo.FRAGMENT);
     }
 
     @Override
-    public void onChatClicked() {
-
+    public void onMessagesClicked() {
+        UserMessagesActivity.start();
     }
 
     @Override
@@ -89,5 +93,12 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
     @Override
     public void onError(ApiError error) {
         Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
     }
 }

@@ -14,8 +14,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.reactivex.subjects.PublishSubject;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Holder> {
 
+    private final PublishSubject<User> mPublish = PublishSubject.create();
     private List<User> mList;
 
     UserSearchAdapter(List<User> list) {
@@ -35,6 +39,7 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
         Picasso
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + user.imgpath)
+                .transform(new CropCircleTransformation())
                 .into(holder.mImage);
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);
@@ -43,6 +48,10 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+    PublishSubject<User> itemClicks() {
+        return mPublish;
     }
 
     void notifyDataSetChanged(List<User> list) {
@@ -68,7 +77,8 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
 
         @Override
         public void onClick(View view) {
-
+            User user = mList.get(getAdapterPosition());
+            mPublish.onNext(user);
         }
     }
 }

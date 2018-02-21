@@ -1,7 +1,8 @@
 package com.codify.howdy.model;
 
 import android.text.Editable;
-import android.text.TextUtils;
+
+import com.blankj.utilcode.util.StringUtils;
 
 import java.util.regex.Pattern;
 
@@ -18,7 +19,7 @@ public final class Email {
     }
 
     public boolean isValid() {
-        if (TextUtils.isEmpty(mValue)) {
+        if (StringUtils.isEmpty(mValue)) {
             return false;
         }
 

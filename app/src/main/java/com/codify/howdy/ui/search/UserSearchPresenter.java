@@ -1,6 +1,10 @@
 package com.codify.howdy.ui.search;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.codify.howdy.R;
@@ -23,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class UserSearchPresenter extends BasePresenter<UserSearchView> {
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void attachView(UserSearchView view, View root) {
         super.attachView(view, root);
@@ -46,6 +51,11 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
                             Logcat.v("User searched : " + findViewById(R.id.search_search, AppCompatEditText.class).getText().toString());
                             view.onUserSearched(word.toString());
                         }));
+
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
+        findViewById(R.id.user_search_recycler, RecyclerView.class).addItemDecoration(divider);
+        findViewById(R.id.user_search_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     void search(String query) {
@@ -74,5 +84,14 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
 
     void bind(ArrayList<User> users) {
         UserSearchAdapter adapter = new UserSearchAdapter(users);
+        mDisposables.add(
+                adapter
+                        .itemClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(user -> {
+                            Logcat.v("User clicked");
+                            mView.onUserClicked(user);
+                        }));
+        findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);
     }
 }

@@ -3,9 +3,9 @@ package com.codify.howdy.ui.register;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.support.design.widget.TextInputEditText;
-import android.text.TextUtils;
 import android.view.View;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
@@ -62,7 +62,7 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                         .filter(o -> {
                             TextInputEditText password = findViewById(R.id.register_password);
                             TextInputEditText confirm = findViewById(R.id.register_password_confirm);
-                            return TextUtils.equals(password.getText(), confirm.getText());
+                            return StringUtils.equals(password.getText(), confirm.getText());
                         })
                         .filter(o -> {
                             CharSequence email = findViewById(R.id.register_email, TextInputEditText.class).getText();

@@ -7,14 +7,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.ui.landing.LandingFragment;
 
 public final class AuthActivity extends HowdyActivity {
 
-    public static void start(Context context) {
+    public static void start() {
+        Context context = Utils.getApp().getApplicationContext();
+
         Intent starter = new Intent(context, AuthActivity.class);
-        context.startActivity(starter);
+        ActivityUtils.startActivity(starter);
     }
 
     public static Bundle bundle(Context context, AccountAuthenticatorResponse response) {

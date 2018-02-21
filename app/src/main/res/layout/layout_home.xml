@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/ic_howdy_reverse"/>
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/home_chat"
+            android:id="@+id/home_messages"
             style="@style/Button.Transparent"
             android:layout_width="56dp"
             android:layout_height="56dp"

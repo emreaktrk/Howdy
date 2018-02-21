@@ -40,10 +40,10 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(findViewById(R.id.home_chat))
+                        .clicks(findViewById(R.id.home_messages))
                         .subscribe(o -> {
                             Logcat.v("Chat clicked");
-                            view.onChatClicked();
+                            view.onMessagesClicked();
                         }));
     }
 
