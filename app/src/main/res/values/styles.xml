@@ -70,7 +70,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Input">
+    <style name="Input" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/black</item>
         <item name="android:singleLine">true</item>
         <item name="android:maxLines">1</item>

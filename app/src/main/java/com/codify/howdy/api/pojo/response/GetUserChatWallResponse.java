@@ -1,4 +1,8 @@
 package com.codify.howdy.api.pojo.response;
 
-public final class GetUserChatWallResponse extends BaseResponse<Object> {
+import com.codify.howdy.model.UserMessage;
+
+import java.util.ArrayList;
+
+public final class GetUserChatWallResponse extends BaseResponse<ArrayList<UserMessage>> {
 }

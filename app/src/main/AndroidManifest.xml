@@ -55,6 +55,10 @@
             android:name=".ui.messages.UserMessagesActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.chat.ChatActivity"
+            android:theme="@style/MainTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">

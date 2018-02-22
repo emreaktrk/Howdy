@@ -20,7 +20,7 @@ import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -82,7 +82,7 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
                         }));
     }
 
-    void bind(ArrayList<User> users) {
+    void bind(List<User> users) {
         UserSearchAdapter adapter = new UserSearchAdapter(users);
         mDisposables.add(
                 adapter

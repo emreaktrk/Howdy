@@ -13,7 +13,11 @@ import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.User;
+import com.codify.howdy.model.UserMessage;
+import com.codify.howdy.ui.chat.ChatActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
+
+import java.util.List;
 
 public final class UserMessagesActivity extends HowdyActivity implements UserMessagesView {
 
@@ -50,8 +54,13 @@ public final class UserMessagesActivity extends HowdyActivity implements UserMes
     }
 
     @Override
-    public void onLoaded(Object data) {
-        mPresenter.bind(data);
+    public void onUserMessageClicked(UserMessage message) {
+        ChatActivity.start(message.message_touserid);
+    }
+
+    @Override
+    public void onLoaded(List<UserMessage> messages) {
+        mPresenter.bind(messages);
     }
 
     @Override
@@ -65,7 +74,7 @@ public final class UserMessagesActivity extends HowdyActivity implements UserMes
 
         User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
         if (user != null) {
-
+            ChatActivity.start(user);
         }
     }
 }

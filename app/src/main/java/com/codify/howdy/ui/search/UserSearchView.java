@@ -4,7 +4,7 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.User;
 import com.codify.howdy.ui.base.MvpView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 interface UserSearchView extends MvpView {
 
@@ -14,7 +14,7 @@ interface UserSearchView extends MvpView {
 
     void onUserClicked(User user);
 
-    void onLoaded(ArrayList<User> users);
+    void onLoaded(List<User> users);
 
     void onError(ApiError error);
 }

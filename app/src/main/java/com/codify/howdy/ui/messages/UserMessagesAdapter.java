@@ -9,17 +9,20 @@ import android.view.ViewGroup;
 
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
-import com.codify.howdy.model.User;
+import com.codify.howdy.model.UserMessage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.reactivex.subjects.PublishSubject;
+
 final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter.Holder> {
 
-    private List<User> mList;
+    private PublishSubject<UserMessage> mPublish = PublishSubject.create();
+    private List<UserMessage> mList;
 
-    UserMessagesAdapter(List<User> list) {
-        this.mList = list;
+    UserMessagesAdapter(List<UserMessage> list) {
+        mList = list;
     }
 
     @Override
@@ -30,15 +33,15 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        User user = mList.get(position);
+        UserMessage message = mList.get(position);
 
         Picasso
                 .with(holder.mImage.getContext())
-                .load(BuildConfig.URL + user.imgpath)
+                .load(BuildConfig.URL + message.message_touserid)
                 .into(holder.mImage);
-        holder.mUsername.setText(user.username);
-        holder.mLastMessage.setText(user.namesurname);
-        holder.mDate.setText(user.namesurname);
+        holder.mUsername.setText(message.message_touserid + "");
+        holder.mLastMessage.setText(message.message_text);
+        holder.mDate.setText(message.message_isreaded + "");
     }
 
     @Override
@@ -46,7 +49,11 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
         return mList.size();
     }
 
-    void notifyDataSetChanged(List<User> list) {
+    PublishSubject<UserMessage> itemClicks() {
+        return mPublish;
+    }
+
+    void notifyDataSetChanged(List<UserMessage> list) {
         mList = list;
         notifyDataSetChanged();
     }
@@ -71,7 +78,8 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
 
         @Override
         public void onClick(View view) {
-
+            UserMessage message = mList.get(getAdapterPosition());
+            mPublish.onNext(message);
         }
     }
 }

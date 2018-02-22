@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/chat_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/chat_back"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            android:src="@drawable/button_back" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/chat_username"
+            style="@style/Text.Toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="ilkem23" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/chat_top_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/chat_bottom_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_top_divider" />
+
+    <View
+        android:id="@+id/chat_bottom_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/chat_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/chat_media"
+        style="@style/Button.Transparent"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/button_media"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/chat_message"
+        style="@style/Input"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:background="@drawable/background_chat"
+        android:hint="Mesajini yaz…"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/chat_send"
+        app:layout_constraintStart_toEndOf="@id/chat_media"
+        app:layout_constraintTop_toBottomOf="@id/chat_bottom_divider"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/chat_send"
+        style="@style/Button.Transparent"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/button_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

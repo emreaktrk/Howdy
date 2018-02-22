@@ -46,4 +46,9 @@ public final class AccountUtils {
         return AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE).length == 1;
     }
 
+    public static User me(Context context) {
+        Account account = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
+        return new Gson().fromJson(AccountManager.get(context).getUserData(account, AccountManager.KEY_USERDATA), User.class);
+    }
+
 }

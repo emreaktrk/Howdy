@@ -15,7 +15,7 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public final class UserSearchActivity extends HowdyActivity implements UserSearchView {
 
@@ -78,7 +78,7 @@ public final class UserSearchActivity extends HowdyActivity implements UserSearc
     }
 
     @Override
-    public void onLoaded(ArrayList<User> users) {
+    public void onLoaded(List<User> users) {
         mPresenter.bind(users);
     }
 
