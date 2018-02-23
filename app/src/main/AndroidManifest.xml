@@ -59,6 +59,10 @@
             android:name=".ui.chat.ChatActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+            android:name=".ui.response.ResponseActivity"
+            android:theme="@style/ResponseTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">
