@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.codify.howdy.R;
 import com.codify.howdy.logcat.Logcat;
-import com.codify.howdy.model.Navigation;
+import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -19,7 +19,7 @@ final class MainPresenter extends BasePresenter<MainView> {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.navigation_home))
-                        .doOnEach(notification -> setSelected(Navigation.HOME))
+                        .filter(o -> !findViewById(R.id.navigation_home).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Home clicked");
                             view.onHomeClicked();
@@ -28,10 +28,28 @@ final class MainPresenter extends BasePresenter<MainView> {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.navigation_statistic))
-                        .doOnEach(notification -> setSelected(Navigation.STATISTIC))
+                        .filter(o -> !findViewById(R.id.navigation_statistic).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Statistic clicked");
                             view.onStatisticClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.navigation_notification))
+                        .filter(o -> !findViewById(R.id.navigation_notification).isSelected())
+                        .subscribe(o -> {
+                            Logcat.v("Notification clicked");
+                            view.onNotificationClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.navigation_profile))
+                        .filter(o -> !findViewById(R.id.navigation_profile).isSelected())
+                        .subscribe(o -> {
+                            Logcat.v("Profile clicked");
+                            view.onProfileClicked();
                         }));
 
         mDisposables.add(
@@ -41,27 +59,9 @@ final class MainPresenter extends BasePresenter<MainView> {
                             Logcat.v("Compose clicked");
                             view.onComposeClicked();
                         }));
-
-        mDisposables.add(
-                RxView
-                        .clicks(findViewById(R.id.navigation_notification))
-                        .doOnEach(notification -> setSelected(Navigation.NOTIFICATION))
-                        .subscribe(o -> {
-                            Logcat.v("Notification clicked");
-                            view.onNotificationClicked();
-                        }));
-
-        mDisposables.add(
-                RxView
-                        .clicks(findViewById(R.id.navigation_profile))
-                        .doOnEach(notification -> setSelected(Navigation.PROFILE))
-                        .subscribe(o -> {
-                            Logcat.v("Profile clicked");
-                            view.onProfileClicked();
-                        }));
     }
 
-    private void setSelected(@Navigation int navigation) {
+    void setSelected(@Navigation int navigation) {
         LinearLayoutCompat bar = findViewById(R.id.navigation_bar);
         for (int position = 0; position < bar.getChildCount(); position++) {
             View child = bar.getChildAt(position);

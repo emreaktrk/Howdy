@@ -1,19 +1,18 @@
-package com.codify.howdy.ui.profile;
+package com.codify.howdy.ui.notification;
 
 import com.codify.howdy.R;
 import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.navigation.NavigationFragment;
 
-
-public final class ProfileFragment extends NavigationFragment implements ProfileView {
+public final class NotificationFragment extends NavigationFragment implements NotificationView {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_profile;
+        return R.layout.layout_notification;
     }
 
     @Override
     public int getSelection() {
-        return Navigation.PROFILE;
+        return Navigation.NOTIFICATION;
     }
 }

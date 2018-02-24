@@ -28,5 +28,5 @@ public abstract class Pool<T> {
         }
     }
 
-    protected abstract T supply(Class<? extends T> key) throws Exception;
+    protected abstract T supply(Class<? extends T> clazz) throws Exception;
 }

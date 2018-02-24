@@ -8,12 +8,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
-import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.User;
 import com.codify.howdy.model.Wall;
+import com.codify.howdy.navigation.Navigation;
+import com.codify.howdy.navigation.NavigationFragment;
 import com.codify.howdy.ui.messages.UserMessagesActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
 import com.karumi.dexter.Dexter;
@@ -25,7 +26,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.List;
 
 
-public final class HomeFragment extends HowdyFragment implements HomeView {
+public final class HomeFragment extends NavigationFragment implements HomeView {
 
     private HomePresenter mPresenter = new HomePresenter();
 
@@ -100,5 +101,10 @@ public final class HomeFragment extends HowdyFragment implements HomeView {
         super.onActivityResult(requestCode, resultCode, data);
 
         User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
+    }
+
+    @Override
+    public int getSelection() {
+        return Navigation.HOME;
     }
 }

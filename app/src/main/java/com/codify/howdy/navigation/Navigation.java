@@ -1,4 +1,4 @@
-package com.codify.howdy.model;
+package com.codify.howdy.navigation;
 
 import android.support.annotation.IntDef;
 
@@ -10,4 +10,13 @@ public @interface Navigation {
     int STATISTIC = R.id.navigation_statistic;
     int NOTIFICATION = R.id.navigation_notification;
     int PROFILE = R.id.navigation_profile;
+
+    interface ISelectable {
+        @Navigation
+        int getSelection();
+    }
+
+    interface IController {
+        void onNavigationSelected(@Navigation int selection);
+    }
 }

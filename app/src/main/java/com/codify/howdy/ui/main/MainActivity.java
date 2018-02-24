@@ -11,17 +11,21 @@ import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.helper.Pool;
+import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.ui.compose.ComposeActivity;
 import com.codify.howdy.ui.home.HomeFragment;
+import com.codify.howdy.ui.notification.NotificationFragment;
+import com.codify.howdy.ui.profile.ProfileFragment;
+import com.codify.howdy.ui.statistic.StatisticFragment;
 
 
-public final class MainActivity extends HowdyActivity implements MainView {
+public final class MainActivity extends HowdyActivity implements MainView, Navigation.IController {
 
     private MainPresenter mPresenter = new MainPresenter();
     private Pool<Fragment> mPool = new Pool<Fragment>() {
         @Override
-        protected Fragment supply(Class<? extends Fragment> key) throws Exception {
-            return key.newInstance();
+        protected Fragment supply(Class<? extends Fragment> clazz) throws Exception {
+            return clazz.newInstance();
         }
     };
 
@@ -58,12 +62,20 @@ public final class MainActivity extends HowdyActivity implements MainView {
 
     @Override
     public void onHomeClicked() {
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_frame, mPool.get(HomeFragment.class))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onStatisticClicked() {
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_frame, mPool.get(StatisticFragment.class))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -73,11 +85,24 @@ public final class MainActivity extends HowdyActivity implements MainView {
 
     @Override
     public void onNotificationClicked() {
-
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_frame, mPool.get(NotificationFragment.class))
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onProfileClicked() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_frame, mPool.get(ProfileFragment.class))
+                .addToBackStack(null)
+                .commit();
+    }
 
+    @Override
+    public void onNavigationSelected(@Navigation int selection) {
+        mPresenter.setSelected(selection);
     }
 }
