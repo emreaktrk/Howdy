@@ -16,9 +16,33 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file("keystore/keystore_debug")
+            keyAlias 'muudy'
+            keyPassword '123456'
+            storePassword '123456'
+        }
         release {
-            minifyEnabled false
+            storeFile file("keystore/keystore_release")
+            keyAlias 'muudy'
+            keyPassword '123456'
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
+
+            applicationIdSuffix ".test"
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources false
+            zipAlignEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -28,6 +52,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support:design:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
     implementation('com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0') { exclude group: 'com.android.support' }
     implementation('com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0') { exclude group: 'com.android.support' }
@@ -42,3 +67,5 @@ dependencies {
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.blankj:utilcode:1.12.6'
 }
+
+apply plugin: 'com.google.gms.google-services'

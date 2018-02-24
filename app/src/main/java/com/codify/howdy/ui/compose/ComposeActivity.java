@@ -10,12 +10,14 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
+import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.word.WordActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,9 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onSendClicked() {
-
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.COMPOSE);
     }
 
     @Override
