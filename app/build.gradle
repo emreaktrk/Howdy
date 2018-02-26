@@ -66,6 +66,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.blankj:utilcode:1.12.6'
+    implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
+    implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         mRoot = root;
 
         mDisposables = new ArrayList<>();
+    }
+
+    public final void attachView(V view, Fragment fragment) {
+        attachView(view, fragment.getView());
     }
 
     public final void attachView(V view, Activity activity) {
