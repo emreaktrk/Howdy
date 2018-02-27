@@ -26,6 +26,7 @@ public final class ApiManager {
                                     .create(
                                             new GsonBuilder()
                                                     .serializeNulls()
+                                                    .setDateFormat("yyyy-MM-dd HH:mm:ss")
                                                     .create()))
                     .client(
                             new OkHttpClient

@@ -15,6 +15,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/chat_user_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="16dp"
+                tools:src="@mipmap/ic_launcher_round" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/chat_username"
+                style="@style/Text.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="ilkem23" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/chat_back"
             style="@style/Button.Transparent"
@@ -22,14 +44,6 @@
             android:layout_height="56dp"
             android:layout_gravity="start"
             android:src="@drawable/button_back" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/chat_username"
-            style="@style/Text.Toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:text="ilkem23" />
     </FrameLayout>
 
     <View
@@ -80,7 +94,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/chat_send"
         app:layout_constraintStart_toEndOf="@id/chat_media"
-        app:layout_constraintTop_toBottomOf="@id/chat_bottom_divider"/>
+        app:layout_constraintTop_toBottomOf="@id/chat_bottom_divider" />
 
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/chat_send"

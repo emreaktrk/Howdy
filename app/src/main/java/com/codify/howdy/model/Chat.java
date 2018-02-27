@@ -9,5 +9,6 @@ public final class Chat {
     public long message_touserid;
     public String message_text;
     public Date message_date;
+    public int message_isreaded;
     public String message_img_path;
 }
