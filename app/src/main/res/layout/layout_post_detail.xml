@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/post_detail_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/post_detail_back"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            android:padding="14dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/button_back" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/post_detail_username"
+            style="@style/Text.Toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="@tools:sample/first_names" />
+    </FrameLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/post_detail_bottom_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_detail_toolbar">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/post_detail_image"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/post_detail_emotion"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="@id/post_detail_image"
+                    app:layout_constraintStart_toStartOf="@id/post_detail_image"
+                    app:layout_constraintTop_toBottomOf="@id/post_detail_image"
+                    tools:src="@tools:sample/avatars" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/post_detail_sentence"
+                    style="@style/Text.Normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/post_detail_image"
+                    app:layout_constraintTop_toTopOf="@id/post_detail_image"
+                    tools:text="mrs.mama, Tek başına Ofis’te bıkmış hissediyor." />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/post_detail_like"
+                    style="@style/Text.Normal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/button_like"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/post_detail_emotion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="22" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/post_detail_emotion" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_detail_comment_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/cell_user_messages" />
+    </android.support.design.widget.CoordinatorLayout>
+
+    <View
+        android:id="@+id/post_detail_bottom_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/post_detail_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/post_detail_message"
+        style="@style/Input"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/background_comment"
+        android:hint="Yorum yaz…"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/post_detail_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_detail_bottom_divider" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/post_detail_send"
+        style="@style/Button.Transparent"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/button_send"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

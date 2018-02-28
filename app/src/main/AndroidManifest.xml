@@ -60,6 +60,10 @@
             android:theme="@style/MainTheme" />
 
         <activity
+            android:name=".ui.postdetail.PostDetailActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
             android:name=".ui.response.ResponseActivity"
             android:theme="@style/ResponseTheme" />
 

@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher_round" />
+        tools:src="@tools:sample/avatars" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/user_messages_username"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toEndOf="@id/user_messages_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="ilkem23" />
+        tools:text="@tools:sample/first_names" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/user_messages_date"
