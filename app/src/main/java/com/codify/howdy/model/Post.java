@@ -1,8 +1,9 @@
 package com.codify.howdy.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public final class Post {
+public final class Post implements Serializable {
 
     public long idpost;
     public String post_userid;

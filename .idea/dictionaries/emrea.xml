@@ -3,6 +3,8 @@
     <words>
       <w>darray</w>
       <w>emoji</w>
+      <w>getcomments</w>
+      <w>getsinglepost</w>
       <w>getwall</w>
       <w>getwords</w>
       <w>getwordswithfilter</w>

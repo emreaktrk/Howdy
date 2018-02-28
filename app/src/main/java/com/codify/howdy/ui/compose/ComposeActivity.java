@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
@@ -17,7 +17,6 @@ import com.codify.howdy.model.Category;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.word.WordActivity;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -82,7 +81,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onError(ApiError error) {
-        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(error.message);
     }
 
     @Override

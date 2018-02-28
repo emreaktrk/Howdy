@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
@@ -65,7 +65,7 @@ public final class UserMessagesActivity extends HowdyActivity implements UserMes
 
     @Override
     public void onError(ApiError error) {
-        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(error.message);
     }
 
     @Override

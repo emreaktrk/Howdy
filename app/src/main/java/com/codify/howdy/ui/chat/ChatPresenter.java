@@ -58,7 +58,9 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Send clicked");
-                            view.onSendClicked();
+
+                            String message = findViewById(R.id.chat_message, AppCompatTextView.class).getText().toString();
+                            view.onSendClicked(message);
                         }));
 
         mDisposables.add(
@@ -103,7 +105,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         findViewById(R.id.chat_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
-    void send(String text) {
+    void send(String message) {
 
     }
 

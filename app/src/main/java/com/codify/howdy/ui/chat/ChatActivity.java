@@ -68,8 +68,8 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
     }
 
     @Override
-    public void onSendClicked() {
-
+    public void onSendClicked(String message) {
+        mPresenter.send(message);
     }
 
     @Override

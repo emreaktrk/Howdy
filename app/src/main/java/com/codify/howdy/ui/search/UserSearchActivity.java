@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
@@ -84,6 +84,6 @@ public final class UserSearchActivity extends HowdyActivity implements UserSearc
 
     @Override
     public void onError(ApiError error) {
-        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(error.message);
     }
 }

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.ResultTo;
@@ -93,7 +93,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
 
     @Override
     public void onError(ApiError error) {
-        Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(error.message);
     }
 
     @Override

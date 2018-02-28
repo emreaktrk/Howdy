@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
@@ -69,6 +69,6 @@ public final class RegisterFragment extends HowdyFragment implements RegisterVie
 
     @Override
     public void onError(ApiError error) {
-        Toast.makeText(getContext(), error.message, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(error.message);
     }
 }

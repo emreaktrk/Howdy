@@ -9,7 +9,7 @@ import java.util.List;
 
 interface ChatView extends MvpView {
 
-    void onSendClicked();
+    void onSendClicked(String message);
 
     void onMediaClicked();
 
