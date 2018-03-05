@@ -76,7 +76,6 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         }));
     }
 
-
     public void getPostDetail(long postId) {
         mDisposables.add(
                 Single

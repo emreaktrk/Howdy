@@ -10,6 +10,7 @@ import com.codify.howdy.api.pojo.request.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.request.LoginRequest;
 import com.codify.howdy.api.pojo.request.RegisterRequest;
 import com.codify.howdy.api.pojo.request.SearchUserRequest;
+import com.codify.howdy.api.pojo.request.UploadImageRequest;
 import com.codify.howdy.api.pojo.response.GetCommentsResponse;
 import com.codify.howdy.api.pojo.response.GetMessagesResponse;
 import com.codify.howdy.api.pojo.response.GetSinglePostResponse;
@@ -21,6 +22,7 @@ import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.api.pojo.response.LoginResponse;
 import com.codify.howdy.api.pojo.response.RegisterResponse;
 import com.codify.howdy.api.pojo.response.SearchUserResponse;
+import com.codify.howdy.api.pojo.response.UploadImageResponse;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -60,4 +62,7 @@ public interface ApiServices {
 
     @POST("getcomments")
     Single<GetCommentsResponse> getComments(@Body GetCommentsRequest request);
+
+    @POST("uploadimage")
+    Single<UploadImageResponse> uploadImage(@Body UploadImageRequest request);
 }

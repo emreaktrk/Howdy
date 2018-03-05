@@ -64,6 +64,10 @@
             android:theme="@style/MainTheme" />
 
         <activity
+            android:name=".ui.profileedit.ProfileEditActivity"
+            android:theme="@style/MainTheme" />
+
+        <activity
             android:name=".ui.response.ResponseActivity"
             android:theme="@style/ResponseTheme" />
 

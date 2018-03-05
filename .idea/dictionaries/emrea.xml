@@ -10,7 +10,9 @@
       <w>getwordswithfilter</w>
       <w>namesurname</w>
       <w>postdetail</w>
+      <w>profileedit</w>
       <w>searchuser</w>
+      <w>uploadimage</w>
     </words>
   </dictionary>
 </component>
