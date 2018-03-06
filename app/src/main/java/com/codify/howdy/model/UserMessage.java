@@ -1,6 +1,8 @@
 package com.codify.howdy.model;
 
-public final class UserMessage {
+import java.io.Serializable;
+
+public final class UserMessage implements Serializable {
 
     public long message_touserid;
     public long message_fromuserid;

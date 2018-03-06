@@ -1,8 +1,9 @@
 package com.codify.howdy.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class Chat {
+public final class Chat implements Serializable {
 
     public long idmessage;
     public long message_fromuserid;

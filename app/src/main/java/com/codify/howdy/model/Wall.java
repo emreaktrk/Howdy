@@ -1,8 +1,9 @@
 package com.codify.howdy.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public final class Wall {
+public final class Wall implements Serializable{
 
     public ArrayList<Post> posts;
     public ArrayList<User> recomendedUsers;

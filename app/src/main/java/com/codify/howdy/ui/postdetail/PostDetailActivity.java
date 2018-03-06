@@ -13,20 +13,11 @@ import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.model.Post;
 import com.codify.howdy.model.zipper.PostDetail;
 
 public final class PostDetailActivity extends HowdyActivity implements PostDetailView {
 
     private PostDetailPresenter mPresenter = new PostDetailPresenter();
-
-    public static void start(@NonNull Post post) {
-        Context context = Utils.getApp().getApplicationContext();
-
-        Intent starter = new Intent(context, PostDetailActivity.class);
-        starter.putExtra(post.getClass().getSimpleName(), post);
-        ActivityUtils.startActivity(starter);
-    }
 
     public static void start(@NonNull Long postId) {
         Context context = Utils.getApp().getApplicationContext();
@@ -45,26 +36,19 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Post post = getSerializable(Post.class);
-        if (post != null) {
-            // TODO Load post
-            return;
-        }
-
         Long postId = getSerializable(Long.class);
         if (postId != null) {
-            mPresenter.getPost(postId);
-            return;
+            mPresenter.getPostDetail(postId);
         }
-    }
-
-    @Override
-    public void onLoaded(@NonNull Post post) {
-
     }
 
     @Override
     public void onLoaded(@NonNull PostDetail detail) {
+        mPresenter.bind(detail);
+    }
+
+    @Override
+    public void onLoaded(@NonNull Object object) {
 
     }
 
@@ -75,22 +59,39 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
 
     @Override
     public void onError(Throwable error) {
-
+        ToastUtils.showShort(error.getMessage());
     }
 
     @Override
     public void onLikeClicked() {
+        Long postId = getSerializable(Long.class);
+        if (postId != null) {
+            mPresenter.like(postId);
+        }
 
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.LIKE);
     }
 
     @Override
-    public void onUnlikeClicked() {
+    public void onDislikeClicked() {
+        Long postId = getSerializable(Long.class);
+        if (postId != null) {
+            mPresenter.dislike(postId);
+        }
 
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.DISLIKE);
     }
 
     @Override
     public void onSendClicked(String comment) {
-        mPresenter.send(comment);
+        Long postId = getSerializable(Long.class);
+        if (postId != null) {
+            mPresenter.send(postId, comment);
+        }
 
         Analytics
                 .getInstance()

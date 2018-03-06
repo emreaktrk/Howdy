@@ -34,9 +34,11 @@ public final class Analytics {
         return this;
     }
 
-    @StringDef({Events.COMPOSE, Events.COMMENT})
+    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
+        String LIKE = "like";
+        String DISLIKE = "dislike";
     }
 }

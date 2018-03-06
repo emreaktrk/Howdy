@@ -16,6 +16,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "2g"
+    }
+    aaptOptions {
+        cruncherEnabled = false
+    }
     signingConfigs {
         debug {
             storeFile file("keystore/keystore_debug")
@@ -33,6 +40,7 @@ android {
     buildTypes {
         debug {
             debuggable true
+            ext.enableCrashlytics = false
             signingConfig signingConfigs.debug
 
             applicationIdSuffix ".test"

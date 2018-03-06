@@ -1,13 +1,16 @@
 <component name="ProjectDictionaryState">
   <dictionary name="emrea">
     <words>
+      <w>commentpost</w>
       <w>darray</w>
       <w>emoji</w>
       <w>getcomments</w>
+      <w>getnotifications</w>
       <w>getsinglepost</w>
       <w>getwall</w>
       <w>getwords</w>
       <w>getwordswithfilter</w>
+      <w>idwords</w>
       <w>namesurname</w>
       <w>postdetail</w>
       <w>profileedit</w>

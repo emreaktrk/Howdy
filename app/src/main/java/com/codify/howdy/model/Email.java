@@ -4,9 +4,10 @@ import android.text.Editable;
 
 import com.blankj.utilcode.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public final class Email {
+public final class Email implements Serializable {
 
     public CharSequence mValue;
 

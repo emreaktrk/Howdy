@@ -1,6 +1,8 @@
 package com.codify.howdy.model;
 
-public final class Credential {
+import java.io.Serializable;
+
+public final class Credential implements Serializable {
 
     public final CharSequence mEmail;
     public final CharSequence mPassword;

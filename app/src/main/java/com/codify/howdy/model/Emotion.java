@@ -1,6 +1,8 @@
 package com.codify.howdy.model;
 
-public final class Emotion {
+import java.io.Serializable;
+
+public final class Emotion implements Serializable {
 
     public String post_emoji;
     public long post_activityid;

@@ -8,8 +8,8 @@ import android.view.View;
 import com.codify.howdy.R;
 import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.navigation.NavigationFragment;
-import com.codify.howdy.ui.notification.followed.NotificationFollowedFragment;
-import com.codify.howdy.ui.notification.you.NotificationYouFragment;
+import com.codify.howdy.ui.notification.following.NotificationFollowingFragment;
+import com.codify.howdy.ui.notification.me.NotificationMeFragment;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
@@ -47,8 +47,8 @@ public final class NotificationFragment extends NavigationFragment implements No
                 getChildFragmentManager(),
                 FragmentPagerItems
                         .with(getContext())
-                        .add("Takip Edilen", NotificationFollowedFragment.class)
-                        .add("Sen", NotificationYouFragment.class)
+                        .add("Takip Edilen", NotificationFollowingFragment.class)
+                        .add("Sen", NotificationMeFragment.class)
                         .create());
     }
 }

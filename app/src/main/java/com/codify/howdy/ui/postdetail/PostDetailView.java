@@ -9,9 +9,9 @@ import com.codify.howdy.ui.base.MvpView;
 
 interface PostDetailView extends MvpView {
 
-    void onLoaded(@NonNull Post post);
-
     void onLoaded(@NonNull PostDetail detail);
+
+    void onLoaded(@NonNull Object object);
 
     void onError(ApiError error);
 
@@ -19,7 +19,7 @@ interface PostDetailView extends MvpView {
 
     void onLikeClicked();
 
-    void onUnlikeClicked();
+    void onDislikeClicked();
 
     void onSendClicked(String comment);
 
