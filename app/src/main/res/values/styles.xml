@@ -20,6 +20,9 @@
         <item name="colorControlNormal">@color/orange</item>
         <item name="colorControlActivated">@color/orange</item>
         <item name="colorControlHighlight">@color/orange</item>
+
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="ResponseTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -32,6 +35,8 @@
         <item name="colorControlNormal">@color/orange</item>
         <item name="colorControlActivated">@color/orange</item>
         <item name="colorControlHighlight">@color/orange</item>
+
+        <item name="android:navigationBarColor">@color/green</item>
     </style>
 
     <style name="Button">
@@ -44,6 +49,11 @@
     <style name="Button.Orange">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/button_orange</item>
+    </style>
+
+    <style name="Button.Blue">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_blue</item>
     </style>
 
     <style name="Button.Green">

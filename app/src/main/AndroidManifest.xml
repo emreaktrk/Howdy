@@ -73,6 +73,10 @@
             android:name=".ui.response.ResponseActivity"
             android:theme="@style/ResponseTheme" />
 
+        <activity
+            android:name=".ui.facebookfriends.FacebookFriendsActivity"
+            android:theme="@style/MainTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">
