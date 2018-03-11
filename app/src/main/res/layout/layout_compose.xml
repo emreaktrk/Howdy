@@ -21,7 +21,7 @@
             android:layout_height="56dp"
             android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
             style="@style/Text.Toolbar"
@@ -49,6 +49,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         tools:listitem="@layout/cell_selected_word" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/compose_picture"
+        style="@style/Button.Transparent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@id/compose_now"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/compose_selected_word_recycler"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/compose_cancel"
+        style="@style/Button.Transparent"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_cancel"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/compose_picture"
+        app:layout_constraintTop_toTopOf="@id/compose_picture"
+        tools:visibility="visible" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/compose_now"

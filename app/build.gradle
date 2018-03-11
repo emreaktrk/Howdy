@@ -57,8 +57,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:design:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
@@ -76,6 +76,8 @@ dependencies {
     implementation 'com.blankj:utilcode:1.12.6'
     implementation 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+    implementation 'com.github.marchinram:RxGallery:0.6.3'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 }
 
 apply plugin: 'com.google.gms.google-services'

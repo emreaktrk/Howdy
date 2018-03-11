@@ -1,5 +1,7 @@
 package com.codify.howdy.ui.compose;
 
+import android.net.Uri;
+
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
@@ -26,4 +28,10 @@ interface ComposeView extends MvpView {
     void onCategoryClicked(Category category);
 
     void onWordRemoved(Word word);
+
+    void onPictureClicked();
+
+    void onPhotoSelected(Uri uri);
+
+    void onPhotoCancelClicked();
 }

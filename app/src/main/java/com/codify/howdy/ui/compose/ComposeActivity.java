@@ -2,6 +2,7 @@ package com.codify.howdy.ui.compose;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -93,6 +94,21 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     public void onWordRemoved(Word word) {
         mPresenter.removeSelectedWord(word);
         mPresenter.getWordsWithFilter();
+    }
+
+    @Override
+    public void onPictureClicked() {
+        mPresenter.selectPhoto(this);
+    }
+
+    @Override
+    public void onPhotoSelected(Uri uri) {
+        mPresenter.bind(uri);
+    }
+
+    @Override
+    public void onPhotoCancelClicked() {
+        mPresenter.cancelPhoto();
     }
 
     @Override
