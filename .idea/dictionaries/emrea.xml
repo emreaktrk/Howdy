@@ -5,6 +5,7 @@
       <w>darray</w>
       <w>emoji</w>
       <w>facebookfriends</w>
+      <w>forgotpass</w>
       <w>getcomments</w>
       <w>getnotifications</w>
       <w>getsinglepost</w>
@@ -12,6 +13,7 @@
       <w>getwords</w>
       <w>getwordswithfilter</w>
       <w>idwords</w>
+      <w>keyhash</w>
       <w>namesurname</w>
       <w>postdetail</w>
       <w>profileedit</w>

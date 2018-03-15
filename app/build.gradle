@@ -78,6 +78,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation 'com.github.marchinram:RxGallery:0.6.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
 
 apply plugin: 'com.google.gms.google-services'

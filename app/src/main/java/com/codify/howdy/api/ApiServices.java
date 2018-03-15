@@ -2,6 +2,7 @@ package com.codify.howdy.api;
 
 import com.codify.howdy.api.pojo.request.CommentPostRequest;
 import com.codify.howdy.api.pojo.request.DislikePostRequest;
+import com.codify.howdy.api.pojo.request.ForgotPasswordRequest;
 import com.codify.howdy.api.pojo.request.GetCommentsRequest;
 import com.codify.howdy.api.pojo.request.GetMessagesRequest;
 import com.codify.howdy.api.pojo.request.GetNotificationsRequest;
@@ -17,6 +18,7 @@ import com.codify.howdy.api.pojo.request.SearchUserRequest;
 import com.codify.howdy.api.pojo.request.UploadImageRequest;
 import com.codify.howdy.api.pojo.response.CommentPostResponse;
 import com.codify.howdy.api.pojo.response.DislikePostResponse;
+import com.codify.howdy.api.pojo.response.ForgotPasswordResponse;
 import com.codify.howdy.api.pojo.response.GetCommentsResponse;
 import com.codify.howdy.api.pojo.response.GetMessagesResponse;
 import com.codify.howdy.api.pojo.response.GetNotificationsResponse;
@@ -43,6 +45,9 @@ public interface ApiServices {
 
     @POST("register")
     Single<RegisterResponse> register(@Body RegisterRequest request);
+
+    @POST("register")
+    Single<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
 
     @POST("getwall")
     Single<GetWallResponse> getWall(@Body GetWallRequest request);
