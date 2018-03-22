@@ -10,6 +10,7 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.Emotion;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.User;
 import com.codify.howdy.model.Wall;
@@ -94,6 +95,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     @Override
     public void onError(ApiError error) {
         ToastUtils.showShort(error.message);
+    }
+
+    @Override
+    public void onEmotionClicked(Emotion emotion) {
+
     }
 
     @Override

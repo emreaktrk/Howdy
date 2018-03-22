@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/emotion_image"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        tools:src="@tools:sample/avatars" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/emotion_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:singleLine="true"
+        style="@style/Text.Normal"
+        tools:text="@tools:sample/lorem" />
+</android.support.v7.widget.LinearLayoutCompat>

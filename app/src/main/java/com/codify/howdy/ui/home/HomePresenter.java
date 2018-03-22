@@ -3,6 +3,8 @@ package com.codify.howdy.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.codify.howdy.R;
@@ -45,6 +47,9 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             Logcat.v("Chat clicked");
                             view.onMessagesClicked();
                         }));
+
+        RecyclerView emotion = findViewById(R.id.home_emotion_recycler, RecyclerView.class);
+        emotion.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     @SuppressLint({"MissingPermission"})
@@ -83,6 +88,16 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     void bind(Wall wall) {
+        EmotionAdapter adapter = new EmotionAdapter(wall.nearEmotions);
 
+        mDisposables.add(
+                adapter
+                        .itemClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(emotion -> {
+                            Logcat.v("Emotion clicked");
+                            mView.onEmotionClicked(emotion);
+                        }));
+        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(adapter);
     }
 }
