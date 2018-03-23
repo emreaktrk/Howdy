@@ -9,7 +9,7 @@ public final class Post implements Serializable {
     public String post_userid;
     public String post_text;
     public String post_mediapath;
-    public String post_media_type;
+    public PostMediaType post_media_type;
     public int post_commentcount;
     public Visibility visibility;
     public String post_date;
