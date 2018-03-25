@@ -2,29 +2,18 @@ package com.codify.howdy.ui.postdetail;
 
 import android.support.annotation.NonNull;
 import android.view.View;
-
 import com.blankj.utilcode.util.StringUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
-import com.codify.howdy.api.pojo.request.CommentPostRequest;
-import com.codify.howdy.api.pojo.request.DislikePostRequest;
-import com.codify.howdy.api.pojo.request.GetCommentsRequest;
-import com.codify.howdy.api.pojo.request.GetSinglePostRequest;
-import com.codify.howdy.api.pojo.request.LikePostRequest;
-import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.CommentPostResponse;
-import com.codify.howdy.api.pojo.response.DislikePostResponse;
-import com.codify.howdy.api.pojo.response.GetCommentsResponse;
-import com.codify.howdy.api.pojo.response.GetSinglePostResponse;
-import com.codify.howdy.api.pojo.response.LikePostResponse;
+import com.codify.howdy.api.pojo.request.*;
+import com.codify.howdy.api.pojo.response.*;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.zipper.PostDetail;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
@@ -85,7 +74,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .zip(
                                 observer -> {
                                     GetSinglePostRequest request = new GetSinglePostRequest(postId);
-                                    request.token = AccountUtils.token(getContext());
+                                    request.token = AccountUtils.tokenLegacy(getContext());
 
                                     ApiManager
                                             .getInstance()
@@ -107,7 +96,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                                 },
                                 observer -> {
                                     GetCommentsRequest request = new GetCommentsRequest(postId);
-                                    request.token = AccountUtils.token(getContext());
+                                    request.token = AccountUtils.tokenLegacy(getContext());
 
                                     ApiManager
                                             .getInstance()

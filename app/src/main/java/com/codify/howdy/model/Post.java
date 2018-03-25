@@ -8,18 +8,24 @@ import java.util.Objects;
 public final class Post implements Serializable {
 
     public long idpost;
-    public String post_userid;
+    public long post_userid;
     public String post_text;
     public String post_mediapath;
     public PostMediaType post_media_type;
-    public int post_commentcount;
-    public Visibility visibility;
+    public String post_video_path;
+    public Visibility post_visibility;
     public String post_date;
-    public int post_isliked;
     public long post_activityid;
     public double post_longitude;
     public double post_latitude;
     public ArrayList<Word> post_words_json;
+    public int post_likecount;
+    public String post_emoji;
+    public String post_emoji_word;
+    public int post_commentcount;
+    public String post_place_name;
+    public long post_sharegroup0_wordid;
+    public long post_sharegroup3_wordid;
 
     public long iduser;
     public String username;

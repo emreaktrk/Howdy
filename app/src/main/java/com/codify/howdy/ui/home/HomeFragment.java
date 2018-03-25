@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.*;
+import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.navigation.NavigationFragment;
 import com.codify.howdy.ui.messages.UserMessagesActivity;
@@ -96,8 +97,12 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     }
 
     @Override
-    public void onLikeClicked(Post post) {
-        mPresenter.like(post.idpost);
+    public void onLikeClicked(Like like) {
+        if (like.isChecked) {
+            mPresenter.like(like.post.idpost);
+        } else {
+            mPresenter.dislike(like.post.idpost);
+        }
     }
 
     @Override

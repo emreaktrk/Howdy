@@ -1,13 +1,13 @@
 package com.codify.howdy.api;
 
-import com.codify.howdy.model.Post;
 import com.google.gson.GsonBuilder;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public final class ApiManager {
 
@@ -33,6 +33,9 @@ public final class ApiManager {
                             new OkHttpClient
                                     .Builder()
                                     .addInterceptor(logger)
+                                    .connectTimeout(60, TimeUnit.SECONDS)
+                                    .readTimeout(60, TimeUnit.SECONDS)
+                                    .writeTimeout(60, TimeUnit.SECONDS)
                                     .build())
                     .build()
                     .create(ApiServices.class);

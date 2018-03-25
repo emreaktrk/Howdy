@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public enum Visibility {
 
-    @SerializedName("All")
+    @SerializedName("all")
     ALL
 }

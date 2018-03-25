@@ -5,17 +5,17 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.exception.ImplementationMissingException;
 import com.codify.howdy.helper.utils.InflaterUtils;
 import com.codify.howdy.model.Post;
 import com.codify.howdy.model.PostMediaType;
+import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.view.LikeButton;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
 
     private PublishSubject<Post> mPosts = PublishSubject.create();
-    private PublishSubject<Post> mLikes = PublishSubject.create();
+    private PublishSubject<Like> mLikes = PublishSubject.create();
     private PublishSubject<Post> mComments = PublishSubject.create();
     private List<Post> mList;
 
@@ -52,10 +52,16 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         Post post = mList.get(position);
 
         holder.mMessage.setText(post.post_text);
+        holder.mLike.setText(post.post_likecount + "");
+        holder.mComment.setText(post.post_commentcount + "");
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + post.imgpath)
+                .load(BuildConfig.URL + post.coverimgpath)
                 .into(holder.mImage);
+        Picasso
+                .with(holder.itemView.getContext())
+                .load(BuildConfig.URL + post.post_emoji)
+                .into(holder.mEmotion);
     }
 
     @Override
@@ -72,7 +78,7 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         return mPosts;
     }
 
-    PublishSubject<Post> likeClicks() {
+    PublishSubject<Like> likeClicks() {
         return mLikes;
     }
 
@@ -80,10 +86,11 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         return mComments;
     }
 
-    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
+        private CircleImageView mEmotion;
         private LikeButton mLike;
         private AppCompatTextView mComment;
 
@@ -92,12 +99,12 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
 
             mMessage = itemView.findViewById(R.id.post_message);
             mImage = itemView.findViewById(R.id.post_image);
+            mEmotion = itemView.findViewById(R.id.post_emotion);
 
             mLike = itemView.findViewById(R.id.post_like);
-            mLike.setOnClickListener(this);
+            mLike.setOnCheckedChangeListener(this);
 
             mComment = itemView.findViewById(R.id.post_comment);
-            mComment.setOnClickListener(this);
 
             itemView.setOnClickListener(this);
         }
@@ -105,19 +112,17 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         @Override
         public void onClick(View view) {
             Post post = mList.get(getAdapterPosition());
+            mPosts.onNext(post);
+        }
 
-            switch (view.getId()) {
-                case R.id.post_like:
-                    mLikes.onNext(post);
-                    return;
-                case R.id.post_comment:
-                    mComments.onNext(post);
-                    return;
-                default:
-                    mPosts.onNext(post);
-            }
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            Post post = mList.get(getAdapterPosition());
+            Like like = new Like(post, isChecked);
+            mLikes.onNext(like);
         }
     }
+
 
     class ImageHolder extends NoneHolder {
 
