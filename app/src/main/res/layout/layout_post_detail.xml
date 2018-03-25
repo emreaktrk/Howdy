@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.AppCompatImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/post_detail_image"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -60,7 +60,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars" />
 
-                <android.support.v7.widget.AppCompatImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/post_detail_emotion"
                     android:layout_width="24dp"
                     android:layout_height="24dp"

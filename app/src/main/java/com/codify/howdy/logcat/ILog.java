@@ -2,7 +2,7 @@ package com.codify.howdy.logcat;
 
 interface ILog {
 
-    String TAG = "HOWDY";
+    String TAG = "MUUDY";
 
     void display();
 }

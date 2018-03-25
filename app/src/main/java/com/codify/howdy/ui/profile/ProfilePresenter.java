@@ -1,9 +1,7 @@
 package com.codify.howdy.ui.profile;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.logcat.Logcat;
@@ -11,9 +9,8 @@ import com.codify.howdy.model.User;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
@@ -37,7 +34,6 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         Picasso
                 .with(getContext())
                 .load(BuildConfig.URL + user.imgpath)
-                .transform(new CropCircleTransformation())
-                .into(findViewById(R.id.profile_picture, AppCompatImageView.class));
+                .into(findViewById(R.id.profile_picture, CircleImageView.class));
     }
 }

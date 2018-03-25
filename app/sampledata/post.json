@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "value": true,
+      "sentence": "Emre, Tek basina Ofiste bikmis hissediyor.",
+      "count": 5
+    },
+    {
+      "value": false,
+      "sentence": "Yagmur, kendini sansli hissediyor.",
+      "count": 21
+    },
+    {
+      "value": true,
+      "sentence": "Veli, cafede latte yudumluyor.",
+      "count": 123
+    }
+  ],
+  "comment": [
+    {
+      "count": 51
+    },
+    {
+      "count": 1
+    },
+    {
+      "count": 9
+    }
+  ]
+}

@@ -1,82 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.response.ResponseActivity">
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/response_close"
-        style="@style/Button.Transparent"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/ic_close_white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/response_close"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_close_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/response_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher_round" />
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/response_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/response_mention"
-        style="@style/Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/response_image"
-        tools:text="mrs.mama, sana Muddy! dedi.\nHadi ona cevap ver" />
+            android:id="@+id/response_mention"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/response_image"
+            tools:text="mrs.mama, sana Muddy! dedi.\nHadi ona cevap ver"/>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/response_word"
-        style="@style/Button.Transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableEnd="@drawable/ic_next"
-        android:drawablePadding="16dp"
-        android:text="Duygu Seç"
-        android:textAppearance="@style/Text.Caption"
-        app:layout_constraintBottom_toTopOf="@id/response_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/response_mention" />
+            android:id="@+id/response_word"
+            style="@style/Button.Transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:text="Duygu Seç"
+            android:textAppearance="@style/Text.Caption"
+            app:layout_constraintBottom_toTopOf="@id/response_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/response_mention"/>
 
     <android.support.constraint.Guideline
-        android:id="@+id/response_guideline"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".32" />
+            android:id="@+id/response_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".32"/>
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_muddy"
-        app:layout_constraintBottom_toTopOf="@id/response_send"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/response_guideline" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_muddy"
+            app:layout_constraintBottom_toTopOf="@id/response_send"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/response_guideline"/>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/response_send"
-        style="@style/Button.Green"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:text="Gönder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/response_send"
+            style="@style/Button.Green"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Gönder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

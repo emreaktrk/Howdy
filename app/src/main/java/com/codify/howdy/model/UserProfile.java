@@ -6,5 +6,5 @@ import java.util.ArrayList;
 public final class UserProfile implements Serializable {
 
     public User user;
-    public ArrayList<Object> postlist;
+    public ArrayList<Post> postlist;
 }

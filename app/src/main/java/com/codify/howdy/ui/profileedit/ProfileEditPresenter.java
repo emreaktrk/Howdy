@@ -27,7 +27,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
@@ -110,7 +109,6 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
         Picasso
                 .with(getContext())
                 .load(mPhoto)
-                .transform(new CropCircleTransformation())
                 .into(findViewById(R.id.profile_edit_picture, AppCompatImageButton.class));
     }
 }

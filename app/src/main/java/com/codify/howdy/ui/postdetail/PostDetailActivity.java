@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -36,10 +35,19 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mPresenter.attachView(this, this);
+
         Long postId = getSerializable(Long.class);
         if (postId != null) {
             mPresenter.getPostDetail(postId);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mPresenter.detachView();
     }
 
     @Override

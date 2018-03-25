@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
 
@@ -43,9 +42,6 @@ final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
         Picasso
                 .with(holder.itemView.getContext())
                 .load(BuildConfig.URL + emotion.post_emoji)
-                .transform(
-                        new RoundedCornersTransformation(
-                                SizeUtils.dp2px(8), 0))
                 .into(holder.mImage);
     }
 

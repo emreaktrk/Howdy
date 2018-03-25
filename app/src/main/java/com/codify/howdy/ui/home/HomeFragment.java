@@ -6,17 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.model.Emotion;
-import com.codify.howdy.model.ResultTo;
-import com.codify.howdy.model.User;
-import com.codify.howdy.model.Wall;
+import com.codify.howdy.model.*;
 import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.navigation.NavigationFragment;
 import com.codify.howdy.ui.messages.UserMessagesActivity;
+import com.codify.howdy.ui.postdetail.PostDetailActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -30,14 +27,6 @@ import java.util.List;
 public final class HomeFragment extends NavigationFragment implements HomeView {
 
     private HomePresenter mPresenter = new HomePresenter();
-
-    public static HomeFragment newInstance() {
-        Bundle args = new Bundle();
-
-        HomeFragment fragment = new HomeFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -57,7 +46,6 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-
                             mPresenter.getWall(getContext());
                         }
                     }
@@ -103,10 +91,28 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     }
 
     @Override
+    public void onPostClicked(Post post) {
+        PostDetailActivity.start(post.idpost);
+    }
+
+    @Override
+    public void onLikeClicked(Post post) {
+        mPresenter.like(post.idpost);
+    }
+
+    @Override
+    public void onCommentClicked(Post post) {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
+        if (user != null) {
+            // TODO Go to user profile
+        }
     }
 
     @Override

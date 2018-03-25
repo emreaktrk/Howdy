@@ -1,21 +1,18 @@
 package com.codify.howdy.ui.search;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.model.User;
 import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 
 import java.util.List;
-
-import io.reactivex.subjects.PublishSubject;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Holder> {
 
@@ -39,7 +36,6 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
         Picasso
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + user.imgpath)
-                .transform(new CropCircleTransformation())
                 .into(holder.mImage);
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);
@@ -61,7 +57,7 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private AppCompatImageView mImage;
+        private CircleImageView mImage;
         private AppCompatTextView mUsername;
         private AppCompatTextView mNameSurname;
 

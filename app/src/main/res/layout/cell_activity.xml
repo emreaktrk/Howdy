@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="36dp"
-    android:background="@drawable/background_activity"
-    android:gravity="center">
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/background_activity"
+        android:gravity="center"
+        tools:context=".ui.main.MainActivity">
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/activity_image"
-        style="@style/Button.Transparent"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:padding="8dp"
-        android:scaleType="centerCrop"
-        tools:src="@mipmap/ic_launcher_round" />
+            android:id="@+id/activity_image"
+            style="@style/Button.Transparent"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            tools:scaleType="fitXY"
+            tools:src="@tools:sample/backgrounds/scenic"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/activity_text"
-        style="@style/Text.Normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        tools:text="O Ses Turkiye" />
+            android:id="@+id/activity_text"
+            style="@style/Text.Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            tools:text="@sample/word.json/data/near"/>
 </android.support.v7.widget.LinearLayoutCompat>

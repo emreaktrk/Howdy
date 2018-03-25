@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -99,7 +100,6 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             mView.onPhotoCancelClicked();
                         }));
 
-        findViewById(R.id.compose_category_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(root.getContext()));
         findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setAdapter(mAdapter);
     }

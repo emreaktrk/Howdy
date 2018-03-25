@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 final class FacebookFriendsAdapter extends RecyclerView.Adapter<FacebookFriendsAdapter.Holder> {
 
@@ -37,7 +36,6 @@ final class FacebookFriendsAdapter extends RecyclerView.Adapter<FacebookFriendsA
         Picasso
                 .with(holder.mPicture.getContext())
                 .load(BuildConfig.URL + user.imgpath)
-                .transform(new CropCircleTransformation())
                 .into(holder.mPicture);
     }
 

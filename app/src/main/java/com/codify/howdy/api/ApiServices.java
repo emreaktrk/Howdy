@@ -85,9 +85,9 @@ public interface ApiServices {
     @POST("commentpost")
     Single<CommentPostResponse> commentPost(@Body CommentPostRequest request);
 
-    @POST("commentpost")
+    @POST("likepost")
     Single<LikePostResponse> likePost(@Body LikePostRequest request);
 
-    @POST("commentpost")
+    @POST("dislikepost")
     Single<DislikePostResponse> dislikePost(@Body DislikePostRequest request);
 }

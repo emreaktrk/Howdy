@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="16dp">
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        tools:context=".ui.main.MainActivity">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/word_image"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        tools:src="@mipmap/ic_launcher_round" />
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/word_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            tools:src="@tools:sample/backgrounds/scenic"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/word_text"
-        style="@style/Text.Normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        tools:text="Amerikan Futbolu" />
+            android:id="@+id/word_text"
+            style="@style/Text.Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            tools:text="@sample/word.json/event/word"/>
 </android.support.v7.widget.LinearLayoutCompat>

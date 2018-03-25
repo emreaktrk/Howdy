@@ -1,20 +1,18 @@
 package com.codify.howdy.ui.messages;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.model.UserMessage;
 import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 
 import java.util.List;
-
-import io.reactivex.subjects.PublishSubject;
 
 final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter.Holder> {
 
@@ -63,7 +61,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
         private AppCompatTextView mUsername;
         private AppCompatTextView mLastMessage;
         private AppCompatTextView mDate;
-        private AppCompatImageView mImage;
+        private CircleImageView mImage;
 
         Holder(View itemView) {
             super(itemView);

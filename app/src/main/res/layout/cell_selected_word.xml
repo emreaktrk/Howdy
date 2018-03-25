@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="36dp"
-    android:background="@drawable/background_word"
-    android:gravity="center">
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:background="@drawable/background_word"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        tools:context=".ui.main.MainActivity">
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/selected_word_remove"
-        style="@style/Button.Transparent"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:padding="4dp"
-        android:rotation="45"
-        android:scaleType="centerCrop"
-        android:src="@drawable/button_close" />
+            android:id="@+id/selected_word_remove"
+            style="@style/Button.Transparent"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="4dp"
+            android:rotation="45"
+            android:scaleType="centerCrop"
+            android:src="@drawable/button_close"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/selected_word_text"
-        style="@style/Text.Normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        tools:text="Akli Karisik" />
+            android:id="@+id/selected_word_text"
+            style="@style/Text.Normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            tools:text="@sample/word.json/data/location"/>
 </android.support.v7.widget.LinearLayoutCompat>

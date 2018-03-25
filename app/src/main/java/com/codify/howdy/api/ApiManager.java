@@ -1,5 +1,6 @@
 package com.codify.howdy.api;
 
+import com.codify.howdy.model.Post;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;

@@ -1,8 +1,9 @@
 package com.codify.howdy.model;
 
+import java.io.Serializable;
 import java.util.Locale;
 
-public enum Gender {
+public enum Gender implements Serializable {
 
     MALE,
     FEMALE;
@@ -11,7 +12,8 @@ public enum Gender {
         return valueOf(value);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return (this + "").toLowerCase(Locale.ENGLISH);
     }
 }

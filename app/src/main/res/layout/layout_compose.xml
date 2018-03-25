@@ -1,146 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
 
     <FrameLayout
-        android:id="@+id/home_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/home_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/compose_close"
-            style="@style/Button.Transparent"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/ic_close"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/compose_close"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_close"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         <android.support.v7.widget.AppCompatTextView
-            style="@style/Text.Toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Yeni Durum Yarat" />
+                style="@style/Text.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Yeni Durum Yarat"/>
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/compose_send"
-            style="@style/Button.Transparent"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="end"
-            android:padding="14dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/button_send" />
+                android:id="@+id/compose_send"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="end"
+                android:padding="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/button_send"/>
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/compose_selected_word_recycler"
-        android:layout_width="0dp"
-        android:layout_height="78dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
-        tools:listitem="@layout/cell_selected_word" />
+            android:id="@+id/compose_selected_word_recycler"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/cell_selected_word"/>
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/compose_picture"
-        style="@style/Button.Transparent"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="center"
-        app:layout_constraintBottom_toTopOf="@id/compose_now"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/compose_selected_word_recycler"
-        tools:src="@tools:sample/backgrounds/scenic" />
+            android:id="@+id/compose_picture"
+            style="@style/Button.Transparent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toTopOf="@id/compose_now"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/compose_selected_word_recycler"
+            tools:scaleType="center"
+            tools:src="@tools:sample/backgrounds/scenic"/>
 
     <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/compose_cancel"
-        style="@style/Button.Transparent"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_cancel"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/compose_picture"
-        app:layout_constraintTop_toTopOf="@id/compose_picture"
-        tools:visibility="visible" />
+            android:id="@+id/compose_cancel"
+            style="@style/Button.Transparent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_cancel"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/compose_picture"
+            app:layout_constraintTop_toTopOf="@id/compose_picture"
+            tools:visibility="visible"/>
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/compose_now"
-        style="@style/Text.Normal"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical|start"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:text="Şu Anki Etkinlikler"
-        app:layout_constraintBottom_toTopOf="@id/compose_activity_recycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/compose_now"
+            style="@style/Text.Normal"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|start"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="Şu Anki Etkinlikler"
+            app:layout_constraintBottom_toTopOf="@id/compose_activity_recycler"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/compose_activity_recycler"
-        android:layout_width="0dp"
-        android:layout_height="78dp"
-        app:layout_constraintBottom_toTopOf="@id/home_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/cell_activity" />
+            android:id="@+id/compose_activity_recycler"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/home_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/cell_activity"/>
 
     <android.support.constraint.Guideline
-        android:id="@+id/home_guideline"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
+            android:id="@+id/home_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".5"/>
 
     <FrameLayout
-        android:id="@+id/home_search_container"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/background_search_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_guideline">
+            android:id="@+id/home_search_container"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/background_search_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_guideline">
 
         <android.support.v7.widget.AppCompatTextView
-            style="@style/Text.Normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical"
-            android:text="Durumlar" />
+                style="@style/Text.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="16dp"
+                android:gravity="center_vertical"
+                android:text="Durumlar"/>
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/compose_search"
-            style="@style/Button.Transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:padding="12dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/button_filter" />
+                android:id="@+id/compose_search"
+                style="@style/Button.Transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:padding="12dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/button_filter"/>
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/compose_category_recycler"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_search_container"
-        tools:listitem="@layout/cell_category" />
+            android:id="@+id/compose_category_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_search_container"
+            app:layoutManager="com.codify.howdy.helper.layoutmanager.CategoryLayoutManager"
+            tools:listitem="@layout/cell_category"/>
 </android.support.constraint.ConstraintLayout>

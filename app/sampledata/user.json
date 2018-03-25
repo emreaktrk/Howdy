@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "namesurname": "Ilkem Tuney",
+      "username": "ilkmtny",
+      "age": 24
+    },
+    {
+      "namesurname": "Emre Akturk",
+      "username": "emreaktrk",
+      "age": 28
+    },
+    {
+      "namesurname": "Osman Baklama",
+      "username": "baklamasever",
+      "age": 18
+    },
+    {
+      "namesurname": "Recep Uzun",
+      "username": "yolcu",
+      "age": 34
+    }
+  ]
+}

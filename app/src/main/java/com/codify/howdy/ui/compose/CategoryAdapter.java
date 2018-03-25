@@ -1,20 +1,19 @@
 package com.codify.howdy.ui.compose;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.blankj.utilcode.util.ScreenUtils;
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.model.Category;
 import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 
 import java.util.List;
-
-import io.reactivex.subjects.PublishSubject;
 
 final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder> {
 
@@ -54,7 +53,7 @@ final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder>
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private AppCompatImageView mImage;
+        private CircleImageView mImage;
         private AppCompatTextView mText;
 
         Holder(View itemView) {
@@ -64,6 +63,8 @@ final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder>
             mText = itemView.findViewById(R.id.category_text);
 
             itemView.setOnClickListener(this);
+
+            itemView.getLayoutParams().width = ScreenUtils.getScreenWidth() / 3;
         }
 
         @Override

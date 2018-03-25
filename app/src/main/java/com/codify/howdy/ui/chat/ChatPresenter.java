@@ -35,7 +35,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 final class ChatPresenter extends BasePresenter<ChatView> {
 
@@ -94,7 +93,6 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         Picasso
                 .with(getContext())
                 .load(BuildConfig.URL + user.imgpath)
-                .transform(new CropCircleTransformation())
                 .into(findViewById(R.id.chat_user_image, AppCompatImageView.class));
     }
 

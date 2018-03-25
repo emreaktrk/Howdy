@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Fabrika Bar",
+      "near": "Akli Karisik",
+      "category": "Duygu"
+    },
+    {
+      "event": "Ayak Futbolu",
+      "location": "Zeytin Cafe",
+      "near": "Akli Karisik",
+      "category": "Oyun"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Ataturk Orman Ciftligi",
+      "near": "Akli Karisik",
+      "category": "Film"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Fabrika Bar",
+      "near": "Akli Karisik",
+      "category": "Dizi"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Besiktas",
+      "near": "Akli Karisik",
+      "category": "Yeme Icme"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Umraniye",
+      "near": "Akli Karisik",
+      "category": "Seyahat"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Kurtkoy",
+      "near": "Akli Karisik",
+      "category": "Kitap"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Taksim",
+      "near": "Akli Karisik",
+      "category": "Dusunce"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Sosyal Tesisler",
+      "near": "Akli Karisik",
+      "category": "Spor"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Kadikoy",
+      "near": "Akli Karisik",
+      "category": "Durum"
+    },
+    {
+      "event": "Amerikan Futbolu",
+      "location": "Dogu Ekspress",
+      "near": "Akli Karisik",
+      "category": "Tatil"
+    }
+  ]
+}

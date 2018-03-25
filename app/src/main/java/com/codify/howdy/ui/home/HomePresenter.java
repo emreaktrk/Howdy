@@ -3,23 +3,24 @@ package com.codify.howdy.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
-import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.api.pojo.request.DislikePostRequest;
 import com.codify.howdy.api.pojo.request.GetWallRequest;
+import com.codify.howdy.api.pojo.request.LikePostRequest;
+import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.api.pojo.response.DislikePostResponse;
 import com.codify.howdy.api.pojo.response.GetWallResponse;
+import com.codify.howdy.api.pojo.response.LikePostResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Wall;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
-
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,9 +48,6 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             Logcat.v("Chat clicked");
                             view.onMessagesClicked();
                         }));
-
-        RecyclerView emotion = findViewById(R.id.home_emotion_recycler, RecyclerView.class);
-        emotion.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     @SuppressLint({"MissingPermission"})
@@ -88,16 +86,90 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     void bind(Wall wall) {
-        EmotionAdapter adapter = new EmotionAdapter(wall.nearEmotions);
-
+        EmotionAdapter emotion = new EmotionAdapter(wall.nearEmotions);
         mDisposables.add(
-                adapter
+                emotion
                         .itemClicks()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(emotion -> {
+                        .subscribe(cell -> {
                             Logcat.v("Emotion clicked");
-                            mView.onEmotionClicked(emotion);
+                            mView.onEmotionClicked(cell);
                         }));
-        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);
+
+        PostAdapter post = new PostAdapter(wall.posts);
+        mDisposables.add(
+                post
+                        .itemClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Post clicked");
+                            mView.onPostClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .likeClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Like clicked");
+                            mView.onLikeClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .commentClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Comment clicked");
+                            mView.onCommentClicked(cell);
+                        }));
+        findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+    }
+
+    void like(long postId) {
+        LikePostRequest request = new LikePostRequest(postId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .likePost(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<LikePostResponse>() {
+                            @Override
+                            protected void success(LikePostResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void dislike(long postId) {
+        DislikePostRequest request = new DislikePostRequest(postId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .dislikePost(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<DislikePostResponse>() {
+                            @Override
+                            protected void success(DislikePostResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

@@ -19,7 +19,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
 
@@ -67,9 +66,6 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
             Picasso
                     .with(view.itemView.getContext())
                     .load(BuildConfig.URL + chat.message_img_path)
-                    .transform(
-                            new RoundedCornersTransformation(
-                                    SizeUtils.dp2px(8), 0))
                     .into(view.mImage);
         }
     }
