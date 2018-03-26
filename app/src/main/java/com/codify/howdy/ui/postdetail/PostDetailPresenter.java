@@ -1,8 +1,10 @@
 package com.codify.howdy.ui.postdetail;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
+import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
@@ -12,8 +14,11 @@ import com.codify.howdy.api.pojo.response.*;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.zipper.PostDetail;
 import com.codify.howdy.ui.base.BasePresenter;
+import com.codify.howdy.view.LikeButton;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
@@ -169,6 +174,17 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
     }
 
     void bind(@NonNull PostDetail detail) {
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + detail.post.imgpath)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.post_detail_image, CircleImageView.class));
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + detail.post.post_emoji)
+                .into(findViewById(R.id.post_detail_emotion, CircleImageView.class));
 
+        findViewById(R.id.post_detail_like, LikeButton.class).setText(detail.post.post_likecount + "");
+        findViewById(R.id.post_detail_sentence, AppCompatTextView.class).setText(detail.post.post_text);
     }
 }

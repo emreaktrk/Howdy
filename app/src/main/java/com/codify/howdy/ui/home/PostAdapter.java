@@ -24,7 +24,6 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
 
     private PublishSubject<Post> mPosts = PublishSubject.create();
     private PublishSubject<Like> mLikes = PublishSubject.create();
-    private PublishSubject<Post> mComments = PublishSubject.create();
     private List<Post> mList;
 
     PostAdapter(List<Post> list) {
@@ -56,7 +55,8 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         holder.mComment.setText(post.post_commentcount + "");
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + post.coverimgpath)
+                .load(BuildConfig.URL + post.imgpath)
+                .placeholder(R.drawable.ic_avatar)
                 .into(holder.mImage);
         Picasso
                 .with(holder.itemView.getContext())
@@ -80,10 +80,6 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
 
     PublishSubject<Like> likeClicks() {
         return mLikes;
-    }
-
-    PublishSubject<Post> commentClicks() {
-        return mComments;
     }
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {

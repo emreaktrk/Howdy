@@ -37,7 +37,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + message.message_touserid)
                 .into(holder.mImage);
-        holder.mUsername.setText(message.message_touserid + "");
+        holder.mUsername.setText(message.otherUser.username);
         holder.mLastMessage.setText(message.message_text);
         holder.mDate.setText(message.message_isreaded + "");
     }

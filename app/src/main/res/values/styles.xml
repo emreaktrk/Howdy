@@ -22,7 +22,7 @@
         <item name="colorControlHighlight">@color/orange</item>
 
         <item name="android:navigationBarColor">@color/white</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
     </style>
 
     <style name="ResponseTheme" parent="Theme.AppCompat.Light.NoActionBar">

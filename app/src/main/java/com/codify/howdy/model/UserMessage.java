@@ -9,4 +9,5 @@ public final class UserMessage implements Serializable {
     public String type;
     public int message_isreaded;
     public String message_text;
+    public User otherUser;
 }

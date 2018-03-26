@@ -106,11 +106,6 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     }
 
     @Override
-    public void onCommentClicked(Post post) {
-
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

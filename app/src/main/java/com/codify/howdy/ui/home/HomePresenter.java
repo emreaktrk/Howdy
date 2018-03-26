@@ -5,6 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
@@ -52,6 +53,18 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
     @SuppressLint({"MissingPermission"})
     public void getWall(Context context) {
+        Location mock = new Location("mock");
+        mock.setLatitude(40.991955);
+        mock.setLatitude(28.712913);
+
+        LocationServices
+                .getFusedLocationProviderClient(context)
+                .setMockLocation(mock);
+
+        LocationServices
+                .getFusedLocationProviderClient(context)
+                .setMockMode(BuildConfig.DEBUG);
+
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
@@ -113,14 +126,6 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(cell -> {
                             Logcat.v("Like clicked");
                             mView.onLikeClicked(cell);
-                        }));
-        mDisposables.add(
-                post
-                        .commentClicks()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(cell -> {
-                            Logcat.v("Comment clicked");
-                            mView.onCommentClicked(cell);
                         }));
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
     }
