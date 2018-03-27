@@ -17,7 +17,7 @@
         android:layout_height="48dp"
         android:src="@drawable/button_home"/>
 
-    <android.support.v4.widget.Space
+    <Space
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"/>
@@ -29,7 +29,7 @@
         android:layout_height="48dp"
         android:src="@drawable/button_statistic"/>
 
-    <android.support.v4.widget.Space
+    <Space
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"/>
@@ -42,7 +42,7 @@
         android:layout_gravity="center"
         android:src="@drawable/button_compose"/>
 
-    <android.support.v4.widget.Space
+    <Space
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"/>
@@ -54,7 +54,7 @@
         android:layout_height="48dp"
         android:src="@drawable/button_notification"/>
 
-    <android.support.v4.widget.Space
+    <Space
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"/>

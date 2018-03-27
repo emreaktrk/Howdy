@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.R;
+import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.*;
 import com.codify.howdy.model.zipper.Like;
@@ -16,6 +17,7 @@ import com.codify.howdy.navigation.NavigationFragment;
 import com.codify.howdy.ui.messages.UserMessagesActivity;
 import com.codify.howdy.ui.postdetail.PostDetailActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
+import com.codify.howdy.ui.video.VideoActivity;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -100,9 +102,35 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     public void onLikeClicked(Like like) {
         if (like.isChecked) {
             mPresenter.like(like.post.idpost);
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.LIKE);
         } else {
             mPresenter.dislike(like.post.idpost);
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.DISLIKE);
         }
+    }
+
+    @Override
+    public void onVideoClicked(Post post) {
+        VideoActivity.start(post);
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.VIDEO);
+    }
+
+    @Override
+    public void onImageClicked(Post post) {
+        // TODO Show the preview
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.IMAGE);
     }
 
     @Override

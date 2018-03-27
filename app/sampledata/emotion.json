@@ -2,27 +2,27 @@
   "data": [
     {
       "word": "uzgun",
-      "icon": "@drawable/sample_angry"
+      "icon": "@drawable/sample_smiley_angry"
     },
     {
       "word": "saskin",
-      "icon": "@drawable/sample_cry"
+      "icon": "@drawable/sample_smiley_cry"
     },
     {
       "word": "mutlu",
-      "icon": "@drawable/sample_happy"
+      "icon": "@drawable/sample_smiley_happy"
     },
     {
       "word": "gururlu",
-      "icon": "@drawable/sample_sleepy"
+      "icon": "@drawable/sample_smiley_sleepy"
     },
     {
       "word": "ask",
-      "icon": "@drawable/sample_love"
+      "icon": "@drawable/sample_smiley_love"
     },
     {
       "word": "agri icinde",
-      "icon": "@drawable/sample_surprise"
+      "icon": "@drawable/sample_smiley_surprise"
     }
   ]
 }

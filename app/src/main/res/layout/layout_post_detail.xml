@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/white"
-                                             tools:context=".ui.postdetail.PostDetailActivity">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.postdetail.PostDetailActivity">
 
     <FrameLayout
             android:id="@+id/post_detail_toolbar"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -35,90 +35,37 @@
                 tools:text="@tools:sample/first_names"/>
     </FrameLayout>
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_detail_post"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/post_detail_bottom_divider"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post_detail_toolbar">
+            app:layout_constraintTop_toBottomOf="@id/post_detail_toolbar"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/cell_post_none"
+            tools:layout_height="150dp"
+            tools:itemCount="1"/>
 
-        <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_detail_badge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/post_detail_comment_recycler"
+            app:layout_constraintTop_toBottomOf="@id/post_detail_post"/>
 
-            <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/post_detail_image"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:layout_margin="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:src="@tools:sample/avatars"/>
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/post_detail_emotion"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toEndOf="@id/post_detail_image"
-                        app:layout_constraintStart_toStartOf="@id/post_detail_image"
-                        app:layout_constraintTop_toBottomOf="@id/post_detail_image"
-                        tools:src="@sample/emotion.json/data/icon"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/post_detail_sentence"
-                        style="@style/Text.Normal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/post_detail_image"
-                        app:layout_constraintTop_toTopOf="@id/post_detail_image"
-                        tools:text="mrs.mama, Tek başına Ofis’te bıkmış hissediyor."/>
-
-                <com.codify.howdy.view.LikeButton
-                        android:id="@+id/post_detail_like"
-                        style="@style/Text.Normal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/black"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_margin="16dp"
-                        android:button="@drawable/button_like"
-                        tools:checked="@sample/post.json/data/value"
-                        tools:paddingStart="2dp"
-                        tools:text="@sample/post.json/data/count"
-                        app:layout_constraintBottom_toTopOf="@id/post_detail_badge"
-                        app:layout_constraintTop_toBottomOf="@id/post_detail_sentence"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                <android.support.v7.widget.RecyclerView
-                        android:id="@+id/post_detail_badge"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/post_detail_emotion"/>
-            </android.support.constraint.ConstraintLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/post_detail_comment_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/cell_user_messages"/>
-    </android.support.design.widget.CoordinatorLayout>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/post_detail_comment_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_detail_badge"
+            app:layout_constraintBottom_toTopOf="@id/post_detail_bottom_divider"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/cell_user_messages"/>
 
     <View
             android:id="@+id/post_detail_bottom_divider"

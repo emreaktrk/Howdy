@@ -22,4 +22,8 @@ interface HomeView extends MvpView {
     void onPostClicked(Post post);
 
     void onLikeClicked(Like like);
+
+    void onVideoClicked(Post post);
+
+    void onImageClicked(Post post);
 }

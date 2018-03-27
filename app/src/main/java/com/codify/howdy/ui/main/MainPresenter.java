@@ -1,9 +1,9 @@
 package com.codify.howdy.ui.main;
 
-import android.support.v4.widget.Space;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 
+import android.widget.Space;
 import com.codify.howdy.R;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.navigation.Navigation;

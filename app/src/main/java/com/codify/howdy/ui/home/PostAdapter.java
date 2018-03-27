@@ -1,6 +1,8 @@
 package com.codify.howdy.ui.home;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,16 +20,26 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
+public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
 
     private PublishSubject<Post> mPosts = PublishSubject.create();
     private PublishSubject<Like> mLikes = PublishSubject.create();
+    private PublishSubject<Post> mImage = PublishSubject.create();
+    private PublishSubject<Post> mVideo = PublishSubject.create();
     private List<Post> mList;
+    private int mCommentVisibility = View.VISIBLE;
 
-    PostAdapter(List<Post> list) {
+    public PostAdapter(List<Post> list) {
         mList = list;
+    }
+
+    public PostAdapter(Post post) {
+        mList = Collections.singletonList(post);
+        mCommentVisibility = View.GONE;
     }
 
     @NonNull
@@ -62,6 +74,16 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
                 .with(holder.itemView.getContext())
                 .load(BuildConfig.URL + post.post_emoji)
                 .into(holder.mEmotion);
+
+        if (holder instanceof MediaHolder) {
+            MediaHolder media = (MediaHolder) holder;
+            Picasso
+                    .with(holder.itemView.getContext())
+                    .load(BuildConfig.URL + post.post_mediapath)
+                    .centerCrop()
+                    .resize(180, 180)
+                    .into(media.mMedia);
+        }
     }
 
     @Override
@@ -74,12 +96,20 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         return mList.get(position).post_media_type.ordinal();
     }
 
-    PublishSubject<Post> itemClicks() {
+    public PublishSubject<Post> itemClicks() {
         return mPosts;
     }
 
-    PublishSubject<Like> likeClicks() {
+    public PublishSubject<Like> likeClicks() {
         return mLikes;
+    }
+
+    public PublishSubject<Post> imageClicks() {
+        return mImage;
+    }
+
+    public PublishSubject<Post> videoClicks() {
+        return mVideo;
     }
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -101,7 +131,7 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
             mLike.setOnCheckedChangeListener(this);
 
             mComment = itemView.findViewById(R.id.post_comment);
-
+            mComment.setVisibility(mCommentVisibility);
             itemView.setOnClickListener(this);
         }
 
@@ -119,38 +149,55 @@ final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHolder> {
         }
     }
 
+    abstract class MediaHolder extends NoneHolder {
 
-    class ImageHolder extends NoneHolder {
+        private AppCompatImageView mMedia;
+
+        MediaHolder(View itemView) {
+            super(itemView);
+
+            mMedia = itemView.findViewById(R.id.post_media);
+            mMedia.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.post_media:
+                    onMediaClicked();
+                    return;
+                default:
+                    super.onClick(view);
+            }
+        }
+
+        abstract void onMediaClicked();
+    }
+
+
+    class ImageHolder extends MediaHolder {
 
         ImageHolder(View itemView) {
             super(itemView);
         }
 
         @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.activity_image:
-                    return;
-                default:
-                    super.onClick(view);
-            }
+        void onMediaClicked() {
+            Post post = mList.get(getAdapterPosition());
+            mImage.onNext(post);
         }
     }
 
-    class VideoHolder extends NoneHolder {
+    class VideoHolder extends MediaHolder {
 
         VideoHolder(View itemView) {
             super(itemView);
         }
 
         @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.activity_image:
-                    return;
-                default:
-                    super.onClick(view);
-            }
+        void onMediaClicked() {
+            Post post = mList.get(getAdapterPosition());
+            mVideo.onNext(post);
         }
     }
 }

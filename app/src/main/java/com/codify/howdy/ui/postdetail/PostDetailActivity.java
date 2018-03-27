@@ -12,6 +12,8 @@ import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.Post;
+import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.model.zipper.PostDetail;
 
 public final class PostDetailActivity extends HowdyActivity implements PostDetailView {
@@ -71,27 +73,25 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     }
 
     @Override
-    public void onLikeClicked() {
+    public void onLikeClicked(Like like) {
         Long postId = getSerializable(Long.class);
-        if (postId != null) {
+        if (postId == null) {
+            return;
+        }
+
+        if (like.isChecked) {
             mPresenter.like(postId);
-        }
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.LIKE);
-    }
-
-    @Override
-    public void onDislikeClicked() {
-        Long postId = getSerializable(Long.class);
-        if (postId != null) {
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.LIKE);
+        } else {
             mPresenter.dislike(postId);
-        }
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.DISLIKE);
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.DISLIKE);
+        }
     }
 
     @Override
@@ -109,5 +109,23 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onImageClicked(Post post) {
+        // TODO Show image
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.IMAGE);
+    }
+
+    @Override
+    public void onVideoClicked(Post post) {
+        // TODO Play video
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.VIDEO);
     }
 }

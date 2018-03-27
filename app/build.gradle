@@ -79,6 +79,7 @@ dependencies {
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.appunite:video-player-android:1.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

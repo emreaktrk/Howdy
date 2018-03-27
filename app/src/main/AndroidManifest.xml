@@ -82,6 +82,10 @@
             android:name=".ui.forgotpassword.ForgotPasswordActivity"
             android:theme="@style/MainTheme" />
 
+        <activity
+                android:name=".ui.video.VideoActivity"
+                android:theme="@style/VideoTheme" />
+
         <service
             android:name=".account.AccountService"
             android:exported="false">

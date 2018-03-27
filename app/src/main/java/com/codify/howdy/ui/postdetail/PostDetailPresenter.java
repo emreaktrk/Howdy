@@ -2,6 +2,7 @@ package com.codify.howdy.ui.postdetail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
 import com.codify.howdy.BuildConfig;
@@ -14,6 +15,7 @@ import com.codify.howdy.api.pojo.response.*;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.zipper.PostDetail;
 import com.codify.howdy.ui.base.BasePresenter;
+import com.codify.howdy.ui.home.PostAdapter;
 import com.codify.howdy.view.LikeButton;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -174,17 +176,31 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
     }
 
     void bind(@NonNull PostDetail detail) {
-        Picasso
-                .with(getContext())
-                .load(BuildConfig.URL + detail.post.imgpath)
-                .placeholder(R.drawable.ic_avatar)
-                .into(findViewById(R.id.post_detail_image, CircleImageView.class));
-        Picasso
-                .with(getContext())
-                .load(BuildConfig.URL + detail.post.post_emoji)
-                .into(findViewById(R.id.post_detail_emotion, CircleImageView.class));
-
-        findViewById(R.id.post_detail_like, LikeButton.class).setText(detail.post.post_likecount + "");
-        findViewById(R.id.post_detail_sentence, AppCompatTextView.class).setText(detail.post.post_text);
+        PostAdapter post = new PostAdapter(detail.post);
+        mDisposables.add(
+                post
+                        .likeClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Like clicked");
+                            mView.onLikeClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .imageClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Image clicked");
+                            mView.onImageClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .videoClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Video clicked");
+                            mView.onVideoClicked(cell);
+                        }));
+        findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
     }
 }
