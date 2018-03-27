@@ -15,6 +15,7 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Post;
 import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.model.zipper.PostDetail;
+import com.codify.howdy.ui.video.VideoActivity;
 
 public final class PostDetailActivity extends HowdyActivity implements PostDetailView {
 
@@ -122,7 +123,7 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
 
     @Override
     public void onVideoClicked(Post post) {
-        // TODO Play video
+        VideoActivity.start(post);
 
         Analytics
                 .getInstance()
