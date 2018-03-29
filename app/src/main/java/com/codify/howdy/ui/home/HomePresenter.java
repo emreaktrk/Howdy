@@ -5,7 +5,6 @@ import android.content.Context;
 import android.location.Location;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
@@ -56,40 +55,44 @@ final class HomePresenter extends BasePresenter<HomeView> {
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
-                .addOnSuccessListener(location -> {
-                    if (location == null) {
-                        location = new Location("default");
+                .continueWith(task -> {
+                    Location result = task.getResult();
+                    if (result == null) {
+                        Location location = new Location("default");
                         location.setLatitude(40.991955);
                         location.setLatitude(28.712913);
+                        return location;
                     }
 
-                    mDisposables.add(
-                            Single
-                                    .just(location)
-                                    .subscribeOn(Schedulers.io())
-                                    .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
-                                        GetWallRequest request = new GetWallRequest(point);
-                                        request.token = AccountUtils.token(getContext());
-
-                                        return ApiManager
-                                                .getInstance()
-                                                .getWall(request)
-                                                .observeOn(AndroidSchedulers.mainThread());
-                                    })
-                                    .subscribe(new ServiceConsumer<GetWallResponse>() {
-                                        @Override
-                                        protected void success(GetWallResponse response) {
-                                            mView.onLoaded(response.data);
-                                        }
-
-                                        @Override
-                                        protected void error(ApiError error) {
-                                            Logcat.e(error);
-
-                                            mView.onError(error);
-                                        }
-                                    }));
+                    return result;
                 })
+                .addOnSuccessListener(location ->
+                        mDisposables.add(
+                                Single
+                                        .just(location)
+                                        .subscribeOn(Schedulers.io())
+                                        .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
+                                            GetWallRequest request = new GetWallRequest(point);
+                                            request.token = AccountUtils.token(getContext());
+
+                                            return ApiManager
+                                                    .getInstance()
+                                                    .getWall(request)
+                                                    .observeOn(AndroidSchedulers.mainThread());
+                                        })
+                                        .subscribe(new ServiceConsumer<GetWallResponse>() {
+                                            @Override
+                                            protected void success(GetWallResponse response) {
+                                                mView.onLoaded(response.data);
+                                            }
+
+                                            @Override
+                                            protected void error(ApiError error) {
+                                                Logcat.e(error);
+
+                                                mView.onError(error);
+                                            }
+                                        })))
                 .addOnFailureListener(Logcat::e);
     }
 
