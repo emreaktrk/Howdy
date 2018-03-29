@@ -201,6 +201,14 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                             Logcat.v("Video clicked");
                             mView.onVideoClicked(cell);
                         }));
+        mDisposables.add(
+                post
+                        .avatarClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Avatar clicked");
+                            mView.onAvatarClicked(cell);
+                        }));
         findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
     }
 }

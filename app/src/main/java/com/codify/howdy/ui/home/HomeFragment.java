@@ -15,6 +15,7 @@ import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.navigation.Navigation;
 import com.codify.howdy.navigation.NavigationFragment;
 import com.codify.howdy.ui.messages.UserMessagesActivity;
+import com.codify.howdy.ui.photo.PhotoActivity;
 import com.codify.howdy.ui.postdetail.PostDetailActivity;
 import com.codify.howdy.ui.search.UserSearchActivity;
 import com.codify.howdy.ui.video.VideoActivity;
@@ -126,7 +127,16 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
 
     @Override
     public void onImageClicked(Post post) {
-        // TODO Show the preview
+        PhotoActivity.start(post);
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.IMAGE);
+    }
+
+    @Override
+    public void onAvatarClicked(Post post) {
+        PhotoActivity.start(post.imgpath1);
 
         Analytics
                 .getInstance()

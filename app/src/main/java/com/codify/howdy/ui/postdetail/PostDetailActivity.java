@@ -15,6 +15,7 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Post;
 import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.model.zipper.PostDetail;
+import com.codify.howdy.ui.photo.PhotoActivity;
 import com.codify.howdy.ui.video.VideoActivity;
 
 public final class PostDetailActivity extends HowdyActivity implements PostDetailView {
@@ -108,13 +109,8 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     }
 
     @Override
-    public void onBackClicked() {
-        onBackPressed();
-    }
-
-    @Override
     public void onImageClicked(Post post) {
-        // TODO Show image
+        PhotoActivity.start(post);
 
         Analytics
                 .getInstance()
@@ -128,5 +124,19 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
         Analytics
                 .getInstance()
                 .custom(Analytics.Events.VIDEO);
+    }
+
+    @Override
+    public void onAvatarClicked(Post post) {
+        PhotoActivity.start(post.imgpath1);
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.IMAGE);
+    }
+
+    @Override
+    public void onBackClicked() {
+        onBackPressed();
     }
 }

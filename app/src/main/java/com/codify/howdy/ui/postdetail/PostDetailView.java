@@ -22,9 +22,11 @@ interface PostDetailView extends MvpView {
 
     void onSendClicked(String comment);
 
-    void onBackClicked();
-
     void onImageClicked(Post post);
 
     void onVideoClicked(Post post);
+
+    void onAvatarClicked(Post post);
+
+    void onBackClicked();
 }

@@ -30,6 +30,7 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHold
     private PublishSubject<Like> mLikes = PublishSubject.create();
     private PublishSubject<Post> mImage = PublishSubject.create();
     private PublishSubject<Post> mVideo = PublishSubject.create();
+    private PublishSubject<Post> mAvatar = PublishSubject.create();
     private List<Post> mList;
     private int mCommentVisibility = View.VISIBLE;
 
@@ -67,7 +68,7 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHold
         holder.mComment.setText(post.post_commentcount + "");
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + post.imgpath)
+                .load(BuildConfig.URL + post.imgpath1)
                 .placeholder(R.drawable.ic_avatar)
                 .into(holder.mImage);
         Picasso
@@ -112,6 +113,10 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHold
         return mVideo;
     }
 
+    public PublishSubject<Post> avatarClicks() {
+        return mAvatar;
+    }
+
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
         private AppCompatTextView mMessage;
@@ -124,8 +129,10 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHold
             super(itemView);
 
             mMessage = itemView.findViewById(R.id.post_message);
-            mImage = itemView.findViewById(R.id.post_image);
             mEmotion = itemView.findViewById(R.id.post_emotion);
+
+            mImage = itemView.findViewById(R.id.post_image);
+            mImage.setOnClickListener(this);
 
             mLike = itemView.findViewById(R.id.post_like);
             mLike.setOnCheckedChangeListener(this);
@@ -138,7 +145,13 @@ public final class PostAdapter extends RecyclerView.Adapter<PostAdapter.NoneHold
         @Override
         public void onClick(View view) {
             Post post = mList.get(getAdapterPosition());
-            mPosts.onNext(post);
+            switch (view.getId()) {
+                case R.id.post_image:
+                    mAvatar.onNext(post);
+                    return;
+                default:
+                    mPosts.onNext(post);
+            }
         }
 
         @Override

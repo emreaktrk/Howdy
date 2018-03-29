@@ -85,6 +85,8 @@
                 android:id="@+id/post_media"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
+                android:clickable="true"
+                android:focusable="true"
                 tools:src="@tools:sample/backgrounds/scenic"
                 tools:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="@id/post_message"

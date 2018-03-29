@@ -53,48 +53,43 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
     @SuppressLint({"MissingPermission"})
     public void getWall(Context context) {
-        Location mock = new Location("mock");
-        mock.setLatitude(40.991955);
-        mock.setLatitude(28.712913);
-
-        LocationServices
-                .getFusedLocationProviderClient(context)
-                .setMockLocation(mock);
-
-        LocationServices
-                .getFusedLocationProviderClient(context)
-                .setMockMode(BuildConfig.DEBUG);
-
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
-                .addOnSuccessListener(location ->
-                        mDisposables.add(
-                                Single
-                                        .just(location)
-                                        .subscribeOn(Schedulers.io())
-                                        .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
-                                            GetWallRequest request = new GetWallRequest(point);
-                                            request.token = AccountUtils.token(getContext());
+                .addOnSuccessListener(location -> {
+                    if (location == null) {
+                        location = new Location("default");
+                        location.setLatitude(40.991955);
+                        location.setLatitude(28.712913);
+                    }
 
-                                            return ApiManager
-                                                    .getInstance()
-                                                    .getWall(request)
-                                                    .observeOn(AndroidSchedulers.mainThread());
-                                        })
-                                        .subscribe(new ServiceConsumer<GetWallResponse>() {
-                                            @Override
-                                            protected void success(GetWallResponse response) {
-                                                mView.onLoaded(response.data);
-                                            }
+                    mDisposables.add(
+                            Single
+                                    .just(location)
+                                    .subscribeOn(Schedulers.io())
+                                    .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
+                                        GetWallRequest request = new GetWallRequest(point);
+                                        request.token = AccountUtils.token(getContext());
 
-                                            @Override
-                                            protected void error(ApiError error) {
-                                                Logcat.e(error);
+                                        return ApiManager
+                                                .getInstance()
+                                                .getWall(request)
+                                                .observeOn(AndroidSchedulers.mainThread());
+                                    })
+                                    .subscribe(new ServiceConsumer<GetWallResponse>() {
+                                        @Override
+                                        protected void success(GetWallResponse response) {
+                                            mView.onLoaded(response.data);
+                                        }
 
-                                                mView.onError(error);
-                                            }
-                                        })))
+                                        @Override
+                                        protected void error(ApiError error) {
+                                            Logcat.e(error);
+
+                                            mView.onError(error);
+                                        }
+                                    }));
+                })
                 .addOnFailureListener(Logcat::e);
     }
 
@@ -142,6 +137,14 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(cell -> {
                             Logcat.v("Video clicked");
                             mView.onVideoClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .avatarClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Avatar clicked");
+                            mView.onAvatarClicked(cell);
                         }));
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
     }
