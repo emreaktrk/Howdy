@@ -1,5 +1,6 @@
 package com.codify.howdy.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public enum PostMediaType {
@@ -7,4 +8,5 @@ public enum PostMediaType {
     @SerializedName("none") NONE,
     @SerializedName("image") IMAGE,
     @SerializedName("video") VIDEO,
+    @Expose RECOMMENDED_USERS,
 }

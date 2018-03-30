@@ -109,6 +109,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="Text.Secondary" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/semi_black</item>
+    </style>
+
     <style name="Input" parent="@style/TextAppearance.AppCompat.Small">
         <item name="android:textColor">@color/black</item>
         <item name="android:singleLine">true</item>

@@ -35,7 +35,7 @@ final class FacebookFriendsAdapter extends RecyclerView.Adapter<FacebookFriendsA
 
         Picasso
                 .with(holder.mPicture.getContext())
-                .load(BuildConfig.URL + user.imgpath)
+                .load(BuildConfig.URL + user.imgpath1)
                 .into(holder.mPicture);
     }
 

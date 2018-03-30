@@ -27,7 +27,7 @@ public final class PhotoActivity extends HowdyActivity implements PhotoView {
     }
 
     public static void start(@NonNull User user) {
-        start(user.imgpath);
+        start(user.imgpath1);
     }
 
     public static void start(@NonNull Post post) {

@@ -92,7 +92,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         findViewById(R.id.chat_username, AppCompatTextView.class).setText(user.username);
         Picasso
                 .with(getContext())
-                .load(BuildConfig.URL + user.imgpath)
+                .load(BuildConfig.URL + user.imgpath1)
                 .into(findViewById(R.id.chat_user_image, AppCompatImageView.class));
     }
 

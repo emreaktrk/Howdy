@@ -108,7 +108,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         }));
         findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);
 
-        PostAdapter post = new PostAdapter(wall.posts);
+        PostAdapter post = new PostAdapter(wall.posts, wall.recomendedUsers);
         mDisposables.add(
                 post
                         .itemClicks()

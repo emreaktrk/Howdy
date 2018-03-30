@@ -8,7 +8,9 @@ public final class User implements Serializable {
 
     public long iduser;
     public String username;
-    public String imgpath;
+    public String imgpath1;
+    public String imgpath2;
+    public String imgpath3;
     public String email;
     public String unicode;
     public String tokenstring;

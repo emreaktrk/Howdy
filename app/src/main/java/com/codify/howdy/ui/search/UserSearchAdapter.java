@@ -35,7 +35,7 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
 
         Picasso
                 .with(holder.mImage.getContext())
-                .load(BuildConfig.URL + user.imgpath)
+                .load(BuildConfig.URL + user.imgpath1)
                 .into(holder.mImage);
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);

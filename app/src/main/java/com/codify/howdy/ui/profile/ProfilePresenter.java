@@ -33,7 +33,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         Picasso
                 .with(getContext())
-                .load(BuildConfig.URL + user.imgpath)
+                .load(BuildConfig.URL + user.imgpath1)
                 .into(findViewById(R.id.profile_picture, CircleImageView.class));
     }
 }
