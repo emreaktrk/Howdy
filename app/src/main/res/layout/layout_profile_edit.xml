@@ -1,152 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.profileedit.ProfileEditActivity">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.profileedit.ProfileEditActivity">
 
     <FrameLayout
-        android:id="@+id/profile_edit_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/profile_edit_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/profile_edit_back"
-            style="@style/Button.Transparent"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="start"
-            android:padding="14dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/button_back" />
+                android:id="@+id/profile_edit_back"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="start"
+                android:padding="14dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/button_back"/>
 
         <android.support.v7.widget.AppCompatTextView
-            style="@style/Text.Toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Profili Düzenle" />
+                style="@style/Text.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Profili Düzenle"/>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/profile_edit_save"
-            style="@style/Button.Transparent"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="@android:color/transparent"
-            android:text="Kaydet"
-            android:textColor="@color/black" />
+                android:id="@+id/profile_edit_save"
+                style="@style/Button.Transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:text="Kaydet"
+                android:padding="0dp"
+                android:textColor="@color/black"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_gravity="bottom"/>
     </FrameLayout>
 
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/profile_edit_picture"
-        style="@style/Button.Transparent"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_margin="32dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_toolbar"
-        tools:src="@tools:sample/avatars" />
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_edit_picture"
+            style="@style/Button.Transparent"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="32dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_toolbar"
+            tools:src="@tools:sample/avatars"/>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/profile_edit_fullname_hint"
-        style="@style/Input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="Ad Soyad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_picture">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_edit_fullname"
+            android:id="@+id/profile_edit_fullname_hint"
             style="@style/Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:hint="Ad Soyad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_picture">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/profile_edit_fullname"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/profile_edit_username_hint"
-        style="@style/Input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="Kullanıcı Adı"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_fullname_hint">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_edit_username"
+            android:id="@+id/profile_edit_username_hint"
             style="@style/Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:hint="Kullanıcı Adı"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_fullname_hint">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/profile_edit_username"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/profile_edit_email_hint"
-        style="@style/Input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_username_hint">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_edit_email"
+            android:id="@+id/profile_edit_email_hint"
             style="@style/Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_username_hint">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/profile_edit_email"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/profile_edit_phone_hint"
-        style="@style/Input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="Telefon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_email_hint">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_edit_phone"
+            android:id="@+id/profile_edit_phone_hint"
             style="@style/Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:hint="Telefon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_email_hint">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/profile_edit_phone"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/profile_edit_password_hint"
-        style="@style/Input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:hint="Şifre"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_edit_phone_hint">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/profile_edit_password"
+            android:id="@+id/profile_edit_password_hint"
             style="@style/Input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:hint="Şifre"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_edit_phone_hint">
+
+        <android.support.design.widget.TextInputEditText
+                android:id="@+id/profile_edit_password"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

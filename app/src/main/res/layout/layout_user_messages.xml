@@ -39,6 +39,12 @@
                 android:layout_gravity="end"
                 android:padding="24dp"
                 android:src="@drawable/ic_create"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_gravity="bottom"/>
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView

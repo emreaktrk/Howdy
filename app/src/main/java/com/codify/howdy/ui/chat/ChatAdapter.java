@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.chat;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.codify.howdy.ui.chat.decorator.IncomingChatDecorator;
 import com.codify.howdy.ui.chat.decorator.OutgoingChatDecorator;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,8 +27,9 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
     private List<Chat> mList;
     private long mUserId;
 
-    ChatAdapter(List<Chat> list, long userId) {
-        mList = list;
+    ChatAdapter(@Nullable List<Chat> list, long userId) {
+        mList = list == null ? new ArrayList<>() : list
+        ;
         mUserId = userId;
     }
 

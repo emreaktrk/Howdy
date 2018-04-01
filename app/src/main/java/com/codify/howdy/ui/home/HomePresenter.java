@@ -149,6 +149,22 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             Logcat.v("Avatar clicked");
                             mView.onAvatarClicked(cell);
                         }));
+        mDisposables.add(
+                post
+                        .userClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Avatar clicked");
+                            mView.onUserClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .followClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Follow clicked");
+                            mView.onFollowClicked(cell);
+                        }));
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
     }
 

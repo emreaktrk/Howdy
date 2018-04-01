@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
+import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.User;
 import com.codify.howdy.ui.auth.AuthActivity;
@@ -35,6 +37,9 @@ public final class ProfileEditActivity extends HowdyActivity implements ProfileE
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        User me = AccountUtils.me(this);
+        mPresenter.bind(me);
     }
 
     @Override
@@ -64,7 +69,7 @@ public final class ProfileEditActivity extends HowdyActivity implements ProfileE
 
     @Override
     public void onError(ApiError error) {
-
+        ToastUtils.showShort(error.message);
     }
 
     @Override

@@ -1,51 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity">
 
     <FrameLayout
-        android:id="@+id/notification_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/notification_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageView
-            android:layout_width="72dp"
-            android:layout_height="56dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_howdy_reverse" />
+                android:layout_width="72dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_howdy_reverse"/>
     </FrameLayout>
 
     <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/notification_tab"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notification_toolbar"
-        app:stl_defaultTabBackground="@android:color/transparent"
-        app:stl_defaultTabTextAllCaps="false"
-        app:stl_defaultTabTextColor="@color/black"
-        app:stl_defaultTabTextHorizontalPadding="24dp"
-        app:stl_distributeEvenly="true"
-        app:stl_dividerThickness="0dp"
-        app:stl_indicatorColor="@color/blue"
-        app:stl_indicatorInterpolation="linear"
-        app:stl_indicatorThickness="3dp"
-        app:stl_overlineThickness="0dp"
-        app:stl_underlineThickness="0dp" />
+            android:id="@+id/notification_tab"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notification_toolbar"
+            app:stl_defaultTabBackground="@android:color/transparent"
+            app:stl_defaultTabTextAllCaps="false"
+            app:stl_defaultTabTextColor="@color/black"
+            app:stl_defaultTabTextHorizontalPadding="24dp"
+            app:stl_distributeEvenly="true"
+            app:stl_dividerThickness="0dp"
+            app:stl_indicatorColor="@color/blue"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorThickness="3dp"
+            app:stl_overlineThickness="0dp"
+            app:stl_underlineThickness="0dp"/>
+
+    <View
+            android:id="@+id/notification_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notification_tab"/>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/notification_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notification_tab" />
+            android:id="@+id/notification_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notification_divider"/>
 </android.support.constraint.ConstraintLayout>

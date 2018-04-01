@@ -119,28 +119,40 @@ public final class HomeFragment extends NavigationFragment implements HomeView {
     @Override
     public void onVideoClicked(Post post) {
         VideoActivity.start(post);
-
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.VIDEO);
     }
 
     @Override
     public void onImageClicked(Post post) {
         PhotoActivity.start(post);
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.IMAGE);
     }
 
     @Override
     public void onAvatarClicked(Post post) {
         PhotoActivity.start(post.imgpath1);
+    }
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.IMAGE);
+    @Override
+    public void onUserClicked(User user) {
+        // TODO Send to user or own profile
+    }
+
+    @Override
+    public void onFollowClicked(Follow follow) {
+        // TODO Follow
+
+        if (follow.isFollowed) {
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.FOLLOW);
+        } else {
+
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.UNFOLLOW);
+        }
     }
 
     @Override

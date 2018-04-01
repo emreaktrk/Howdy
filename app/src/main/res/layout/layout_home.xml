@@ -54,6 +54,15 @@
             app:layout_constraintTop_toBottomOf="@id/home_toolbar"
             tools:listitem="@layout/cell_emotion"/>
 
+    <View
+            android:id="@+id/home_emotion_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/home_emotion_recycler"/>
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/home_post_recycler"
             android:layout_width="0dp"
@@ -62,7 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_emotion_recycler"
+            app:layout_constraintTop_toBottomOf="@id/home_emotion_divider"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/cell_post_none"/>
 </android.support.constraint.ConstraintLayout>

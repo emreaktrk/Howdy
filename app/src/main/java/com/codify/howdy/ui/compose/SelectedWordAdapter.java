@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.compose;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.codify.howdy.R;
 import com.codify.howdy.model.Word;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
@@ -19,8 +21,8 @@ final class SelectedWordAdapter extends RecyclerView.Adapter<SelectedWordAdapter
     private final PublishSubject<Word> mPublish = PublishSubject.create();
     private List<Word> mList;
 
-    SelectedWordAdapter(List<Word> list) {
-        mList = list;
+    SelectedWordAdapter(@Nullable List<Word> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @Override

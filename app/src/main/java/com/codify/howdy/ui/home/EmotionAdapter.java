@@ -1,6 +1,7 @@
 package com.codify.howdy.ui.home;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.codify.howdy.R;
 import com.codify.howdy.model.Emotion;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
@@ -23,8 +25,8 @@ final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
     private final PublishSubject<Emotion> mPublish = PublishSubject.create();
     private List<Emotion> mList;
 
-    EmotionAdapter(List<Emotion> list) {
-        mList = list;
+    EmotionAdapter(@Nullable List<Emotion> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @NonNull

@@ -111,28 +111,16 @@ public final class PostDetailActivity extends HowdyActivity implements PostDetai
     @Override
     public void onImageClicked(Post post) {
         PhotoActivity.start(post);
-
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.IMAGE);
     }
 
     @Override
     public void onVideoClicked(Post post) {
         VideoActivity.start(post);
-
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.VIDEO);
     }
 
     @Override
     public void onAvatarClicked(Post post) {
         PhotoActivity.start(post.imgpath1);
-
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.IMAGE);
     }
 
     @Override

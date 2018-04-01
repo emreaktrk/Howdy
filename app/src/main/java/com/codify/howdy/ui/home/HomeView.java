@@ -1,9 +1,7 @@
 package com.codify.howdy.ui.home;
 
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.model.Emotion;
-import com.codify.howdy.model.Post;
-import com.codify.howdy.model.Wall;
+import com.codify.howdy.model.*;
 import com.codify.howdy.model.zipper.Like;
 import com.codify.howdy.ui.base.MvpView;
 
@@ -28,4 +26,8 @@ interface HomeView extends MvpView {
     void onImageClicked(Post post);
 
     void onAvatarClicked(Post post);
+
+    void onUserClicked(User user);
+
+    void onFollowClicked(Follow follow);
 }

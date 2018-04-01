@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.messages;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter.Holder> {
@@ -19,8 +21,8 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
     private PublishSubject<UserMessage> mPublish = PublishSubject.create();
     private List<UserMessage> mList;
 
-    UserMessagesAdapter(List<UserMessage> list) {
-        mList = list;
+    UserMessagesAdapter(@Nullable List<UserMessage> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @Override
@@ -37,7 +39,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + message.message_touserid)
                 .into(holder.mImage);
-        holder.mUsername.setText(message.otherUser.username);
+        holder.mUsername.setText(message.otherUser == null ? null : message.otherUser.username);
         holder.mLastMessage.setText(message.message_text);
         holder.mDate.setText(message.message_isreaded + "");
     }

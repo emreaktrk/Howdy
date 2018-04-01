@@ -34,13 +34,13 @@ public final class Analytics {
         return this;
     }
 
-    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE, Events.IMAGE, Events.VIDEO})
+    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE, Events.FOLLOW, Events.UNFOLLOW})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
         String LIKE = "like";
         String DISLIKE = "dislike";
-        String IMAGE = "image";
-        String VIDEO = "video";
+        String FOLLOW = "follow";
+        String UNFOLLOW = "unfollow";
     }
 }

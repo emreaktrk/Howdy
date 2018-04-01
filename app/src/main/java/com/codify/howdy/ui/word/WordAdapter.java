@@ -22,9 +22,9 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
     private final PublishSubject<Word> mPublish = PublishSubject.create();
     private List<Word> mFiltered;
 
-    WordAdapter(List<Word> list) {
-        this.mList = list;
-        this.mFiltered = new ArrayList<>(list);
+    WordAdapter(@Nullable List<Word> list) {
+        mList = list == null ? new ArrayList<>() : list;
+        mFiltered = new ArrayList<>(mList);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.codify.howdy.ui.home;
 
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,16 +41,13 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private RecommendedUsersAdapter mUsers;
     private int mCommentVisibility = View.VISIBLE;
 
-    public PostAdapter(List<Post> posts) {
-        mPosts = posts;
+    public PostAdapter(@Nullable List<Post> posts) {
+        mPosts = posts == null ? new ArrayList<>() : posts;
     }
 
-    public PostAdapter(List<Post> posts, List<User> users) {
-        mPosts = posts;
-
-        if (users != null && !users.isEmpty()) {
-            mUsers = new RecommendedUsersAdapter(users);
-        }
+    public PostAdapter(@Nullable List<Post> posts, @Nullable List<User> users) {
+        mPosts = posts == null ? new ArrayList<>() : posts;
+        mUsers = new RecommendedUsersAdapter(users);
     }
 
     public PostAdapter(Post post) {
@@ -168,6 +167,10 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public PublishSubject<Follow> followClicks() {
         return mUsers.followClicks();
+    }
+
+    public PublishSubject<User> userClicks() {
+        return mUsers.userClicks();
     }
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {

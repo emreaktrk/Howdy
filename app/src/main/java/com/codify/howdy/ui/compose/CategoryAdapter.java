@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.compose;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder> {
@@ -20,8 +22,8 @@ final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder>
     private final PublishSubject<Category> mPublish = PublishSubject.create();
     private final List<Category> mList;
 
-    CategoryAdapter(List<Category> list) {
-        this.mList = list;
+    CategoryAdapter(@Nullable List<Category> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @Override

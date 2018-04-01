@@ -1,10 +1,7 @@
 package com.codify.howdy.ui.chat;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.view.View;
 
 import com.blankj.utilcode.util.SizeUtils;
@@ -31,6 +28,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -58,7 +56,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .subscribe(o -> {
                             Logcat.v("Send clicked");
 
-                            String message = findViewById(R.id.chat_message, AppCompatTextView.class).getText().toString();
+                            String message = findViewById(R.id.chat_message, AppCompatEditText.class).getText().toString();
                             view.onSendClicked(message);
                         }));
 
@@ -93,7 +91,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         Picasso
                 .with(getContext())
                 .load(BuildConfig.URL + user.imgpath1)
-                .into(findViewById(R.id.chat_user_image, AppCompatImageView.class));
+                .into(findViewById(R.id.chat_user_image, CircleImageView.class));
     }
 
     void bind(@NonNull List<Chat> chats) {
@@ -104,7 +102,9 @@ final class ChatPresenter extends BasePresenter<ChatView> {
     }
 
     void send(String message) {
+        findViewById(R.id.chat_message, AppCompatEditText.class).setText(null);
 
+        // TODO Send message
     }
 
     public void getUser(Long userId) {

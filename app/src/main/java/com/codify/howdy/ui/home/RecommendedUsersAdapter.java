@@ -1,6 +1,7 @@
 package com.codify.howdy.ui.home;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class RecommendedUsersAdapter extends RecyclerView.Adapter<RecommendedUsersAdapter.UserHolder> {
@@ -22,8 +24,8 @@ public final class RecommendedUsersAdapter extends RecyclerView.Adapter<Recommen
     private PublishSubject<Follow> mFollowSubject = PublishSubject.create();
     private List<User> mList;
 
-    public RecommendedUsersAdapter(List<User> list) {
-        mList = list;
+    public RecommendedUsersAdapter(@Nullable List<User> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @NonNull
@@ -58,7 +60,7 @@ public final class RecommendedUsersAdapter extends RecyclerView.Adapter<Recommen
     }
 
 
-    class UserHolder extends RecyclerView.ViewHolder {
+    class UserHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private CircleImageView mImage;
         private AppCompatTextView mFullname;
@@ -70,6 +72,18 @@ public final class RecommendedUsersAdapter extends RecyclerView.Adapter<Recommen
             mImage = itemView.findViewById(R.id.recommended_user_image);
             mFullname = itemView.findViewById(R.id.recommended_user_fullname);
             mUsername = itemView.findViewById(R.id.recommended_user_username);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            User user = mList.get(getAdapterPosition());
+
+            switch (view.getId()) {
+                default:
+                    mUserSubject.onNext(user);
+            }
         }
     }
 }

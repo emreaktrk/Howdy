@@ -24,7 +24,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/chat_user_image"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
@@ -37,7 +37,7 @@
                     style="@style/Text.Toolbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="ilkem23"/>
+                    tools:text="@sample/user.json/data/username"/>
         </android.support.v7.widget.LinearLayoutCompat>
 
         <android.support.v7.widget.AppCompatImageButton

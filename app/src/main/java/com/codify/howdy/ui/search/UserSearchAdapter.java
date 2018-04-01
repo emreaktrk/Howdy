@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.search;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Holder> {
@@ -19,8 +21,8 @@ final class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Hol
     private final PublishSubject<User> mPublish = PublishSubject.create();
     private List<User> mList;
 
-    UserSearchAdapter(List<User> list) {
-        this.mList = list;
+    UserSearchAdapter(@Nullable List<User> list) {
+        mList = list == null ? new ArrayList<>() : list;
     }
 
     @Override
