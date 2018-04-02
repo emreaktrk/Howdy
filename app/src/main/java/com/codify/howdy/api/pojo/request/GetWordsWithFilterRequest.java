@@ -1,5 +1,7 @@
 package com.codify.howdy.api.pojo.request;
 
+import android.support.annotation.Nullable;
+import com.codify.howdy.model.Selectable;
 import com.codify.howdy.model.Word;
 
 import java.util.ArrayList;
@@ -17,11 +19,15 @@ public final class GetWordsWithFilterRequest {
         this.categoriesIDarray = categoriesIDarray;
     }
 
-    public GetWordsWithFilterRequest(long activityid, Collection<Word> words) {
+    public GetWordsWithFilterRequest(long activityid, @Nullable Collection<Selectable> words) {
         this.activityid = activityid;
         ArrayList<Long> ids = new ArrayList<>();
-        for (Word word : words) {
-            ids.add(word.words_top_category_id);
+        if (words != null) {
+            for (Selectable selected : words) {
+                if (selected != null && selected instanceof Word) {
+                    ids.add(selected.id());
+                }
+            }
         }
         this.categoriesIDarray = ids;
     }

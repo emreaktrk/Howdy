@@ -18,6 +18,7 @@ import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
+import com.codify.howdy.model.Selectable;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -36,7 +37,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
     private Uri mPhoto;
     private Activity mActivity;
-    private final List<Word> mSelecteds = new ArrayList<>();
+    private final List<Selectable> mSelecteds = new ArrayList<>();
     private final SelectedAdapter mAdapter = new SelectedAdapter(mSelecteds);
 
     @Override
@@ -74,9 +75,14 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                 mAdapter
                         .removeClicks()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(word -> {
-                            Logcat.v("Selected word remove clicked");
-                            mView.onWordRemoved(word);
+                        .subscribe(selectable -> {
+                            if (selectable instanceof Word) {
+                                Logcat.v("Selected word remove clicked");
+                                mView.onWordRemoved((Word) selectable);
+                            } else if (selectable instanceof Activity) {
+                                Logcat.v("Selected activity remove clicked");
+                                mView.onActivityRemoved((Activity) selectable);
+                            }
                         }));
 
         mDisposables.add(
@@ -101,8 +107,11 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setAdapter(mAdapter);
     }
 
-    void getWordsWithFilter(@Nullable Activity activity) {
-        setSelectedActivity(activity);
+    void getWordsWithFilter() {
+        if (mActivity != null && !mSelecteds.contains(mActivity)) {
+            mSelecteds.add(mActivity);
+        }
+
         GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(mActivity == null ? 0 : mActivity.idactivities, mSelecteds);
 
         mDisposables.add(
@@ -123,10 +132,6 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                 mView.onError(error);
                             }
                         }));
-    }
-
-    void getWordsWithFilter() {
-        getWordsWithFilter(null);
     }
 
     void bind(ArrayList<Category> categories) {
@@ -167,15 +172,23 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         mAdapter.notifyDataSetChanged(mSelecteds);
     }
 
-    List<Word> getSelectedWords() {
+    List<Selectable> getSelectedWords() {
         return mSelecteds;
     }
 
-    void setSelectedActivity(@Nullable Activity activity) {
-        mActivity = activity;
+    void selectActivity(@Nullable Activity activity) {
+        if (activity == null) {
+            removeActivity();
+        } else {
+            mActivity = activity;
+        }
     }
 
-    void removeSelectedActivity() {
+    void removeActivity() {
+        if (mSelecteds.contains(mActivity)) {
+            mSelecteds.remove(mActivity);
+        }
+
         mActivity = null;
     }
 

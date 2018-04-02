@@ -95,12 +95,19 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onActivityClicked(Activity activity) {
-        mPresenter.getWordsWithFilter(activity);
+        mPresenter.selectActivity(activity);
+        mPresenter.getWordsWithFilter();
     }
 
     @Override
     public void onWordRemoved(Word word) {
         mPresenter.removeSelectedWord(word);
+        mPresenter.getWordsWithFilter();
+    }
+
+    @Override
+    public void onActivityRemoved(Activity activity) {
+        mPresenter.removeActivity();
         mPresenter.getWordsWithFilter();
     }
 

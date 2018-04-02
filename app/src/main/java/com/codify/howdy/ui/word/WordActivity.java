@@ -11,10 +11,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.model.Activity;
-import com.codify.howdy.model.Category;
-import com.codify.howdy.model.ResultTo;
-import com.codify.howdy.model.Word;
+import com.codify.howdy.model.*;
 import io.reactivex.annotations.NonNull;
 
 import java.util.List;
@@ -44,15 +41,15 @@ public final class WordActivity extends HowdyActivity implements WordView {
         }
     }
 
-    public static void start(@Nullable List<Word> words, @Nullable Activity activity, @ResultTo int to) {
+    public static void start(@Nullable List<? extends Selectable> selecteds, @Nullable Activity activity, @ResultTo int to) {
         AppCompatActivity compat = (AppCompatActivity) ActivityUtils.getTopActivity();
 
         Intent starter = new Intent(compat, WordActivity.class);
-        if (words != null) {
-            long[] ids = new long[words.size()];
-            for (int i = 0; i < words.size(); i++) {
-                Word word = words.get(i);
-                ids[i] = word.words_top_category_id;
+        if (selecteds != null) {
+            long[] ids = new long[selecteds.size()];
+            for (int i = 0; i < selecteds.size(); i++) {
+                Selectable selected = selecteds.get(i);
+                ids[i] = selected.id();
             }
             starter.putExtra(ids.getClass().getSimpleName(), ids);
         }

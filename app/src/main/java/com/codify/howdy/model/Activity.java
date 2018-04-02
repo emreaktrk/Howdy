@@ -10,6 +10,16 @@ public final class Activity implements Selectable, Serializable {
     public String activities_icon_url;
 
     @Override
+    public long id() {
+        return idactivities;
+    }
+
+    @Override
+    public String text() {
+        return activities_title;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -19,12 +29,6 @@ public final class Activity implements Selectable, Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(idactivities);
-    }
-
-    @Override
-    public String text() {
-        return activities_title;
     }
 }

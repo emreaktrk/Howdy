@@ -30,6 +30,8 @@ interface ComposeView extends MvpView {
 
     void onWordRemoved(Word word);
 
+    void onActivityRemoved(Activity activity);
+
     void onPictureClicked();
 
     void onPhotoSelected(Uri uri);

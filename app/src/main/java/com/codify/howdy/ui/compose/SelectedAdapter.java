@@ -7,21 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.codify.howdy.R;
-import com.codify.howdy.model.Word;
+import com.codify.howdy.model.Selectable;
+import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.subjects.PublishSubject;
-
 final class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.Holder> {
 
-    private final PublishSubject<Word> mPublish = PublishSubject.create();
-    private List<Word> mList;
+    private final PublishSubject<Selectable> mPublish = PublishSubject.create();
+    private List<? extends Selectable> mList;
 
-    SelectedAdapter(@Nullable List<Word> list) {
+    SelectedAdapter(@Nullable List<? extends Selectable> list) {
         mList = list == null ? new ArrayList<>() : list;
     }
 
@@ -33,8 +31,8 @@ final class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.Holder>
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Word word = mList.get(position);
-        holder.mText.setText(word.words_word);
+        Selectable selectable = mList.get(position);
+        holder.mText.setText(selectable.text());
     }
 
     @Override
@@ -42,11 +40,11 @@ final class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.Holder>
         return mList.size();
     }
 
-    PublishSubject<Word> removeClicks() {
+    PublishSubject<Selectable> removeClicks() {
         return mPublish;
     }
 
-    public void notifyDataSetChanged(List<Word> list) {
+    public void notifyDataSetChanged(List<? extends Selectable> list) {
         mList = list;
         notifyDataSetChanged();
     }
@@ -68,8 +66,8 @@ final class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.Holder>
 
         @Override
         public void onClick(View view) {
-            Word word = mList.get(getAdapterPosition());
-            mPublish.onNext(word);
+            Selectable selectable = mList.get(getAdapterPosition());
+            mPublish.onNext(selectable);
         }
     }
 }

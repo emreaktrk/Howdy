@@ -14,6 +14,16 @@ public final class Word implements Selectable, Serializable {
     public long words_top_category_id;
 
     @Override
+    public long id() {
+        return words_top_category_id;
+    }
+
+    @Override
+    public String text() {
+        return words_word;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -26,10 +36,5 @@ public final class Word implements Selectable, Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idwords, words_award_id, words_top_category_id);
-    }
-
-    @Override
-    public String text() {
-        return words_word;
     }
 }
