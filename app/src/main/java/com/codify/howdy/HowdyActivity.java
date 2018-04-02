@@ -34,6 +34,14 @@ public abstract class HowdyActivity extends AppCompatActivity {
         return null;
     }
 
+    protected final long[] getLongArray() {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(long[].class.getSimpleName())) {
+            return getIntent().getExtras().getLongArray(long[].class.getSimpleName());
+        }
+
+        return null;
+    }
+
     protected final void setResult(int resultCode, Serializable data) {
         Intent intent = new Intent();
         intent.putExtra(data.getClass().getSimpleName(), data);

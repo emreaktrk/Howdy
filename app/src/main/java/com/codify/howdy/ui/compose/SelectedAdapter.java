@@ -16,12 +16,12 @@ import java.util.List;
 
 import io.reactivex.subjects.PublishSubject;
 
-final class SelectedWordAdapter extends RecyclerView.Adapter<SelectedWordAdapter.Holder> {
+final class SelectedAdapter extends RecyclerView.Adapter<SelectedAdapter.Holder> {
 
     private final PublishSubject<Word> mPublish = PublishSubject.create();
     private List<Word> mList;
 
-    SelectedWordAdapter(@Nullable List<Word> list) {
+    SelectedAdapter(@Nullable List<Word> list) {
         mList = list == null ? new ArrayList<>() : list;
     }
 

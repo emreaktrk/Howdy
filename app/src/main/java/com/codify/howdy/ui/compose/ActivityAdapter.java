@@ -7,22 +7,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
-import com.codify.howdy.model.Word;
+import com.codify.howdy.model.Activity;
+import com.squareup.picasso.Picasso;
+import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.subjects.PublishSubject;
-
 final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder> {
 
-    private final PublishSubject<Word> mPublish = PublishSubject.create();
-    private List<Word> mList;
+    private final PublishSubject<Activity> mPublish = PublishSubject.create();
+    private List<Activity> mList;
+    private Activity mSelected;
 
-    ActivityAdapter(@Nullable List<Word> list) {
+    ActivityAdapter(@Nullable List<Activity> list, @Nullable Activity selected) {
         mList = list == null ? new ArrayList<>() : list;
+        mSelected = selected;
     }
 
     @Override
@@ -33,8 +35,13 @@ final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder>
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Word word = mList.get(position);
-        holder.mText.setText(word.words_word);
+        Activity activity = mList.get(position);
+        holder.mText.setText(activity.activities_title);
+        Picasso
+                .with(holder.mImage.getContext())
+                .load(BuildConfig.URL + activity.activities_icon_url)
+                .into(holder.mImage);
+        holder.itemView.setSelected(mSelected != null && mSelected.equals(activity));
     }
 
     @Override
@@ -42,11 +49,11 @@ final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder>
         return mList.size();
     }
 
-    PublishSubject<Word> itemClicks() {
+    PublishSubject<Activity> itemClicks() {
         return mPublish;
     }
 
-    public void notifyDataSetChanged(List<Word> list) {
+    public void notifyDataSetChanged(List<Activity> list) {
         mList = list;
         notifyDataSetChanged();
     }
@@ -62,12 +69,14 @@ final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder>
 
             mText = itemView.findViewById(R.id.activity_text);
             mImage = itemView.findViewById(R.id.activity_image);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Word word = mList.get(getAdapterPosition());
-            mPublish.onNext(word);
+            Activity activity = mList.get(getAdapterPosition());
+            mPublish.onNext(activity);
         }
     }
 }

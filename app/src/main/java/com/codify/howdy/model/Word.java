@@ -3,7 +3,7 @@ package com.codify.howdy.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public final class Word implements Serializable {
+public final class Word implements Selectable, Serializable {
 
     public long idwords;
     public String words_word;
@@ -26,5 +26,10 @@ public final class Word implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idwords, words_award_id, words_top_category_id);
+    }
+
+    @Override
+    public String text() {
+        return words_word;
     }
 }

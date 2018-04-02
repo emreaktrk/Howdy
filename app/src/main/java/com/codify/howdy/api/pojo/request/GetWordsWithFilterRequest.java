@@ -8,20 +8,31 @@ import java.util.List;
 
 public final class GetWordsWithFilterRequest {
 
-    public long activityId;
+    public long activityid;
     public List<Long> categoriesIDarray;
+    public boolean addWords;
 
-    public GetWordsWithFilterRequest(long activityId, List<Long> categoriesIDarray) {
-        this.activityId = activityId;
+    public GetWordsWithFilterRequest(long activityid, List<Long> categoriesIDarray) {
+        this.activityid = activityid;
         this.categoriesIDarray = categoriesIDarray;
     }
 
-    public GetWordsWithFilterRequest(long activityId, Collection<Word> words) {
-        this.activityId = activityId;
+    public GetWordsWithFilterRequest(long activityid, Collection<Word> words) {
+        this.activityid = activityid;
         ArrayList<Long> ids = new ArrayList<>();
         for (Word word : words) {
             ids.add(word.words_top_category_id);
         }
         this.categoriesIDarray = ids;
+    }
+
+    public GetWordsWithFilterRequest(long activityid, long[] categoryIds) {
+        this.activityid = activityid;
+        ArrayList<Long> ids = new ArrayList<>();
+        for (long id : categoryIds) {
+            ids.add(id);
+        }
+        this.categoriesIDarray = ids;
+        addWords = true;
     }
 }

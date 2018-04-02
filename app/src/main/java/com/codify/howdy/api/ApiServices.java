@@ -2,7 +2,6 @@ package com.codify.howdy.api;
 
 import com.codify.howdy.api.pojo.request.*;
 import com.codify.howdy.api.pojo.response.*;
-
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -22,10 +21,13 @@ public interface ApiServices {
     Single<GetWallResponse> getWall(@Body GetWallRequest request);
 
     @POST("getwords")
-    Single<GetWordsResponse> getWords();
+    Single<GetWordsResponse> getWords(@Body GetWordsRequest request);
 
     @POST("getwordswithfilter")
     Single<GetWordsWithFilterResponse> getWordsWithFilter(@Body GetWordsWithFilterRequest request);
+
+    @POST("searchplaces")
+    Single<GetWordsWithFilterResponse> searchPlaces(@Body GetWordsWithFilterRequest request);
 
     @POST("searchuser")
     Single<SearchUserResponse> searchUser(@Body SearchUserRequest request);

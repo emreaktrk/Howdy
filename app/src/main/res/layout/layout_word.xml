@@ -33,6 +33,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 tools:text="Oyun"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/word_mention"
+                style="@style/Button.Transparent"
+                android:background="@android:color/transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_mention"
+                android:visibility="gone"
+                tools:visibility="visible"/>
     </FrameLayout>
 
     <android.support.v7.widget.AppCompatEditText

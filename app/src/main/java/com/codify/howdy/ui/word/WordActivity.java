@@ -5,16 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
+import com.codify.howdy.api.pojo.response.ApiError;
+import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.Word;
-
 import io.reactivex.annotations.NonNull;
+
+import java.util.List;
 
 public final class WordActivity extends HowdyActivity implements WordView {
 
@@ -41,6 +44,35 @@ public final class WordActivity extends HowdyActivity implements WordView {
         }
     }
 
+    public static void start(@Nullable List<Word> words, @Nullable Activity activity, @ResultTo int to) {
+        AppCompatActivity compat = (AppCompatActivity) ActivityUtils.getTopActivity();
+
+        Intent starter = new Intent(compat, WordActivity.class);
+        if (words != null) {
+            long[] ids = new long[words.size()];
+            for (int i = 0; i < words.size(); i++) {
+                Word word = words.get(i);
+                ids[i] = word.words_top_category_id;
+            }
+            starter.putExtra(ids.getClass().getSimpleName(), ids);
+        }
+        if (activity != null) {
+            starter.putExtra(activity.getClass().getSimpleName(), activity);
+        }
+
+        switch (to) {
+            case ResultTo.ACTIVITY:
+                compat.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            case ResultTo.FRAGMENT:
+                Fragment fragment = FragmentUtils.getTopShow(compat.getSupportFragmentManager());
+                fragment.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown ResultTo value");
+        }
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_word;
@@ -54,7 +86,11 @@ public final class WordActivity extends HowdyActivity implements WordView {
 
         Category category = getSerializable(Category.class);
         if (category != null) {
-            mPresenter.bind(category);
+            mPresenter.getWords(category);
+        } else {
+            Activity activity = getSerializable(Activity.class);
+            long[] ids = getLongArray();
+            mPresenter.getWordsWithFilter(ids, activity);
         }
     }
 
@@ -77,8 +113,35 @@ public final class WordActivity extends HowdyActivity implements WordView {
     }
 
     @Override
+    public void onLoaded(Category category) {
+        mPresenter.bind(category);
+    }
+
+    @Override
+    public void onLoaded(List<Word> words) {
+        mPresenter.bind(words);
+    }
+
+    @Override
+    public void onError(ApiError error) {
+        ToastUtils.showShort(error.message);
+    }
+
+    @Override
+    public void onMentionClicked() {
+        // TODO Navigate to mention screen
+    }
+
+    @Override
     public void onBackClicked() {
         setResult(RESULT_CANCELED);
         onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // TODO resolve user list and notify compose
     }
 }

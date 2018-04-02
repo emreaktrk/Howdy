@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -43,7 +42,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
-        mPresenter.getWords();
+        mPresenter.getWordsWithFilter();
     }
 
     @Override
@@ -67,12 +66,12 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onSearchClicked() {
-
+        WordActivity.start(mPresenter.getSelectedWords(), null, ResultTo.ACTIVITY);
     }
 
     @Override
     public void onLoaded(ArrayList<Category> categories, ArrayList<Activity> activities) {
-        mPresenter.bind(categories);
+        mPresenter.bind(categories, activities);
     }
 
     @Override
@@ -87,7 +86,16 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onCategoryClicked(Category category) {
-        WordActivity.start(category, ResultTo.ACTIVITY);
+        if (category.isLocation()) {
+            // TODO Navigate search places screen
+        } else {
+            WordActivity.start(category, ResultTo.ACTIVITY);
+        }
+    }
+
+    @Override
+    public void onActivityClicked(Activity activity) {
+        mPresenter.getWordsWithFilter(activity);
     }
 
     @Override

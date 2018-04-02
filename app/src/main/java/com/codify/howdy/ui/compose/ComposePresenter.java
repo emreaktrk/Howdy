@@ -6,17 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.codify.howdy.R;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
 import com.codify.howdy.api.pojo.request.GetWordsWithFilterRequest;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.GetWordsResponse;
 import com.codify.howdy.api.pojo.response.GetWordsWithFilterResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Activity;
@@ -27,20 +24,20 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class ComposePresenter extends BasePresenter<ComposeView> {
 
     private Uri mPhoto;
+    private Activity mActivity;
     private final List<Word> mSelecteds = new ArrayList<>();
-    private final SelectedWordAdapter mAdapter = new SelectedWordAdapter(mSelecteds);
+    private final SelectedAdapter mAdapter = new SelectedAdapter(mSelecteds);
 
     @Override
     public void attachView(ComposeView view, View root) {
@@ -104,29 +101,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setAdapter(mAdapter);
     }
 
-    void getWords() {
-        mDisposables.add(
-                ApiManager
-                        .getInstance()
-                        .getWords()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<GetWordsResponse>() {
-                            @Override
-                            protected void success(GetWordsResponse response) {
-                                mView.onLoaded(response.data);
-                            }
-
-                            @Override
-                            protected void error(ApiError error) {
-                                Logcat.e(error);
-
-                                mView.onError(error);
-                            }
-                        }));
-    }
-
     void getWordsWithFilter(@Nullable Activity activity) {
-        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(activity == null ? 0 : activity.id, mSelecteds);
+        setSelectedActivity(activity);
+        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(mActivity == null ? 0 : mActivity.idactivities, mSelecteds);
 
         mDisposables.add(
                 ApiManager
@@ -136,7 +113,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(new ServiceConsumer<GetWordsWithFilterResponse>() {
                             @Override
                             protected void success(GetWordsWithFilterResponse response) {
-                                mView.onLoaded(response.data.topCategories, response.data.activities);
+                                mView.onLoaded(response.data.topCategories, response.data.activites);
                             }
 
                             @Override
@@ -152,17 +129,32 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         getWordsWithFilter(null);
     }
 
-    void bind(ArrayList<Category> list) {
-        CategoryAdapter adapter = new CategoryAdapter(list);
+    void bind(ArrayList<Category> categories) {
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categories);
         mDisposables.add(
-                adapter
+                categoryAdapter
                         .itemClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(category -> {
                             Logcat.v("Category clicked");
                             mView.onCategoryClicked(category);
                         }));
-        findViewById(R.id.compose_category_recycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.compose_category_recycler, RecyclerView.class).setAdapter(categoryAdapter);
+    }
+
+    void bind(ArrayList<Category> categories, ArrayList<Activity> activities) {
+        bind(categories);
+
+        ActivityAdapter activityAdapter = new ActivityAdapter(activities, mActivity);
+        mDisposables.add(
+                activityAdapter
+                        .itemClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(activity -> {
+                            Logcat.v("Activity clicked");
+                            mView.onActivityClicked(activity);
+                        }));
+        findViewById(R.id.compose_activity_recycler, RecyclerView.class).setAdapter(activityAdapter);
     }
 
     void addSelectedWord(Word word) {
@@ -173,6 +165,18 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void removeSelectedWord(Word word) {
         mSelecteds.remove(word);
         mAdapter.notifyDataSetChanged(mSelecteds);
+    }
+
+    List<Word> getSelectedWords() {
+        return mSelecteds;
+    }
+
+    void setSelectedActivity(@Nullable Activity activity) {
+        mActivity = activity;
+    }
+
+    void removeSelectedActivity() {
+        mActivity = null;
     }
 
     void selectPhoto(@NonNull AppCompatActivity activity) {
