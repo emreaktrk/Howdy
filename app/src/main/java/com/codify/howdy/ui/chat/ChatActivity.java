@@ -89,6 +89,11 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
     }
 
     @Override
+    public void onLoaded(Object object) {
+        // TODO Update
+    }
+
+    @Override
     public void onError(ApiError error) {
 
     }

@@ -1,6 +1,7 @@
 package com.codify.howdy.ui.postdetail;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -49,6 +50,20 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .flatMap((Function<String, ObservableSource<Boolean>>) message -> Observable.just(!StringUtils.isEmpty(message)))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(enabled -> findViewById(R.id.post_detail_send).setEnabled(enabled)));
+
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.post_detail_send))
+                        .flatMap((Function<Object, ObservableSource<String>>) o -> {
+                            String comment = findViewById(R.id.post_detail_comment, AppCompatEditText.class).getText().toString().trim();
+                            return Observable.just(comment);
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(comment -> {
+                            Logcat.v("Send clicked");
+                            view.onSendClicked(comment);
+                        }));
     }
 
     void send(long postId, String comment) {

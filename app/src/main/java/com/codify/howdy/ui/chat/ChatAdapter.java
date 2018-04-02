@@ -1,5 +1,6 @@
 package com.codify.howdy.ui.chat;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -28,8 +29,7 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
     private long mUserId;
 
     ChatAdapter(@Nullable List<Chat> list, long userId) {
-        mList = list == null ? new ArrayList<>() : list
-        ;
+        mList = list == null ? new ArrayList<>() : list;
         mUserId = userId;
     }
 
@@ -52,7 +52,7 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
         Chat chat = mList.get(position);
         if (chat.message_fromuserid == mUserId) {
             new OutgoingChatDecorator(holder.getView());

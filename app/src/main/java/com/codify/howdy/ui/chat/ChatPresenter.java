@@ -13,9 +13,11 @@ import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
 import com.codify.howdy.api.pojo.request.GetMessagesRequest;
 import com.codify.howdy.api.pojo.request.GetUserProfileRequest;
+import com.codify.howdy.api.pojo.request.SendMessageRequest;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.api.pojo.response.GetMessagesResponse;
 import com.codify.howdy.api.pojo.response.GetUserProfileResponse;
+import com.codify.howdy.api.pojo.response.SendMessageResponse;
 import com.codify.howdy.helper.decoration.SideSpaceItemDecoration;
 import com.codify.howdy.helper.decoration.VerticalSpaceItemDecoration;
 import com.codify.howdy.logcat.Logcat;
@@ -26,6 +28,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.squareup.picasso.Picasso;
 
+import java.util.Base64;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -35,6 +38,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 
 final class ChatPresenter extends BasePresenter<ChatView> {
+
+    private User mUser;
 
     @Override
     public void attachView(ChatView view, View root) {
@@ -87,6 +92,8 @@ final class ChatPresenter extends BasePresenter<ChatView> {
     }
 
     void bind(@NonNull User user) {
+        mUser = user;
+
         findViewById(R.id.chat_username, AppCompatTextView.class).setText(user.username);
         Picasso
                 .with(getContext())
@@ -104,7 +111,59 @@ final class ChatPresenter extends BasePresenter<ChatView> {
     void send(String message) {
         findViewById(R.id.chat_message, AppCompatEditText.class).setText(null);
 
-        // TODO Send message
+        SendMessageRequest request = new SendMessageRequest();
+        request.text = message;
+        request.toUserId = mUser.iduser;
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sendMessage(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SendMessageResponse>() {
+                            @Override
+                            protected void success(SendMessageResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void send(Base64 data) {
+        findViewById(R.id.chat_message, AppCompatEditText.class).setText(null);
+
+        SendMessageRequest request = new SendMessageRequest();
+        request.toUserId = mUser.iduser;
+        request.data = data;
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sendMessage(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SendMessageResponse>() {
+                            @Override
+                            protected void success(SendMessageResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 
     public void getUser(Long userId) {

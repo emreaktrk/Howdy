@@ -17,6 +17,8 @@ interface ChatView extends MvpView {
 
     void onLoaded(List<Chat> chats);
 
+    void onLoaded(Object object);
+
     void onError(ApiError error);
 
     void onBackClicked();
