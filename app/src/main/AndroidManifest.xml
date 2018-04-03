@@ -90,6 +90,9 @@
         <activity
                 android:name=".ui.photo.PhotoActivity"
                 android:theme="@style/MediaTheme"/>
+        <activity
+                android:name=".ui.mention.MentionActivity"
+                android:theme="@style/MainTheme"/>
 
         <service
                 android:name=".account.AccountService"

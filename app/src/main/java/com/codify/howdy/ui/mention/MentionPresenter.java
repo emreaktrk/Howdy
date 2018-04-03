@@ -1,4 +1,4 @@
-package com.codify.howdy.ui.search;
+package com.codify.howdy.ui.mention;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
@@ -6,7 +6,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
@@ -19,22 +18,23 @@ import com.codify.howdy.model.User;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
+final class MentionPresenter extends BasePresenter<MentionView> {
 
-final class UserSearchPresenter extends BasePresenter<UserSearchView> {
+    private ArrayList<User> mSelecteds = new ArrayList<>();
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void attachView(UserSearchView view, View root) {
+    public void attachView(MentionView view, View root) {
         super.attachView(view, root);
 
         mDisposables.add(
                 RxView
-                        .clicks(findViewById(R.id.user_search_close))
+                        .clicks(findViewById(R.id.mention_close))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Close clicked");
@@ -44,7 +44,7 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
 
         mDisposables.add(
                 RxTextView
-                        .textChanges(findViewById(R.id.search_search))
+                        .textChanges(findViewById(R.id.mention_search))
                         .debounce(200, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .skip(1)
@@ -56,8 +56,8 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
 
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
-        findViewById(R.id.user_search_recycler, RecyclerView.class).addItemDecoration(divider);
-        findViewById(R.id.user_search_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
+        findViewById(R.id.mention_recycler, RecyclerView.class).addItemDecoration(divider);
+        findViewById(R.id.mention_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     void search(String query) {
@@ -85,15 +85,32 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
     }
 
     void bind(List<User> users) {
-        UserSearchAdapter adapter = new UserSearchAdapter(users);
+        MentionAdapter adapter = new MentionAdapter(users);
         mDisposables.add(
                 adapter
-                        .itemClicks()
+                        .mentionClicks()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(user -> {
-                            Logcat.v("User clicked");
-                            mView.onUserClicked(user);
+                        .subscribe(mention -> {
+                            Logcat.v("Mention clicked");
+
+                            mView.onMentionClicked(mention);
                         }));
         findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);
+    }
+
+    void add(User user) {
+        if (!mSelecteds.contains(user)) {
+            mSelecteds.add(user);
+        }
+    }
+
+    void remove(User user) {
+        if (mSelecteds.contains(user)) {
+            mSelecteds.remove(user);
+        }
+    }
+
+    public ArrayList<User> getSelecteds() {
+        return mSelecteds;
     }
 }

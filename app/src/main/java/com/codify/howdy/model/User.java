@@ -3,8 +3,9 @@ package com.codify.howdy.model;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-public final class User implements Serializable {
+public final class User implements Selectable, Serializable {
 
     public long iduser;
     public String username;
@@ -24,6 +25,30 @@ public final class User implements Serializable {
     public String namesurname;
     public Gender gender;
     public String birthDate;
+
+    @Override
+    public long id() {
+        return iduser;
+    }
+
+    @Override
+    public String text() {
+        return "@" + username;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return iduser == user.iduser;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(iduser);
+    }
 
     @Override
     public String toString() {

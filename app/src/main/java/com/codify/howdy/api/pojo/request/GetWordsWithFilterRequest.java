@@ -1,6 +1,7 @@
 package com.codify.howdy.api.pojo.request;
 
 import android.support.annotation.Nullable;
+import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Selectable;
 import com.codify.howdy.model.Word;
 
@@ -21,24 +22,37 @@ public final class GetWordsWithFilterRequest {
 
     public GetWordsWithFilterRequest(long activityid, @Nullable Collection<Selectable> words) {
         this.activityid = activityid;
-        ArrayList<Long> ids = new ArrayList<>();
+        categoriesIDarray = new ArrayList<>();
         if (words != null) {
             for (Selectable selected : words) {
                 if (selected != null && selected instanceof Word) {
-                    ids.add(selected.id());
+                    categoriesIDarray.add(selected.id());
                 }
             }
         }
-        this.categoriesIDarray = ids;
+    }
+
+    public GetWordsWithFilterRequest(@Nullable Collection<Selectable> selecteds) {
+        categoriesIDarray = new ArrayList<>();
+        if (selecteds != null) {
+            for (Selectable selected : selecteds) {
+                if (selected != null) {
+                    if (selected instanceof Word) {
+                        categoriesIDarray.add(selected.id());
+                    } else if (selected instanceof Activity) {
+                        activityid = selected.id();
+                    }
+                }
+            }
+        }
     }
 
     public GetWordsWithFilterRequest(long activityid, long[] categoryIds) {
         this.activityid = activityid;
-        ArrayList<Long> ids = new ArrayList<>();
+        this.categoriesIDarray = new ArrayList<>();
         for (long id : categoryIds) {
-            ids.add(id);
+            categoriesIDarray.add(id);
         }
-        this.categoriesIDarray = ids;
         addWords = true;
     }
 }

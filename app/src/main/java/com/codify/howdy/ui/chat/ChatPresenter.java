@@ -51,6 +51,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Back clicked");
+
                             view.onBackClicked();
                         }));
 
@@ -71,6 +72,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Media clicked");
+
                             view.onMediaClicked();
                         }));
 
@@ -116,7 +118,6 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         request.toUserId = mUser.iduser;
         request.token = AccountUtils.tokenLegacy(getContext());
 
-
         mDisposables.add(
                 ApiManager
                         .getInstance()
@@ -144,7 +145,6 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         request.toUserId = mUser.iduser;
         request.data = data;
         request.token = AccountUtils.tokenLegacy(getContext());
-
 
         mDisposables.add(
                 ApiManager

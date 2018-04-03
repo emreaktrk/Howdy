@@ -19,7 +19,6 @@ import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
 import com.codify.howdy.model.Selectable;
-import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
@@ -31,12 +30,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 final class ComposePresenter extends BasePresenter<ComposeView> {
 
     private Uri mPhoto;
-    private Activity mActivity;
     private final List<Selectable> mSelecteds = new ArrayList<>();
     private final SelectedAdapter mAdapter = new SelectedAdapter(mSelecteds);
 
@@ -50,6 +50,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Send clicked");
+
                             view.onSendClicked();
                         }));
 
@@ -59,6 +60,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Close clicked");
+
                             view.onCloseClicked();
                         }));
 
@@ -68,6 +70,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Search clicked");
+
                             view.onSearchClicked();
                         }));
 
@@ -76,13 +79,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .removeClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(selectable -> {
-                            if (selectable instanceof Word) {
-                                Logcat.v("Selected word remove clicked");
-                                mView.onWordRemoved((Word) selectable);
-                            } else if (selectable instanceof Activity) {
-                                Logcat.v("Selected activity remove clicked");
-                                mView.onActivityRemoved((Activity) selectable);
-                            }
+                            Logcat.v("Selected remove clicked");
+
+                            mView.onSelectedRemoved(selectable);
                         }));
 
         mDisposables.add(
@@ -91,6 +90,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Picture clicked");
+
                             mView.onPictureClicked();
                         }));
 
@@ -100,6 +100,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Picture cancelled");
+
                             mView.onPhotoCancelClicked();
                         }));
 
@@ -108,11 +109,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     }
 
     void getWordsWithFilter() {
-        if (mActivity != null && !mSelecteds.contains(mActivity)) {
-            mSelecteds.add(mActivity);
-        }
-
-        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(mActivity == null ? 0 : mActivity.idactivities, mSelecteds);
+        GetWordsWithFilterRequest request = new GetWordsWithFilterRequest(mSelecteds);
 
         mDisposables.add(
                 ApiManager
@@ -142,6 +139,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(category -> {
                             Logcat.v("Category clicked");
+
                             mView.onCategoryClicked(category);
                         }));
         findViewById(R.id.compose_category_recycler, RecyclerView.class).setAdapter(categoryAdapter);
@@ -150,46 +148,46 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void bind(ArrayList<Category> categories, ArrayList<Activity> activities) {
         bind(categories);
 
-        ActivityAdapter activityAdapter = new ActivityAdapter(activities, mActivity);
+        ActivityAdapter activityAdapter = new ActivityAdapter(activities, getSelectedActivity());
         mDisposables.add(
                 activityAdapter
                         .itemClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(activity -> {
                             Logcat.v("Activity clicked");
+
                             mView.onActivityClicked(activity);
                         }));
         findViewById(R.id.compose_activity_recycler, RecyclerView.class).setAdapter(activityAdapter);
     }
 
-    void addSelectedWord(Word word) {
-        mSelecteds.add(word);
-        mAdapter.notifyDataSetChanged(mSelecteds);
+    void addSelected(Selectable selectable) {
+        if (!mSelecteds.contains(selectable)) {
+
+            if (selectable instanceof Activity) {
+                Iterator<Selectable> iterator = mSelecteds.iterator();
+                while (iterator.hasNext()) {
+                    Selectable next = iterator.next();
+                    if (next instanceof Activity) {
+                        iterator.remove();
+                    }
+                }
+            }
+
+            mSelecteds.add(selectable);
+            mAdapter.notifyDataSetChanged(mSelecteds);
+        }
     }
 
-    void removeSelectedWord(Word word) {
-        mSelecteds.remove(word);
-        mAdapter.notifyDataSetChanged(mSelecteds);
+    void removeSelected(Selectable selectable) {
+        if (mSelecteds.contains(selectable)) {
+            mSelecteds.remove(selectable);
+            mAdapter.notifyDataSetChanged(mSelecteds);
+        }
     }
 
-    List<Selectable> getSelectedWords() {
+    List<Selectable> getSelecteds() {
         return mSelecteds;
-    }
-
-    void selectActivity(@Nullable Activity activity) {
-        if (activity == null) {
-            removeActivity();
-        } else {
-            mActivity = activity;
-        }
-    }
-
-    void removeActivity() {
-        if (mSelecteds.contains(mActivity)) {
-            mSelecteds.remove(mActivity);
-        }
-
-        mActivity = null;
     }
 
     void selectPhoto(@NonNull AppCompatActivity activity) {
@@ -200,7 +198,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(uris -> {
                             Uri uri = uris.get(0);
                             Logcat.v("Selected uri for photo is " + uri.toString());
+
                             mView.onPhotoSelected(uri);
+
                         })
         );
     }
@@ -212,6 +212,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .flatMap((Function<Boolean, ObservableSource<Uri>>) granted -> granted ? RxGallery.photoCapture(activity).toObservable() : Observable.empty())
                         .subscribe(uri -> {
                             Logcat.v("Selected uri for photo is " + uri.toString());
+
                             mView.onPhotoSelected(uri);
                         })
         );
@@ -233,5 +234,19 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(null);
         findViewById(R.id.compose_cancel).setVisibility(View.GONE);
+    }
+
+    private Activity getSelectedActivity() {
+        if (mSelecteds.isEmpty()) {
+            return null;
+        }
+
+        for (Selectable selected : mSelecteds) {
+            if (selected != null && selected instanceof Activity) {
+                return (Activity) selected;
+            }
+        }
+
+        return null;
     }
 }

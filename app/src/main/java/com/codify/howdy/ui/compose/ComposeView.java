@@ -4,6 +4,7 @@ import android.net.Uri;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Activity;
 import com.codify.howdy.model.Category;
+import com.codify.howdy.model.Selectable;
 import com.codify.howdy.model.Word;
 import com.codify.howdy.ui.base.MvpView;
 
@@ -28,9 +29,7 @@ interface ComposeView extends MvpView {
 
     void onActivityClicked(Activity activity);
 
-    void onWordRemoved(Word word);
-
-    void onActivityRemoved(Activity activity);
+    void onSelectedRemoved(Selectable selected);
 
     void onPictureClicked();
 

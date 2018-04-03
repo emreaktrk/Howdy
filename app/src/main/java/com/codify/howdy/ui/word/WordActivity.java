@@ -12,8 +12,10 @@ import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.*;
+import com.codify.howdy.ui.mention.MentionActivity;
 import io.reactivex.annotations.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class WordActivity extends HowdyActivity implements WordView {
@@ -126,7 +128,7 @@ public final class WordActivity extends HowdyActivity implements WordView {
 
     @Override
     public void onMentionClicked() {
-        // TODO Navigate to mention screen
+        MentionActivity.start(ResultTo.ACTIVITY);
     }
 
     @Override
@@ -135,10 +137,18 @@ public final class WordActivity extends HowdyActivity implements WordView {
         onBackPressed();
     }
 
+    @SuppressWarnings({"unchecked", "InstantiatingObjectToGetClassObject"})
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // TODO resolve user list and notify compose
+        ArrayList<Selectable> users = resolveResult(requestCode, resultCode, data, new ArrayList<User>().getClass(), MentionActivity.REQUEST_CODE);
+        if (users != null && !users.isEmpty()) {
+            setResult(RESULT_OK, users);
+            finish();
+        } else {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
     }
 }

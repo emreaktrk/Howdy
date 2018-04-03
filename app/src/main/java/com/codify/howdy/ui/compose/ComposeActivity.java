@@ -12,10 +12,7 @@ import com.codify.howdy.HowdyActivity;
 import com.codify.howdy.R;
 import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.model.Activity;
-import com.codify.howdy.model.Category;
-import com.codify.howdy.model.ResultTo;
-import com.codify.howdy.model.Word;
+import com.codify.howdy.model.*;
 import com.codify.howdy.ui.word.WordActivity;
 
 import java.util.ArrayList;
@@ -66,7 +63,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onSearchClicked() {
-        WordActivity.start(mPresenter.getSelectedWords(), null, ResultTo.ACTIVITY);
+        WordActivity.start(mPresenter.getSelecteds(), null, ResultTo.ACTIVITY);
     }
 
     @Override
@@ -95,19 +92,13 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onActivityClicked(Activity activity) {
-        mPresenter.selectActivity(activity);
+        mPresenter.addSelected(activity);
         mPresenter.getWordsWithFilter();
     }
 
     @Override
-    public void onWordRemoved(Word word) {
-        mPresenter.removeSelectedWord(word);
-        mPresenter.getWordsWithFilter();
-    }
-
-    @Override
-    public void onActivityRemoved(Activity activity) {
-        mPresenter.removeActivity();
+    public void onSelectedRemoved(Selectable selected) {
+        mPresenter.removeSelected(selected);
         mPresenter.getWordsWithFilter();
     }
 
@@ -132,7 +123,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
         Word word = resolveResult(requestCode, resultCode, data, Word.class, WordActivity.REQUEST_CODE);
         if (word != null) {
-            mPresenter.addSelectedWord(word);
+            mPresenter.addSelected(word);
             mPresenter.getWordsWithFilter();
         }
     }
