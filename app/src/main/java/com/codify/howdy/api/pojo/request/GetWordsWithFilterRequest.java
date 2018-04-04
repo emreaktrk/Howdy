@@ -1,9 +1,7 @@
 package com.codify.howdy.api.pojo.request;
 
 import android.support.annotation.Nullable;
-import com.codify.howdy.model.Activity;
-import com.codify.howdy.model.Selectable;
-import com.codify.howdy.model.Word;
+import com.codify.howdy.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +39,10 @@ public final class GetWordsWithFilterRequest {
                         categoriesIDarray.add(selected.id());
                     } else if (selected instanceof Activity) {
                         activityid = selected.id();
+                    } else if (selected instanceof User) {
+                        if (!categoriesIDarray.contains(Category.MEETING)) {
+                            categoriesIDarray.add(Category.MEETING);
+                        }
                     }
                 }
             }

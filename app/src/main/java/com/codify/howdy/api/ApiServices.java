@@ -27,7 +27,7 @@ public interface ApiServices {
     Single<GetWordsWithFilterResponse> getWordsWithFilter(@Body GetWordsWithFilterRequest request);
 
     @POST("searchplaces")
-    Single<GetWordsWithFilterResponse> searchPlaces(@Body GetWordsWithFilterRequest request);
+    Single<SearchPlacesRequest> searchPlaces(@Body SearchPlacesRequest request);
 
     @POST("searchuser")
     Single<SearchUserResponse> searchUser(@Body SearchUserRequest request);
@@ -64,4 +64,7 @@ public interface ApiServices {
 
     @POST("dislikepost")
     Single<DislikePostResponse> dislikePost(@Body DislikePostRequest request);
+
+    @POST("getfollowedusers")
+    Single<GetFollowedUsersResponse> getFollowedUsers(@Body GetFollowedUsersRequest request);
 }

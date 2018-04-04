@@ -163,7 +163,6 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
     void addSelected(Selectable selectable) {
         if (!mSelecteds.contains(selectable)) {
-
             if (selectable instanceof Activity) {
                 Iterator<Selectable> iterator = mSelecteds.iterator();
                 while (iterator.hasNext()) {
@@ -176,6 +175,12 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
             mSelecteds.add(selectable);
             mAdapter.notifyDataSetChanged(mSelecteds);
+        }
+    }
+
+    void addSelected(List<? extends Selectable> selectables){
+        for (Selectable selectable : selectables){
+            addSelected(selectable);
         }
     }
 

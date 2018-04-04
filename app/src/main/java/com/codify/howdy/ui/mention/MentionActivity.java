@@ -14,7 +14,6 @@ import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Mention;
 import com.codify.howdy.model.ResultTo;
 import com.codify.howdy.model.User;
-import com.codify.howdy.ui.search.UserSearchActivity;
 
 import java.util.ArrayList;
 
@@ -52,6 +51,7 @@ public final class MentionActivity extends HowdyActivity implements MentionView 
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+        mPresenter.getFollowedUsers();
     }
 
     @Override
@@ -62,13 +62,13 @@ public final class MentionActivity extends HowdyActivity implements MentionView 
     }
 
     @Override
-    public void onUserSearched(String query) {
-        mPresenter.search(query);
+    public void onLoaded(ArrayList<User> users) {
+        mPresenter.bind(users);
     }
 
     @Override
-    public void onLoaded(ArrayList<User> users) {
-        mPresenter.bind(users);
+    public void onUserSearched(String query) {
+        mPresenter.search(query);
     }
 
     @Override
@@ -86,8 +86,8 @@ public final class MentionActivity extends HowdyActivity implements MentionView 
     }
 
     @Override
-    public void onDoneClicked() {
-        setResult(RESULT_OK, mPresenter.getSelecteds());
+    public void onDoneClicked(ArrayList<User> users) {
+        setResult(RESULT_OK, users);
         onBackPressed();
     }
 

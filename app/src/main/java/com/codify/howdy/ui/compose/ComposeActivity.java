@@ -117,6 +117,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
         mPresenter.cancelPhoto();
     }
 
+    @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,6 +126,14 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
         if (word != null) {
             mPresenter.addSelected(word);
             mPresenter.getWordsWithFilter();
+            return;
+        }
+
+        ArrayList<User> users = resolveResult(requestCode, resultCode, data, ArrayList.class, WordActivity.REQUEST_CODE);
+        if (users != null) {
+            mPresenter.addSelected(users);
+            mPresenter.getWordsWithFilter();
+            return;
         }
     }
 }

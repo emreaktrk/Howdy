@@ -1,6 +1,7 @@
 package com.codify.howdy.ui.compose;
 
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +56,7 @@ final class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder>
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private CircleImageView mImage;
+        private AppCompatImageView mImage;
         private AppCompatTextView mText;
 
         Holder(View itemView) {

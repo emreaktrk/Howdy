@@ -9,15 +9,15 @@ import java.util.ArrayList;
 
 interface MentionView extends MvpView {
 
-    void onUserSearched(String query);
-
     void onLoaded(ArrayList<User> users);
 
     void onError(ApiError error);
 
+    void onUserSearched(String query);
+
     void onMentionClicked(Mention mention);
 
-    void onDoneClicked();
+    void onDoneClicked(ArrayList<User> users);
 
     void onCloseClicked();
 

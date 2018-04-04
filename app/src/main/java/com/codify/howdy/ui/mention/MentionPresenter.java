@@ -10,9 +10,9 @@ import com.codify.howdy.R;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
-import com.codify.howdy.api.pojo.request.SearchUserRequest;
+import com.codify.howdy.api.pojo.request.GetFollowedUsersRequest;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.SearchUserResponse;
+import com.codify.howdy.api.pojo.response.GetFollowedUsersResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.User;
 import com.codify.howdy.ui.base.BasePresenter;
@@ -54,6 +54,16 @@ final class MentionPresenter extends BasePresenter<MentionView> {
                             view.onUserSearched(word.toString());
                         }));
 
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.mention_done))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Done clicked");
+
+                            view.onDoneClicked(mSelecteds);
+                        }));
+
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
         findViewById(R.id.mention_recycler, RecyclerView.class).addItemDecoration(divider);
@@ -61,27 +71,7 @@ final class MentionPresenter extends BasePresenter<MentionView> {
     }
 
     void search(String query) {
-        SearchUserRequest request = new SearchUserRequest(query);
-        request.token = AccountUtils.tokenLegacy(getContext());
-
-        mDisposables.add(
-                ApiManager
-                        .getInstance()
-                        .searchUser(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<SearchUserResponse>() {
-                            @Override
-                            protected void success(SearchUserResponse response) {
-                                mView.onLoaded(response.data.result);
-                            }
-
-                            @Override
-                            protected void error(ApiError error) {
-                                Logcat.e(error);
-
-                                mView.onError(error);
-                            }
-                        }));
+        // TODO Local search
     }
 
     void bind(List<User> users) {
@@ -95,7 +85,7 @@ final class MentionPresenter extends BasePresenter<MentionView> {
 
                             mView.onMentionClicked(mention);
                         }));
-        findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.mention_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
     void add(User user) {
@@ -110,7 +100,32 @@ final class MentionPresenter extends BasePresenter<MentionView> {
         }
     }
 
-    public ArrayList<User> getSelecteds() {
+    ArrayList<User> getSelecteds() {
         return mSelecteds;
+    }
+
+    void getFollowedUsers() {
+        GetFollowedUsersRequest request = new GetFollowedUsersRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = AccountUtils.me(getContext()).iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getFollowedUsers(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetFollowedUsersResponse>() {
+                            @Override
+                            protected void success(GetFollowedUsersResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

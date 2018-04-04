@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import com.codify.howdy.BuildConfig;
 import com.codify.howdy.R;
 import com.codify.howdy.model.Mention;
 import com.codify.howdy.model.User;
+import com.codify.howdy.view.MentionButton;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -58,11 +60,13 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
         notifyDataSetChanged();
     }
 
-    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    class Holder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
 
         private CircleImageView mImage;
         private AppCompatTextView mUsername;
         private AppCompatTextView mNameSurname;
+        private MentionButton mMention;
 
         Holder(View itemView) {
             super(itemView);
@@ -70,14 +74,16 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
             mImage = itemView.findViewById(R.id.mention_image);
             mUsername = itemView.findViewById(R.id.mention_username);
             mNameSurname = itemView.findViewById(R.id.mention_namesurname);
+            mMention = itemView.findViewById(R.id.mention_button);
 
-            itemView.setOnClickListener(this);
+            mMention.setOnCheckedChangeListener(this);
         }
 
+
         @Override
-        public void onClick(View view) {
+        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
             User user = mList.get(getAdapterPosition());
-            Mention mention = new Mention(user, true);
+            Mention mention = new Mention(user, isChecked);
             mPublish.onNext(mention);
         }
     }
