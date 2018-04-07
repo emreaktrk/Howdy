@@ -1,9 +1,12 @@
 package com.codify.howdy.ui.chat;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.*;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
-
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.codify.howdy.BuildConfig;
@@ -27,15 +30,13 @@ import com.codify.howdy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.squareup.picasso.Picasso;
-
-import java.util.Base64;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+
+import java.util.List;
 
 final class ChatPresenter extends BasePresenter<ChatView> {
 
@@ -85,12 +86,11 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .subscribe(enabled -> findViewById(R.id.chat_send).setEnabled(enabled)));
 
         RecyclerView recycler = findViewById(R.id.chat_recycler, RecyclerView.class);
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true));
 
         int space = SizeUtils.dp2px(16);
-        recycler.addItemDecoration(new VerticalSpaceItemDecoration(space));
         recycler.addItemDecoration(new SideSpaceItemDecoration(space, LinearLayoutManager.HORIZONTAL));
-        recycler.addItemDecoration(new SideSpaceItemDecoration(space, LinearLayoutManager.VERTICAL));
+        recycler.addItemDecoration(new SideSpaceItemDecoration(space / 2, LinearLayoutManager.VERTICAL));
     }
 
     void bind(@NonNull User user) {

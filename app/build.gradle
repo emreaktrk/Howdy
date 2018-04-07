@@ -18,7 +18,7 @@ android {
     }
     dexOptions {
         preDexLibraries true
-        javaMaxHeapSize "2g"
+        javaMaxHeapSize "6g"
     }
     aaptOptions {
         cruncherEnabled = false
@@ -54,16 +54,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:appcompat-v7:27.1.0'
+        resolutionStrategy.force 'com.android.support:cardview-v7:27.1.0'
+        resolutionStrategy.force 'com.android.support:animated-vector-drawable:27.1.0'
+        resolutionStrategy.force 'com.android.support:customtabs:27.1.0'
+    }
 }
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.google.firebase:firebase-core:12.0.0'
-    implementation 'com.google.android.gms:play-services-location:12.0.0'
-    implementation('com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0') { exclude group: 'com.android.support' }
-    implementation('com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.0.0') { exclude group: 'com.android.support' }
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+    implementation 'com.google.android.gms:play-services-location:12.0.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -77,7 +83,7 @@ dependencies {
     implementation 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
     implementation 'com.github.marchinram:RxGallery:0.6.3'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.appunite:video-player-android:1.0.1'
 }

@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "range": "100 m",
+      "name": "Viaport"
+    },
+    {
+      "range": "61 m",
+      "name": "Atlantis"
+    },
+    {
+      "range": "2300 m",
+      "name": "Pelican Mall"
+    },
+    {
+      "range": "123 m",
+      "name": "Kurtkoy"
+    },
+    {
+      "range": "195 m",
+      "name": "Pendik"
+    },
+    {
+      "range": "2300 m",
+      "name": "Atrium"
+    }
+  ]
+}

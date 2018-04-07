@@ -94,6 +94,10 @@
                 android:name=".ui.mention.MentionActivity"
                 android:theme="@style/MainTheme"/>
 
+        <activity
+                android:name=".ui.places.PlacesActivity"
+                android:theme="@style/MainTheme"/>
+
         <service
                 android:name=".account.AccountService"
                 android:exported="false">

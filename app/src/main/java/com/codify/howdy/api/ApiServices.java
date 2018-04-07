@@ -27,7 +27,7 @@ public interface ApiServices {
     Single<GetWordsWithFilterResponse> getWordsWithFilter(@Body GetWordsWithFilterRequest request);
 
     @POST("searchplaces")
-    Single<SearchPlacesRequest> searchPlaces(@Body SearchPlacesRequest request);
+    Single<SearchPlacesResponse> searchPlaces(@Body SearchPlacesRequest request);
 
     @POST("searchuser")
     Single<SearchUserResponse> searchUser(@Body SearchUserRequest request);

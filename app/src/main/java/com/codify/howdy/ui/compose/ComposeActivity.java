@@ -13,6 +13,7 @@ import com.codify.howdy.R;
 import com.codify.howdy.analytics.Analytics;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.*;
+import com.codify.howdy.ui.places.PlacesActivity;
 import com.codify.howdy.ui.word.WordActivity;
 
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     @Override
     public void onCategoryClicked(Category category) {
         if (category.isLocation()) {
-            // TODO Navigate search places screen
+            PlacesActivity.start(ResultTo.ACTIVITY);
         } else {
             WordActivity.start(category, ResultTo.ACTIVITY);
         }
@@ -132,6 +133,13 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
         ArrayList<User> users = resolveResult(requestCode, resultCode, data, ArrayList.class, WordActivity.REQUEST_CODE);
         if (users != null) {
             mPresenter.addSelected(users);
+            mPresenter.getWordsWithFilter();
+            return;
+        }
+
+        Place place = resolveResult(requestCode, resultCode, data, Place.class, PlacesActivity.REQUEST_CODE);
+        if (place != null) {
+            mPresenter.addSelected(place);
             mPresenter.getWordsWithFilter();
             return;
         }

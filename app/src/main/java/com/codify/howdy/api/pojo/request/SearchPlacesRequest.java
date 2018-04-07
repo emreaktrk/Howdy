@@ -9,6 +9,9 @@ public final class SearchPlacesRequest {
     public double lng;
     public String text;
 
+    public SearchPlacesRequest() {
+    }
+
     public SearchPlacesRequest(String token, double lat, double lng, @Nullable String text) {
         this.token = token;
         this.lat = lat;

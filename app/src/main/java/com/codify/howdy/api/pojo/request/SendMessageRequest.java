@@ -1,7 +1,7 @@
 package com.codify.howdy.api.pojo.request;
 
 
-import java.util.Base64;
+import android.util.Base64;
 
 public final class SendMessageRequest {
 
