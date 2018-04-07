@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public final class PlacesActivity extends HowdyActivity implements PlacesView {
 
     public static final int REQUEST_CODE = 238;
+
     private PlacesPresenter mPresenter = new PlacesPresenter();
 
     public static void start(@ResultTo int to) {
@@ -72,7 +73,7 @@ public final class PlacesActivity extends HowdyActivity implements PlacesView {
 
     @Override
     public void onPlaceSearched(String query) {
-        // TODO Get places with text
+        mPresenter.search(query);
     }
 
     @Override

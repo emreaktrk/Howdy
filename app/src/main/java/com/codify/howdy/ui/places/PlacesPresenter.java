@@ -1,5 +1,7 @@
 package com.codify.howdy.ui.places;
 
+import android.annotation.SuppressLint;
+import android.location.Location;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,17 +14,15 @@ import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
 import com.codify.howdy.api.pojo.request.SearchPlacesRequest;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.GetFollowedUsersResponse;
 import com.codify.howdy.api.pojo.response.SearchPlacesResponse;
 import com.codify.howdy.logcat.Logcat;
 import com.codify.howdy.model.Place;
-import com.codify.howdy.model.User;
 import com.codify.howdy.ui.base.BasePresenter;
+import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -78,10 +78,54 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
         findViewById(R.id.places_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
+    @SuppressLint("MissingPermission")
     void getPlaces() {
+        LocationServices
+                .getFusedLocationProviderClient(getContext())
+                .getLastLocation()
+                .continueWith(task -> {
+                    Location result = task.getResult();
+                    if (result == null) {
+                        Location location = new Location("default");
+                        location.setLatitude(40.991955);
+                        location.setLatitude(28.712913);
+                        return location;
+                    }
+
+                    return result;
+                })
+                .addOnSuccessListener(location -> {
+                    SearchPlacesRequest request = new SearchPlacesRequest();
+                    request.token = AccountUtils.tokenLegacy(getContext());
+                    request.lat = location.getLatitude();
+                    request.lng = location.getLongitude();
+
+                    mDisposables.add(
+                            ApiManager
+                                    .getInstance()
+                                    .searchPlaces(request)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new ServiceConsumer<SearchPlacesResponse>() {
+                                        @Override
+                                        protected void success(SearchPlacesResponse response) {
+                                            mView.onLoaded(response.data);
+                                        }
+
+                                        @Override
+                                        protected void error(ApiError error) {
+                                            Logcat.e(error);
+
+                                            mView.onError(error);
+                                        }
+                                    }));
+                })
+                .addOnFailureListener(Logcat::e);
+    }
+
+    void getPlaces(String query) {
         SearchPlacesRequest request = new SearchPlacesRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
-        // TODO Assign other properties
+        request.text = query;
 
         mDisposables.add(
                 ApiManager
