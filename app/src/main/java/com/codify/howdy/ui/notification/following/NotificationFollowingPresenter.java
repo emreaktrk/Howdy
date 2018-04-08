@@ -3,30 +3,31 @@ package com.codify.howdy.ui.notification.following;
 import com.codify.howdy.account.AccountUtils;
 import com.codify.howdy.api.ApiManager;
 import com.codify.howdy.api.pojo.ServiceConsumer;
-import com.codify.howdy.api.pojo.request.GetNotificationsRequest;
+import com.codify.howdy.api.pojo.request.GetNotificationsFollowingRequest;
 import com.codify.howdy.api.pojo.response.ApiError;
-import com.codify.howdy.api.pojo.response.GetNotificationsResponse;
+import com.codify.howdy.api.pojo.response.GetNotificationsFollowingResponse;
 import com.codify.howdy.logcat.Logcat;
-import com.codify.howdy.model.NotificationType;
+import com.codify.howdy.model.NotificationsFollowing;
 import com.codify.howdy.ui.base.BasePresenter;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import java.util.List;
 
 final class NotificationFollowingPresenter extends BasePresenter<NotificationFollowingView> {
 
     void getNotifications() {
-        GetNotificationsRequest request = new GetNotificationsRequest(NotificationType.FOLLOWINGS);
+        GetNotificationsFollowingRequest request = new GetNotificationsFollowingRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
 
         mDisposables.add(
                 ApiManager
                         .getInstance()
-                        .getNotifications(request)
+                        .getNotificationsFollowing(request)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<GetNotificationsResponse>() {
+                        .subscribe(new ServiceConsumer<GetNotificationsFollowingResponse>() {
                             @Override
-                            protected void success(GetNotificationsResponse response) {
-                                mView.onLoaded(response.data.userNotifications);
+                            protected void success(GetNotificationsFollowingResponse response) {
+                                mView.onLoaded(response.data);
                             }
 
                             @Override
@@ -36,5 +37,9 @@ final class NotificationFollowingPresenter extends BasePresenter<NotificationFol
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void bind(List<NotificationsFollowing> notifications) {
+
     }
 }

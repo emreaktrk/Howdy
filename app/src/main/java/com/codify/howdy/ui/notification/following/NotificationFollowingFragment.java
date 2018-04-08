@@ -10,6 +10,7 @@ import com.codify.howdy.HowdyFragment;
 import com.codify.howdy.R;
 import com.codify.howdy.api.pojo.response.ApiError;
 import com.codify.howdy.model.Notification;
+import com.codify.howdy.model.NotificationsFollowing;
 
 import java.util.List;
 
@@ -38,12 +39,17 @@ public final class NotificationFollowingFragment extends HowdyFragment implement
     }
 
     @Override
-    public void onLoaded(List<Notification> notifications) {
-
+    public void onLoaded(List<NotificationsFollowing> notifications) {
+        mPresenter.bind(notifications);
     }
 
     @Override
     public void onError(ApiError error) {
         ToastUtils.showShort(error.message);
+    }
+
+    @Override
+    public void onNotificationClicked(Notification notification) {
+        // TODO Deep link
     }
 }

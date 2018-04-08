@@ -54,7 +54,10 @@ public interface ApiServices {
     Single<UploadImageResponse> uploadImage(@Body UploadImageRequest request);
 
     @POST("getnotifications")
-    Single<GetNotificationsResponse> getNotifications(@Body GetNotificationsRequest request);
+    Single<GetNotificationsMeResponse> getNotificationsMe(@Body GetNotificationsMeRequest request);
+
+    @POST("getnotifications")
+    Single<GetNotificationsFollowingResponse> getNotificationsFollowing(@Body GetNotificationsFollowingRequest request);
 
     @POST("commentpost")
     Single<CommentPostResponse> commentPost(@Body CommentPostRequest request);

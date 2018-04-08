@@ -30,6 +30,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
     void bind(User user) {
         findViewById(R.id.profile_username, AppCompatTextView.class).setText(user.username);
+        findViewById(R.id.profile_fullname, AppCompatTextView.class).setText(user.namesurname);
 
         Picasso
                 .with(getContext())

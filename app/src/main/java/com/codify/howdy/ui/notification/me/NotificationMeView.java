@@ -12,4 +12,6 @@ interface NotificationMeView extends MvpView {
     void onLoaded(List<Notification> notifications, List<FollowRequest> requests);
 
     void onError(ApiError error);
+
+    void onNotificationClicked(Notification notification);
 }

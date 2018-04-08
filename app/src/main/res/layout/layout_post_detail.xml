@@ -51,6 +51,8 @@
             android:id="@+id/post_detail_badge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/post_detail_comment_recycler"
@@ -60,10 +62,13 @@
             android:id="@+id/post_detail_comment_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/post_detail_badge"
             app:layout_constraintBottom_toTopOf="@id/post_detail_bottom_divider"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/cell_user_messages"/>
 
