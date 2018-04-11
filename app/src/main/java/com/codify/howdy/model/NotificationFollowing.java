@@ -3,7 +3,7 @@ package com.codify.howdy.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public final class NotificationsFollowing implements Serializable {
+public final class NotificationFollowing implements Serializable {
 
     public int actionCount;
     public long notification_fromuserid;

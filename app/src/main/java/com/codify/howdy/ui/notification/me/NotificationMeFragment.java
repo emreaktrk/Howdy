@@ -27,7 +27,7 @@ public final class NotificationMeFragment extends HowdyFragment implements Notif
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, this);
-//        mPresenter.getNotifications();
+        mPresenter.getNotifications();
     }
 
     @Override
