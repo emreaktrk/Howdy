@@ -70,4 +70,10 @@ public interface ApiServices {
 
     @POST("getfollowedusers")
     Single<GetFollowedUsersResponse> getFollowedUsers(@Body GetFollowedUsersRequest request);
+
+    @POST("getActivities")
+    Single<GetActivitiesResponse> getActivities();
+
+    @POST("getActivityStats")
+    Single<GetActivityStatsResponse> getActivityStats(@Body GetActivityStatsRequest request);
 }

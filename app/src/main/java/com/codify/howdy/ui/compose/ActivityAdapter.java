@@ -16,13 +16,13 @@ import io.reactivex.subjects.PublishSubject;
 import java.util.ArrayList;
 import java.util.List;
 
-final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder> {
+public final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder> {
 
     private final PublishSubject<Activity> mPublish = PublishSubject.create();
     private List<Activity> mList;
     private Activity mSelected;
 
-    ActivityAdapter(@Nullable List<Activity> list, @Nullable Activity selected) {
+    public ActivityAdapter(@Nullable List<Activity> list, @Nullable Activity selected) {
         mList = list == null ? new ArrayList<>() : list;
         mSelected = selected;
     }
@@ -49,8 +49,12 @@ final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Holder>
         return mList.size();
     }
 
-    PublishSubject<Activity> itemClicks() {
+    public PublishSubject<Activity> itemClicks() {
         return mPublish;
+    }
+
+    public void setSelected(@Nullable Activity selected){
+        mSelected = selected;
     }
 
     public void notifyDataSetChanged(List<Activity> list) {
