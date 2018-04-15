@@ -15,4 +15,6 @@ interface StatisticEventView extends MvpView {
     void onError(ApiError error);
 
     void onActivityClicked(Activity activity);
+
+    void onWordSelected(Word word);
 }

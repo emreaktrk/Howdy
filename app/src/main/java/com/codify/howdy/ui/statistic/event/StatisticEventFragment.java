@@ -56,4 +56,9 @@ public final class StatisticEventFragment extends HowdyFragment implements Stati
         mPresenter.bind(activity);
         mPresenter.getStats(activity);
     }
+
+    @Override
+    public void onWordSelected(Word word) {
+        mPresenter.bind(word);
+    }
 }

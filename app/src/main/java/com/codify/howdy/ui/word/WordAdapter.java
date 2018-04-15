@@ -16,13 +16,13 @@ import io.reactivex.subjects.PublishSubject;
 import java.util.ArrayList;
 import java.util.List;
 
-final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
+public final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
 
     private final List<Word> mList;
     private final PublishSubject<Word> mPublish = PublishSubject.create();
     private List<Word> mFiltered;
 
-    WordAdapter(@Nullable List<Word> list) {
+    public WordAdapter(@Nullable List<Word> list) {
         mList = list == null ? new ArrayList<>() : list;
         mFiltered = new ArrayList<>(mList);
     }
@@ -49,11 +49,11 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
         return mFiltered.size();
     }
 
-    PublishSubject<Word> itemClicks() {
+    public PublishSubject<Word> itemClicks() {
         return mPublish;
     }
 
-    List<Word> getWords() {
+    public List<Word> getWords() {
         return mList;
     }
 
