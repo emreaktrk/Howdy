@@ -10,6 +10,7 @@ import istanbul.codify.muudy.api.pojo.request.UpdateProfileRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.UpdateProfileResponse;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.DeviceType;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
 final class FCMPresenter extends BasePresenter<FCMView> {
@@ -28,6 +29,7 @@ final class FCMPresenter extends BasePresenter<FCMView> {
         UpdateProfileRequest request = new UpdateProfileRequest();
         request.token = AccountUtils.tokenLegacy(context);
         request.pushToken = token;
+        request.deviceType = DeviceType.ANDROID;
 
         mDisposables
                 .add(

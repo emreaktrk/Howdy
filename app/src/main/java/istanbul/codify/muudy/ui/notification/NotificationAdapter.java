@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import istanbul.codify.muudy.BuildConfig;
-import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.model.Notification;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
+import istanbul.codify.muudy.BuildConfig;
+import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<Notification
         holder.mText.setText(notification.notification_msg);
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + notification.fromUser.imgpath1)
+                .load(notification.fromUser == null ? null : BuildConfig.URL + notification.fromUser.imgpath1)
                 .into(holder.mImage);
     }
 
@@ -65,7 +65,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<Notification
             mText = itemView.findViewById(R.id.notification_text);
 
             itemView.setOnClickListener(this);
-
         }
 
         @Override
