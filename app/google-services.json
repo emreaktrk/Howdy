@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "1089335096230",
-    "firebase_url": "https://muudy-c5c89.firebaseio.com",
-    "project_id": "muudy-c5c89",
-    "storage_bucket": "muudy-c5c89.appspot.com"
+    "project_number": "231087551966",
+    "firebase_url": "https://muudy-1ce1b.firebaseio.com",
+    "project_id": "muudy-1ce1b",
+    "storage_bucket": "muudy-1ce1b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1089335096230:android:94f4cf4d208ca157",
+        "mobilesdk_app_id": "1:231087551966:android:15d0703d3f927a73",
         "android_client_info": {
-          "package_name": "com.codify.howdy.test"
+          "package_name": "istanbul.codify.muudy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1089335096230-ust96691pn803e822l7b9sfnl60b9863.apps.googleusercontent.com",
+          "client_id": "231087551966-h02igous9jtiu4fb3es42q7ttflnp9g5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codify.howdy.test",
-            "certificate_hash": "5c0996b4fe80482ac438dcba3e5d9df3c2eace52"
+            "package_name": "istanbul.codify.muudy",
+            "certificate_hash": "120b8f5ab184813570c91f4e940cc3705cd4fc75"
           }
         },
         {
-          "client_id": "1089335096230-53nl94phfsvg2eugqeden37jthckdue7.apps.googleusercontent.com",
+          "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBXMZqcqEwwCXo2mR6_nrrGqhrbg5Tchjs"
+          "current_key": "AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4"
         }
       ],
       "services": {
@@ -40,7 +40,51 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1089335096230-53nl94phfsvg2eugqeden37jthckdue7.apps.googleusercontent.com",
+              "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231087551966:android:6ba69fc67155f5c5",
+        "android_client_info": {
+          "package_name": "istanbul.codify.muudy.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231087551966-ca51gk8ilhqg590pcng4d75t3vnmmt0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "istanbul.codify.muudy.test",
+            "certificate_hash": "5c0996b4fe80482ac438dcba3e5d9df3c2eace52"
+          }
+        },
+        {
+          "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

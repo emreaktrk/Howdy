@@ -156,6 +156,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/home_search_container"
-            app:layoutManager="com.codify.howdy.helper.layoutmanager.CategoryLayoutManager"
+            app:layoutManager="istanbul.codify.muudy.helper.layoutmanager.CategoryLayoutManager"
             tools:listitem="@layout/cell_category"/>
 </android.support.constraint.ConstraintLayout>

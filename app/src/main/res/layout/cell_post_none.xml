@@ -45,7 +45,7 @@
                 android:padding="8dp"
                 tools:text="@sample/post.json/data/sentence"/>
 
-        <com.codify.howdy.view.LikeButton
+        <istanbul.codify.muudy.view.LikeButton
                 android:id="@+id/post_like"
                 style="@style/Text.Normal"
                 android:layout_width="wrap_content"
