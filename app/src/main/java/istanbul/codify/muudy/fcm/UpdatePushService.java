@@ -42,7 +42,7 @@ public final class UpdatePushService extends IntentService implements FCMView {
 
     @Override
     public void onTokenUpdated(String token) {
-        // Empty block
+        mPresenter.detachView();
     }
 
     @Override

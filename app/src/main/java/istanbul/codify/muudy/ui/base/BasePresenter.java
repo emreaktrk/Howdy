@@ -1,28 +1,25 @@
 package istanbul.codify.muudy.ui.base;
 
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import io.reactivex.disposables.Disposable;
-
-import java.util.ArrayList;
+import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
-    protected ArrayList<Disposable> mDisposables;
     protected V mView;
     protected View mRoot;
+    protected CompositeDisposable mDisposables;
 
     @Override
     public void attachView(V view, View root) {
         mView = view;
         mRoot = root;
 
-        mDisposables = new ArrayList<>();
+        mDisposables = new CompositeDisposable();
     }
 
     public final void attachView(V view, Fragment fragment) {
@@ -37,7 +34,7 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         mView = view;
         mRoot = null;
 
-        mDisposables = new ArrayList<>();
+        mDisposables = new CompositeDisposable();
     }
 
     @Override
@@ -45,9 +42,7 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
         mView = null;
         mRoot = null;
 
-        for (Disposable disposable : mDisposables) {
-            disposable.dispose();
-        }
+        mDisposables.clear();
     }
 
     private boolean isViewAttached() {
