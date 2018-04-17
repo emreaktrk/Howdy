@@ -200,7 +200,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         public void onClick(View view) {
-            Post post = mPosts.get(getAdapterPosition());
+            Post post = getItem(getAdapterPosition());
             switch (view.getId()) {
                 case R.id.post_image:
                     mAvatarSubject.onNext(post);
@@ -212,7 +212,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-            Post post = mPosts.get(getAdapterPosition());
+            Post post = getItem(getAdapterPosition());
             Like like = new Like(post, isChecked);
             mLikeSubject.onNext(like);
         }

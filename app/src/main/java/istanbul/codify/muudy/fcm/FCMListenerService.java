@@ -51,7 +51,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         Notification notification = new NotificationCompat
                 .Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(getTitle(message))
                 .setContentText(getBody(message))
                 .setAutoCancel(true)
