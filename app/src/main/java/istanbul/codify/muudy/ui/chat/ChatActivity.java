@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.HowdyActivity;
@@ -13,6 +12,8 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.event.ChatEvent;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -91,6 +92,21 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
     @Override
     public void onLoaded(Object object) {
         // TODO Update
+    }
+
+    @Subscribe
+    public void onEvent(ChatEvent event) {
+        User user = getSerializable(User.class);
+        if (user != null) {
+            mPresenter.bind(user);
+            mPresenter.getMessages(user.iduser);
+            return;
+        }
+
+        Long userId = getSerializable(Long.class);
+        if (userId != null) {
+            mPresenter.getUser(userId);
+        }
     }
 
     @Override

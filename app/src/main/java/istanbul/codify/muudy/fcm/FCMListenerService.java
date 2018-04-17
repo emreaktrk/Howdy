@@ -10,13 +10,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.NotificationActionType;
+import istanbul.codify.muudy.model.event.NotificationEvent;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
+import org.greenrobot.eventbus.EventBus;
 
 
 public final class FCMListenerService extends FirebaseMessagingService {
@@ -31,6 +35,13 @@ public final class FCMListenerService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage message) {
+        NotificationEvent event = getEvent(message);
+        if (event != null) {
+            EventBus
+                    .getDefault()
+                    .post(getNotificationActionType(message));
+        }
+
         NotificationManager manager = getManager();
 
         Intent intent = new Intent(this, SplashActivity.class);
@@ -108,6 +119,29 @@ public final class FCMListenerService extends FirebaseMessagingService {
         } else {
             return message.getNotification().getLink();
         }
+    }
+
+    private NotificationActionType getNotificationActionType(RemoteMessage message) {
+        return NotificationActionType.value(message.getData().get("actiontype"));
+    }
+
+    private @Nullable
+    Long getItemId(RemoteMessage message) {
+        String itemId = message.getData().get("itemid");
+        return TextUtils.isEmpty(itemId) ? null : Long.valueOf(itemId);
+    }
+
+    public @Nullable
+    NotificationEvent getEvent(RemoteMessage message) {
+        NotificationActionType type = getNotificationActionType(message);
+        if (type != null) {
+            NotificationEvent event = type.getEvent();
+            if (event != null) {
+                event.itemId = getItemId(message);
+            }
+        }
+
+        return null;
     }
 
     private NotificationManager getManager() {
