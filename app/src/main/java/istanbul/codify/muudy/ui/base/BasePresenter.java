@@ -1,15 +1,15 @@
 package istanbul.codify.muudy.ui.base;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import io.reactivex.disposables.Disposable;
 
 import java.util.ArrayList;
-
-import io.reactivex.disposables.Disposable;
 
 public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
@@ -31,6 +31,13 @@ public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V
 
     public final void attachView(V view, Activity activity) {
         attachView(view, activity.getWindow().getDecorView().getRootView());
+    }
+
+    public final void attachView(V view) {
+        mView = view;
+        mRoot = null;
+
+        mDisposables = new ArrayList<>();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.HowdyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
@@ -51,6 +52,8 @@ public final class MainActivity extends HowdyActivity implements MainView, Navig
                 .commit();
 
         mPresenter.attachView(this, this);
+
+        UpdatePushService.start();
     }
 
     @Override

@@ -76,4 +76,7 @@ public interface ApiServices {
 
     @POST("getActivityStats")
     Single<GetActivityStatsResponse> getActivityStats(@Body GetActivityStatsRequest request);
+
+    @POST("updateprofile")
+    Single<UpdateProfileResponse> updateProfile(@Body UpdateProfileRequest request);
 }
