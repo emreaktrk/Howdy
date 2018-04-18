@@ -24,7 +24,8 @@ public final class GetWordsWithFilterRequest {
         if (words != null) {
             for (Selectable selected : words) {
                 if (selected != null && selected instanceof Word) {
-                    categoriesIDarray.add(selected.id());
+                    Word word = (Word) selected;
+                    categoriesIDarray.add(word.words_top_category_id);
                 }
             }
         }
@@ -36,7 +37,8 @@ public final class GetWordsWithFilterRequest {
             for (Selectable selected : selecteds) {
                 if (selected != null) {
                     if (selected instanceof Word) {
-                        categoriesIDarray.add(selected.id());
+                        Word word = (Word) selected;
+                        categoriesIDarray.add(word.words_top_category_id);
                     } else if (selected instanceof Activity) {
                         activityid = selected.id();
                     } else if (selected instanceof User) {
