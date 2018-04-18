@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.api.pojo.response;
 
 
-public final class SendMessageResponse extends BaseResponse<Object> {
+import istanbul.codify.muudy.model.MessageResult;
+
+public final class SendMessageResponse extends BaseResponse<MessageResult> {
 }

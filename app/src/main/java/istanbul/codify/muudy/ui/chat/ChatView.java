@@ -1,7 +1,9 @@
 package istanbul.codify.muudy.ui.chat;
 
+import android.net.Uri;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
+import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.MvpView;
 
@@ -13,13 +15,19 @@ interface ChatView extends MvpView {
 
     void onMediaClicked();
 
+    void onPhotoSelected(Uri uri);
+
     void onLoaded(User user);
 
     void onLoaded(List<Chat> chats);
 
-    void onLoaded(Object object);
+    void onMessageSent(Result result);
+
+    void onImageClicked(Chat chat);
+
 
     void onError(ApiError error);
 
     void onBackClicked();
+
 }

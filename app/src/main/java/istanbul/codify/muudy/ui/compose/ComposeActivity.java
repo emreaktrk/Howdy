@@ -105,7 +105,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
 
     @Override
     public void onPictureClicked() {
-        mPresenter.selectPhoto(this);
+
     }
 
     @Override

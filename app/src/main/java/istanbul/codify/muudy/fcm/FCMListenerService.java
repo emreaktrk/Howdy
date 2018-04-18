@@ -39,7 +39,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         if (event != null) {
             EventBus
                     .getDefault()
-                    .post(getNotificationActionType(message));
+                    .post(event);
         }
 
         NotificationManager manager = getManager();
@@ -139,6 +139,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
             if (event != null) {
                 event.itemId = getItemId(message);
             }
+
+            return event;
         }
 
         return null;

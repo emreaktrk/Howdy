@@ -1,17 +1,19 @@
 package istanbul.codify.muudy.ui.messages;
 
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import istanbul.codify.muudy.BuildConfig;
-import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.model.UserMessage;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
+import istanbul.codify.muudy.BuildConfig;
+import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.Result;
+import istanbul.codify.muudy.model.UserMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +39,14 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
 
         Picasso
                 .with(holder.mImage.getContext())
-                .load(BuildConfig.URL + message.message_touserid)
+                .load(BuildConfig.URL + message.otherUser.imgpath1)
                 .into(holder.mImage);
-        holder.mUsername.setText(message.otherUser == null ? null : message.otherUser.username);
+        holder.mUsername.setText(message.otherUser.username);
         holder.mLastMessage.setText(message.message_text);
-        holder.mDate.setText(message.message_isreaded + "");
+        holder.mDate.setText(message.message_humandate);
+
+        holder.mUsername.setTypeface(holder.mUsername.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);
+        holder.mLastMessage.setTypeface(holder.mLastMessage.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);
     }
 
     @Override
@@ -57,6 +62,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
         mList = list;
         notifyDataSetChanged();
     }
+
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

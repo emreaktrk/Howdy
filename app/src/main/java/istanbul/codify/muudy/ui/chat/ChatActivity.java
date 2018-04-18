@@ -2,22 +2,28 @@ package istanbul.codify.muudy.ui.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.HowdyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
+import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.event.ChatEvent;
+import istanbul.codify.muudy.model.event.MessageEvent;
+import istanbul.codify.muudy.ui.EventSupport;
+import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public final class ChatActivity extends HowdyActivity implements ChatView {
+public final class ChatActivity extends HowdyActivity implements ChatView, EventSupport {
 
     private ChatPresenter mPresenter = new ChatPresenter();
 
@@ -75,7 +81,12 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
 
     @Override
     public void onMediaClicked() {
+        mPresenter.selectPhoto(this);
+    }
 
+    @Override
+    public void onPhotoSelected(Uri uri) {
+        mPresenter.send(uri);
     }
 
     @Override
@@ -90,12 +101,27 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
     }
 
     @Override
-    public void onLoaded(Object object) {
-        // TODO Update
+    public void onMessageSent(Result result) {
+        User user = getSerializable(User.class);
+        if (user != null) {
+            mPresenter.bind(user);
+            mPresenter.getMessages(user.iduser);
+            return;
+        }
+
+        Long userId = getSerializable(Long.class);
+        if (userId != null) {
+            mPresenter.getUser(userId);
+        }
     }
 
-    @Subscribe
-    public void onEvent(ChatEvent event) {
+    @Override
+    public void onImageClicked(Chat chat) {
+        PhotoActivity.start(chat.message_img_path);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
         User user = getSerializable(User.class);
         if (user != null) {
             mPresenter.bind(user);
@@ -111,7 +137,7 @@ public final class ChatActivity extends HowdyActivity implements ChatView {
 
     @Override
     public void onError(ApiError error) {
-
+        ToastUtils.showShort(error.message);
     }
 
     @Override

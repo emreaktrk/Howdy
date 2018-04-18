@@ -35,7 +35,6 @@
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/user_messages_date"
             style="@style/Text.Normal"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -45,7 +44,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:visibility="visible"
             tools:text="@tools:sample/date/ddmmyy"/>
 
     <android.support.v7.widget.AppCompatTextView

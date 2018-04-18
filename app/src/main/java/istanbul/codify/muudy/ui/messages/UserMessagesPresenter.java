@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.messages;
 
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -44,6 +46,9 @@ final class UserMessagesPresenter extends BasePresenter<UserMessagesView> {
                             view.onNewClicked();
                         }));
 
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
+        findViewById(R.id.user_search_recycler, RecyclerView.class).addItemDecoration(divider);
         findViewById(R.id.user_search_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
     }
 

@@ -1,5 +1,0 @@
-package istanbul.codify.muudy.model.event;
-
-public final class ChatEvent extends NotificationEvent{
-
-}

@@ -9,15 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.squareup.picasso.Picasso;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Chat;
+import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.ui.chat.decorator.IncomingChatDecorator;
 import istanbul.codify.muudy.ui.chat.decorator.OutgoingChatDecorator;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,7 @@ import java.util.List;
 
 final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
 
+    private PublishSubject<Chat> mSubject = PublishSubject.create();
     private List<Chat> mList;
     private long mUserId;
 
@@ -97,6 +98,10 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
         abstract View getView();
     }
 
+    PublishSubject<Chat> imageClicks() {
+        return mSubject;
+    }
+
     class TextHolder extends Holder {
 
         private static final int TYPE = 0;
@@ -115,7 +120,7 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
         }
     }
 
-    class ImageHolder extends Holder {
+    class ImageHolder extends Holder implements View.OnClickListener {
 
         private static final int TYPE = 1;
 
@@ -125,11 +130,18 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.chat_image);
+            mImage.setOnClickListener(this);
         }
 
         @Override
         View getView() {
             return mImage;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Chat chat = mList.get(getAdapterPosition());
+            mSubject.onNext(chat);
         }
     }
 }

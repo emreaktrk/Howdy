@@ -205,7 +205,6 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             Logcat.v("Selected uri for photo is " + uri.toString());
 
                             mView.onPhotoSelected(uri);
-
                         })
         );
     }

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import istanbul.codify.muudy.ui.EventSupport;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
@@ -22,6 +24,23 @@ public abstract class HowdyActivity extends AppCompatActivity {
 
         if (getLayoutResId() != NO_ID) {
             setContentView(getLayoutResId());
+        }
+
+        if (this instanceof EventSupport){
+            EventBus
+                    .getDefault()
+                    .register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (this instanceof EventSupport){
+            EventBus
+                    .getDefault()
+                    .unregister(this);
         }
     }
 

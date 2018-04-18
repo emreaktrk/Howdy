@@ -1,6 +1,11 @@
 package istanbul.codify.muudy.ui.chat;
 
+import android.Manifest;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +14,16 @@ import android.util.Base64;
 import android.view.View;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.marchinram.rxgallery.RxGallery;
+import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -22,20 +37,13 @@ import istanbul.codify.muudy.api.pojo.response.GetMessagesResponse;
 import istanbul.codify.muudy.api.pojo.response.GetUserProfileResponse;
 import istanbul.codify.muudy.api.pojo.response.SendMessageResponse;
 import istanbul.codify.muudy.helper.decoration.SideSpaceItemDecoration;
-import istanbul.codify.muudy.helper.decoration.VerticalSpaceItemDecoration;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.squareup.picasso.Picasso;
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 final class ChatPresenter extends BasePresenter<ChatView> {
@@ -107,6 +115,14 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         long userId = AccountUtils.me(getContext()).iduser;
 
         ChatAdapter adapter = new ChatAdapter(chats, userId);
+        mDisposables.add(
+                adapter
+                        .imageClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Image clicked");
+                            mView.onImageClicked(cell);
+                        }));
         findViewById(R.id.chat_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
@@ -126,7 +142,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .subscribe(new ServiceConsumer<SendMessageResponse>() {
                             @Override
                             protected void success(SendMessageResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onMessageSent(response.data.r);
                             }
 
                             @Override
@@ -138,12 +154,12 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         }));
     }
 
-    void send(Base64 data) {
+    void send(byte[] bytes) {
         findViewById(R.id.chat_message, AppCompatEditText.class).setText(null);
 
         SendMessageRequest request = new SendMessageRequest();
         request.toUserId = mUser.iduser;
-        request.data = data;
+        request.data = Base64.encodeToString(bytes, Base64.DEFAULT);
         request.token = AccountUtils.tokenLegacy(getContext());
 
         mDisposables.add(
@@ -154,7 +170,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .subscribe(new ServiceConsumer<SendMessageResponse>() {
                             @Override
                             protected void success(SendMessageResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onMessageSent(response.data.r);
                             }
 
                             @Override
@@ -164,6 +180,49 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void send(Uri uri) {
+        try {
+            InputStream input = getContext().getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            byte[] bytes = output.toByteArray();
+
+            send(bytes);
+        } catch (Exception e) {
+            Logcat.e(e);
+
+            // TODO Notify ui
+        }
+    }
+
+    void selectPhoto(@NonNull AppCompatActivity activity) {
+        mDisposables.add(
+                new RxPermissions(activity)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .flatMap((Function<Boolean, ObservableSource<List<Uri>>>) granted -> granted ? RxGallery.gallery(activity, false).toObservable() : Observable.empty())
+                        .subscribe(uris -> {
+                            Uri uri = uris.get(0);
+                            Logcat.v("Selected uri for photo is " + uri.toString());
+
+                            mView.onPhotoSelected(uri);
+                        })
+        );
+    }
+
+    void capturePhoto(@NonNull AppCompatActivity activity) {
+        mDisposables.add(
+                new RxPermissions(activity)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .flatMap((Function<Boolean, ObservableSource<Uri>>) granted -> granted ? RxGallery.photoCapture(activity).toObservable() : Observable.empty())
+                        .subscribe(uri -> {
+                            Logcat.v("Selected uri for photo is " + uri.toString());
+
+                            mView.onPhotoSelected(uri);
+                        })
+        );
     }
 
     public void getUser(Long userId) {

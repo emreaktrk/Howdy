@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -14,12 +13,16 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UserMessage;
+import istanbul.codify.muudy.model.event.MessageEvent;
+import istanbul.codify.muudy.ui.EventSupport;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public final class UserMessagesActivity extends HowdyActivity implements UserMessagesView {
+public final class UserMessagesActivity extends HowdyActivity implements UserMessagesView, EventSupport {
 
     private UserMessagesPresenter mPresenter = new UserMessagesPresenter();
 
@@ -40,6 +43,12 @@ public final class UserMessagesActivity extends HowdyActivity implements UserMes
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         mPresenter.getMessages();
     }
 
@@ -61,6 +70,11 @@ public final class UserMessagesActivity extends HowdyActivity implements UserMes
     @Override
     public void onLoaded(List<UserMessage> messages) {
         mPresenter.bind(messages);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        mPresenter.getMessages();
     }
 
     @Override

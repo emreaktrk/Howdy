@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import istanbul.codify.muudy.model.event.ChatEvent;
+import istanbul.codify.muudy.model.event.MessageEvent;
 import istanbul.codify.muudy.model.event.NotificationEvent;
 
 public enum NotificationActionType {
@@ -35,7 +35,7 @@ public enum NotificationActionType {
     public NotificationEvent getEvent() {
         switch (this) {
             case MESSAGE:
-                return new ChatEvent();
+                return new MessageEvent();
             default:
                 return null;
         }
