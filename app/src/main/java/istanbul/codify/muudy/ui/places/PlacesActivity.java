@@ -13,7 +13,6 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Place;
 import istanbul.codify.muudy.model.ResultTo;
-import istanbul.codify.muudy.ui.mention.MentionActivity;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public final class PlacesActivity extends HowdyActivity implements PlacesView {
     public static void start(@ResultTo int to) {
         AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
 
-        Intent starter = new Intent(activity, MentionActivity.class);
+        Intent starter = new Intent(activity, PlacesActivity.class);
 
         switch (to) {
             case ResultTo.ACTIVITY:

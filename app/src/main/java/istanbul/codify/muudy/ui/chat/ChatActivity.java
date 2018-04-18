@@ -16,7 +16,7 @@ import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.MessageEvent;
-import istanbul.codify.muudy.ui.EventSupport;
+import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

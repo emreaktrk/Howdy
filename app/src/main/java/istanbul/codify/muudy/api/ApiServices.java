@@ -79,4 +79,7 @@ public interface ApiServices {
 
     @POST("updateprofile")
     Single<UpdateProfileResponse> updateProfile(@Body UpdateProfileRequest request);
+
+    @POST("createposttext")
+    Single<CreateTextPostResponse> createPostText(@Body CreatePostTextRequest request);
 }

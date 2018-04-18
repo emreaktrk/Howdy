@@ -60,16 +60,27 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/cell_selected_word"/>
 
+    <View
+            android:id="@+id/compose_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/compose_selected_word_recycler"
+            android:layout_gravity="bottom"/>
+
     <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/compose_picture"
             style="@style/Button.Transparent"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerInside"
+            android:src="@drawable/ic_image_add"
             app:layout_constraintBottom_toTopOf="@id/compose_now"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/compose_selected_word_recycler"
+            app:layout_constraintTop_toBottomOf="@id/compose_divider"
             tools:scaleType="center"
             tools:src="@tools:sample/backgrounds/scenic"/>
 

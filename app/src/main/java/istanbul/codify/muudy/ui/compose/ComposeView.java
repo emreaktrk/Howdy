@@ -23,6 +23,8 @@ interface ComposeView extends MvpView {
 
     void onLoaded(ArrayList<Category> filtered);
 
+    void onLoaded(String sentence);
+
     void onError(ApiError error);
 
     void onCategoryClicked(Category category);

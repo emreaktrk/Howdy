@@ -9,17 +9,6 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.api.ApiManager;
-import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.GetWordsWithFilterRequest;
-import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.GetWordsWithFilterResponse;
-import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.Activity;
-import istanbul.codify.muudy.model.Category;
-import istanbul.codify.muudy.model.Selectable;
-import istanbul.codify.muudy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
 import com.squareup.picasso.Picasso;
@@ -28,11 +17,24 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.api.ApiManager;
+import istanbul.codify.muudy.api.pojo.ServiceConsumer;
+import istanbul.codify.muudy.api.pojo.request.CreatePostTextRequest;
+import istanbul.codify.muudy.api.pojo.request.GetWordsWithFilterRequest;
+import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.api.pojo.response.CreateTextPostResponse;
+import istanbul.codify.muudy.api.pojo.response.GetWordsWithFilterResponse;
+import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.Activity;
+import istanbul.codify.muudy.model.Category;
+import istanbul.codify.muudy.model.Selectable;
+import istanbul.codify.muudy.ui.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 final class ComposePresenter extends BasePresenter<ComposeView> {
 
@@ -178,8 +180,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         }
     }
 
-    void addSelected(List<? extends Selectable> selectables){
-        for (Selectable selectable : selectables){
+    void addSelected(List<? extends Selectable> selectables) {
+        for (Selectable selectable : selectables) {
             addSelected(selectable);
         }
     }
@@ -236,8 +238,32 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void cancelPhoto() {
         mPhoto = null;
 
-        findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(null);
+        findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageResource(R.drawable.ic_image_add);
         findViewById(R.id.compose_cancel).setVisibility(View.GONE);
+    }
+
+    void createTextPost() {
+        CreatePostTextRequest request = new CreatePostTextRequest(mSelecteds);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .createPostText(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<CreateTextPostResponse>() {
+                            @Override
+                            protected void success(CreateTextPostResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 
     private Activity getSelectedActivity() {

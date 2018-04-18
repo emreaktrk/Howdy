@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:context=".ui.compose.ComposeActivity">
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/compose_title"
+            style="@style/Text.Normal"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Paylaşım Detayı"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/compose_sentence"
+            style="@style/Text.Normal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/compose_title"
+            tools:text="egesert, keyifli hissediyor"/>
+
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/compose_share"
+            style="@style/Button.Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
+            android:text="Paylaş"
+            app:layout_constraintTop_toBottomOf="@id/compose_sentence"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+</android.support.constraint.ConstraintLayout>

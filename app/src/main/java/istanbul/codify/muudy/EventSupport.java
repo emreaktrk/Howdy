@@ -1,4 +1,4 @@
-package istanbul.codify.muudy.ui;
+package istanbul.codify.muudy;
 
 public interface EventSupport {
 }

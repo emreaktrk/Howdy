@@ -8,18 +8,23 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.HowdyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.event.ShareEvent;
+import istanbul.codify.muudy.ui.compose.dialog.ComposeDialog;
 import istanbul.codify.muudy.ui.places.PlacesActivity;
 import istanbul.codify.muudy.ui.word.WordActivity;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
 
-public final class ComposeActivity extends HowdyActivity implements ComposeView {
+public final class ComposeActivity extends HowdyActivity implements ComposeView, EventSupport {
 
     private final ComposePresenter mPresenter = new ComposePresenter();
 
@@ -55,6 +60,8 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
         Analytics
                 .getInstance()
                 .custom(Analytics.Events.COMPOSE);
+
+        mPresenter.createTextPost();
     }
 
     @Override
@@ -75,6 +82,18 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView 
     @Override
     public void onLoaded(ArrayList<Category> filtered) {
         mPresenter.bind(filtered);
+    }
+
+    @Override
+    public void onLoaded(String sentence) {
+        ComposeDialog
+                .newInstance(sentence)
+                .show(getSupportFragmentManager(), null);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShareEvent(ShareEvent event) {
+        // TODO Request new post
     }
 
     @Override

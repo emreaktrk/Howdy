@@ -14,7 +14,7 @@ import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UserMessage;
 import istanbul.codify.muudy.model.event.MessageEvent;
-import istanbul.codify.muudy.ui.EventSupport;
+import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
 import org.greenrobot.eventbus.Subscribe;
