@@ -2,7 +2,7 @@ package istanbul.codify.muudy.api.pojo.request;
 
 import istanbul.codify.muudy.model.DeviceType;
 import istanbul.codify.muudy.model.Gender;
-import istanbul.codify.muudy.model.Visibility;
+import istanbul.codify.muudy.model.ProfileVisibility;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public final class UpdateProfileRequest {
     public String imgpath2;
     public String imgpath3;
     public String pass;
-    public Visibility isprofilehidden;
+    public ProfileVisibility isprofilehidden;
     public String bio;
     public String namesurname;
     public Gender gender;

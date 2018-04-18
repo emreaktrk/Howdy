@@ -1,6 +1,8 @@
 package istanbul.codify.muudy.ui.compose;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.location.Location;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,27 +11,32 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.CreatePostTextRequest;
 import istanbul.codify.muudy.api.pojo.request.GetWordsWithFilterRequest;
+import istanbul.codify.muudy.api.pojo.request.NewPostRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.CreateTextPostResponse;
 import istanbul.codify.muudy.api.pojo.response.GetWordsWithFilterResponse;
+import istanbul.codify.muudy.api.pojo.response.NewPostResponse;
 import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.Activity;
-import istanbul.codify.muudy.model.Category;
-import istanbul.codify.muudy.model.Selectable;
+import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.event.ShareEvent;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
 import java.util.ArrayList;
@@ -264,6 +271,58 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    @SuppressLint("MissingPermission")
+    void post(ShareEvent event) {
+        LocationServices
+                .getFusedLocationProviderClient(getContext())
+                .getLastLocation()
+                .continueWith(task -> {
+                    Location result = task.getResult();
+                    if (result == null) {
+                        Location location = new Location("default");
+                        location.setLatitude(40.991955);
+                        location.setLatitude(28.712913);
+                        return location;
+                    }
+
+                    return result;
+                })
+                .addOnSuccessListener(location ->
+                        mDisposables.add(
+                                Single
+                                        .just(location)
+                                        .subscribeOn(Schedulers.io())
+                                        .flatMap((Function<Location, SingleSource<NewPostResponse>>) point -> {
+                                            NewPostRequest request = new NewPostRequest(mSelecteds);
+                                            request.token = AccountUtils.token(getContext());
+                                            request.text = event.sentence;
+                                            request.visibility = event.visibility;
+                                            request.coordinates = Coordinate.from(location);
+                                            request.mediaType = PostMediaType.NONE;
+
+                                            return ApiManager
+                                                    .getInstance()
+                                                    .newPost(request)
+                                                    .observeOn(AndroidSchedulers.mainThread());
+                                        })
+                                        .subscribe(new ServiceConsumer<NewPostResponse>() {
+                                            @Override
+                                            protected void success(NewPostResponse response) {
+                                                Logcat.v("New post created with id " + response.data.id);
+
+                                                mView.onLoaded(response.data);
+                                            }
+
+                                            @Override
+                                            protected void error(ApiError error) {
+                                                Logcat.e(error);
+
+                                                mView.onError(error);
+                                            }
+                                        })))
+                .addOnFailureListener(Logcat::e);
     }
 
     private Activity getSelectedActivity() {

@@ -13,7 +13,7 @@ public final class Post implements Serializable {
     public String post_mediapath;
     public PostMediaType post_media_type;
     public String post_video_path;
-    public Visibility post_visibility;
+    public PostVisibility post_visibility;
     public String post_date;
     public long post_activityid;
     public double post_longitude;

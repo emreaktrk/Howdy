@@ -1,8 +1,8 @@
 package istanbul.codify.muudy.api;
 
+import io.reactivex.Single;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
-import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -82,4 +82,7 @@ public interface ApiServices {
 
     @POST("createposttext")
     Single<CreateTextPostResponse> createPostText(@Body CreatePostTextRequest request);
+
+    @POST("newpost")
+    Single<NewPostResponse> newPost(@Body NewPostRequest request);
 }

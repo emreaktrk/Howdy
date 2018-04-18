@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import istanbul.codify.muudy.HowdyDialog;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.PostVisibility;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,6 +49,7 @@ public final class ComposeDialog extends HowdyDialog implements ComposeDialogVie
     public void onShareClicked() {
         ShareEvent event = new ShareEvent();
         event.sentence = getSerializable(String.class);
+        event.visibility = PostVisibility.ALL;
         // TODO Set event properties like visibility etc.
 
         EventBus

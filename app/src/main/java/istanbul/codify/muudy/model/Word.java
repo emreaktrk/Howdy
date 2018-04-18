@@ -15,7 +15,7 @@ public final class Word implements Selectable, Serializable {
 
     @Override
     public long id() {
-        return words_top_category_id;
+        return idwords;
     }
 
     @Override

@@ -14,10 +14,12 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import istanbul.codify.muudy.ui.compose.dialog.ComposeDialog;
 import istanbul.codify.muudy.ui.places.PlacesActivity;
 import istanbul.codify.muudy.ui.word.WordActivity;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -91,9 +93,20 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView,
                 .show(getSupportFragmentManager(), null);
     }
 
+    @Override
+    public void onLoaded(NewPost post) {
+        PostEvent event = new PostEvent(post);
+
+        EventBus
+                .getDefault()
+                .post(event);
+
+        finish();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShareEvent(ShareEvent event) {
-        // TODO Request new post
+        mPresenter.post(event);
     }
 
     @Override

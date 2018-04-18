@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.exception.ImplementationMissingException;
@@ -19,9 +22,6 @@ import istanbul.codify.muudy.model.PostMediaType;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.view.LikeButton;
-import com.squareup.picasso.Picasso;
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -129,7 +129,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             }
 
-            return mPosts.get(position > 15 ? position - 1 : position).post_media_type.ordinal();
+            Post post = mPosts.get(position > 15 ? position - 1 : position);
+            return post.post_media_type == null ? PostMediaType.NONE.ordinal() : post.post_media_type.ordinal();
         }
     }
 
