@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.squareup.picasso.Picasso;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.helper.transformation.RoundedCornersTransformation;
 import istanbul.codify.muudy.model.Chat;
-import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.ui.chat.decorator.IncomingChatDecorator;
 import istanbul.codify.muudy.ui.chat.decorator.OutgoingChatDecorator;
 
@@ -70,6 +71,7 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
             Picasso
                     .with(view.itemView.getContext())
                     .load(BuildConfig.URL + chat.message_img_path)
+                    .transform(new RoundedCornersTransformation(SizeUtils.dp2px(8), 0))
                     .into(view.mImage);
         }
     }
