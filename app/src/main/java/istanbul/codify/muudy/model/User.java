@@ -23,7 +23,7 @@ public final class User implements Selectable, Serializable {
     public int isbanned;
     public String namesurname;
     public Gender gender;
-    public Date birthDate;
+    public Date birtDate;
     public String facebookuserid;
     public String phone;
     public String facebooklink;
@@ -65,7 +65,6 @@ public final class User implements Selectable, Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(iduser);
     }
 

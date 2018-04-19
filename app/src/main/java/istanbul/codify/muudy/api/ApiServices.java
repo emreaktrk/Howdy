@@ -86,6 +86,9 @@ public interface ApiServices {
     @POST("newpost")
     Single<NewPostResponse> newPost(@Body NewPostRequest request);
 
-    @POST("sugguest")
+    @POST("suggest")
     Single<SuggestResponse> suggest(@Body SuggestRequest request);
+
+    @POST("facebooklogin")
+    Single<FacebookLoginResponse> facebookLogin(@Body FacebookLoginRequest request);
 }

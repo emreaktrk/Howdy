@@ -11,6 +11,8 @@ interface LoginView extends MvpView {
 
     void onConnectWithFacebookClicked();
 
+    void onCreateUser(User user);
+
     void onForgotPasswordClicked();
 
     void onRegisterClicked();
@@ -20,4 +22,5 @@ interface LoginView extends MvpView {
     void onLogin(User user);
 
     void onError(ApiError error);
+
 }

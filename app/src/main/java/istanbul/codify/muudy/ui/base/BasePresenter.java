@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import io.reactivex.disposables.CompositeDisposable;
+import istanbul.codify.muudy.model.FacebookProfile;
 
 public abstract class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
 

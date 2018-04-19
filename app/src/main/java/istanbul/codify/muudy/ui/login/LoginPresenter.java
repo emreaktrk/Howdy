@@ -2,20 +2,21 @@ package istanbul.codify.muudy.ui.login;
 
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
-
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
+import istanbul.codify.muudy.api.pojo.request.FacebookLoginRequest;
 import istanbul.codify.muudy.api.pojo.request.LoginRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.api.pojo.response.FacebookLoginResponse;
 import istanbul.codify.muudy.api.pojo.response.LoginResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Credential;
+import istanbul.codify.muudy.model.FacebookProfile;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class LoginPresenter extends BasePresenter<LoginView> {
 
@@ -66,7 +67,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         }));
     }
 
-    public void login(Credential credential) {
+    void login(Credential credential) {
         LoginRequest request = new LoginRequest(credential);
 
         mDisposables.add(
@@ -78,6 +79,38 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                             @Override
                             protected void success(LoginResponse response) {
                                 mView.onLogin(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void bind(FacebookProfile facebook) {
+        FacebookLoginRequest request = new FacebookLoginRequest(facebook);
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .facebookLogin(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<FacebookLoginResponse>() {
+                            @Override
+                            protected void success(FacebookLoginResponse response) {
+                                switch (response.data.type) {
+                                    case USER_LOGINED:
+                                        mView.onLogin(response.data.user.get(0));
+                                        return;
+                                    case USER_CREATED:
+                                        mView.onCreateUser(response.data.user.get(0));
+                                        return;
+                                    default:
+                                        throw new IllegalArgumentException("Unknown user type");
+                                }
                             }
 
                             @Override
