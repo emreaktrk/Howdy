@@ -9,14 +9,16 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.HowdyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
+import istanbul.codify.muudy.model.MediaEvent;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.MessageEvent;
-import istanbul.codify.muudy.EventSupport;
+import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -81,7 +83,23 @@ public final class ChatActivity extends HowdyActivity implements ChatView, Event
 
     @Override
     public void onMediaClicked() {
-        mPresenter.selectPhoto(this);
+        MediaBottomSheet
+                .newInstance()
+                .show(getSupportFragmentManager(), null);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMediaEvent(MediaEvent event) {
+        switch (event.mediaType) {
+            case GALLERY:
+                mPresenter.selectPhoto(this);
+                return;
+            case CAPTURE:
+                mPresenter.capturePhoto(this);
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown media type");
+        }
     }
 
     @Override

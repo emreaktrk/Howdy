@@ -16,7 +16,7 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(findViewById(R.id.compose_share))
+                        .clicks(findViewById(R.id.compose_dialog_share))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Share clicked");
@@ -26,6 +26,6 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
     }
 
     void bind(String sentence) {
-        findViewById(R.id.compose_sentence, AppCompatTextView.class).setText(sentence);
+        findViewById(R.id.compose_dialog_sentence, AppCompatTextView.class).setText(sentence);
     }
 }

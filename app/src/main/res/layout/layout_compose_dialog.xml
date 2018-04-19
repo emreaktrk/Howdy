@@ -20,7 +20,7 @@
             android:text="Paylaşım Detayı"/>
 
     <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/compose_sentence"
+            android:id="@+id/compose_dialog_sentence"
             style="@style/Text.Normal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             tools:text="egesert, keyifli hissediyor"/>
 
     <android.support.v7.widget.AppCompatButton
-            android:id="@+id/compose_share"
+            android:id="@+id/compose_dialog_share"
             style="@style/Button.Blue"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
@@ -39,7 +39,7 @@
             android:layout_marginStart="80dp"
             android:layout_marginEnd="80dp"
             android:text="Paylaş"
-            app:layout_constraintTop_toBottomOf="@id/compose_sentence"
+            app:layout_constraintTop_toBottomOf="@id/compose_dialog_sentence"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>

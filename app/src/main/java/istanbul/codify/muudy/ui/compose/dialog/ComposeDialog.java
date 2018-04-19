@@ -25,7 +25,7 @@ public final class ComposeDialog extends HowdyDialog implements ComposeDialogVie
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.dialog_compose;
+        return R.layout.layout_compose_dialog;
     }
 
     @Override
