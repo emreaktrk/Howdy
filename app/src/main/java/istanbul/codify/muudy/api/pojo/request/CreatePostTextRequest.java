@@ -36,7 +36,7 @@ public final class CreatePostTextRequest {
                 activityid = selected.id();
             }
 
-            if (selected instanceof Place){
+            if (selected instanceof Place) {
                 placeName = selected.text();
             }
         }

@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Place;
-import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,9 @@ final class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Place place = mList.get(position);
+
+        holder.mRange.setText(place.userDistance + " m");
+        holder.mName.setText(place.place_name);
     }
 
     @Override
