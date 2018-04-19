@@ -1,4 +1,4 @@
-package istanbul.codify.muudy.ui.word;
+package istanbul.codify.muudy.ui.statistic.event;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -11,37 +11,37 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.model.Word;
+import istanbul.codify.muudy.model.ActivityStat;
 
 import java.util.ArrayList;
 import java.util.List;
 
-final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
+final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapter.Holder> {
 
-    private final List<Word> mList;
-    private final PublishSubject<Word> mPublish = PublishSubject.create();
-    private List<Word> mFiltered;
+    private final List<ActivityStat> mList;
+    private final PublishSubject<ActivityStat> mPublish = PublishSubject.create();
+    private List<ActivityStat> mFiltered;
 
-    WordAdapter(@Nullable List<Word> list) {
+    ActivityStatsAdapter(@Nullable List<ActivityStat> list) {
         mList = list == null ? new ArrayList<>() : list;
         mFiltered = new ArrayList<>(mList);
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cell = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_word, parent, false);
+        View cell = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_activity_stat, parent, false);
         return new Holder(cell);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Word word = mFiltered.get(position);
+        ActivityStat stat = mFiltered.get(position);
 
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + word.words_emoji_url)
+                .load(BuildConfig.URL + stat.post_emoji)
                 .into(holder.mImage);
-        holder.mText.setText(word.words_word);
+        holder.mText.setText(stat.post_emoji_word);
     }
 
     @Override
@@ -49,15 +49,15 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
         return mFiltered.size();
     }
 
-    PublishSubject<Word> itemClicks() {
+    PublishSubject<ActivityStat> itemClicks() {
         return mPublish;
     }
 
-    List<Word> getWords() {
+    List<ActivityStat> getWords() {
         return mList;
     }
 
-    void setFiltered(@Nullable List<Word> filtered) {
+    void setFiltered(@Nullable List<ActivityStat> filtered) {
         this.mFiltered = filtered == null ? new ArrayList<>(mList) : filtered;
         notifyDataSetChanged();
     }
@@ -71,16 +71,16 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
         Holder(View itemView) {
             super(itemView);
 
-            mImage = itemView.findViewById(R.id.word_image);
-            mText = itemView.findViewById(R.id.word_text);
+            mImage = itemView.findViewById(R.id.activity_stat_image);
+            mText = itemView.findViewById(R.id.activity_stat_text);
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Word word = mFiltered.get(getAdapterPosition());
-            mPublish.onNext(word);
+            ActivityStat stat = mFiltered.get(getAdapterPosition());
+            mPublish.onNext(stat);
         }
     }
 }

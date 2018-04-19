@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
@@ -13,11 +14,9 @@ import istanbul.codify.muudy.api.pojo.response.GetActivitiesResponse;
 import istanbul.codify.muudy.api.pojo.response.GetActivityStatsResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Activity;
-import istanbul.codify.muudy.model.Word;
+import istanbul.codify.muudy.model.ActivityStat;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.compose.ActivityAdapter;
-import istanbul.codify.muudy.ui.word.WordAdapter;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                         }));
     }
 
-    void bind(@Nullable List<Activity> activities, @Nullable List<Word> words) {
+    void bind(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats) {
         if (activities != null) {
             ActivityAdapter activityAdapter = new ActivityAdapter(activities, null);
             mDisposables.add(
@@ -64,17 +63,19 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                                 mView.onActivityClicked(activity);
                             }));
             findViewById(R.id.statistic_event_activity, RecyclerView.class).setAdapter(activityAdapter);
+
+            mView.onActivityClicked(activities.get(0));
         }
 
-        if (words != null) {
-            WordAdapter wordAdapter = new WordAdapter(words);
+        if (stats != null) {
+            ActivityStatsAdapter wordAdapter = new ActivityStatsAdapter(stats);
             mDisposables.add(
                     wordAdapter
                             .itemClicks()
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(word -> {
-                                Logcat.v("Word clicked");
-                                mView.onWordSelected(word);
+                            .subscribe(stat -> {
+                                Logcat.v("Activity stat clicked");
+                                mView.onActivityStatSelected(stat);
                             }));
 
             findViewById(R.id.statistic_event_word, RecyclerView.class).setAdapter(wordAdapter);
@@ -87,7 +88,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
         adapter.notifyDataSetChanged();
     }
 
-    void bind(Word word) {
+    void bind(ActivityStat stat) {
         // TODO Bind pie chart
     }
 

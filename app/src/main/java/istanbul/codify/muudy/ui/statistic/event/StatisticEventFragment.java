@@ -9,6 +9,7 @@ import istanbul.codify.muudy.HowdyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Activity;
+import istanbul.codify.muudy.model.ActivityStat;
 import istanbul.codify.muudy.model.Word;
 
 import java.util.List;
@@ -38,12 +39,8 @@ public final class StatisticEventFragment extends HowdyFragment implements Stati
     }
 
     @Override
-    public void onLoaded(@Nullable List<Activity> activities, @Nullable List<Word> words) {
-        mPresenter.bind(activities, words);
-
-        if (activities != null && !activities.isEmpty()) {
-            mPresenter.bind(activities.get(0));
-        }
+    public void onLoaded(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats) {
+        mPresenter.bind(activities, stats);
     }
 
     @Override
@@ -58,7 +55,7 @@ public final class StatisticEventFragment extends HowdyFragment implements Stati
     }
 
     @Override
-    public void onWordSelected(Word word) {
-        mPresenter.bind(word);
+    public void onActivityStatSelected(ActivityStat stat) {
+        mPresenter.bind(stat);
     }
 }

@@ -7,11 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.squareup.picasso.Picasso;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Activity;
-import com.squareup.picasso.Picasso;
-import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.
         return mPublish;
     }
 
-    public void setSelected(@Nullable Activity selected){
+    public void setSelected(@Nullable Activity selected) {
         mSelected = selected;
     }
 

@@ -28,13 +28,13 @@
     <android.support.v7.widget.RecyclerView
             android:id="@+id/statistic_event_word"
             android:layout_width="0dp"
-            android:background="@color/white"
             android:layout_height="0dp"
+            android:background="@color/white"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/statistic_event_guideline"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/cell_word"/>
+            tools:listitem="@layout/cell_activity_stat"/>
 </android.support.constraint.ConstraintLayout>
