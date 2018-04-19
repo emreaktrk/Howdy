@@ -2,27 +2,33 @@
   "data": [
     {
       "word": "uzgun",
-      "icon": "@drawable/sample_smiley_angry"
+      "icon": "@drawable/sample_smiley_angry",
+      "category": "Duygu"
     },
     {
       "word": "saskin",
-      "icon": "@drawable/sample_smiley_cry"
+      "icon": "@drawable/sample_smiley_cry",
+      "category": "Duygu"
     },
     {
       "word": "mutlu",
-      "icon": "@drawable/sample_smiley_happy"
+      "icon": "@drawable/sample_smiley_happy",
+      "category": "Durum"
     },
     {
       "word": "gururlu",
-      "icon": "@drawable/sample_smiley_sleepy"
+      "icon": "@drawable/sample_smiley_sleepy",
+      "category": "Duygu"
     },
     {
       "word": "ask",
-      "icon": "@drawable/sample_smiley_love"
+      "icon": "@drawable/sample_smiley_love",
+      "category": "Yer Bildirimi"
     },
     {
       "word": "agri icinde",
-      "icon": "@drawable/sample_smiley_surprise"
+      "icon": "@drawable/sample_smiley_surprise",
+      "category": "Durum"
     }
   ]
 }

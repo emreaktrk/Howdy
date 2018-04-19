@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.HowdyActivity;
@@ -64,21 +63,27 @@ public final class MainActivity extends HowdyActivity implements MainView, Navig
     }
 
     @Override
-    public void onHomeClicked() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_frame, mPool.get(HomeFragment.class))
-                .addToBackStack(null)
-                .commit();
+    public void onHomeClicked(boolean reselect) {
+        if (reselect) {
+            // TODO Event
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_frame, mPool.get(HomeFragment.class))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override
-    public void onStatisticClicked() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_frame, mPool.get(StatisticFragment.class))
-                .addToBackStack(null)
-                .commit();
+    public void onStatisticClicked(boolean reselect) {
+        if (!reselect) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_frame, mPool.get(StatisticFragment.class))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override
@@ -87,21 +92,25 @@ public final class MainActivity extends HowdyActivity implements MainView, Navig
     }
 
     @Override
-    public void onNotificationClicked() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_frame, mPool.get(NotificationFragment.class))
-                .addToBackStack(null)
-                .commit();
+    public void onNotificationClicked(boolean reselect) {
+        if (!reselect) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_frame, mPool.get(NotificationFragment.class))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override
-    public void onProfileClicked() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.home_frame, mPool.get(ProfileFragment.class))
-                .addToBackStack(null)
-                .commit();
+    public void onProfileClicked(boolean reselect) {
+        if (!reselect) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_frame, mPool.get(ProfileFragment.class))
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     @Override

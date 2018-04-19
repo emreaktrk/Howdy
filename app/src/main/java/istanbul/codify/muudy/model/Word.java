@@ -12,6 +12,7 @@ public final class Word implements Selectable, Serializable {
     public String words_verb_at_end;
     public String words_verb_in_middle;
     public long words_top_category_id;
+    public transient String word_top_category_text;
 
     @Override
     public long id() {

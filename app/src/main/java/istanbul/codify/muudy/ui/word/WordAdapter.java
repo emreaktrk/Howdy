@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.word;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,9 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
                 .load(BuildConfig.URL + word.words_emoji_url)
                 .into(holder.mImage);
         holder.mText.setText(word.words_word);
+
+        holder.mCategory.setVisibility(TextUtils.isEmpty(word.word_top_category_text) ? View.GONE : View.VISIBLE);
+        holder.mCategory.setText(word.word_top_category_text);
     }
 
     @Override
@@ -67,12 +71,14 @@ final class WordAdapter extends RecyclerView.Adapter<WordAdapter.Holder> {
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
+        private AppCompatTextView mCategory;
 
         Holder(View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.word_image);
             mText = itemView.findViewById(R.id.word_text);
+            mCategory = itemView.findViewById(R.id.word_category);
 
             itemView.setOnClickListener(this);
         }

@@ -61,6 +61,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         .clicks(findViewById(R.id.login_register))
                         .subscribe(o -> {
                             Logcat.v("Register clicked");
+
                             view.onRegisterClicked();
                         }));
     }

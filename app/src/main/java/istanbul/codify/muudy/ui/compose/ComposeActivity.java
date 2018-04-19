@@ -116,6 +116,11 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView,
     }
 
     @Override
+    public void onError(Exception exception) {
+        ToastUtils.showShort(exception.getMessage());
+    }
+
+    @Override
     public void onCategoryClicked(Category category) {
         if (category.isLocation()) {
             PlacesActivity.start(ResultTo.ACTIVITY);

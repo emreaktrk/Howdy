@@ -4,13 +4,13 @@ import istanbul.codify.muudy.ui.base.MvpView;
 
 public interface MainView extends MvpView {
 
-    void onHomeClicked();
+    void onHomeClicked(boolean reselect);
 
-    void onStatisticClicked();
+    void onStatisticClicked(boolean reselect);
 
     void onComposeClicked();
 
-    void onNotificationClicked();
+    void onNotificationClicked(boolean reselect);
 
-    void onProfileClicked();
+    void onProfileClicked(boolean reselect);
 }

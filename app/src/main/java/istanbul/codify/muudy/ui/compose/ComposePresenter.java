@@ -2,6 +2,8 @@ package istanbul.codify.muudy.ui.compose;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.View;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -38,8 +41,9 @@ import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -251,6 +255,12 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     }
 
     void createTextPost() {
+        if (!isValid()) {
+            IllegalStateException exception = new IllegalStateException("Paylaşım yapmak için durum veya aktivite seçmelisiniz");
+            mView.onError(exception);
+            return;
+        }
+
         CreatePostTextRequest request = new CreatePostTextRequest(mSelecteds);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -301,7 +311,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                             request.text = event.sentence;
                                             request.visibility = event.visibility;
                                             request.coordinates = Coordinate.from(location);
-                                            request.mediaType = PostMediaType.NONE;
+                                            request.mediaType = getMediaType();
+                                            request.mediaData = getMediaData();
 
                                             return ApiManager
                                                     .getInstance()
@@ -338,5 +349,43 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         }
 
         return null;
+    }
+
+    private String getMediaData() {
+        if (mPhoto == null) {
+            return null;
+        }
+
+        try {
+            InputStream input = getContext().getContentResolver().openInputStream(mPhoto);
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            byte[] bytes = output.toByteArray();
+
+            return Base64.encodeToString(bytes, Base64.DEFAULT);
+        } catch (Exception e) {
+            Logcat.e(e);
+
+            return null;
+        }
+    }
+
+    private PostMediaType getMediaType() {
+        return mPhoto == null ? PostMediaType.NONE : PostMediaType.IMAGE;
+    }
+
+    private boolean isValid() {
+        for (Selectable selected : mSelecteds) {
+            if (selected instanceof Activity) {
+                return true;
+            }
+
+            if (selected instanceof Word) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

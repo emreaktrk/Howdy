@@ -8,12 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import io.reactivex.annotations.NonNull;
 import istanbul.codify.muudy.HowdyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.mention.MentionActivity;
-import io.reactivex.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,11 @@ public final class WordActivity extends HowdyActivity implements WordView {
             long[] ids = new long[selecteds.size()];
             for (int i = 0; i < selecteds.size(); i++) {
                 Selectable selected = selecteds.get(i);
-                ids[i] = selected.id();
+
+                if (selected instanceof Word) {
+                    Word word = (Word) selected;
+                    ids[i] = word.words_top_category_id;
+                }
             }
             starter.putExtra(ids.getClass().getSimpleName(), ids);
         }

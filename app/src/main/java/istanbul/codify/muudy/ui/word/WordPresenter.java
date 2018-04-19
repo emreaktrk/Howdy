@@ -125,8 +125,13 @@ final class WordPresenter extends BasePresenter<WordView> {
                             protected void success(GetWordsWithFilterResponse response) {
                                 ArrayList<Word> words = new ArrayList<>();
                                 for (Category category : response.data.topCategories) {
+                                    for (Word word: category.words) {
+                                        word.word_top_category_text = category.words_top_category_text;
+                                    }
+
                                     words.addAll(category.words);
                                 }
+
                                 mView.onLoaded(words);
                             }
 

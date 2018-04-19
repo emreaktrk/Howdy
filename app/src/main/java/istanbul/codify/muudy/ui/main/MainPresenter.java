@@ -19,19 +19,21 @@ final class MainPresenter extends BasePresenter<MainView> {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.navigation_home))
-                        .filter(o -> !findViewById(R.id.navigation_home).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Home clicked");
-                            view.onHomeClicked();
+
+                            boolean reselect = findViewById(R.id.navigation_home).isSelected();
+                            view.onHomeClicked(reselect);
                         }));
 
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.navigation_statistic))
-                        .filter(o -> !findViewById(R.id.navigation_statistic).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Statistic clicked");
-                            view.onStatisticClicked();
+
+                            boolean reselect = findViewById(R.id.navigation_statistic).isSelected();
+                            view.onStatisticClicked(reselect);
                         }));
 
         mDisposables.add(
@@ -40,7 +42,9 @@ final class MainPresenter extends BasePresenter<MainView> {
                         .filter(o -> !findViewById(R.id.navigation_notification).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Notification clicked");
-                            view.onNotificationClicked();
+
+                            boolean reselect = findViewById(R.id.navigation_notification).isSelected();
+                            view.onNotificationClicked(reselect);
                         }));
 
         mDisposables.add(
@@ -49,7 +53,9 @@ final class MainPresenter extends BasePresenter<MainView> {
                         .filter(o -> !findViewById(R.id.navigation_profile).isSelected())
                         .subscribe(o -> {
                             Logcat.v("Profile clicked");
-                            view.onProfileClicked();
+
+                            boolean reselect = findViewById(R.id.navigation_profile).isSelected();
+                            view.onProfileClicked(reselect);
                         }));
 
         mDisposables.add(
@@ -57,6 +63,7 @@ final class MainPresenter extends BasePresenter<MainView> {
                         .clicks(findViewById(R.id.navigation_compose))
                         .subscribe(o -> {
                             Logcat.v("Compose clicked");
+
                             view.onComposeClicked();
                         }));
     }
