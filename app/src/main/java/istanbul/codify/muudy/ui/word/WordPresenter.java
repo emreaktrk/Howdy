@@ -5,24 +5,28 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.GetWordsRequest;
 import istanbul.codify.muudy.api.pojo.request.GetWordsWithFilterRequest;
+import istanbul.codify.muudy.api.pojo.request.SuggestRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.GetWordsResponse;
 import istanbul.codify.muudy.api.pojo.response.GetWordsWithFilterResponse;
+import istanbul.codify.muudy.api.pojo.response.SuggestResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Activity;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Word;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                         .skip(1)
                         .subscribe(word -> {
                             Logcat.v("Word searched : " + findViewById(R.id.word_search, AppCompatEditText.class).getText().toString());
+
                             view.onWordSearched(word.toString());
                         }));
 
@@ -61,6 +66,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(word -> {
                             Logcat.v("Mention clicked");
+
                             view.onMentionClicked();
                         }));
     }
@@ -75,8 +81,23 @@ final class WordPresenter extends BasePresenter<WordView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(word -> {
                             Logcat.v("Word clicked");
+
                             mView.onWordSelected(word);
                         }));
+
+        mDisposables.add(
+                adapter
+                        .suggestClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .filter(o -> findViewById(R.id.word_search, AppCompatEditText.class) == null)
+                        .subscribe(o -> {
+                            Logcat.v("Suggest clicked");
+
+                            AppCompatEditText search = findViewById(R.id.word_search, AppCompatEditText.class);
+                            String suggest = search.getText().toString();
+                            mView.onSuggestClicked(suggest);
+                        }));
+
 
         findViewById(R.id.word_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(mRoot.getContext()));
         findViewById(R.id.word_recycler, RecyclerView.class).setAdapter(adapter);
@@ -125,7 +146,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                             protected void success(GetWordsWithFilterResponse response) {
                                 ArrayList<Word> words = new ArrayList<>();
                                 for (Category category : response.data.topCategories) {
-                                    for (Word word: category.words) {
+                                    for (Word word : category.words) {
                                         word.word_top_category_text = category.words_top_category_text;
                                     }
 
@@ -156,7 +177,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                         .subscribe(filtered -> {
                             RecyclerView.Adapter adapter = findViewById(R.id.word_recycler, RecyclerView.class).getAdapter();
                             if (adapter != null && adapter instanceof WordAdapter) {
-                                ((WordAdapter) adapter).setFiltered(filtered);
+                                ((WordAdapter) adapter).setFiltered(filtered, !TextUtils.isEmpty(query));
                             }
                         }));
     }
@@ -167,5 +188,29 @@ final class WordPresenter extends BasePresenter<WordView> {
             List<Word> words = ((WordAdapter) adapter).getWords();
             filter(query, words);
         }
+    }
+
+    void suggest(String word, @Nullable Category category) {
+        SuggestRequest request = new SuggestRequest(word, category == null ? 0 : category.id_word_top_category);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .suggest(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SuggestResponse>() {
+                            @Override
+                            protected void success(SuggestResponse response) {
+                                mView.onSuggested();
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

@@ -1,6 +1,6 @@
 package istanbul.codify.muudy.model;
 
-public class MessageResult {
+public class ApiResult {
 
     public Result r;
 }

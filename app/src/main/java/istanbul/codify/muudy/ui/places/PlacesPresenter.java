@@ -8,6 +8,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.google.android.gms.location.LocationServices;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -18,10 +22,6 @@ import istanbul.codify.muudy.api.pojo.response.SearchPlacesResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Place;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.google.android.gms.location.LocationServices;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -99,6 +99,7 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
                     request.token = AccountUtils.tokenLegacy(getContext());
                     request.lat = location.getLatitude();
                     request.lng = location.getLongitude();
+                    request.text = "";
 
                     mDisposables.add(
                             ApiManager

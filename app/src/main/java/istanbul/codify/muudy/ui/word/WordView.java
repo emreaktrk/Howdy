@@ -14,6 +14,10 @@ interface WordView extends MvpView {
 
     void onWordSelected(Word word);
 
+    void onSuggestClicked(String suggest);
+
+    void onSuggested();
+
     void onLoaded(Category category);
 
     void onLoaded(List<Word> words);

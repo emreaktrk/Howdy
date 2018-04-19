@@ -116,6 +116,17 @@ public final class WordActivity extends HowdyActivity implements WordView {
     }
 
     @Override
+    public void onSuggestClicked(String word) {
+        Category category = getSerializable(Category.class);
+        mPresenter.suggest(word, category);
+    }
+
+    @Override
+    public void onSuggested() {
+        ToastUtils.showShort("Kelime önerin başarıyla gönderildi");
+    }
+
+    @Override
     public void onLoaded(Category category) {
         mPresenter.bind(category);
     }

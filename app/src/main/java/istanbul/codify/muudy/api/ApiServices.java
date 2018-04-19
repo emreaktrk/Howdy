@@ -85,4 +85,7 @@ public interface ApiServices {
 
     @POST("newpost")
     Single<NewPostResponse> newPost(@Body NewPostRequest request);
+
+    @POST("sugguest")
+    Single<SuggestResponse> suggest(@Body SuggestRequest request);
 }
