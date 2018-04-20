@@ -16,7 +16,9 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Credential;
 import istanbul.codify.muudy.model.FacebookProfile;
+import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.ui.createuser.CreateUserActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
 import istanbul.codify.muudy.ui.welcome.WelcomeFragment;
 
@@ -93,12 +95,12 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
 
     @Override
     public void onCreateUser(User user) {
-
+        CreateUserActivity.start(ResultTo.FRAGMENT, user);
     }
 
     @Override
     public void onForgotPasswordClicked() {
-
+        // TODO Navigate to forgot password
     }
 
     @Override
@@ -140,6 +142,14 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
 
         if (FacebookSdk.isFacebookRequestCode(requestCode)) {
             mCallback.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+
+        User user = resolveResult(requestCode, resultCode, data, User.class, CreateUserActivity.REQUEST_CODE);
+        if (user != null) {
+            AccountUtils.login(getContext(), user);
+
+            MainActivity.start();
         }
     }
 
@@ -159,4 +169,6 @@ public final class LoginFragment extends HowdyFragment implements LoginView {
     private void loginWithFacebook(FacebookProfile facebook) {
         mPresenter.bind(facebook);
     }
+
+
 }

@@ -39,6 +39,8 @@
 
         <activity android:name=".ui.auth.AuthActivity"/>
 
+        <activity android:name=".ui.createuser.CreateUserActivity"/>
+
         <activity
                 android:name=".ui.main.MainActivity"
                 android:theme="@style/MainTheme"/>
