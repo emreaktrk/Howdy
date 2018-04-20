@@ -125,7 +125,7 @@ public final class ComposeActivity extends HowdyActivity implements ComposeView,
         if (category.isLocation()) {
             PlacesActivity.start(ResultTo.ACTIVITY);
         } else {
-            WordActivity.start(category, ResultTo.ACTIVITY);
+            WordActivity.start(ResultTo.ACTIVITY, category);
         }
     }
 

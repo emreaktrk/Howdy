@@ -24,7 +24,7 @@ public final class WordActivity extends HowdyActivity implements WordView {
 
     private WordPresenter mPresenter = new WordPresenter();
 
-    public static void start(@NonNull Category category, @ResultTo int to) {
+    public static void start(@ResultTo int to, @NonNull Category category) {
         AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
 
         Intent starter = new Intent(activity, WordActivity.class);

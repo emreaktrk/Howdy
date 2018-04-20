@@ -384,6 +384,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
             if (selected instanceof Word) {
                 return true;
             }
+
+            if (selected instanceof User) {
+                return true;
+            }
         }
 
         return false;

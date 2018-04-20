@@ -29,7 +29,7 @@ public final class CreatePostTextRequest {
             }
 
             if (selected instanceof User) {
-                words.add(selected.id());
+                otherUsers.add(selected.id());
             }
 
             if (selected instanceof Activity) {

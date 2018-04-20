@@ -1,11 +1,13 @@
 package istanbul.codify.muudy.ui.mention;
 
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -16,9 +18,6 @@ import istanbul.codify.muudy.api.pojo.response.GetFollowedUsersResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +47,10 @@ final class MentionPresenter extends BasePresenter<MentionView> {
                         .debounce(200, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .skip(1)
-                        .subscribe(word -> {
-                            Logcat.v("User searched : " + findViewById(R.id.search_search, AppCompatEditText.class).getText().toString());
+                        .subscribe(query -> {
+                            Logcat.v("User searched : " + query);
 
-                            view.onUserSearched(word.toString());
+                            view.onUserSearched(query.toString());
                         }));
 
         mDisposables.add(

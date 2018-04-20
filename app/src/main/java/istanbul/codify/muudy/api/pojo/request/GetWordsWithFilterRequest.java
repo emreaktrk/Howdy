@@ -39,11 +39,23 @@ public final class GetWordsWithFilterRequest {
                     if (selected instanceof Word) {
                         Word word = (Word) selected;
                         categoriesIDarray.add(word.words_top_category_id);
-                    } else if (selected instanceof Activity) {
+                    }
+
+                    if (selected instanceof Activity) {
                         activityid = selected.id();
-                    } else if (selected instanceof User) {
+                    }
+
+                    if (selected instanceof User) {
                         if (!categoriesIDarray.contains(Category.MEETING)) {
                             categoriesIDarray.add(Category.MEETING);
+                        }
+
+
+                    }
+
+                    if (selected instanceof Place){
+                        if (!categoriesIDarray.contains(Category.LOCATION)) {
+                            categoriesIDarray.add(Category.LOCATION);
                         }
                     }
                 }

@@ -37,7 +37,7 @@ public final class NewPostRequest {
             }
 
             if (selected instanceof User) {
-                words.add(selected.id());
+                otherUsers.add(selected.id());
             }
 
             if (selected instanceof Activity) {
