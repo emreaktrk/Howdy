@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:context=".ui.main.MainActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/around_image"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            tools:src="@tools:sample/avatars"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/around_text"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:maxLines="1"
+            android:gravity="center"
+            android:singleLine="true"
+            style="@style/Text.Normal"
+            tools:text="@sample/user.json/data/username"/>
+</android.support.v7.widget.LinearLayoutCompat>

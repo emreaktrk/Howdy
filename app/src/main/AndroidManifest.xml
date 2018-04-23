@@ -100,6 +100,10 @@
                 android:name=".ui.places.PlacesActivity"
                 android:theme="@style/MainTheme"/>
 
+        <activity
+                android:name=".ui.around.AroundActivity"
+                android:theme="@style/MainTheme"/>
+
         <service
                 android:name=".account.AccountService"
                 android:exported="false">
