@@ -2,26 +2,71 @@
 <android.support.v7.widget.LinearLayoutCompat
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp"
-        tools:context=".ui.main.MainActivity">
+        tools:context=".ui.around.AroundActivity"
+        android:background="@color/white">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/around_image"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            tools:src="@tools:sample/avatars"/>
+    <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/around_text"
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:maxLines="1"
-            android:gravity="center"
-            android:singleLine="true"
-            style="@style/Text.Normal"
-            tools:text="@sample/user.json/data/username"/>
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/around_title"
+                style="@style/Text.Normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                tools:text="Çevrende 5 kişi acı içinde hissediyor"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/around_more"
+                style="@style/Text.Normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Daha Fazla"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"/>
+
+    <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/around_container"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:gravity="center">
+
+        <istanbul.codify.muudy.view.AvatarView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        <istanbul.codify.muudy.view.AvatarView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        <istanbul.codify.muudy.view.AvatarView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        <istanbul.codify.muudy.view.AvatarView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+        <istanbul.codify.muudy.view.AvatarView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+    </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v7.widget.LinearLayoutCompat>

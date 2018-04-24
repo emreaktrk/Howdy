@@ -14,48 +14,20 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="start"
-            android:src="@drawable/ic_close"/>
-
-    <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/around_emotion_first"
-            style="@style/Text.Normal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/around_close"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            tools:text="Çevrende 5 kişi acı içinde hissediyor"/>
-
-    <android.support.v7.widget.AppCompatTextView
-            style="@style/Text.Normal"
-            android:id="@+id/around_emotion_first_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/around_close"
-            android:layout_marginEnd="16dp"
-            android:text="Daha Fazla"/>
-
-    <View
-            android:id="@+id/around_emotion_first_divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/around_emotion_first"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/around_emotion_first_recycler"
+            android:id="@+id/around_recycler"
             android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            tools:listitem="@layout/cell_around"
+            tools:itemCount="3"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/around_emotion_first_divider"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/cell_around"/>
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/around_close"/>
 </android.support.constraint.ConstraintLayout>
