@@ -64,9 +64,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_comment" />
+                            <entry key="height" value="69" />
+                            <entry key="outputName" value="ic_star" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\emrea\Downloads\chat.svg" />
+                            <entry key="sourceFile" value="C:\Users\emrea\Desktop\icons\ic_star.svg" />
+                            <entry key="width" value="73" />
                           </map>
                         </option>
                       </PersistentState>

@@ -41,6 +41,9 @@ public interface ApiServices {
     @POST("getuserprofile")
     Single<GetUserProfileResponse> getUserProfile(@Body GetUserProfileRequest request);
 
+    @POST("getuserposts")
+    Single<GetUserPostsResponse> getUserPosts(@Body GetUserPostsRequest request);
+
     @POST("getmessages")
     Single<GetMessagesResponse> getMessages(@Body GetMessagesRequest request);
 

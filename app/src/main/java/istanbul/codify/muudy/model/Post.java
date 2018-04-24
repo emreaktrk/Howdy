@@ -45,6 +45,9 @@ public final class Post implements Serializable {
     public String namesurname;
     public Gender gender;
     public String birthDate;
+    public String words_word;
+    public float post_given_point;
+    public String words_emoji_url;
 
     @Override
     public boolean equals(Object o) {
@@ -56,7 +59,6 @@ public final class Post implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(idpost);
     }
 }

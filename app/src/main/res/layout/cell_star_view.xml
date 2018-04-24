@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:parentTag="android.support.v7.widget.LinearLayoutCompat"
+        tools:context=".ui.main.MainActivity">
+
+    <android.support.v7.widget.AppCompatImageView
+            style="@style/Text.Toolbar"
+            android:id="@+id/star_view_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:src="@drawable/ic_star"
+            tools:tint="@color/orange"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:id="@+id/star_view_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="4.5"/>
+</merge>

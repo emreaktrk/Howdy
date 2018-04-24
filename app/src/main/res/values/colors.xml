@@ -15,4 +15,6 @@
     <color name="green">#2cb62d</color>
     <color name="facebook">#3b5998</color>
     <color name="dark_facebook">#293e6a</color>
+    <color name="star_red">#f44336</color>
+    <color name="star_green">#4caf50</color>
 </resources>

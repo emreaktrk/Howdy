@@ -47,7 +47,10 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public PostAdapter(@Nullable List<Post> posts, @Nullable List<User> users) {
         mPosts = posts == null ? new ArrayList<>() : posts;
-        mUsers = new RecommendedUsersAdapter(users);
+
+        if (users != null && !users.isEmpty()) {
+            mUsers = new RecommendedUsersAdapter(users);
+        }
     }
 
     public PostAdapter(Post post) {
@@ -117,7 +120,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position) {
         if (mUsers == null) {
-            return mPosts.get(position).post_media_type.ordinal();
+            Post post = mPosts.get(position);
+            return post.post_media_type == null ? PostMediaType.NONE.ordinal() : post.post_media_type.ordinal();
         } else {
             if (getItemCount() > RECOMMENDED_USER_POSITION) {
                 if (position == RECOMMENDED_USER_POSITION) {

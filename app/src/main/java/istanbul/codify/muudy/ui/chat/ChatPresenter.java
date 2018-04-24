@@ -225,7 +225,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         );
     }
 
-    public void getUser(Long userId) {
+    void getUser(Long userId) {
         GetUserProfileRequest request = new GetUserProfileRequest(userId);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -249,7 +249,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         }));
     }
 
-    public void getMessages(Long userId) {
+    void getMessages(Long userId) {
         GetMessagesRequest request = new GetMessagesRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
         request.otherUserId = userId;
