@@ -6,29 +6,30 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.account.AccountUtils;
-import istanbul.codify.muudy.api.ApiManager;
-import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.UploadImageRequest;
-import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.UploadImageResponse;
-import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.ui.base.BasePresenter;
+import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.api.ApiManager;
+import istanbul.codify.muudy.api.pojo.ServiceConsumer;
+import istanbul.codify.muudy.api.pojo.request.UpdateProfileRequest;
+import istanbul.codify.muudy.api.pojo.request.UploadImageRequest;
+import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.api.pojo.response.UpdateProfileResponse;
+import istanbul.codify.muudy.api.pojo.response.UploadImageResponse;
+import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.ui.base.BasePresenter;
+
+import java.util.List;
 
 final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
@@ -123,5 +124,60 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                 .with(getContext())
                 .load(user.imgpath1)
                 .into(findViewById(R.id.profile_edit_picture, CircleImageView.class));
+    }
+
+    void save() {
+        if (!isValid()) {
+            mView.onError(new IllegalStateException("Lutfen alanlari doldurunuz"));
+            return;
+        }
+
+        UpdateProfileRequest request = new UpdateProfileRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.namesurname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
+        request.username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
+        request.email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+
+        mDisposables
+                .add(
+                        ApiManager
+                                .getInstance()
+                                .updateProfile(request)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
+                                    @Override
+                                    protected void success(UpdateProfileResponse response) {
+                                        Logcat.v("Profile updated");
+
+                                        mView.onProfileUpdated();
+                                    }
+
+                                    @Override
+                                    protected void error(ApiError error) {
+                                        Logcat.e(error);
+
+                                        mView.onError(error);
+                                    }
+                                })
+                );
+    }
+
+    private boolean isValid() {
+        String fullname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
+        if (StringUtils.isEmpty(fullname)) {
+            return false;
+        }
+
+        String username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
+        if (StringUtils.isEmpty(username)) {
+            return false;
+        }
+
+        String email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+        if (StringUtils.isEmpty(email)) {
+            return false;
+        }
+
+        return true;
     }
 }

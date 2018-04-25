@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -14,7 +13,6 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.ui.auth.AuthActivity;
 
 public final class ProfileEditActivity extends HowdyActivity implements ProfileEditView {
 
@@ -54,6 +52,11 @@ public final class ProfileEditActivity extends HowdyActivity implements ProfileE
 
     @Override
     public void onSaveClicked() {
+        mPresenter.save();
+    }
+
+    @Override
+    public void onProfileUpdated() {
 
     }
 
@@ -70,6 +73,11 @@ public final class ProfileEditActivity extends HowdyActivity implements ProfileE
     @Override
     public void onError(ApiError error) {
         ToastUtils.showShort(error.message);
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        ToastUtils.showShort(throwable.getMessage());
     }
 
     @Override

@@ -40,6 +40,7 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
         User me = AccountUtils.me(getContext());
         mPresenter.bind(me);
+        mPresenter.posts();
     }
 
     @Override
