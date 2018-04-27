@@ -7,10 +7,10 @@ import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 
-public final class ResponseActivity extends HowdyActivity implements ResponseView {
+public final class ResponseActivity extends MuudyActivity implements ResponseView {
 
     private ResponsePresenter mPresenter = new ResponsePresenter();
 

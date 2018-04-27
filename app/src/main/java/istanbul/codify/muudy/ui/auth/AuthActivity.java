@@ -9,10 +9,10 @@ import android.support.annotation.Nullable;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.ui.landing.LandingFragment;
 
-public final class AuthActivity extends HowdyActivity {
+public final class AuthActivity extends MuudyActivity {
 
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();

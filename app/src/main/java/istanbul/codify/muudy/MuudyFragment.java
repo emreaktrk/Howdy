@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 
 
-public abstract class HowdyFragment extends Fragment {
+public abstract class MuudyFragment extends Fragment {
 
     abstract protected @LayoutRes
     int getLayoutResId();
@@ -50,8 +50,8 @@ public abstract class HowdyFragment extends Fragment {
     @SuppressWarnings("unchecked")
     public @Nullable
     <T extends Serializable> T resolveResult(int requestCode, int resultCode, Intent data, Class<? extends T> clazz, int waitingRequestCode) {
-        if (getActivity() != null && getActivity() instanceof HowdyActivity) {
-            return ((HowdyActivity) getActivity()).resolveResult(requestCode, resultCode, data, clazz, waitingRequestCode);
+        if (getActivity() != null && getActivity() instanceof MuudyActivity) {
+            return ((MuudyActivity) getActivity()).resolveResult(requestCode, resultCode, data, clazz, waitingRequestCode);
         }
 
         return null;

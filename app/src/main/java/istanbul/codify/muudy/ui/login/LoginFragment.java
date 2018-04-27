@@ -10,7 +10,7 @@ import com.facebook.*;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
-import istanbul.codify.muudy.HowdyFragment;
+import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
@@ -25,7 +25,7 @@ import istanbul.codify.muudy.ui.welcome.WelcomeFragment;
 import java.util.Arrays;
 
 
-public final class LoginFragment extends HowdyFragment implements LoginView {
+public final class LoginFragment extends MuudyFragment implements LoginView {
 
     private LoginPresenter mPresenter = new LoginPresenter();
     private CallbackManager mCallback;

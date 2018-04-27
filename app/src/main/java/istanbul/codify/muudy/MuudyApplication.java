@@ -9,7 +9,7 @@ import istanbul.codify.muudy.analytics.FirebaseAnalyst;
 import com.google.firebase.FirebaseApp;
 
 
-public final class HowdyApplication extends Application {
+public final class MuudyApplication extends Application {
 
     @Override
     public void onCreate() {

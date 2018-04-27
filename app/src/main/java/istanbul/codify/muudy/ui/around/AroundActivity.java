@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.model.User;
@@ -15,7 +15,7 @@ import istanbul.codify.muudy.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class AroundActivity extends HowdyActivity implements AroundView {
+public final class AroundActivity extends MuudyActivity implements AroundView {
 
     private AroundPresenter mPresenter = new AroundPresenter();
 

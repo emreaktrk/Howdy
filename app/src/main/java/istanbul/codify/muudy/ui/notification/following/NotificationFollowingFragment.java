@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
-import istanbul.codify.muudy.HowdyFragment;
+import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.Notification;
 import istanbul.codify.muudy.model.NotificationFollowing;
 
 import java.util.List;
 
-public final class NotificationFollowingFragment extends HowdyFragment implements NotificationFollowingView {
+public final class NotificationFollowingFragment extends MuudyFragment implements NotificationFollowingView {
 
     private NotificationFollowingPresenter mPresenter = new NotificationFollowingPresenter();
 

@@ -9,13 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 
-public final class CreateUserActivity extends HowdyActivity implements CreateUserView {
+public final class CreateUserActivity extends MuudyActivity implements CreateUserView {
 
     public static final int REQUEST_CODE = 26;
 

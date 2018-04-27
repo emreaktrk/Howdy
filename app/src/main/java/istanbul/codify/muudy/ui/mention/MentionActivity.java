@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Mention;
@@ -17,7 +17,7 @@ import istanbul.codify.muudy.model.User;
 
 import java.util.ArrayList;
 
-public final class MentionActivity extends HowdyActivity implements MentionView {
+public final class MentionActivity extends MuudyActivity implements MentionView {
 
     public static final int REQUEST_CODE = 654;
 

@@ -8,13 +8,12 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.ui.chat.ChatActivity;
 
-public final class PhotoActivity extends HowdyActivity implements PhotoView {
+public final class PhotoActivity extends MuudyActivity implements PhotoView {
 
     private PhotoPresenter mPresenter = new PhotoPresenter();
 

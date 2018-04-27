@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
-import istanbul.codify.muudy.HowdyFragment;
+import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
@@ -15,7 +15,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.main.MainActivity;
 
 
-public final class RegisterFragment extends HowdyFragment implements RegisterView {
+public final class RegisterFragment extends MuudyFragment implements RegisterView {
 
     private RegisterPresenter mPresenter = new RegisterPresenter();
 

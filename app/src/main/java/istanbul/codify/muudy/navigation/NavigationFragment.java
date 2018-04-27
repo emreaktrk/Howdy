@@ -1,8 +1,8 @@
 package istanbul.codify.muudy.navigation;
 
-import istanbul.codify.muudy.HowdyFragment;
+import istanbul.codify.muudy.MuudyFragment;
 
-public abstract class NavigationFragment extends HowdyFragment implements Navigation.ISelectable {
+public abstract class NavigationFragment extends MuudyFragment implements Navigation.ISelectable {
 
     @Override
     public void onResume() {

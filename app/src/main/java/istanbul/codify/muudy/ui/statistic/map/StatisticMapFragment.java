@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import istanbul.codify.muudy.HowdyFragment;
+import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 
-public final class StatisticMapFragment extends HowdyFragment implements StatisticMapView {
+public final class StatisticMapFragment extends MuudyFragment implements StatisticMapView {
 
     private StatisticMapPresenter mPresenter = new StatisticMapPresenter();
 

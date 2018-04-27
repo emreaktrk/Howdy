@@ -3,14 +3,14 @@ package istanbul.codify.muudy.ui.facebookfriends;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
 
 import java.util.List;
 
-public final class FacebookFriendsActivity extends HowdyActivity implements FacebookFriendsView {
+public final class FacebookFriendsActivity extends MuudyActivity implements FacebookFriendsView {
 
     private FacebookFriendsPresenter mPresenter = new FacebookFriendsPresenter();
 

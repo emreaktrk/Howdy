@@ -2,9 +2,11 @@ package istanbul.codify.muudy.account;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 
+import istanbul.codify.muudy.account.sync.profile.ProfileContract;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
 import com.google.gson.Gson;
@@ -51,4 +53,8 @@ public final class AccountUtils {
         return new Gson().fromJson(AccountManager.get(context).getUserData(account, AccountManager.KEY_USERDATA), User.class);
     }
 
+    public static void sync(Context context) {
+        Account account = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
+        ContentResolver.requestSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY);
+    }
 }

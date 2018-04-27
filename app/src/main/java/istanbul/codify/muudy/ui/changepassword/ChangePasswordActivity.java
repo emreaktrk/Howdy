@@ -1,35 +1,33 @@
-package istanbul.codify.muudy.ui.forgotpassword;
+package istanbul.codify.muudy.ui.changepassword;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.model.ApiResult;
+import istanbul.codify.muudy.model.Result;
 
-public final class ForgotPasswordActivity extends MuudyActivity implements ForgotPasswordView {
+public final class ChangePasswordActivity extends MuudyActivity implements ChangePasswordView {
 
-    private ForgotPasswordPresenter mPresenter = new ForgotPasswordPresenter();
+    private ChangePasswordPresenter mPresenter = new ChangePasswordPresenter();
 
-    public static void start(@Nullable String email) {
+    public static void start() {
         Context context = Utils.getApp().getApplicationContext();
 
-        Intent starter = new Intent(context, ForgotPasswordActivity.class);
-        if (!StringUtils.isEmpty(email)) {
-            starter.putExtra(email.getClass().getSimpleName(), email);
-        }
+        Intent starter = new Intent(context, ChangePasswordActivity.class);
         ActivityUtils.startActivity(starter);
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_forgot_password;
+        return R.layout.layout_change_password;
     }
 
     @Override
@@ -37,9 +35,6 @@ public final class ForgotPasswordActivity extends MuudyActivity implements Forgo
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
-
-        String email = getSerializable(String.class);
-        mPresenter.bind(email);
     }
 
     @Override
@@ -50,15 +45,20 @@ public final class ForgotPasswordActivity extends MuudyActivity implements Forgo
     }
 
     @Override
-    public void onSendClicked() {
-        mPresenter.sendEmail();
+    public void onChangeClicked() {
+        mPresenter.changePassword();
     }
 
     @Override
-    public void onLoaded(String data) {
-        ToastUtils.showShort(data);
+    public void onLoaded(ApiResult result) {
+        if (result.r == Result.OK) {
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.CHANGE_PASSWORD);
 
-        finish();
+            ToastUtils.showShort("Sifreniz degistirilmistir");
+            finish();
+        }
     }
 
     @Override
@@ -67,7 +67,12 @@ public final class ForgotPasswordActivity extends MuudyActivity implements Forgo
     }
 
     @Override
-    public void onCloseClicked() {
+    public void onError(Throwable throwable) {
+        ToastUtils.showShort(throwable.getMessage());
+    }
+
+    @Override
+    public void onBackClicked() {
         finish();
     }
 }

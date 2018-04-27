@@ -2,23 +2,20 @@ package istanbul.codify.muudy.ui.home;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.blankj.utilcode.util.SizeUtils;
+import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Emotion;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.subjects.PublishSubject;
 
 final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
 
@@ -58,7 +55,7 @@ final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
 
     class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private AppCompatImageView mImage;
+        private CircleImageView mImage;
         private AppCompatTextView mText;
 
         Holder(View itemView) {

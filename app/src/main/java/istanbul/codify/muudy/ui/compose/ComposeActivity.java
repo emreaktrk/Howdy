@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.EventSupport;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 
-public final class ComposeActivity extends HowdyActivity implements ComposeView, EventSupport {
+public final class ComposeActivity extends MuudyActivity implements ComposeView, EventSupport {
 
     private final ComposePresenter mPresenter = new ComposePresenter();
 

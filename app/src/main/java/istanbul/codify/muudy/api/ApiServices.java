@@ -17,6 +17,9 @@ public interface ApiServices {
     @POST("register")
     Single<ForgotPasswordResponse> forgotPassword(@Body ForgotPasswordRequest request);
 
+    @POST("changepass")
+    Single<ChangePasswordResponse> changePassword(@Body ChangePasswordRequest request);
+
     @POST("getwall")
     Single<GetWallResponse> getWall(@Body GetWallRequest request);
 

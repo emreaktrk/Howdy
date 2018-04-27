@@ -13,7 +13,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 
 
-public abstract class HowdyDialog extends DialogFragment {
+public abstract class MuudyDialog extends DialogFragment {
 
     abstract protected @LayoutRes
     int getLayoutResId();

@@ -45,6 +45,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Back clicked");
+
                             view.onBackClicked();
                         }));
 
@@ -54,6 +55,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Save clicked");
+
                             view.onSaveClicked();
                         }));
 
@@ -63,6 +65,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Photo clicked");
+
                             view.onPhotoClicked();
                         }));
     }

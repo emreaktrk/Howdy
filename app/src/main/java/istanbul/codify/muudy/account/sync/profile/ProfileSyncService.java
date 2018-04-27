@@ -13,7 +13,9 @@ public class ProfileSyncService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        mAdapter = new ProfileSyncAdapter(this, true, false);
+        if (mAdapter == null){
+            mAdapter = new ProfileSyncAdapter(this, true, false);
+        }
     }
 
     @Nullable

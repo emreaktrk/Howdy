@@ -14,7 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 
 
-public abstract class HowdyBottomSheet extends BottomSheetDialogFragment {
+public abstract class MuudyBottomSheet extends BottomSheetDialogFragment {
 
     abstract protected @LayoutRes
     int getLayoutResId();

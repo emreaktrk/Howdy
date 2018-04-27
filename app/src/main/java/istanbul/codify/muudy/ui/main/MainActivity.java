@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
@@ -19,7 +19,7 @@ import istanbul.codify.muudy.ui.profile.ProfileFragment;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
 
 
-public final class MainActivity extends HowdyActivity implements MainView, Navigation.IController {
+public final class MainActivity extends MuudyActivity implements MainView, Navigation.IController {
 
     private MainPresenter mPresenter = new MainPresenter();
     private Pool<Fragment> mPool = new Pool<Fragment>() {

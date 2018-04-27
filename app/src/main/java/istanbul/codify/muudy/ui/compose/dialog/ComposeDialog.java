@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import istanbul.codify.muudy.HowdyDialog;
+import istanbul.codify.muudy.MuudyDialog;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.PostVisibility;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import org.greenrobot.eventbus.EventBus;
 
-public final class ComposeDialog extends HowdyDialog implements ComposeDialogView {
+public final class ComposeDialog extends MuudyDialog implements ComposeDialogView {
 
     private ComposeDialogPresenter mPresenter = new ComposeDialogPresenter();
 

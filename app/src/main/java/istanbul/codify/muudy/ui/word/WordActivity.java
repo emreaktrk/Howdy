@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import io.reactivex.annotations.NonNull;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
@@ -18,7 +18,7 @@ import istanbul.codify.muudy.ui.mention.MentionActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WordActivity extends HowdyActivity implements WordView {
+public final class WordActivity extends MuudyActivity implements WordView {
 
     public static final int REQUEST_CODE = 123;
 

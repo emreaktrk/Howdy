@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.EventSupport;
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public final class ChatActivity extends HowdyActivity implements ChatView, EventSupport {
+public final class ChatActivity extends MuudyActivity implements ChatView, EventSupport {
 
     private ChatPresenter mPresenter = new ChatPresenter();
 

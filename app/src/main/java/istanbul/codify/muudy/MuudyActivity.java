@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.Serializable;
 
 
-public abstract class HowdyActivity extends AppCompatActivity {
+public abstract class MuudyActivity extends AppCompatActivity {
 
     public static final int NO_ID = -1;
 

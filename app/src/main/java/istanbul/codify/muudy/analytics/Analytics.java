@@ -34,7 +34,7 @@ public final class Analytics {
         return this;
     }
 
-    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE, Events.FOLLOW, Events.UNFOLLOW})
+    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE, Events.FOLLOW, Events.UNFOLLOW, Events.CHANGE_PASSWORD})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
@@ -42,5 +42,6 @@ public final class Analytics {
         String DISLIKE = "dislike";
         String FOLLOW = "follow";
         String UNFOLLOW = "unfollow";
+        String CHANGE_PASSWORD = "change_password";
     }
 }
