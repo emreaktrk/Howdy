@@ -34,6 +34,8 @@ import istanbul.codify.muudy.view.NumberView;
 
 final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
+    private User mUser;
+
     @Override
     public void attachView(UserProfileView view, View root) {
         super.attachView(view, root);
@@ -97,13 +99,45 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             view.onBooksClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_back))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Back clicked");
+
+                            view.onBackClicked();
+                        }));
     }
 
-    void bind(@NonNull Long userId) {
-        // TODO Get user profile
+    void load(@NonNull Long userId) {
+        GetUserProfileRequest request = new GetUserProfileRequest(userId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getUserProfile(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
+                            @Override
+                            protected void success(GetUserProfileResponse response) {
+                                mView.onLoaded(response.data.user);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 
     void bind(User user) {
+        mUser = user;
+
         findViewById(R.id.user_profile_username, AppCompatTextView.class).setText(user.username);
         findViewById(R.id.user_profile_fullname, AppCompatTextView.class).setText(user.namesurname);
 
@@ -149,8 +183,12 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                 .into(findViewById(R.id.user_profile_picture, CircleImageView.class));
     }
 
-    void posts(User user) {
-        GetUserProfileRequest request = new GetUserProfileRequest(user.iduser);
+    void posts() {
+        if (mUser == null) {
+            return;
+        }
+
+        GetUserProfileRequest request = new GetUserProfileRequest(mUser.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
         mDisposables.add(
@@ -178,8 +216,12 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setAdapter(post);
     }
 
-    void stars(User user, long categoryId) {
-        GetUserPostsRequest request = new GetUserPostsRequest(user.iduser);
+    void stars(long categoryId) {
+        if (mUser == null) {
+            return;
+        }
+
+        GetUserPostsRequest request = new GetUserPostsRequest(mUser.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
         request.categoryId = categoryId;
 

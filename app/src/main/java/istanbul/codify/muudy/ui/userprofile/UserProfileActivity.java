@@ -52,7 +52,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
         Long userId = getSerializable(Long.class);
         if (userId != null) {
-            mPresenter.bind(userId);
+            mPresenter.load(userId);
         }
 
         User user = getSerializable(User.class);
@@ -70,10 +70,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
     @Override
     public void onPostsClicked() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            mPresenter.posts(user);
-        }
+        mPresenter.posts();
     }
 
     @Override
@@ -83,34 +80,22 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
     @Override
     public void onGamesClicked() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            mPresenter.stars(user, Category.GAME);
-        }
+        mPresenter.stars(Category.GAME);
     }
 
     @Override
     public void onSeriesClicked() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            mPresenter.stars(user, Category.SERIES);
-        }
+        mPresenter.stars(Category.SERIES);
     }
 
     @Override
     public void onFilmsClicked() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            mPresenter.stars(user, Category.FILM);
-        }
+        mPresenter.stars(Category.FILM);
     }
 
     @Override
     public void onBooksClicked() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            mPresenter.stars(user, Category.BOOK);
-        }
+        mPresenter.stars(Category.BOOK);
     }
 
     @Override
@@ -129,6 +114,11 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     }
 
     @Override
+    public void onLoaded(User user) {
+        mPresenter.bind(user);
+    }
+
+    @Override
     public void onLoadedPosts(List<Post> posts) {
         mPresenter.bindPosts(posts);
     }
@@ -141,5 +131,10 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     @Override
     public void onError(ApiError error) {
         ToastUtils.showShort(error.message);
+    }
+
+    @Override
+    public void onBackClicked() {
+        finish();
     }
 }

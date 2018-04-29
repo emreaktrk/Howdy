@@ -6,17 +6,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.AroundUsers;
+import istanbul.codify.muudy.model.Emotion;
+import istanbul.codify.muudy.model.Follow;
+import istanbul.codify.muudy.model.Post;
+import istanbul.codify.muudy.model.ResultTo;
+import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.Wall;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
@@ -26,12 +41,8 @@ import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public final class HomeFragment extends NavigationFragment implements HomeView, EventSupport {
@@ -134,12 +145,17 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onAvatarClicked(Post post) {
-        PhotoActivity.start(post.imgpath1);
+        boolean own = AccountUtils.own(getContext(), post.iduser);
+        if (own) {
+            // TODO Navigate to profile
+        } else {
+            UserProfileActivity.start(post.iduser);
+        }
     }
 
     @Override
     public void onUserClicked(User user) {
-        // TODO Send to user or own profile
+        UserProfileActivity.start(user);
     }
 
     @Override

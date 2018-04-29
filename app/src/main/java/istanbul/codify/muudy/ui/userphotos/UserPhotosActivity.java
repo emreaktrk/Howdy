@@ -54,24 +54,19 @@ public final class UserPhotosActivity extends MuudyActivity implements UserPhoto
     }
 
     @Override
-    public FragmentPagerItemAdapter create() {
-        User user = getSerializable(User.class);
-        if (user != null) {
-            return new FragmentPagerItemAdapter(
-                    getSupportFragmentManager(),
-                    FragmentPagerItems
-                            .with(this)
-                            .add("Resim 1", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath1))
-                            .add("Resim 2", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath2))
-                            .add("Resim 3", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath3))
-                            .create());
-        }
-
-        throw new IllegalArgumentException("User can not be null");
+    public FragmentPagerItemAdapter create(User user) {
+        return new FragmentPagerItemAdapter(
+                getSupportFragmentManager(),
+                FragmentPagerItems
+                        .with(this)
+                        .add("Resim 1", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath1))
+                        .add("Resim 2", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath2))
+                        .add("Resim 3", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath3))
+                        .create());
     }
 
     @Override
-    public void onCloseClicked() {
+    public void onBackClicked() {
         finish();
     }
 }
