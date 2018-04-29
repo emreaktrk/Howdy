@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.userphotos.UserPhotosActivity">
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/user_photos_close"
+        style="@style/Button.Transparent"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="start"
+        android:padding="14dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_close"
+        android:tint="@color/white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/user_photos_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</android.support.v7.widget.LinearLayoutCompat>

@@ -3,13 +3,13 @@ package istanbul.codify.muudy.ui.splash;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import istanbul.codify.muudy.HowdyActivity;
+import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.ui.auth.AuthActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
 
-public final class SplashActivity extends HowdyActivity {
+public final class SplashActivity extends MuudyActivity {
 
     @Override
     protected int getLayoutResId() {

@@ -1,0 +1,45 @@
+package istanbul.codify.muudy.ui.userphotos.photo;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.View;
+
+import istanbul.codify.muudy.MuudyFragment;
+import istanbul.codify.muudy.R;
+
+public final class UserPhotoFragment extends MuudyFragment implements UserPhotoView {
+
+    private UserPhotoPresenter mPresenter = new UserPhotoPresenter();
+
+    public static Bundle args(String image) {
+        Bundle args = new Bundle();
+        args.putSerializable(image.getClass().getSimpleName(), image);
+
+        return args;
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.layout_user_photo;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mPresenter.attachView(this, this);
+
+        String path = getSerializable(String.class);
+        if (path != null) {
+            mPresenter.bind(path);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mPresenter.detachView();
+    }
+}

@@ -16,7 +16,7 @@ import istanbul.codify.muudy.view.StarView;
 import java.util.ArrayList;
 import java.util.List;
 
-final class StarAdapter extends RecyclerView.Adapter<StarAdapter.Holder> {
+public final class StarAdapter extends RecyclerView.Adapter<StarAdapter.Holder> {
 
     private List<Post> mList;
 

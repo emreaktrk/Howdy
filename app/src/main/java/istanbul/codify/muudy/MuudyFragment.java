@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
@@ -45,6 +46,15 @@ public abstract class MuudyFragment extends Fragment {
                     .getDefault()
                     .unregister(this);
         }
+    }
+
+    protected final <T extends Serializable> T getSerializable(Class<? extends T> clazz) {
+        String key = clazz.getSimpleName();
+        if (getArguments() != null && getArguments().containsKey(key)) {
+            return clazz.cast(getArguments().getSerializable(key));
+        }
+
+        return null;
     }
 
     @SuppressWarnings("unchecked")
