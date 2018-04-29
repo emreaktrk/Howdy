@@ -27,6 +27,8 @@ interface UserProfileView extends MvpView {
 
     void onUserFollowed();
 
+    void onPictureClicked();
+
     void onLoaded(User user);
 
     void onLoadedPosts(List<Post> posts);

@@ -109,6 +109,16 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             view.onBackClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_picture))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Picture clicked");
+
+                            view.onPictureClicked();
+                        }));
     }
 
     void load(@NonNull Long userId) {
@@ -248,5 +258,9 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     void bindStars(List<Post> stars) {
         StarAdapter post = new StarAdapter(stars);
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setAdapter(post);
+    }
+
+    User getUser() {
+        return mUser;
     }
 }

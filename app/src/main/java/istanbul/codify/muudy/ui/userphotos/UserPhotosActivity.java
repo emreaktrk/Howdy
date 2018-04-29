@@ -24,7 +24,7 @@ public final class UserPhotosActivity extends MuudyActivity implements UserPhoto
     public static void start(@NonNull User user) {
         Context context = Utils.getApp().getApplicationContext();
 
-        Intent starter = new Intent(context, UserProfileActivity.class);
+        Intent starter = new Intent(context, UserPhotosActivity.class);
         starter.putExtra(user.getClass().getSimpleName(), user);
         ActivityUtils.startActivity(starter);
     }

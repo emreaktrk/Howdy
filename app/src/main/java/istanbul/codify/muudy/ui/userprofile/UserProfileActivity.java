@@ -18,6 +18,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 
 public final class UserProfileActivity extends MuudyActivity implements UserProfileView {
 
@@ -111,6 +112,14 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     @Override
     public void onUserFollowed() {
         // TODO Show user followed
+    }
+
+    @Override
+    public void onPictureClicked() {
+        User user = mPresenter.getUser();
+        if (user != null) {
+            UserPhotosActivity.start(user);
+        }
     }
 
     @Override
