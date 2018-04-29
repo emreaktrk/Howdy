@@ -22,6 +22,9 @@ public final class AccountUtils {
         manager.addAccountExplicitly(account, null, null);
         manager.setAuthToken(account, AccountContract.FULL_ACCESS, user.tokenstring);
         manager.setUserData(account, AccountManager.KEY_USERDATA, user.toString());
+
+        ContentResolver.setSyncAutomatically(account, ProfileContract.AUTHORITY, true);
+        ContentResolver.addPeriodicSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY, 60L);
     }
 
     public static String token(Context context) {
