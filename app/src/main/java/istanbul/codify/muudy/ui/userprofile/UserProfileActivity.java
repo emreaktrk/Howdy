@@ -125,6 +125,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     @Override
     public void onLoaded(User user) {
         mPresenter.bind(user);
+        mPresenter.posts();
     }
 
     @Override

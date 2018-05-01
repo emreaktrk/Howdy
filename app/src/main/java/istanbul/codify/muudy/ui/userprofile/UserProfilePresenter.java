@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.userprofile;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -47,6 +48,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Posts clicked");
 
+                            setSelected(0);
                             view.onPostsClicked();
                         }));
 
@@ -57,6 +59,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Tops clicked");
 
+                            setSelected(1);
                             view.onTopsClicked();
                         }));
 
@@ -67,6 +70,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Games clicked");
 
+                            setSelected(2);
                             view.onGamesClicked();
                         }));
 
@@ -77,6 +81,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Series clicked");
 
+                            setSelected(3);
                             view.onSeriesClicked();
                         }));
 
@@ -87,6 +92,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Films clicked");
 
+                            setSelected(4);
                             view.onFilmsClicked();
                         }));
 
@@ -97,6 +103,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Books clicked");
 
+                            setSelected(5);
                             view.onBooksClicked();
                         }));
 
@@ -198,6 +205,8 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
             return;
         }
 
+        setSelected(0);
+
         GetUserProfileRequest request = new GetUserProfileRequest(mUser.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -262,5 +271,13 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
     User getUser() {
         return mUser;
+    }
+
+    private void setSelected(int position) {
+        LinearLayoutCompat tabs = findViewById(R.id.user_profile_tabs, LinearLayoutCompat.class);
+        for (int i = 0; i < tabs.getChildCount(); i++) {
+            View child = tabs.getChildAt(i);
+            child.setSelected(i == position);
+        }
     }
 }
