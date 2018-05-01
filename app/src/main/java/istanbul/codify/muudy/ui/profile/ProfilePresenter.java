@@ -1,11 +1,17 @@
 package istanbul.codify.muudy.ui.profile;
 
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.BuildConfig;
@@ -19,15 +25,11 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.GetUserPostsResponse;
 import istanbul.codify.muudy.api.pojo.response.GetUserProfileResponse;
 import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.view.NumberView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
@@ -52,6 +54,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Posts clicked");
 
+                            setSelected(0);
                             view.onPostsClicked();
                         }));
 
@@ -62,6 +65,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Tops clicked");
 
+                            setSelected(1);
                             view.onTopsClicked();
                         }));
 
@@ -72,6 +76,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Games clicked");
 
+                            setSelected(2);
                             view.onGamesClicked();
                         }));
 
@@ -82,6 +87,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Series clicked");
 
+                            setSelected(3);
                             view.onSeriesClicked();
                         }));
 
@@ -92,6 +98,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Films clicked");
 
+                            setSelected(4);
                             view.onFilmsClicked();
                         }));
 
@@ -102,6 +109,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(o -> {
                             Logcat.v("Books clicked");
 
+                            setSelected(5);
                             view.onBooksClicked();
                         }));
     }
@@ -153,6 +161,8 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void posts() {
+        setSelected(0);
+
         User me = AccountUtils.me(getContext());
 
         GetUserProfileRequest request = new GetUserProfileRequest(me.iduser);
@@ -213,5 +223,13 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     void bindStars(List<Post> stars) {
         StarAdapter post = new StarAdapter(stars);
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
+    }
+
+    private void setSelected(int position) {
+        LinearLayoutCompat tabs = findViewById(R.id.profile_tabs, LinearLayoutCompat.class);
+        for (int i = 0; i < tabs.getChildCount(); i++) {
+            View child = tabs.getChildAt(i);
+            child.setSelected(i == position);
+        }
     }
 }

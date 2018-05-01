@@ -127,7 +127,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_posts"
+                    android:src="@drawable/ic_user_posts_normal"
                     android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -136,7 +136,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_tops"
+                    android:src="@drawable/ic_user_tops_normal"
                     android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -145,7 +145,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_games"
+                    android:src="@drawable/ic_user_games_normal"
                     android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -154,7 +154,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_series"
+                    android:src="@drawable/ic_user_series_normal"
                     android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -163,7 +163,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_films"
+                    android:src="@drawable/ic_user_films_normal"
                     android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -172,7 +172,7 @@
                     android:background="@android:color/transparent"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_user_books"
+                    android:src="@drawable/ic_user_books_normal"
                     android:layout_height="match_parent"/>
             </android.support.v7.widget.LinearLayoutCompat>
         </android.support.design.widget.AppBarLayout>
