@@ -36,6 +36,7 @@ import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
+import istanbul.codify.muudy.navigation.Navigator;
 import istanbul.codify.muudy.ui.around.AroundActivity;
 import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
@@ -147,7 +148,9 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     public void onAvatarClicked(Post post) {
         boolean own = AccountUtils.own(getContext(), post.iduser);
         if (own) {
-            // TODO Navigate to profile
+            Navigator
+                    .with(this)
+                    .setSelected(Navigation.PROFILE);
         } else {
             UserProfileActivity.start(post.iduser);
         }
@@ -189,7 +192,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
         User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
         if (user != null) {
-            // TODO Go to user profile
+            UserProfileActivity.start(user);
         }
     }
 

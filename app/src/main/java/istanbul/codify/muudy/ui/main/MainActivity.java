@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
+
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.fcm.UpdatePushService;
@@ -116,5 +118,27 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Override
     public void onNavigationSelected(@Navigation int selection) {
         mPresenter.setSelected(selection);
+    }
+
+    @Override
+    public void setSelected(@Navigation int selection) {
+        mPresenter.setSelected(selection);
+
+        switch (selection) {
+            case Navigation.HOME:
+                onHomeClicked(false);
+                return;
+            case Navigation.STATISTIC:
+                onStatisticClicked(false);
+                return;
+            case Navigation.NOTIFICATION:
+                onHomeClicked(false);
+                return;
+            case Navigation.PROFILE:
+                onProfileClicked(false);
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown navigation");
+        }
     }
 }

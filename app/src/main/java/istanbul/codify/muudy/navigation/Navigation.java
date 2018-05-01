@@ -18,5 +18,7 @@ public @interface Navigation {
 
     interface IController {
         void onNavigationSelected(@Navigation int selection);
+
+        void setSelected(@Navigation int selection);
     }
 }
