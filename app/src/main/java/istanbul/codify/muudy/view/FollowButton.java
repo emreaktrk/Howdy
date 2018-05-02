@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ToggleButton;
 
-public final class FollowButton extends ToggleButton {
+public class FollowButton extends ToggleButton {
 
     public FollowButton(Context context) {
         super(context);

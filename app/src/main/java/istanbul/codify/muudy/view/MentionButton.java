@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ToggleButton;
 import com.blankj.utilcode.util.SizeUtils;
 
-public final class MentionButton extends ToggleButton {
+public class MentionButton extends ToggleButton {
 
     public MentionButton(Context context) {
         super(context);

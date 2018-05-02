@@ -5,7 +5,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import com.blankj.utilcode.util.SizeUtils;
 
-public final class LikeButton extends AppCompatCheckBox {
+public class LikeButton extends AppCompatCheckBox {
 
     public LikeButton(Context context) {
         super(context);

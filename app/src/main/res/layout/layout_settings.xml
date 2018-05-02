@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".ui.settings.SettingsActivity">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/white">
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/settings_close"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_close"/>
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:text="Mesafe Ayarla"/>
+
+    <SeekBar
+            android:id="@+id/settings_distance"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            style="@style/Widget.AppCompat.SeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="50"
+            tools:progress="5"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:drawableEnd="@drawable/ic_next_reverse"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Bildirimler"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:text="Takip Et"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:drawableEnd="@drawable/ic_next_reverse"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Facebook Arkadaşları"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:drawableEnd="@drawable/ic_next_reverse"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Kişilerim"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:text="Hesabım"/>
+</android.support.v7.widget.LinearLayoutCompat>
