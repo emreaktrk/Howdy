@@ -4,10 +4,11 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-
+import android.support.annotation.Nullable;
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
-
 import istanbul.codify.muudy.account.sync.profile.ProfileContract;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
@@ -70,5 +71,40 @@ public final class AccountUtils {
     public static void sync(Context context) {
         Account account = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
         ContentResolver.requestSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY);
+    }
+
+    public static void logout(Context context, @Nullable AccountCallback callback) {
+        LoginManager
+                .getInstance()
+                .logOut();
+
+        Account[] accounts = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE);
+        if (accounts.length == 0) {
+            return;
+        }
+
+        Account account = accounts[0];
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            AccountManager.get(context).removeAccountExplicitly(account);
+            if (callback != null) {
+                callback.onResult(true);
+            }
+        } else {
+            AccountManager.get(context).removeAccount(account, future -> {
+                if (callback != null) {
+                    try {
+                        Boolean result = future.getResult();
+                        callback.onResult(result);
+                    } catch (Exception e) {
+                        callback.onResult(false);
+                    }
+                }
+            }, null);
+        }
+    }
+
+    public interface AccountCallback {
+
+        void onResult(boolean result);
     }
 }

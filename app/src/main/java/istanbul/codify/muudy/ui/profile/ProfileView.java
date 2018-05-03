@@ -23,6 +23,8 @@ interface ProfileView extends MvpView {
 
     void onEditClicked();
 
+    void onSettingsClicked();
+
     void onLoadedPosts(List<Post> posts);
 
     void onLoadedStars(List<Post> stars);

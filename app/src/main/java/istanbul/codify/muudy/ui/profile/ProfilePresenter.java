@@ -49,6 +49,16 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.profile_settings))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Settings clicked");
+
+                            view.onSettingsClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.profile_posts))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {

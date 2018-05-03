@@ -97,4 +97,7 @@ public interface ApiServices {
 
     @POST("facebooklogin")
     Single<FacebookLoginResponse> facebookLogin(@Body FacebookLoginRequest request);
+
+    @POST("logout")
+    Single<LogoutResponse> logout(@Body LogoutRequest request);
 }
