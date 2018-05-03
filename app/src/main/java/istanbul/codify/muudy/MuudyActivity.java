@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.account.sync.SyncListener;
+import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.event.SyncEvent;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 
@@ -25,7 +31,7 @@ public abstract class MuudyActivity extends AppCompatActivity {
             setContentView(getLayoutResId());
         }
 
-        if (this instanceof EventSupport){
+        if (this instanceof EventSupport) {
             EventBus
                     .getDefault()
                     .register(this);
@@ -36,7 +42,7 @@ public abstract class MuudyActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if (this instanceof EventSupport){
+        if (this instanceof EventSupport) {
             EventBus
                     .getDefault()
                     .unregister(this);
@@ -78,5 +84,15 @@ public abstract class MuudyActivity extends AppCompatActivity {
         }
 
         return (T) data.getExtras().getSerializable(clazz.getSimpleName());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSyncEvent(SyncEvent event) {
+        if (this instanceof SyncListener){
+            User me = AccountUtils.me(this);
+
+            SyncListener listener = (SyncListener) this;
+            listener.onSync(me);
+        }
     }
 }

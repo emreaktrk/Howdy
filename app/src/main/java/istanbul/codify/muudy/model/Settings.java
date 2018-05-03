@@ -2,8 +2,14 @@ package istanbul.codify.muudy.model;
 
 public final class Settings {
 
-    public int distance;
+    public Integer distance;
+    public ProfileVisibility profileVisibility;
 
-    public boolean hiddenProfile;
+    public Settings(Integer distance) {
+        this.distance = distance;
+    }
 
+    public Settings(ProfileVisibility profileVisibility) {
+        this.profileVisibility = profileVisibility;
+    }
 }

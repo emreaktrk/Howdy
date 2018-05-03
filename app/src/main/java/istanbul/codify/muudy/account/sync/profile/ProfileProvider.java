@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class ProfileProvider extends ContentProvider {
+public final class ProfileProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {

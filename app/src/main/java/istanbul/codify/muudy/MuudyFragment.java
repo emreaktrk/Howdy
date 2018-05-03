@@ -10,7 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.account.sync.SyncListener;
+import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.event.SyncEvent;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 
@@ -65,5 +71,15 @@ public abstract class MuudyFragment extends Fragment {
         }
 
         return null;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSyncEvent(SyncEvent event) {
+        if (this instanceof SyncListener){
+            User me = AccountUtils.me(getContext());
+
+            SyncListener listener = (SyncListener) this;
+            listener.onSync(me);
+        }
     }
 }

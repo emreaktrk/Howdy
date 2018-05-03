@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
@@ -13,6 +14,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.ApiResult;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.Settings;
+import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 
 public final class SettingsActivity extends MuudyActivity implements SettingsView {
@@ -36,6 +38,9 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        User me = AccountUtils.me(this);
+        mPresenter.bind(me);
     }
 
     @Override
@@ -68,8 +73,15 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     }
 
     @Override
-    public void onError(ApiError error) {
+    public void onSettingsUpdated() {
+        AccountUtils.sync(this);
 
+        ToastUtils.showShort("Ayarlar guncellendi.");
+    }
+
+    @Override
+    public void onError(ApiError error) {
+        ToastUtils.showShort(error.message);
     }
 
     @Override

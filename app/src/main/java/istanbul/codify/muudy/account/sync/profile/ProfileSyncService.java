@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-public class ProfileSyncService extends Service {
+public final class ProfileSyncService extends Service {
 
     private ProfileSyncAdapter mAdapter;
 

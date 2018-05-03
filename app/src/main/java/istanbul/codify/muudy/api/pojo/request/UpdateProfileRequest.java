@@ -25,7 +25,7 @@ public final class UpdateProfileRequest {
     public String facebooklink;
     public String instagramlink;
     public String twitterlink;
-    public int distance_km;
+    public Integer distance_km;
     public String pushToken;
     public DeviceType deviceType;
 

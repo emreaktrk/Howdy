@@ -12,11 +12,13 @@ import com.google.gson.Gson;
 import istanbul.codify.muudy.account.sync.profile.ProfileContract;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.event.SyncEvent;
+import org.greenrobot.eventbus.EventBus;
 
 public final class AccountUtils {
 
 
-    public static void login(Context context, User user) {
+    public synchronized static void login(Context context, User user) {
         Account account = new Account(user.username, AccountContract.ACCOUNT_TYPE);
 
         AccountManager manager = AccountManager.get(context);
@@ -28,7 +30,18 @@ public final class AccountUtils {
         ContentResolver.addPeriodicSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY, 60L);
     }
 
-    public static String token(Context context) {
+    public synchronized static void update(Context context, User user) {
+        AccountManager manager = AccountManager.get(context);
+        Account account = manager.getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
+        manager.setAuthToken(account, AccountContract.FULL_ACCESS, user.tokenstring);
+        manager.setUserData(account, AccountManager.KEY_USERDATA, new Gson().toJson(user));
+
+        EventBus
+                .getDefault()
+                .post(new SyncEvent());
+    }
+
+    public synchronized static String token(Context context) {
         try {
             AccountManager manager = AccountManager.get(context);
             Account account = manager.getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
@@ -42,38 +55,38 @@ public final class AccountUtils {
         }
     }
 
-    public static String tokenLegacy(Context context) {
+    public synchronized static String tokenLegacy(Context context) {
         AccountManager manager = AccountManager.get(context);
         Account account = manager.getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
         String json = manager.getUserData(account, AccountManager.KEY_USERDATA);
         return new Gson().fromJson(json, User.class).tokenstring;
     }
 
-    public static boolean has(Context context) {
+    public synchronized static boolean has(Context context) {
         return AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE).length == 1;
     }
 
-    public static User me(Context context) {
+    public synchronized static User me(Context context) {
         Account account = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
         return new Gson().fromJson(AccountManager.get(context).getUserData(account, AccountManager.KEY_USERDATA), User.class);
     }
 
-    public static boolean own(Context context, User user) {
+    public synchronized static boolean own(Context context, User user) {
         User me = me(context);
         return me.equals(user);
     }
 
-    public static boolean own(Context context, long userId) {
+    public synchronized static boolean own(Context context, long userId) {
         User me = me(context);
         return me.equals(userId);
     }
 
-    public static void sync(Context context) {
+    public synchronized static void sync(Context context) {
         Account account = AccountManager.get(context).getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
         ContentResolver.requestSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY);
     }
 
-    public static void logout(Context context, @Nullable AccountCallback callback) {
+    public synchronized static void logout(Context context, @Nullable AccountCallback callback) {
         LoginManager
                 .getInstance()
                 .logOut();

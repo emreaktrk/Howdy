@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -171,8 +175,6 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void posts() {
-        setSelected(0);
-
         User me = AccountUtils.me(getContext());
 
         GetUserProfileRequest request = new GetUserProfileRequest(me.iduser);
@@ -199,6 +201,8 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void bindPosts(List<Post> posts) {
+        setSelected(0);
+
         PostAdapter post = new PostAdapter(posts);
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
     }

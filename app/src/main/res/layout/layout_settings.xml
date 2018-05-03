@@ -52,12 +52,10 @@
 
             <SeekBar
                     android:id="@+id/settings_distance"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
                     style="@style/Widget.AppCompat.SeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:max="160"
                     tools:progress="50"/>
 
@@ -118,6 +116,7 @@
                     android:text="Hesabım"/>
 
             <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/settings_hidden_profile"
                     android:padding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

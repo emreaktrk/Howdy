@@ -13,7 +13,10 @@ interface SettingsView extends MvpView {
 
     void onLogout(ApiResult result);
 
+    void onSettingsUpdated();
+
     void onError(ApiError error);
 
     void onCloseClicked();
+
 }
