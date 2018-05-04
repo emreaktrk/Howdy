@@ -14,6 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.exception.ImplementationMissingException;
 import istanbul.codify.muudy.helper.utils.InflaterUtils;
 import istanbul.codify.muudy.model.Follow;
@@ -37,6 +38,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private PublishSubject<Post> mImageSubject = PublishSubject.create();
     private PublishSubject<Post> mVideoSubject = PublishSubject.create();
     private PublishSubject<Post> mAvatarSubject = PublishSubject.create();
+    private PublishSubject<Post> mMuudySubject = PublishSubject.create();
+    private PublishSubject<Post> mDeleteSubject = PublishSubject.create();
     private List<Post> mPosts;
     private RecommendedUsersAdapter mUsers;
     private int mCommentVisibility = View.VISIBLE;
@@ -178,7 +181,15 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mUsers.userClicks();
     }
 
-    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    public PublishSubject<Post> muudyClicks() {
+        return mMuudySubject;
+    }
+
+    public PublishSubject<Post> deleteClicks() {
+        return mDeleteSubject;
+    }
+
+    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, CompoundButton.OnCheckedChangeListener {
 
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
@@ -201,6 +212,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mComment = itemView.findViewById(R.id.post_comment);
             mComment.setVisibility(mCommentVisibility);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -220,6 +232,19 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Post post = getItem(getAdapterPosition());
             Like like = new Like(post, isChecked);
             mLikeSubject.onNext(like);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            Post post = getItem(getAdapterPosition());
+            boolean own = AccountUtils.own(view.getContext(), post.iduser);
+            if (own) {
+                mDeleteSubject.onNext(post);
+            } else {
+                mMuudySubject.onNext(post);
+            }
+
+            return true;
         }
     }
 

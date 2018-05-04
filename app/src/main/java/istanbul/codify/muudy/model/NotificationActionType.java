@@ -4,8 +4,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import istanbul.codify.muudy.model.event.MessageEvent;
-import istanbul.codify.muudy.model.event.NotificationEvent;
+import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
+import istanbul.codify.muudy.model.event.notification.NotificationEvent;
+import istanbul.codify.muudy.model.event.notification.SayHiNotificationEvent;
 
 public enum NotificationActionType {
 
@@ -35,7 +36,9 @@ public enum NotificationActionType {
     public NotificationEvent getEvent() {
         switch (this) {
             case MESSAGE:
-                return new MessageEvent();
+                return new MessageNotificationEvent();
+            case SAY_HI:
+                return new SayHiNotificationEvent();
             default:
                 return null;
         }

@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.deeplink.DeepLink;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
 import istanbul.codify.muudy.navigation.Navigation;
@@ -55,6 +55,19 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         mPresenter.attachView(this, this);
 
         UpdatePushService.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        DeepLink pending = DeepLinkManager
+                .getInstance()
+                .getPending();
+
+        if (pending != null) {
+            pending.navigate();
+        }
     }
 
     @Override

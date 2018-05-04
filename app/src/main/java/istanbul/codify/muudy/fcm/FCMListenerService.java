@@ -17,8 +17,10 @@ import android.text.TextUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.deeplink.DeepLink;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.model.NotificationActionType;
-import istanbul.codify.muudy.model.event.NotificationEvent;
+import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,6 +39,13 @@ public final class FCMListenerService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage message) {
         NotificationEvent event = getEvent(message);
         if (event != null) {
+            DeepLink link = event.getDeepLink();
+            if (link != null) {
+                DeepLinkManager
+                        .getInstance()
+                        .setPending(link);
+            }
+
             EventBus
                     .getDefault()
                     .post(event);
@@ -45,7 +54,6 @@ public final class FCMListenerService extends FirebaseMessagingService {
         NotificationManager manager = getManager();
 
         Intent intent = new Intent(this, SplashActivity.class);
-        intent.setData(getUri(message));
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
@@ -107,28 +115,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
         }
     }
 
-    private Uri getUri(RemoteMessage message) {
-        if (message.getNotification() == null
-                || message.getNotification().getLink() == null) {
-            if (message.getData() != null && message.getData().containsKey("link")) {
-                String link = message.getData().get("link");
-                return Uri.parse(link);
-            } else {
-                return Uri.EMPTY;
-            }
-        } else {
-            return message.getNotification().getLink();
-        }
-    }
-
     private NotificationActionType getNotificationActionType(RemoteMessage message) {
         return NotificationActionType.value(message.getData().get("actiontype"));
-    }
-
-    private @Nullable
-    Long getItemId(RemoteMessage message) {
-        String itemId = message.getData().get("itemid");
-        return TextUtils.isEmpty(itemId) ? null : Long.valueOf(itemId);
     }
 
     public @Nullable
@@ -137,7 +125,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         if (type != null) {
             NotificationEvent event = type.getEvent();
             if (event != null) {
-                event.itemId = getItemId(message);
+                event.message = message;
             }
 
             return event;

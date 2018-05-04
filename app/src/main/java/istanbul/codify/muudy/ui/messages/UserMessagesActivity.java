@@ -13,7 +13,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UserMessage;
-import istanbul.codify.muudy.model.event.MessageEvent;
+import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
@@ -73,7 +73,7 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
+    public void onMessageEvent(MessageNotificationEvent event) {
         mPresenter.getMessages();
     }
 

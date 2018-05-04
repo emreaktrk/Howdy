@@ -3,7 +3,7 @@ package istanbul.codify.muudy.logcat;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-
+import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 
 public final class Logcat {
@@ -76,8 +76,10 @@ public final class Logcat {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            ILog log = (ILog) msg.obj;
-            log.display();
+            if (BuildConfig.DEBUG) {
+                ILog log = (ILog) msg.obj;
+                log.display();
+            }
         }
     }
 }

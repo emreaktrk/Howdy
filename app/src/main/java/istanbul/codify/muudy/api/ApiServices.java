@@ -106,4 +106,7 @@ public interface ApiServices {
 
     @POST("logout")
     Single<LogoutResponse> logout(@Body LogoutRequest request);
+
+    @POST("sayhi")
+    Single<SayHiResponse> sayHi(@Body SayHiRequest request);
 }

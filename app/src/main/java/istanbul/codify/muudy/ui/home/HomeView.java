@@ -30,4 +30,8 @@ interface HomeView extends MvpView {
     void onUserClicked(User user);
 
     void onFollowClicked(Follow follow);
+
+    void onDeleteClicked(Post post);
+
+    void onMuudyClicked(Post post);
 }

@@ -17,7 +17,7 @@ import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.MediaEvent;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.event.MessageEvent;
+import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import org.greenrobot.eventbus.Subscribe;
@@ -139,7 +139,7 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(MessageEvent event) {
+    public void onMessageEvent(MessageNotificationEvent event) {
         User user = getSerializable(User.class);
         if (user != null) {
             mPresenter.bind(user);

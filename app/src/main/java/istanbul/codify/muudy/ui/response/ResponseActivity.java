@@ -9,6 +9,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.SayHiLink;
 
 public final class ResponseActivity extends MuudyActivity implements ResponseView {
 
@@ -25,6 +27,10 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(SayHiLink.class);
     }
 
     @Override

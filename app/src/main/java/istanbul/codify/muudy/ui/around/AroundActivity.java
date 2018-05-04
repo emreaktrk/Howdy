@@ -11,6 +11,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UserProfile;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,7 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
 
     @Override
     public void onUserClicked(User user) {
-        // TODO Navigate to user profile
+        UserProfileActivity.start(user);
     }
 
     @Override

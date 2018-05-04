@@ -19,11 +19,10 @@ import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.DislikePostRequest;
 import istanbul.codify.muudy.api.pojo.request.GetWallRequest;
 import istanbul.codify.muudy.api.pojo.request.LikePostRequest;
-import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.DislikePostResponse;
-import istanbul.codify.muudy.api.pojo.response.GetWallResponse;
-import istanbul.codify.muudy.api.pojo.response.LikePostResponse;
+import istanbul.codify.muudy.api.pojo.request.SayHiRequest;
+import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.Wall;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
@@ -51,7 +50,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     @SuppressLint({"MissingPermission"})
-    public void getWall(Context context) {
+    void getWall(Context context) {
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
@@ -116,6 +115,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Post clicked");
+
                             mView.onPostClicked(cell);
                         }));
         mDisposables.add(
@@ -124,6 +124,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Like clicked");
+
                             mView.onLikeClicked(cell);
                         }));
         mDisposables.add(
@@ -132,6 +133,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Image clicked");
+
                             mView.onImageClicked(cell);
                         }));
         mDisposables.add(
@@ -140,6 +142,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Video clicked");
+
                             mView.onVideoClicked(cell);
                         }));
         mDisposables.add(
@@ -148,6 +151,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Avatar clicked");
+
                             mView.onAvatarClicked(cell);
                         }));
         mDisposables.add(
@@ -156,6 +160,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Avatar clicked");
+
                             mView.onUserClicked(cell);
                         }));
         mDisposables.add(
@@ -164,8 +169,28 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Follow clicked");
+
                             mView.onFollowClicked(cell);
                         }));
+        mDisposables.add(
+                post
+                        .deleteClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Delete clicked");
+
+                            mView.onDeleteClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .muudyClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Muudy clicked");
+
+                            mView.onMuudyClicked(cell);
+                        }));
+
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
     }
 
@@ -205,6 +230,31 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(new ServiceConsumer<DislikePostResponse>() {
                             @Override
                             protected void success(DislikePostResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void sayHi(long userId) {
+        SayHiRequest request = new SayHiRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = userId;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sayHi(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SayHiResponse>() {
+                            @Override
+                            protected void success(SayHiResponse response) {
 
                             }
 
