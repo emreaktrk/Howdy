@@ -39,7 +39,6 @@
                 android:layout_height="56dp"
                 android:layout_gravity="end"
                 android:padding="14dp"
-                android:scaleType="fitCenter"
                 android:src="@drawable/button_send"/>
 
         <View

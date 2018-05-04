@@ -16,7 +16,6 @@
             android:layout_height="36dp"
             android:padding="4dp"
             android:rotation="45"
-            android:scaleType="centerCrop"
             android:src="@drawable/button_close"/>
 
     <android.support.v7.widget.AppCompatTextView
