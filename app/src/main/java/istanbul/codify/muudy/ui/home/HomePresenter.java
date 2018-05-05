@@ -16,13 +16,10 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.DislikePostRequest;
-import istanbul.codify.muudy.api.pojo.request.GetWallRequest;
-import istanbul.codify.muudy.api.pojo.request.LikePostRequest;
-import istanbul.codify.muudy.api.pojo.request.SayHiRequest;
+import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.Wall;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
@@ -256,6 +253,31 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             @Override
                             protected void success(SayHiResponse response) {
 
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void delete(Post post) {
+        DeletePostRequest request = new DeletePostRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.postid = post.idpost;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .deletePost(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<DeletePostResponse>() {
+                            @Override
+                            protected void success(DeletePostResponse response) {
+                                mView.onPostDeleted();
                             }
 
                             @Override

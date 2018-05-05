@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.karumi.dexter.Dexter;
@@ -18,6 +19,7 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
@@ -30,6 +32,7 @@ import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -169,14 +172,47 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onDeleteClicked(Post post) {
-        // TODO Show delete dialog
+        if (getContext() != null) {
+            new AlertDialog
+                    .Builder(getContext())
+                    .setMessage("Silmek istiyor musunuz?")
+                    .setPositiveButton("Evet", (dialogInterface, which) -> {
+                        mPresenter.delete(post);
+
+                        Analytics
+                                .getInstance()
+                                .custom(Analytics.Events.DELETE_POST);
+                    })
+                    .setNegativeButton("Hayir", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+        }
     }
 
     @Override
     public void onMuudyClicked(Post post) {
-        // TODO Show muudy dialog
+        if (getContext() != null) {
+            new AlertDialog
+                    .Builder(getContext())
+                    .setMessage("Muudy demek istiyor musunuz?")
+                    .setPositiveButton("Muudy De!", (dialogInterface, which) -> {
+                        mPresenter.sayHi(post.iduser);
 
-        mPresenter.sayHi(post.iduser);
+                        Analytics
+                                .getInstance()
+                                .custom(Analytics.Events.MUUDY);
+                    })
+                    .setNegativeButton("Hayir", (dialog, which) -> dialog.dismiss())
+                    .create()
+                    .show();
+        }
+    }
+
+    @Override
+    public void onPostDeleted() {
+        EventBus
+                .getDefault()
+                .post(new DeleteEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -197,6 +233,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         if (user != null) {
             UserProfileActivity.start(user);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDeleteEvent(DeleteEvent event) {
+        mPresenter.getWall(getContext());
     }
 
     @Override

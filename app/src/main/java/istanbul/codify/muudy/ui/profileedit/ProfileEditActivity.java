@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.changepassword.ChangePasswordActivity;
@@ -54,6 +55,10 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
     @Override
     public void onSaveClicked() {
         mPresenter.save();
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.UPDATE_PROFILE);
     }
 
     @Override

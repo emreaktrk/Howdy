@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
@@ -64,6 +65,10 @@ public final class CreateUserActivity extends MuudyActivity implements CreateUse
         User user = getSerializable(User.class);
         if (user != null) {
             mPresenter.createUser(user);
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.CREATE_USER);
         }
     }
 

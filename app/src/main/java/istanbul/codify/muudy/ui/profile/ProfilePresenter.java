@@ -5,19 +5,10 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -34,6 +25,9 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.view.NumberView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
@@ -245,5 +239,17 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
             View child = tabs.getChildAt(i);
             child.setSelected(i == position);
         }
+    }
+
+    int getSeleceted() {
+        LinearLayoutCompat tabs = findViewById(R.id.profile_tabs, LinearLayoutCompat.class);
+        for (int i = 0; i < tabs.getChildCount(); i++) {
+            View child = tabs.getChildAt(i);
+            if (child.isSelected()) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

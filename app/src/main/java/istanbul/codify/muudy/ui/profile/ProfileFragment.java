@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
+import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.account.sync.SyncListener;
@@ -12,15 +13,18 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
 import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.settings.SettingsActivity;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
 
-public final class ProfileFragment extends NavigationFragment implements ProfileView, SyncListener {
+public final class ProfileFragment extends NavigationFragment implements ProfileView, SyncListener, EventSupport {
 
     private ProfilePresenter mPresenter = new ProfilePresenter();
 
@@ -109,5 +113,12 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     public void onSync(User me) {
         mPresenter.bind(me);
         mPresenter.posts();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDeleteEvent(DeleteEvent event) {
+        if (mPresenter.getSeleceted() == 0) {
+            mPresenter.posts();
+        }
     }
 }

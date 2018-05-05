@@ -96,6 +96,9 @@ public interface ApiServices {
     @POST("newpost")
     Single<NewPostResponse> newPost(@Body NewPostRequest request);
 
+    @POST("deletepost")
+    Single<DeletePostResponse> deletePost(@Body DeletePostRequest request);
+
     @POST("suggest")
     Single<SuggestResponse> suggest(@Body SuggestRequest request);
 

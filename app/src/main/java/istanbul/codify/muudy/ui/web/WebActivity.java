@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.webkit.SslErrorHandler;
-import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;

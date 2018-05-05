@@ -34,7 +34,16 @@ public final class Analytics {
         return this;
     }
 
-    @StringDef({Events.COMPOSE, Events.COMMENT, Events.LIKE, Events.DISLIKE, Events.FOLLOW, Events.UNFOLLOW, Events.CHANGE_PASSWORD})
+    @StringDef({
+            Events.COMPOSE,
+            Events.COMMENT,
+            Events.LIKE, Events.DISLIKE,
+            Events.FOLLOW, Events.UNFOLLOW,
+            Events.CHANGE_PASSWORD, Events.DELETE_POST,
+            Events.MUUDY, Events.UPDATE_PROFILE,
+            Events.FORGOT_PASSWORD,
+            Events.CHAT_MESSAGE,
+            Events.CREATE_USER})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
@@ -43,5 +52,11 @@ public final class Analytics {
         String FOLLOW = "follow";
         String UNFOLLOW = "unfollow";
         String CHANGE_PASSWORD = "change_password";
+        String DELETE_POST = "delete_post";
+        String MUUDY = "muudy";
+        String UPDATE_PROFILE = "update_profile";
+        String FORGOT_PASSWORD = "forgot_password";
+        String CHAT_MESSAGE = "chat_message";
+        String CREATE_USER = "create_user";
     }
 }

@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.MediaEvent;
@@ -79,6 +80,10 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     @Override
     public void onSendClicked(String message) {
         mPresenter.send(message);
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.CHAT_MESSAGE);
     }
 
     @Override

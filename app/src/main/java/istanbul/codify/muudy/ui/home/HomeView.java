@@ -34,4 +34,6 @@ interface HomeView extends MvpView {
     void onDeleteClicked(Post post);
 
     void onMuudyClicked(Post post);
+
+    void onPostDeleted();
 }
