@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_chat_normal" />
-                            <entry key="sourceFile" value="C:\Users\emrea\Downloads\mail.svg" />
+                            <entry key="outputName" value="ic_media_normal" />
+                            <entry key="sourceFile" value="C:\Users\emrea\Downloads\photo-camera.svg" />
                           </map>
                         </option>
                       </PersistentState>

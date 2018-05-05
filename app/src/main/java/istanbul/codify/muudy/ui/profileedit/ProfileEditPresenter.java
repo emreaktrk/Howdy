@@ -68,6 +68,16 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
                             view.onPhotoClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit_password_change))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Change password clicked");
+
+                            view.onChangePasswordClicked();
+                        }));
     }
 
     void uploadImage() {
@@ -115,6 +125,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
         Picasso
                 .with(getContext())
                 .load(mPhoto)
+                .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_edit_picture, CircleImageView.class));
     }
 

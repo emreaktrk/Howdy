@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public final class Category implements Serializable {
 
+    public static final long EMOTION = 1;
     public static final long LOCATION = 13;
     public static final long MEETING = 10;
     public static final long GAME = 12;

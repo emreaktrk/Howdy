@@ -43,6 +43,27 @@ public final class WordActivity extends MuudyActivity implements WordView {
         }
     }
 
+    public static void start(@ResultTo int to, @NonNull Long categoryId) {
+        AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
+
+        Intent starter = new Intent(activity, WordActivity.class);
+        Category category = new Category();
+        category.id_word_top_category = categoryId;
+        starter.putExtra(category.getClass().getSimpleName(), category);
+
+        switch (to) {
+            case ResultTo.ACTIVITY:
+                activity.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            case ResultTo.FRAGMENT:
+                Fragment fragment = FragmentUtils.getTopShow(activity.getSupportFragmentManager());
+                fragment.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown ResultTo value");
+        }
+    }
+
     public static void start(@Nullable List<? extends Selectable> selecteds, @Nullable Activity activity, @ResultTo int to) {
         AppCompatActivity compat = (AppCompatActivity) ActivityUtils.getTopActivity();
 

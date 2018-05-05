@@ -12,6 +12,7 @@ public final class SayHiLink extends DeepLink {
 
     @Override
     public void navigate() {
-        ResponseActivity.start();
+        // TODO Get user from remote message
+        // TODO Start Response activity
     }
 }

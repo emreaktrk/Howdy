@@ -13,6 +13,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.ui.changepassword.ChangePasswordActivity;
 
 public final class ProfileEditActivity extends MuudyActivity implements ProfileEditView {
 
@@ -53,6 +54,11 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
     @Override
     public void onSaveClicked() {
         mPresenter.save();
+    }
+
+    @Override
+    public void onChangePasswordClicked() {
+        ChangePasswordActivity.start();
     }
 
     @Override

@@ -27,7 +27,7 @@ public final class DeepLinkManager {
     }
 
     public void nullifyIf(@NonNull Class clazz) {
-        if (mPending.getClass().equals(clazz)) {
+        if (mPending != null && mPending.getClass().equals(clazz)) {
             sInstance = null;
         }
     }

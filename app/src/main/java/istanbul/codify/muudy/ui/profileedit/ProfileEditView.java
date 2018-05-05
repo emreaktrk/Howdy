@@ -13,6 +13,8 @@ interface ProfileEditView extends MvpView {
 
     void onSaveClicked();
 
+    void onChangePasswordClicked();
+
     void onProfileUpdated();
 
     void onLoaded(String imagePath);

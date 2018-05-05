@@ -40,6 +40,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
         Picasso
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + message.otherUser.imgpath1)
+                .placeholder(R.drawable.ic_avatar)
                 .into(holder.mImage);
         holder.mUsername.setText(message.otherUser.username);
         holder.mLastMessage.setText(message.message_text);

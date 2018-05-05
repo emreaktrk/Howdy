@@ -89,6 +89,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.appunite:video-player-android:1.0.1'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.binaryfork:spanny:1.0.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

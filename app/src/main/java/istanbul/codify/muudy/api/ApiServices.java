@@ -1,11 +1,9 @@
 package istanbul.codify.muudy.api;
 
 import io.reactivex.Single;
-import istanbul.codify.muudy.api.pojo.ServiceCallback;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -109,4 +107,7 @@ public interface ApiServices {
 
     @POST("sayhi")
     Single<SayHiResponse> sayHi(@Body SayHiRequest request);
+
+    @POST("sayhi")
+    Single<AnswerHiResponse> answerHi(@Body AnswerHiRequest request);
 }

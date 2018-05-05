@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.UpdatePushService;
@@ -18,6 +19,7 @@ import istanbul.codify.muudy.ui.compose.ComposeActivity;
 import istanbul.codify.muudy.ui.home.HomeFragment;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
+import istanbul.codify.muudy.ui.response.ResponseActivity;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
 
 
@@ -55,6 +57,8 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         mPresenter.attachView(this, this);
 
         UpdatePushService.start();
+
+        ResponseActivity.start(AccountUtils.me(this));
     }
 
     @Override

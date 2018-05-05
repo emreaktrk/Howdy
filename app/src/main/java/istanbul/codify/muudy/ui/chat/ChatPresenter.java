@@ -108,6 +108,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         Picasso
                 .with(getContext())
                 .load(BuildConfig.URL + user.imgpath1)
+                .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.chat_user_image, CircleImageView.class));
     }
 
