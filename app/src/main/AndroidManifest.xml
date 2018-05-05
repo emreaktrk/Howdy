@@ -119,6 +119,10 @@
                 android:name=".ui.settings.SettingsActivity"
                 android:theme="@style/SettingsTheme"/>
 
+        <activity
+                android:name=".ui.web.WebActivity"
+                android:theme="@style/MainTheme"/>
+
         <service
                 android:name=".account.AccountService"
                 android:exported="false">

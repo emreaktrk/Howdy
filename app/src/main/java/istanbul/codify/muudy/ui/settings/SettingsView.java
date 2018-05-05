@@ -7,6 +7,8 @@ import istanbul.codify.muudy.ui.base.MvpView;
 
 interface SettingsView extends MvpView {
 
+    void onPolicyClicked();
+
     void onSettingsChanged(Settings settings);
 
     void onLogoutClicked();

@@ -57,8 +57,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         mPresenter.attachView(this, this);
 
         UpdatePushService.start();
-
-        ResponseActivity.start(AccountUtils.me(this));
     }
 
     @Override

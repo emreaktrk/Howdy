@@ -11,11 +11,9 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.ApiResult;
-import istanbul.codify.muudy.model.Result;
-import istanbul.codify.muudy.model.Settings;
-import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
+import istanbul.codify.muudy.ui.web.WebActivity;
 
 public final class SettingsActivity extends MuudyActivity implements SettingsView {
 
@@ -48,6 +46,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
         super.onDestroy();
 
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onPolicyClicked() {
+        WebActivity.start(new Web("Gizlilik Sözleşmesi", URL.POLICY));
     }
 
     @Override

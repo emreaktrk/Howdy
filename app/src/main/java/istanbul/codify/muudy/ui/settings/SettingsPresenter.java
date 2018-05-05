@@ -30,6 +30,16 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.settings_policy))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Policy clicked");
+
+                            view.onPolicyClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.settings_close))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {

@@ -135,6 +135,7 @@
                     android:text="Geri Bildirim Gönder"/>
 
             <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settings_policy"
                     style="@style/Text.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

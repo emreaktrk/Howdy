@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MainActivity"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/web_close"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="start"
+                android:src="@drawable/ic_close"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/web_title"
+                style="@style/Text.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:text="Web Site Title"/>
+    </FrameLayout>
+
+    <WebView
+            android:id="@+id/web_web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+</android.support.v7.widget.LinearLayoutCompat>
