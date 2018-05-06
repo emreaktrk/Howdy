@@ -11,7 +11,6 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.ui.auth.AuthActivity;
 
 public final class FeedbackActivity extends MuudyActivity implements FeedbackView {
 

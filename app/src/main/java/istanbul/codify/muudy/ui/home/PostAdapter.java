@@ -86,6 +86,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             NoneHolder none = (NoneHolder) holder;
             none.mMessage.setText(post.post_text);
+            none.mLike.setLike(post.isliked);
             none.mLike.setText(post.post_likecount + "");
             none.mComment.setText(post.post_commentcount + "");
             Picasso
@@ -189,7 +190,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mDeleteSubject;
     }
 
-    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, CompoundButton.OnCheckedChangeListener {
+    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {
 
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
@@ -207,7 +208,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mImage.setOnClickListener(this);
 
             mLike = itemView.findViewById(R.id.post_like);
-            mLike.setOnCheckedChangeListener(this);
+            mLike.setOnLikeClickListener(this);
 
             mComment = itemView.findViewById(R.id.post_comment);
             mComment.setVisibility(mCommentVisibility);
@@ -228,9 +229,9 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        public void onLike(boolean isLiked) {
             Post post = getItem(getAdapterPosition());
-            Like like = new Like(post, isChecked);
+            Like like = new Like(post, isLiked);
             mLikeSubject.onNext(like);
         }
 

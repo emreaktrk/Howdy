@@ -60,8 +60,11 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
     }
 
     @Override
-    public void onLoaded(@NonNull Object object) {
-
+    public void onLoaded() {
+        Long postId = getSerializable(Long.class);
+        if (postId != null) {
+            mPresenter.getPostDetail(postId);
+        }
     }
 
     @Override
@@ -101,11 +104,11 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
         Long postId = getSerializable(Long.class);
         if (postId != null) {
             mPresenter.send(postId, comment);
-        }
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.COMMENT);
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.COMMENT);
+        }
     }
 
     @Override

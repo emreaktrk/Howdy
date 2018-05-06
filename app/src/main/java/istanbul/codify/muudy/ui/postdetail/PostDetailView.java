@@ -12,7 +12,7 @@ interface PostDetailView extends MvpView {
 
     void onLoaded(@NonNull PostDetail detail);
 
-    void onLoaded(@NonNull Object object);
+    void onLoaded();
 
     void onError(ApiError error);
 

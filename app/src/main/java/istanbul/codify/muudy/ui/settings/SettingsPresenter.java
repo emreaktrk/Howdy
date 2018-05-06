@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.settings;
 
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.SeekBar;
@@ -75,8 +76,11 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
                         .userChanges(findViewById(R.id.settings_distance))
                         .skipInitialValue()
                         .observeOn(AndroidSchedulers.mainThread())
+                        .debounce(1, TimeUnit.SECONDS)
                         .subscribe(distance -> {
                             Logcat.v("Distance changed");
+
+                            findViewById(R.id.settings_distance_value, AppCompatTextView.class).setText(distance + " km");
 
                             Settings settings = new Settings(distance);
                             view.onSettingsChanged(settings);
@@ -156,6 +160,7 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
     void bind(User me) {
         findViewById(R.id.settings_distance, SeekBar.class).setProgress(me.distance_km);
+        findViewById(R.id.settings_distance_value, AppCompatTextView.class).setText(me.distance_km + " km");
         findViewById(R.id.settings_hidden_profile, SwitchCompat.class).setChecked(me.isprofilehidden != null && me.isprofilehidden == ProfileVisibility.HIDDEN);
     }
 }

@@ -2,11 +2,16 @@ package istanbul.codify.muudy.ui.postdetail;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
-import istanbul.codify.muudy.BuildConfig;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -17,16 +22,6 @@ import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
-import istanbul.codify.muudy.view.LikeButton;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.squareup.picasso.Picasso;
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 
 final class PostDetailPresenter extends BasePresenter<PostDetailView> {
 
@@ -67,6 +62,8 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
     }
 
     void send(long postId, String comment) {
+        findViewById(R.id.post_detail_comment, AppCompatEditText.class).setText(null);
+
         CommentPostRequest request = new CommentPostRequest(postId, comment);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -78,7 +75,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .subscribe(new ServiceConsumer<CommentPostResponse>() {
                             @Override
                             protected void success(CommentPostResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onLoaded();
                             }
 
                             @Override
@@ -90,7 +87,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         }));
     }
 
-    public void getPostDetail(long postId) {
+    void getPostDetail(long postId) {
         mDisposables.add(
                 Single
                         .zip(
@@ -98,45 +95,49 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                                     GetSinglePostRequest request = new GetSinglePostRequest(postId);
                                     request.token = AccountUtils.tokenLegacy(getContext());
 
-                                    ApiManager
-                                            .getInstance()
-                                            .getSinglePost(request)
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(new ServiceConsumer<GetSinglePostResponse>() {
-                                                @Override
-                                                protected void success(GetSinglePostResponse response) {
-                                                    observer.onSuccess(response.data);
-                                                }
+                                    mDisposables.add(
+                                            ApiManager
+                                                    .getInstance()
+                                                    .getSinglePost(request)
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(new ServiceConsumer<GetSinglePostResponse>() {
+                                                        @Override
+                                                        protected void success(GetSinglePostResponse response) {
+                                                            observer.onSuccess(response.data);
+                                                        }
 
-                                                @Override
-                                                protected void error(ApiError error) {
-                                                    Logcat.e(error);
+                                                        @Override
+                                                        protected void error(ApiError error) {
+                                                            Logcat.e(error);
 
-                                                    mView.onError(error);
-                                                }
-                                            });
+                                                            mView.onError(error);
+                                                        }
+                                                    })
+                                    );
                                 },
                                 observer -> {
                                     GetCommentsRequest request = new GetCommentsRequest(postId);
                                     request.token = AccountUtils.tokenLegacy(getContext());
 
-                                    ApiManager
-                                            .getInstance()
-                                            .getComments(request)
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(new ServiceConsumer<GetCommentsResponse>() {
-                                                @Override
-                                                protected void success(GetCommentsResponse response) {
-                                                    observer.onSuccess(response.data);
-                                                }
+                                    mDisposables.add(
+                                            ApiManager
+                                                    .getInstance()
+                                                    .getComments(request)
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(new ServiceConsumer<GetCommentsResponse>() {
+                                                        @Override
+                                                        protected void success(GetCommentsResponse response) {
+                                                            observer.onSuccess(response.data);
+                                                        }
 
-                                                @Override
-                                                protected void error(ApiError error) {
-                                                    Logcat.e(error);
+                                                        @Override
+                                                        protected void error(ApiError error) {
+                                                            Logcat.e(error);
 
-                                                    mView.onError(error);
-                                                }
-                                            });
+                                                            mView.onError(error);
+                                                        }
+                                                    })
+                                    );
                                 },
                                 PostDetail::new)
                         .subscribe((detail, throwable) -> mView.onLoaded(detail)));
@@ -154,7 +155,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .subscribe(new ServiceConsumer<LikePostResponse>() {
                             @Override
                             protected void success(LikePostResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onLoaded();
                             }
 
                             @Override
@@ -178,7 +179,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .subscribe(new ServiceConsumer<DislikePostResponse>() {
                             @Override
                             protected void success(DislikePostResponse response) {
-                                mView.onLoaded(response.data);
+                                mView.onLoaded();
                             }
 
                             @Override

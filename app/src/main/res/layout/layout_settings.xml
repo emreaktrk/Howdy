@@ -50,14 +50,30 @@
                     android:textStyle="bold"
                     android:text="Mesafe Ayarla"/>
 
-            <SeekBar
-                    android:id="@+id/settings_distance"
-                    style="@style/Widget.AppCompat.SeekBar"
+            <android.support.v7.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:max="160"
-                    tools:progress="50"/>
+                    android:layout_height="wrap_content">
+
+                <SeekBar
+                        android:id="@+id/settings_distance"
+                        style="@style/Widget.AppCompat.SeekBar"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:max="160"
+                        tools:progress="50"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/settings_distance_value"
+                        style="@style/Text.Secondary"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        tools:text="150 km"/>
+            </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.AppCompatTextView
                     style="@style/Text.Normal"

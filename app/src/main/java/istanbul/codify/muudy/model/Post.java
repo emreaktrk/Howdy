@@ -33,6 +33,7 @@ public final class Post implements Serializable {
     public String imgpath2;
     public String imgpath3;
     public String email;
+    public boolean isliked;
     public String unicode;
     public String tokenstring;
     public int postcount;

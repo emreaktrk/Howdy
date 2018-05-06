@@ -3,9 +3,12 @@ package istanbul.codify.muudy.view;
 import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
+import android.widget.CompoundButton;
 import com.blankj.utilcode.util.SizeUtils;
 
-public class LikeButton extends AppCompatCheckBox {
+public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCheckedChangeListener {
+
+    private OnLikeClickListener mListener;
 
     public LikeButton(Context context) {
         super(context);
@@ -26,6 +29,7 @@ public class LikeButton extends AppCompatCheckBox {
     }
 
     private void init() {
+        setOnCheckedChangeListener(this);
         setPadding(
                 getPaddingLeft() + SizeUtils.dp2px(2),
                 getPaddingTop(),
@@ -40,5 +44,26 @@ public class LikeButton extends AppCompatCheckBox {
         }
 
         super.setText(text, type);
+    }
+
+    public void setLike(boolean isLiked) {
+        setOnCheckedChangeListener(null);
+        setChecked(isLiked);
+        setOnCheckedChangeListener(this);
+    }
+
+    public void setOnLikeClickListener(OnLikeClickListener listener) {
+        mListener = listener;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        if (mListener != null) {
+            mListener.onLike(isChecked);
+        }
+    }
+
+    public interface OnLikeClickListener {
+        void onLike(boolean isLiked);
     }
 }
