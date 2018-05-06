@@ -1,6 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="istanbul.codify.muudy">
+<manifest
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        package="istanbul.codify.muudy">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -121,6 +122,10 @@
 
         <activity
                 android:name=".ui.web.WebActivity"
+                android:theme="@style/MainTheme"/>
+
+        <activity
+                android:name=".ui.feedback.FeedbackActivity"
                 android:theme="@style/MainTheme"/>
 
         <service

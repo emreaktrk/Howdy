@@ -22,6 +22,8 @@ import istanbul.codify.muudy.model.Settings;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
+import java.util.concurrent.TimeUnit;
+
 final class SettingsPresenter extends BasePresenter<SettingsView> {
 
     @Override
@@ -36,6 +38,16 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
                             Logcat.v("Policy clicked");
 
                             view.onPolicyClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.settings_feedback))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Feedback clicked");
+
+                            view.onFeedbackClicked();
                         }));
 
         mDisposables.add(
@@ -74,6 +86,7 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
                 RxCompoundButton
                         .checkedChanges(findViewById(R.id.settings_hidden_profile))
                         .skipInitialValue()
+                        .skip(1, TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(hidden -> {
                             Logcat.v("Hidden profile changed");

@@ -43,7 +43,10 @@ public final class Analytics {
             Events.MUUDY, Events.UPDATE_PROFILE,
             Events.FORGOT_PASSWORD,
             Events.CHAT_MESSAGE,
-            Events.CREATE_USER})
+            Events.CREATE_USER,
+            Events.UPDATE_SETTINGS,
+            Events.LOGOUT,
+            Events.FEEDBACK})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
@@ -58,5 +61,8 @@ public final class Analytics {
         String FORGOT_PASSWORD = "forgot_password";
         String CHAT_MESSAGE = "chat_message";
         String CREATE_USER = "create_user";
+        String UPDATE_SETTINGS = "update_settings";
+        String LOGOUT = "logout";
+        String FEEDBACK = "feedback";
     }
 }

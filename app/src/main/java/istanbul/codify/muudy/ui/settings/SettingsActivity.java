@@ -10,8 +10,10 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.ui.feedback.FeedbackActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import istanbul.codify.muudy.ui.web.WebActivity;
 
@@ -54,13 +56,26 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     }
 
     @Override
+    public void onFeedbackClicked() {
+        FeedbackActivity.start();
+    }
+
+    @Override
     public void onSettingsChanged(Settings settings) {
         mPresenter.update(settings);
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.UPDATE_SETTINGS);
     }
 
     @Override
     public void onLogoutClicked() {
         mPresenter.logout();
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.LOGOUT);
     }
 
     @Override

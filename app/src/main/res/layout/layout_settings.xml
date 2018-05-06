@@ -125,6 +125,7 @@
                     tools:checked="true"/>
 
             <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settings_feedback"
                     style="@style/Text.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

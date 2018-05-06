@@ -9,6 +9,8 @@ interface SettingsView extends MvpView {
 
     void onPolicyClicked();
 
+    void onFeedbackClicked();
+
     void onSettingsChanged(Settings settings);
 
     void onLogoutClicked();

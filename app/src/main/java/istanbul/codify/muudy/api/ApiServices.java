@@ -113,4 +113,7 @@ public interface ApiServices {
 
     @POST("sayhi")
     Single<AnswerHiResponse> answerHi(@Body AnswerHiRequest request);
+
+    @POST("sendFeedback")
+    Single<SendFeedbackResponse> sendFeedback(@Body SendFeedbackRequest request);
 }
