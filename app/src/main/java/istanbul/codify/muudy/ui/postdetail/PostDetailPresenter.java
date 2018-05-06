@@ -229,5 +229,8 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
 
         CommentAdapter comment = new CommentAdapter(detail.comments);
         findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).setAdapter(comment);
+
+        BadgeAdapter badge = new BadgeAdapter(detail.post.rozetler);
+        findViewById(R.id.post_detail_badge, RecyclerView.class).setAdapter(badge);
     }
 }

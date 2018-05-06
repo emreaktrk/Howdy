@@ -49,6 +49,8 @@ public final class Post implements Serializable {
     public String words_word;
     public float post_given_point;
     public String words_emoji_url;
+    public ArrayList<Badge> rozetler;
+
 
     @Override
     public boolean equals(Object o) {

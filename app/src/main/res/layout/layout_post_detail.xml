@@ -55,7 +55,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/post_detail_comment_recycler"
-            app:layout_constraintTop_toBottomOf="@id/post_detail_post"/>
+            app:layout_constraintTop_toBottomOf="@id/post_detail_post"
+            tools:listitem="@layout/cell_badge"
+            tools:itemCount="2"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/post_detail_comment_recycler"
