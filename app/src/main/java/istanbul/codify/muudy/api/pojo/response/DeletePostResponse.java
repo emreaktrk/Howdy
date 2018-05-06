@@ -1,6 +1,6 @@
 package istanbul.codify.muudy.api.pojo.response;
 
-import istanbul.codify.muudy.model.ApiResult;
+import istanbul.codify.muudy.model.Result;
 
-public final class DeletePostResponse extends BaseResponse<ApiResult> {
+public final class DeletePostResponse extends BaseResponse<Result> {
 }

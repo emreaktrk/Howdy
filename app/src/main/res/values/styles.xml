@@ -8,6 +8,8 @@
         <item name="colorControlNormal">@color/orange</item>
         <item name="colorControlActivated">@color/orange</item>
         <item name="colorControlHighlight">@color/orange</item>
+
+        <item name="android:navigationBarColor">@color/dark_orange</item>
     </style>
 
     <style name="MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -22,7 +24,7 @@
         <item name="colorControlHighlight">@color/orange</item>
 
         <item name="android:navigationBarColor">@color/white</item>
-        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
 
     <style name="ResponseTheme" parent="Theme.AppCompat.Light.NoActionBar">
