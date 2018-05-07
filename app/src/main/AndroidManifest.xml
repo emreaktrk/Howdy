@@ -204,5 +204,8 @@
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/blue"/>
+
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+                   android:value="AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4" />
     </application>
 </manifest>

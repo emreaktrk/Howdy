@@ -81,10 +81,10 @@ public interface ApiServices {
     @POST("getfollowedusers")
     Single<GetFollowedUsersResponse> getFollowedUsers(@Body GetFollowedUsersRequest request);
 
-    @POST("getActivities")
+    @POST("getactivities")
     Single<GetActivitiesResponse> getActivities();
 
-    @POST("getActivityStats")
+    @POST("getactivitystats")
     Single<GetActivityStatsResponse> getActivityStats(@Body GetActivityStatsRequest request);
 
     @POST("updateprofile")
@@ -114,6 +114,9 @@ public interface ApiServices {
     @POST("sayhi")
     Single<AnswerHiResponse> answerHi(@Body AnswerHiRequest request);
 
-    @POST("sendFeedback")
+    @POST("sendfeedback")
     Single<SendFeedbackResponse> sendFeedback(@Body SendFeedbackRequest request);
+
+    @POST("gettopemojisonmap")
+    Single<GetTopEmojisOnMapResponse> getTopEmojisOnMapRequest(@Body GetTopEmojisOnMapRequest request);
 }
