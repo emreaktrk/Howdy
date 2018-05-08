@@ -1,7 +1,7 @@
 package istanbul.codify.muudy.api.pojo.response;
 
 
-import istanbul.codify.muudy.model.ApiResult;
+import istanbul.codify.muudy.model.Result;
 
-public final class DislikePostResponse extends BaseResponse<ApiResult> {
+public final class DislikePostResponse extends BaseResponse<Result> {
 }

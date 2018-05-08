@@ -5,6 +5,7 @@ import java.util.List;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.base.MvpView;
 
 interface UserProfileView extends MvpView {
@@ -35,7 +36,18 @@ interface UserProfileView extends MvpView {
 
     void onLoadedStars(List<Post> stars);
 
+    void onPostClicked(Post post);
+
+    void onLikeClicked(Like like);
+
+    void onImageClicked(Post post);
+
+    void onVideoClicked(Post post);
+
+    void onMuudyClicked(Post post);
+
     void onError(ApiError error);
 
     void onBackClicked();
+
 }

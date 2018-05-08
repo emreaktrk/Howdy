@@ -5,20 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
+import android.support.v7.app.AlertDialog;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-
-import java.util.List;
-
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.zipper.Like;
+import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
+import istanbul.codify.muudy.ui.video.VideoActivity;
+
+import java.util.List;
 
 public final class UserProfileActivity extends MuudyActivity implements UserProfileView {
 
@@ -136,6 +140,55 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     @Override
     public void onLoadedStars(List<Post> stars) {
         mPresenter.bindStars(stars);
+    }
+
+    @Override
+    public void onPostClicked(Post post) {
+        PostDetailActivity.start(post.idpost);
+    }
+
+    @Override
+    public void onLikeClicked(Like like) {
+        if (like.isChecked) {
+            mPresenter.like(like.post.idpost);
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.LIKE);
+        } else {
+            mPresenter.dislike(like.post.idpost);
+
+            Analytics
+                    .getInstance()
+                    .custom(Analytics.Events.DISLIKE);
+        }
+    }
+
+    @Override
+    public void onVideoClicked(Post post) {
+        VideoActivity.start(post);
+    }
+
+    @Override
+    public void onMuudyClicked(Post post) {
+        new AlertDialog
+                .Builder(this)
+                .setMessage("Muudy demek istiyor musunuz?")
+                .setPositiveButton("Muudy De!", (dialogInterface, which) -> {
+                    mPresenter.sayHi(post.iduser);
+
+                    Analytics
+                            .getInstance()
+                            .custom(Analytics.Events.MUUDY);
+                })
+                .setNegativeButton("Hayir", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onImageClicked(Post post) {
+        PhotoActivity.start(post);
     }
 
     @Override

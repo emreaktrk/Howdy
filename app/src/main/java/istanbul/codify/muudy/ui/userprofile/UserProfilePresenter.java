@@ -20,11 +20,8 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.GetUserPostsRequest;
-import istanbul.codify.muudy.api.pojo.request.GetUserProfileRequest;
-import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.GetUserPostsResponse;
-import istanbul.codify.muudy.api.pojo.response.GetUserProfileResponse;
+import istanbul.codify.muudy.api.pojo.request.*;
+import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
@@ -232,6 +229,51 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
     void bindPosts(List<Post> posts) {
         PostAdapter post = new PostAdapter(posts);
+        mDisposables.add(
+                post
+                        .itemClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Post clicked");
+
+                            mView.onPostClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .likeClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Like clicked");
+
+                            mView.onLikeClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .imageClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Image clicked");
+
+                            mView.onImageClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .videoClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Video clicked");
+
+                            mView.onVideoClicked(cell);
+                        }));
+        mDisposables.add(
+                post
+                        .muudyClicks()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Muudy clicked");
+
+                            mView.onMuudyClicked(cell);
+                        }));
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setAdapter(post);
     }
 
@@ -279,5 +321,78 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
             View child = tabs.getChildAt(i);
             child.setSelected(i == position);
         }
+    }
+
+    void like(long postId) {
+        LikePostRequest request = new LikePostRequest(postId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .likePost(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<LikePostResponse>() {
+                            @Override
+                            protected void success(LikePostResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void dislike(long postId) {
+        DislikePostRequest request = new DislikePostRequest(postId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .dislikePost(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<DislikePostResponse>() {
+                            @Override
+                            protected void success(DislikePostResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void sayHi(long userId) {
+        SayHiRequest request = new SayHiRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = userId;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sayHi(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SayHiResponse>() {
+                            @Override
+                            protected void success(SayHiResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }
