@@ -43,6 +43,16 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.settings_edit))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Edit clicked");
+
+                            view.onEditClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.settings_feedback))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {

@@ -100,6 +100,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Emotion clicked");
+
                             mView.onEmotionClicked(cell);
                         }));
         findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);

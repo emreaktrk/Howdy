@@ -47,8 +47,8 @@ public final class NotificationFragment extends NavigationFragment implements No
                 getChildFragmentManager(),
                 FragmentPagerItems
                         .with(getContext())
-                        .add("Takip Edilen", NotificationFollowingFragment.class)
                         .add("Sen", NotificationMeFragment.class)
+                        .add("Takip Edilen", NotificationFollowingFragment.class)
                         .create());
     }
 }

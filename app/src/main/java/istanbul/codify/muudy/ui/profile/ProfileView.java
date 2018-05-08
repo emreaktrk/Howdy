@@ -21,8 +21,6 @@ interface ProfileView extends MvpView {
 
     void onBooksClicked();
 
-    void onEditClicked();
-
     void onSettingsClicked();
 
     void onLoadedPosts(List<Post> posts);

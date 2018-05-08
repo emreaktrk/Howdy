@@ -103,7 +103,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onEmotionClicked(Emotion emotion) {
-
+        // TODO Navigate to Around Users with emotion
     }
 
     @Override

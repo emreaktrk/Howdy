@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import istanbul.codify.muudy.KeyboardSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
@@ -18,7 +19,7 @@ import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 
-public final class PostDetailActivity extends MuudyActivity implements PostDetailView {
+public final class PostDetailActivity extends MuudyActivity implements PostDetailView, KeyboardSupport {
 
     private PostDetailPresenter mPresenter = new PostDetailPresenter();
 
@@ -129,5 +130,14 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onKeyboard(boolean isOpen) {
+        if (isOpen) {
+            mPresenter.collapse();
+        } else {
+            mPresenter.expand();
+        }
     }
 }

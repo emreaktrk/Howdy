@@ -131,6 +131,17 @@
                     android:textStyle="bold"
                     android:text="Hesabım"/>
 
+            <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settings_edit"
+                    style="@style/Text.Normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:drawableEnd="@drawable/ic_next_reverse"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Profil Düzenle"/>
+
             <android.support.v7.widget.SwitchCompat
                     android:id="@+id/settings_hidden_profile"
                     android:padding="16dp"

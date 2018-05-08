@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.widget.CompoundButton;
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.StringUtils;
 
 public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCheckedChangeListener {
 
@@ -58,6 +59,12 @@ public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCh
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        String text = getText().toString().replace(" ", "");
+        if (!StringUtils.isEmpty(text)) {
+            Integer count = Integer.valueOf(text);
+            setText(isChecked ? (count + 1) + "" : (count - 1) + "");
+        }
+
         if (mListener != null) {
             mListener.onLike(isChecked);
         }

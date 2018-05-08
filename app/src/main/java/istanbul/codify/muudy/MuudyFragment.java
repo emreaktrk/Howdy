@@ -9,11 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.account.sync.SyncListener;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.SyncEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -40,6 +40,10 @@ public abstract class MuudyFragment extends Fragment {
             EventBus
                     .getDefault()
                     .register(this);
+        }
+
+        if (getActivity() != null && this instanceof KeyboardSupport) {
+            KeyboardVisibilityEvent.setEventListener(getActivity(), ((KeyboardSupport) MuudyFragment.this)::onKeyboard);
         }
     }
 
@@ -75,7 +79,7 @@ public abstract class MuudyFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onSyncEvent(SyncEvent event) {
-        if (this instanceof SyncListener){
+        if (this instanceof SyncListener) {
             User me = AccountUtils.me(getContext());
 
             SyncListener listener = (SyncListener) this;

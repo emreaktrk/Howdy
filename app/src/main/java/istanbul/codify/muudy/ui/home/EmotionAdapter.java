@@ -37,10 +37,10 @@ final class EmotionAdapter extends RecyclerView.Adapter<EmotionAdapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Emotion emotion = mList.get(position);
 
-        holder.mText.setText(emotion.post_emoji_word);
+        holder.mText.setText(emotion.words_word);
         Picasso
                 .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + emotion.post_emoji)
+                .load(BuildConfig.URL + emotion.words_emoji_url)
                 .into(holder.mImage);
     }
 

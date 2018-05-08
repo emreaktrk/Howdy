@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
@@ -71,7 +72,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(findViewById(R.id.profile_edit_password_change))
+                        .clicks(findViewById(R.id.profile_edit_password))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Change password clicked");
@@ -142,7 +143,6 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
     void save() {
         if (!isValid()) {
-            mView.onError(new IllegalStateException("Lutfen alanlari doldurunuz"));
             return;
         }
 
@@ -179,16 +179,19 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
     private boolean isValid() {
         String fullname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
         if (StringUtils.isEmpty(fullname)) {
+            mView.onError(new IllegalStateException("Ad Soyad boş olamaz"));
             return false;
         }
 
         String username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
         if (StringUtils.isEmpty(username)) {
+            mView.onError(new IllegalStateException("Kullanıcı adı boş olamaz"));
             return false;
         }
 
         String email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
-        if (StringUtils.isEmpty(email)) {
+        if (!RegexUtils.isEmail(email)) {
+            mView.onError(new IllegalStateException("Lütfen geçerli email adresi giriniz"));
             return false;
         }
 

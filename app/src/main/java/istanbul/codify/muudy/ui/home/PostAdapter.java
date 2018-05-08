@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -87,6 +86,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             NoneHolder none = (NoneHolder) holder;
             none.mMessage.setText(post.post_text);
             none.mLike.setLike(post.isliked);
+            none.mDate.setText(post.humanDate);
             none.mLike.setText(post.post_likecount + "");
             none.mComment.setText(post.post_commentcount + "");
             Picasso
@@ -197,18 +197,21 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private CircleImageView mEmotion;
         private LikeButton mLike;
         private AppCompatTextView mComment;
+        private AppCompatTextView mDate;
 
         NoneHolder(View itemView) {
             super(itemView);
 
             mMessage = itemView.findViewById(R.id.post_message);
             mEmotion = itemView.findViewById(R.id.post_emotion);
+            mDate = itemView.findViewById(R.id.post_date);
 
             mImage = itemView.findViewById(R.id.post_image);
             mImage.setOnClickListener(this);
 
             mLike = itemView.findViewById(R.id.post_like);
             mLike.setOnLikeClickListener(this);
+
 
             mComment = itemView.findViewById(R.id.post_comment);
             mComment.setVisibility(mCommentVisibility);
@@ -283,7 +286,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         void onMediaClicked() {
-            Post post = mPosts.get(getAdapterPosition());
+            Post post = getItem(getAdapterPosition());
             mImageSubject.onNext(post);
         }
     }
@@ -296,7 +299,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         void onMediaClicked() {
-            Post post = mPosts.get(getAdapterPosition());
+            Post post = getItem(getAdapterPosition());
             mVideoSubject.onNext(post);
         }
     }

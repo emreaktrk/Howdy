@@ -68,7 +68,9 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
 
     @Override
     public void onProfileUpdated() {
+        AccountUtils.sync(this);
 
+        ToastUtils.showShort("Profiliniz başarıyla güncellendi");
     }
 
     @Override

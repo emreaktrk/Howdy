@@ -19,6 +19,7 @@ import istanbul.codify.muudy.model.FacebookProfile;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.createuser.CreateUserActivity;
+import istanbul.codify.muudy.ui.forgotpassword.ForgotPasswordActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
 import istanbul.codify.muudy.ui.welcome.WelcomeFragment;
 
@@ -100,7 +101,7 @@ public final class LoginFragment extends MuudyFragment implements LoginView {
 
     @Override
     public void onForgotPasswordClicked() {
-        // TODO Navigate to forgot password
+        ForgotPasswordActivity.start(null);
     }
 
     @Override

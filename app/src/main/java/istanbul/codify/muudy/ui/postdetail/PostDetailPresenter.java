@@ -1,8 +1,8 @@
 package istanbul.codify.muudy.ui.postdetail;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.*;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -228,9 +228,24 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
         findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
 
         CommentAdapter comment = new CommentAdapter(detail.comments);
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
+        findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).addItemDecoration(divider);
         findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).setAdapter(comment);
 
         BadgeAdapter badge = new BadgeAdapter(detail.post.rozetler);
         findViewById(R.id.post_detail_badge, RecyclerView.class).setAdapter(badge);
+
+        findViewById(R.id.post_detail_username, AppCompatTextView.class).setText(detail.post.username);
+    }
+
+    void collapse() {
+        findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.GONE);
+        findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.GONE);
+    }
+
+    void expand() {
+        findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.VISIBLE);
+        findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.VISIBLE);
     }
 }

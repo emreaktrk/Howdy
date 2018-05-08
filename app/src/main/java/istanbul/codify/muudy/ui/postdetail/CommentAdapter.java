@@ -19,7 +19,7 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
 
     private List<Comment> mList;
 
-    public CommentAdapter(List<Comment> list) {
+    CommentAdapter(List<Comment> list) {
         this.mList = list == null ? new ArrayList<>() : list;
     }
 
@@ -35,6 +35,7 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
         Comment comment = mList.get(position);
 
         holder.mText.setText(comment.postcomment_text);
+        holder.mDate.setText(comment.humanDate);
         Picasso
                 .with(holder.mAvatar.getContext())
                 .load(BuildConfig.URL + comment.commenterUser.imgpath1)
@@ -51,12 +52,14 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
 
         private CircleImageView mAvatar;
         private AppCompatTextView mText;
+        private AppCompatTextView mDate;
 
         public Holder(View itemView) {
             super(itemView);
 
             mAvatar = itemView.findViewById(R.id.comment_avatar);
             mText = itemView.findViewById(R.id.comment_text);
+            mDate = itemView.findViewById(R.id.comment_date);
         }
     }
 }

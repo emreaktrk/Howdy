@@ -85,11 +85,6 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     }
 
     @Override
-    public void onEditClicked() {
-        ProfileEditActivity.start();
-    }
-
-    @Override
     public void onSettingsClicked() {
         SettingsActivity.start();
     }

@@ -38,6 +38,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                                     .toString());
 
                             Logcat.v("Login clicked with credentials " + credential.toString());
+
                             view.onLoginClicked(credential);
                         }));
 
@@ -46,6 +47,7 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         .clicks(findViewById(R.id.login_connect_with_facebook))
                         .subscribe(o -> {
                             Logcat.v("Connect with facebook clicked");
+
                             view.onConnectWithFacebookClicked();
                         }));
 
@@ -54,7 +56,8 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                         .clicks(findViewById(R.id.login_forgot_password))
                         .subscribe(o -> {
                             Logcat.v("Forgot password clicked");
-                            view.onConnectWithFacebookClicked();
+
+                            view.onForgotPasswordClicked();
                         }));
 
         mDisposables.add(

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -14,6 +15,7 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.feedback.FeedbackActivity;
+import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import istanbul.codify.muudy.ui.web.WebActivity;
 
@@ -70,12 +72,25 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     }
 
     @Override
-    public void onLogoutClicked() {
-        mPresenter.logout();
+    public void onEditClicked() {
+        ProfileEditActivity.start();
+    }
 
-        Analytics
-                .getInstance()
-                .custom(Analytics.Events.LOGOUT);
+    @Override
+    public void onLogoutClicked() {
+        new AlertDialog
+                .Builder(this)
+                .setMessage("Çıkış yapmak istediğinize emin misiniz?")
+                .setPositiveButton("Evet", (dialogInterface, which) -> {
+                    mPresenter.logout();
+
+                    Analytics
+                            .getInstance()
+                            .custom(Analytics.Events.LOGOUT);
+                })
+                .setNegativeButton("Hayır", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
     }
 
     @Override
@@ -94,7 +109,7 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     public void onSettingsUpdated() {
         AccountUtils.sync(this);
 
-        ToastUtils.showShort("Ayarlar guncellendi.");
+        ToastUtils.showShort("Ayarlar güncellendi.");
     }
 
     @Override

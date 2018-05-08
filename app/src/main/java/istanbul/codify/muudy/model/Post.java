@@ -50,6 +50,7 @@ public final class Post implements Serializable {
     public float post_given_point;
     public String words_emoji_url;
     public ArrayList<Badge> rozetler;
+    public String humanDate;
 
 
     @Override

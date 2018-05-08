@@ -1,163 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <android.support.v7.widget.AppCompatImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@color/semi_white"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_people"/>
-
-    <android.support.v7.widget.AppCompatImageButton
-        android:id="@+id/register_close"
-        style="@style/Button.Transparent"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/ic_close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:background="@color/white">
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/register_icon"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_howdy_reverse"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/image_background"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/register_close"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/register_icon"
+            android:layout_width="180dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_howdy_reverse"/>
 
     <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/register_form"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/register_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_icon">
+            android:id="@+id/register_form"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/register_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_icon">
 
         <android.support.design.widget.TextInputLayout
-            style="@style/Input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Isim Soyisim">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/register_fullname"
+                style="@style/Input"
+                android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"/>
+                android:hint="İsim Soyisim">
+
+            <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_fullname"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:hint="Cinsiyet">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/register_gender"
+                    style="@style/Input"
+                    android:textColorHint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_down"/>
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:hint="Cinsiyet">
+
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/register_gender"
+                        android:textColor="@color/white"
+                        style="@style/Input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_down"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                style="@style/Input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:hint="Dogum Tarihi">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/register_birthday"
+                    style="@style/Input"
+                    android:textColorHint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:drawableEnd="@drawable/ic_calendar"
-                    android:editable="false"
-                    android:focusable="false"
-                    android:longClickable="false"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:hint="Dogum Tarihi">
+
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/register_birthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:textColor="@color/white"
+                        style="@style/Input"
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:drawableTint="@color/white"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:longClickable="false"/>
             </android.support.design.widget.TextInputLayout>
         </android.support.v7.widget.LinearLayoutCompat>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/Input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="E-Posta">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/register_email"
+                style="@style/Input"
+                android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"/>
+                android:hint="E-Posta">
+
+            <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_email"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/Input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Kullanici Adi">
+                style="@style/Input"
+                android:textColorHint="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kullanici Adı">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/register_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                    android:id="@+id/register_username"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/Input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Sifre"
-            app:passwordToggleEnabled="true">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/register_password"
+                style="@style/Input"
+                android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:hint="Şifre"
+                app:passwordToggleTint="@color/white"
+                app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_password"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            style="@style/Input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Sifre Tekrar"
-            app:passwordToggleEnabled="true">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/register_password_confirm"
+                style="@style/Input"
+                android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:hint="Şifre Tekrar"
+                app:passwordToggleTint="@color/white"
+                app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_password_confirm"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
     </android.support.v7.widget.LinearLayoutCompat>
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/register_register"
-        style="@style/Button.Orange"
-        android:layout_width="260dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="16dp"
-        android:text="Kayit Ol"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+            android:id="@+id/register_register"
+            style="@style/Button.Blue"
+            android:layout_width="260dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="16dp"
+            android:text="Kayit Ol"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>
