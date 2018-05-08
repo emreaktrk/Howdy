@@ -11,6 +11,7 @@ interface HomeView extends MvpView {
 
     void onMessagesClicked();
 
+
     void onLoaded(Wall wall);
 
     void onError(ApiError error);
@@ -36,4 +37,6 @@ interface HomeView extends MvpView {
     void onMuudyClicked(Post post);
 
     void onPostDeleted();
+
+    void onRefresh();
 }

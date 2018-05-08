@@ -215,6 +215,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
                 .post(new DeleteEvent());
     }
 
+    @Override
+    public void onRefresh() {
+        mPresenter.getWall(getContext());
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
         mPresenter.getWall(getContext());

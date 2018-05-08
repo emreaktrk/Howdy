@@ -3,9 +3,11 @@ package istanbul.codify.muudy.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.google.android.gms.location.LocationServices;
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding2.view.RxView;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
@@ -34,6 +36,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .clicks(findViewById(R.id.home_search))
                         .subscribe(o -> {
                             Logcat.v("Search clicked");
+
                             view.onSearchClicked();
                         }));
 
@@ -42,7 +45,17 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .clicks(findViewById(R.id.home_messages))
                         .subscribe(o -> {
                             Logcat.v("Chat clicked");
+
                             view.onMessagesClicked();
+                        }));
+
+        mDisposables.add(
+                RxSwipeRefreshLayout
+                        .refreshes(findViewById(R.id.home_refresh))
+                        .subscribe(o -> {
+                            Logcat.v("Refresh clicked");
+
+                            view.onRefresh();
                         }));
     }
 
@@ -62,33 +75,40 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
                     return result;
                 })
-                .addOnSuccessListener(location ->
-                        mDisposables.add(
-                                Single
-                                        .just(location)
-                                        .subscribeOn(Schedulers.io())
-                                        .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
-                                            GetWallRequest request = new GetWallRequest(point);
-                                            request.token = AccountUtils.token(getContext());
+                .addOnSuccessListener(location -> {
+                    findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
 
-                                            return ApiManager
-                                                    .getInstance()
-                                                    .getWall(request)
-                                                    .observeOn(AndroidSchedulers.mainThread());
-                                        })
-                                        .subscribe(new ServiceConsumer<GetWallResponse>() {
-                                            @Override
-                                            protected void success(GetWallResponse response) {
-                                                mView.onLoaded(response.data);
-                                            }
+                    mDisposables.add(
+                            Single
+                                    .just(location)
+                                    .subscribeOn(Schedulers.io())
+                                    .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
+                                        GetWallRequest request = new GetWallRequest(point);
+                                        request.token = AccountUtils.token(getContext());
 
-                                            @Override
-                                            protected void error(ApiError error) {
-                                                Logcat.e(error);
+                                        return ApiManager
+                                                .getInstance()
+                                                .getWall(request)
+                                                .observeOn(AndroidSchedulers.mainThread());
+                                    })
+                                    .subscribe(new ServiceConsumer<GetWallResponse>() {
+                                        @Override
+                                        protected void success(GetWallResponse response) {
+                                            mView.onLoaded(response.data);
 
-                                                mView.onError(error);
-                                            }
-                                        })))
+                                            findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(false);
+                                        }
+
+                                        @Override
+                                        protected void error(ApiError error) {
+                                            Logcat.e(error);
+
+                                            mView.onError(error);
+
+                                            findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(false);
+                                        }
+                                    }));
+                })
                 .addOnFailureListener(Logcat::e);
     }
 
