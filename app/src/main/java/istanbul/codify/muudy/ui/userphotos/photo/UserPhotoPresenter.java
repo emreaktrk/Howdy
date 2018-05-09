@@ -1,8 +1,7 @@
 package istanbul.codify.muudy.ui.userphotos.photo;
 
+import android.support.v7.widget.AppCompatImageView;
 import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.ui.base.BasePresenter;
@@ -14,6 +13,6 @@ class UserPhotoPresenter extends BasePresenter<UserPhotoView> {
                 .with(getContext())
                 .load(BuildConfig.URL + path)
                 .placeholder(R.drawable.ic_avatar)
-                .into(findViewById(R.id.user_photo_image, CircleImageView.class));
+                .into(findViewById(R.id.user_photo_image, AppCompatImageView.class));
     }
 }

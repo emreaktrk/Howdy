@@ -22,6 +22,7 @@ import istanbul.codify.muudy.navigation.NavigationFragment;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.settings.SettingsActivity;
+import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -57,6 +58,12 @@ public final class ProfileFragment extends NavigationFragment implements Profile
         super.onDestroyView();
 
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onPictureClicked() {
+        User me = AccountUtils.me(getContext());
+        UserPhotosActivity.start(me);
     }
 
     @Override

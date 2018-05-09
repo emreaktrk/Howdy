@@ -107,6 +107,16 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                             setSelected(5);
                             view.onBooksClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_picture))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Picture clicked");
+
+                            view.onPictureClicked();
+                        }));
     }
 
     void bind(User user) {

@@ -93,6 +93,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.binaryfork:spanny:1.0.4'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
+    implementation 'com.github.IntruderShanky:scatter-piechart:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -60,6 +60,8 @@
                             android:id="@+id/profile_picture"
                             android:layout_width="90dp"
                             android:layout_height="90dp"
+                            android:clickable="true"
+                            android:focusable="true"
                             tools:src="@tools:sample/avatars"/>
 
                     <android.support.v7.widget.AppCompatTextView
