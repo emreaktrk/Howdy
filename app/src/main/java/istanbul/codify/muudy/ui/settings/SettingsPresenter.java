@@ -61,6 +61,15 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
                             view.onChangePasswordClicked();
                         }));
 
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.settings_notification_settings))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(hidden -> {
+                            Logcat.v("Notification settings clicked");
+
+                            view.onNotificationSettingsClicked();
+                        }));
 
         mDisposables.add(
                 RxView

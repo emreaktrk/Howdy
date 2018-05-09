@@ -11,7 +11,6 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UserProfile;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 
 import java.util.ArrayList;

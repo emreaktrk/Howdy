@@ -132,6 +132,10 @@
                 android:name=".ui.socialmedia.SocialMediaActivity"
                 android:theme="@style/MainTheme"/>
 
+        <activity
+                android:name=".ui.notificationsettings.NotificationSettingsActivity"
+                android:theme="@style/SettingsTheme"/>
+
         <service
                 android:name=".account.AccountService"
                 android:exported="false">

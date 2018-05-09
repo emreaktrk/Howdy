@@ -15,6 +15,8 @@ interface SettingsView extends MvpView {
 
     void onChangePasswordClicked();
 
+    void onNotificationSettingsClicked();
+
     void onSettingsChanged(Settings settings);
 
     void onEditClicked();

@@ -16,6 +16,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.changepassword.ChangePasswordActivity;
 import istanbul.codify.muudy.ui.feedback.FeedbackActivity;
+import istanbul.codify.muudy.ui.notificationsettings.NotificationSettingsActivity;
 import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.socialmedia.SocialMediaActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
@@ -72,6 +73,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     @Override
     public void onChangePasswordClicked() {
         ChangePasswordActivity.start();
+    }
+
+    @Override
+    public void onNotificationSettingsClicked() {
+        NotificationSettingsActivity.start();
     }
 
     @Override

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.settings.SettingsActivity">
+
+    <FrameLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/notification_settings_back"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="start"
+                android:src="@drawable/button_back"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                style="@style/Text.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Bildirim Ayarları"/>
+    </FrameLayout>
+
+    <View
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <android.support.v7.widget.SwitchCompat
+            android:background="@color/white"
+            android:id="@+id/notification_settings_like"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beğenmelerde bildirim gönder"
+            android:checked="false"
+            tools:checked="true"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <android.support.v7.widget.SwitchCompat
+            android:background="@color/white"
+            android:id="@+id/notification_settings_follow"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Takip edildiğimde bildirim gönder"
+            android:checked="false"
+            tools:checked="true"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <android.support.v7.widget.SwitchCompat
+            android:background="@color/white"
+            android:id="@+id/notification_settings_tag"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Etiketlenmelerde bildirim gönder"
+            android:checked="false"
+            tools:checked="true"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

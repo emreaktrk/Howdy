@@ -119,4 +119,7 @@ public interface ApiServices {
 
     @POST("gettopemojisonmap")
     Single<GetTopEmojisOnMapResponse> getTopEmojisOnMapRequest(@Body GetTopEmojisOnMapRequest request);
+
+    @POST("updatepushsettings")
+    Single<UpdatePushNotificationResponse> updatePushSettings(@Body UpdatePushSettingsRequest request);
 }
