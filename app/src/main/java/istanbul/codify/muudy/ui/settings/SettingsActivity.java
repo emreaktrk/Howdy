@@ -14,6 +14,7 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.ui.changepassword.ChangePasswordActivity;
 import istanbul.codify.muudy.ui.feedback.FeedbackActivity;
 import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.socialmedia.SocialMediaActivity;
@@ -66,6 +67,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     @Override
     public void onSocialMediaClicked() {
         SocialMediaActivity.start();
+    }
+
+    @Override
+    public void onChangePasswordClicked() {
+        ChangePasswordActivity.start();
     }
 
     @Override

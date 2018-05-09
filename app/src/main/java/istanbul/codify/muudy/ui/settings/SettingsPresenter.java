@@ -53,6 +53,17 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.settings_change_password))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(hidden -> {
+                            Logcat.v("Change password clicked");
+
+                            view.onChangePasswordClicked();
+                        }));
+
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.settings_edit))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
