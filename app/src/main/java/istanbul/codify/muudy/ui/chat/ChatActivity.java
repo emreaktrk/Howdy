@@ -15,7 +15,6 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Chat;
-import istanbul.codify.muudy.model.MediaEvent;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
@@ -90,21 +89,9 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     public void onMediaClicked() {
         MediaBottomSheet
                 .newInstance()
+                .setOnCameraClickListener(() -> mPresenter.capturePhoto(ChatActivity.this))
+                .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ChatActivity.this))
                 .show(getSupportFragmentManager(), null);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMediaEvent(MediaEvent event) {
-        switch (event.mediaType) {
-            case GALLERY:
-                mPresenter.selectPhoto(this);
-                return;
-            case CAPTURE:
-                mPresenter.capturePhoto(this);
-                return;
-            default:
-                throw new IllegalArgumentException("Unknown media type");
-        }
     }
 
     @Override

@@ -31,7 +31,7 @@ final class MediaPresenter extends BasePresenter<MediaView> {
                         .subscribe(o -> {
                             Logcat.v("Capture clicked");
 
-                            view.onMediaTypeSelected(MediaType.CAPTURE);
+                            view.onMediaTypeSelected(MediaType.CAMERA);
                         }));
     }
 }
