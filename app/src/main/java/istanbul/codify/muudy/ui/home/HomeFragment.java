@@ -31,6 +31,7 @@ import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.search.UserSearchActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -103,7 +104,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onEmotionClicked(Emotion emotion) {
-        // TODO Navigate to Around Users with emotion
+        UsersActivity.start(emotion);
     }
 
     @Override

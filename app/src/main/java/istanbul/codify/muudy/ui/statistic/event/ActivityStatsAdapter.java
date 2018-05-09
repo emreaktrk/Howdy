@@ -42,6 +42,7 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapt
                 .load(BuildConfig.URL + stat.post_emoji)
                 .into(holder.mImage);
         holder.mText.setText(stat.post_emoji_word);
+        holder.mPercent.setText(String.format("%.02f", stat.percent) + "%");
     }
 
     @Override
@@ -67,12 +68,14 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapt
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
+        private AppCompatTextView mPercent;
 
         Holder(View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.activity_stat_image);
             mText = itemView.findViewById(R.id.activity_stat_text);
+            mPercent = itemView.findViewById(R.id.activity_stat_percent);
 
             itemView.setOnClickListener(this);
         }

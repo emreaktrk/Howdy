@@ -3,32 +3,38 @@
     {
       "word": "uzgun",
       "icon": "@drawable/sample_smiley_angry",
-      "category": "Duygu"
+      "category": "Duygu",
+      "percent": 16
     },
     {
       "word": "saskin",
       "icon": "@drawable/sample_smiley_cry",
-      "category": "Duygu"
+      "category": "Duygu",
+      "percent": 22
     },
     {
       "word": "mutlu",
       "icon": "@drawable/sample_smiley_happy",
-      "category": "Durum"
+      "category": "Durum",
+      "percent": 31
     },
     {
       "word": "gururlu",
       "icon": "@drawable/sample_smiley_sleepy",
-      "category": "Duygu"
+      "category": "Duygu",
+      "percent": 0
     },
     {
       "word": "ask",
       "icon": "@drawable/sample_smiley_love",
-      "category": "Yer Bildirimi"
+      "category": "Yer Bildirimi",
+      "percent": 18
     },
     {
       "word": "agri icinde",
       "icon": "@drawable/sample_smiley_surprise",
-      "category": "Durum"
+      "category": "Durum",
+      "percent": 70
     }
   ]
 }

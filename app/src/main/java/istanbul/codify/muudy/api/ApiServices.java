@@ -122,4 +122,7 @@ public interface ApiServices {
 
     @POST("updatepushsettings")
     Single<UpdatePushNotificationResponse> updatePushSettings(@Body UpdatePushSettingsRequest request);
+
+    @POST("aroundusers")
+    Single<AroundUsersResponse> aroundUsers(@Body AroundUsersRequest request);
 }

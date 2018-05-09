@@ -7,6 +7,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
+        android:background="@color/white"
         tools:context=".ui.main.MainActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -18,8 +19,17 @@
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/activity_stat_text"
             style="@style/Text.Normal"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             tools:text="@sample/emotion.json/data/word"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:id="@+id/activity_stat_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="@sample/emotion.json/data/percent"/>
 </android.support.v7.widget.LinearLayoutCompat>

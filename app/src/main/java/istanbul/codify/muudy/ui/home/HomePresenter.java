@@ -14,6 +14,7 @@ import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -66,10 +67,10 @@ final class HomePresenter extends BasePresenter<HomeView> {
                 .getLastLocation()
                 .continueWith(task -> {
                     Location result = task.getResult();
-                    if (result == null) {
+                    if (result == null || BuildConfig.DEBUG) {
                         Location location = new Location("default");
                         location.setLatitude(40.991955);
-                        location.setLatitude(28.712913);
+                        location.setLongitude(28.712913);
                         return location;
                     }
 
