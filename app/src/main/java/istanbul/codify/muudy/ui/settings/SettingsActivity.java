@@ -16,6 +16,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.feedback.FeedbackActivity;
 import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
+import istanbul.codify.muudy.ui.socialmedia.SocialMediaActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import istanbul.codify.muudy.ui.web.WebActivity;
 
@@ -60,6 +61,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     @Override
     public void onFeedbackClicked() {
         FeedbackActivity.start();
+    }
+
+    @Override
+    public void onSocialMediaClicked() {
+        SocialMediaActivity.start();
     }
 
     @Override

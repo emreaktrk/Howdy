@@ -152,6 +152,17 @@
                     tools:checked="true"/>
 
             <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settings_social_media"
+                    style="@style/Text.Normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:drawableEnd="@drawable/ic_next_reverse"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="Sosyal Medya Hesaplarını Ekle"/>
+
+            <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/settings_feedback"
                     style="@style/Text.Normal"
                     android:layout_width="match_parent"

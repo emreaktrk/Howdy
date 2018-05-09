@@ -46,7 +46,8 @@ public final class Analytics {
             Events.CREATE_USER,
             Events.UPDATE_SETTINGS,
             Events.LOGOUT,
-            Events.FEEDBACK})
+            Events.FEEDBACK,
+            Events.SOCIAL_MEDIA})
     public @interface Events {
         String COMPOSE = "compose";
         String COMMENT = "comment";
@@ -64,5 +65,6 @@ public final class Analytics {
         String UPDATE_SETTINGS = "update_settings";
         String LOGOUT = "logout";
         String FEEDBACK = "feedback";
+        String SOCIAL_MEDIA = "social_media";
     }
 }
