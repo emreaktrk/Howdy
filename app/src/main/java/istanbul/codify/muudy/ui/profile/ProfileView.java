@@ -9,6 +9,10 @@ import java.util.List;
 
 interface ProfileView extends MvpView {
 
+    void onFollowersClicked();
+
+    void onFollowingsClicked();
+
     void onPictureClicked();
 
     void onPostsClicked();

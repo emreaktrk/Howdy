@@ -16,10 +16,12 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 
 import java.util.List;
@@ -71,6 +73,22 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         super.onDestroy();
 
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onFollowersClicked() {
+        User user = mPresenter.getUser();
+        if (user != null) {
+            UsersActivity.start(user, UsersScreenMode.FOLLOWER);
+        }
+    }
+
+    @Override
+    public void onFollowingsClicked() {
+        User user = mPresenter.getUser();
+        if (user != null) {
+            UsersActivity.start(user, UsersScreenMode.FOLLOWING);
+        }
     }
 
     @Override

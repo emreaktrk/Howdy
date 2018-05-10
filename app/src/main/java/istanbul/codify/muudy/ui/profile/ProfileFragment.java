@@ -15,6 +15,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
@@ -23,6 +24,7 @@ import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.settings.SettingsActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -58,6 +60,18 @@ public final class ProfileFragment extends NavigationFragment implements Profile
         super.onDestroyView();
 
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onFollowersClicked() {
+        User me = AccountUtils.me(getContext());
+        UsersActivity.start(me, UsersScreenMode.FOLLOWER);
+    }
+
+    @Override
+    public void onFollowingsClicked() {
+        User me = AccountUtils.me(getContext());
+        UsersActivity.start(me, UsersScreenMode.FOLLOWING);
     }
 
     @Override

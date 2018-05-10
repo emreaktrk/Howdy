@@ -44,6 +44,26 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.profile_number_followed))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Followers clicked");
+
+                            view.onFollowersClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_number_following))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Followings clicked");
+
+                            view.onFollowingsClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.profile_posts))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
@@ -152,11 +172,11 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         NumberView followed = findViewById(R.id.profile_number_followed, NumberView.class);
         followed.setText("Takip Eden");
-        followed.setValue(user.followercount);
+        followed.setValue(user.followedcount);
 
         NumberView following = findViewById(R.id.profile_number_following, NumberView.class);
         following.setText("Takip Edilen");
-        following.setValue(user.followedcount);
+        following.setValue(user.followercount);
 
         Picasso
                 .with(getContext())

@@ -3,6 +3,7 @@ package istanbul.codify.muudy.api;
 import io.reactivex.Single;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.api.pojo.response.GetFollowersResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -80,6 +81,9 @@ public interface ApiServices {
 
     @POST("getfollowedusers")
     Single<GetFollowedUsersResponse> getFollowedUsers(@Body GetFollowedUsersRequest request);
+
+    @POST("getfollowers")
+    Single<GetFollowersResponse> getFollowers(@Body GetFollowersRequest request);
 
     @POST("getactivities")
     Single<GetActivitiesResponse> getActivities();

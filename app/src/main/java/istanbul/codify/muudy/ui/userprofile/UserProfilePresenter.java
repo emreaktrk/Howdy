@@ -6,13 +6,8 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.BuildConfig;
@@ -30,6 +25,9 @@ import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.ui.profile.StarAdapter;
 import istanbul.codify.muudy.view.NumberView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
     private User mUser;
@@ -37,6 +35,26 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     @Override
     public void attachView(UserProfileView view, View root) {
         super.attachView(view, root);
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_number_followed))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Followers clicked");
+
+                            view.onFollowersClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_number_following))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Followings clicked");
+
+                            view.onFollowingsClicked();
+                        }));
 
         mDisposables.add(
                 RxView
@@ -184,11 +202,11 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         NumberView followed = findViewById(R.id.user_profile_number_followed, NumberView.class);
         followed.setText("Takip Eden");
-        followed.setValue(user.followercount);
+        followed.setValue(user.followedcount);
 
         NumberView following = findViewById(R.id.user_profile_number_following, NumberView.class);
         following.setText("Takip Edilen");
-        following.setValue(user.followedcount);
+        following.setValue(user.followercount);
 
         Picasso
                 .with(getContext())

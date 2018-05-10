@@ -3,11 +3,9 @@ package istanbul.codify.muudy.ui.users;
 import android.annotation.SuppressLint;
 import android.location.Location;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.view.View;
+import com.blankj.utilcode.util.StringUtils;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -17,11 +15,16 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.AroundUsersRequest;
+import istanbul.codify.muudy.api.pojo.request.GetFollowedUsersRequest;
+import istanbul.codify.muudy.api.pojo.request.GetFollowersRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.AroundUsersResponse;
+import istanbul.codify.muudy.api.pojo.response.GetFollowedUsersResponse;
+import istanbul.codify.muudy.api.pojo.response.GetFollowersResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Emotion;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
 import java.util.List;
@@ -118,5 +121,65 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                                     }));
                 })
                 .addOnFailureListener(Logcat::e);
+    }
+
+    public void bind(User user, @UsersScreenMode String mode) {
+        findViewById(R.id.users_title, AppCompatTextView.class).setText(mode);
+
+        if (StringUtils.equals(mode, UsersScreenMode.FOLLOWER)) {
+            getFollowedUsers(user);
+        } else if (StringUtils.equals(mode, UsersScreenMode.FOLLOWING)) {
+            getFollowers(user);
+        }
+    }
+
+    private void getFollowedUsers(User user) {
+        GetFollowedUsersRequest request = new GetFollowedUsersRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getFollowedUsers(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetFollowedUsersResponse>() {
+                            @Override
+                            protected void success(GetFollowedUsersResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    private void getFollowers(User user) {
+        GetFollowersRequest request = new GetFollowersRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getFollowers(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetFollowersResponse>() {
+                            @Override
+                            protected void success(GetFollowersResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

@@ -25,11 +25,12 @@
                 android:src="@drawable/ic_close"/>
 
         <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/users_title"
                 style="@style/Text.Toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Kişi Arama"/>
+                android:text="Etrafındakiler"/>
     </FrameLayout>
 
     <FrameLayout

@@ -10,6 +10,10 @@ import istanbul.codify.muudy.ui.base.MvpView;
 
 interface UserProfileView extends MvpView {
 
+    void onFollowersClicked();
+
+    void onFollowingsClicked();
+
     void onPostsClicked();
 
     void onTopsClicked();
