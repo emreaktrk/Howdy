@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -141,6 +142,36 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             view.onPictureClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_facebook))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Facebook clicked");
+
+                            view.onFacebookClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_twitter))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Twitter clicked");
+
+                            view.onTwitterClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_instagram))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Instagram clicked");
+
+                            view.onInstagramClicked();
+                        }));
     }
 
     void load(@NonNull Long userId) {
@@ -184,6 +215,18 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         if (!TextUtils.isEmpty(user.award3Text)) {
             awards.add(user.award3Text);
+        }
+
+        if (StringUtils.isEmpty(user.facebooklink)) {
+            findViewById(R.id.user_profile_facebook).setVisibility(View.GONE);
+        }
+
+        if (StringUtils.isEmpty(user.twitterlink)) {
+            findViewById(R.id.user_profile_twitter).setVisibility(View.GONE);
+        }
+
+        if (StringUtils.isEmpty(user.instagramlink)) {
+            findViewById(R.id.user_profile_instagram).setVisibility(View.GONE);
         }
 
         StringBuilder text = new StringBuilder();

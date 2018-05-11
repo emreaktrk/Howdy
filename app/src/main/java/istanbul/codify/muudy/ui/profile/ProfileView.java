@@ -47,4 +47,10 @@ interface ProfileView extends MvpView {
 
     void onError(ApiError error);
 
+    void onFacebookClicked();
+
+    void onTwitterClicked();
+
+    void onInstagramClicked();
+
 }

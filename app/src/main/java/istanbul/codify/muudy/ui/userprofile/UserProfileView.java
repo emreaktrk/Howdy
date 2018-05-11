@@ -52,6 +52,12 @@ interface UserProfileView extends MvpView {
 
     void onError(ApiError error);
 
+    void onFacebookClicked();
+
+    void onTwitterClicked();
+
+    void onInstagramClicked();
+
     void onBackClicked();
 
 }

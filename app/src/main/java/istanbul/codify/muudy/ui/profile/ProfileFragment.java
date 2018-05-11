@@ -187,6 +187,21 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     }
 
     @Override
+    public void onFacebookClicked() {
+
+    }
+
+    @Override
+    public void onTwitterClicked() {
+
+    }
+
+    @Override
+    public void onInstagramClicked() {
+
+    }
+
+    @Override
     public void onSync(User me) {
         mPresenter.bind(me);
         mPresenter.posts();

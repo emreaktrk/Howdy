@@ -215,6 +215,21 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     }
 
     @Override
+    public void onFacebookClicked() {
+        
+    }
+
+    @Override
+    public void onTwitterClicked() {
+
+    }
+
+    @Override
+    public void onInstagramClicked() {
+
+    }
+
+    @Override
     public void onBackClicked() {
         finish();
     }

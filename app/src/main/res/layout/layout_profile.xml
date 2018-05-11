@@ -117,8 +117,29 @@
                     <android.support.v7.widget.LinearLayoutCompat
                             android:id="@+id/profile_social_media"
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
+                            android:layout_height="wrap_content"
                             android:layout_margin="8dp">
+
+                        <android.support.v7.widget.AppCompatImageButton
+                                android:id="@+id/profile_facebook"
+                                android:background="@android:color/transparent"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:src="@drawable/ic_facebook"/>
+
+                        <android.support.v7.widget.AppCompatImageButton
+                                android:id="@+id/profile_twitter"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_twitter"/>
+
+                        <android.support.v7.widget.AppCompatImageButton
+                                android:id="@+id/profile_instagram"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_instagram"/>
                     </android.support.v7.widget.LinearLayoutCompat>
                 </android.support.v7.widget.LinearLayoutCompat>
             </android.support.design.widget.CollapsingToolbarLayout>
