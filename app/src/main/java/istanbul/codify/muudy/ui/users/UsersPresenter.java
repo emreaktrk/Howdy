@@ -14,13 +14,8 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.AroundUsersRequest;
-import istanbul.codify.muudy.api.pojo.request.GetFollowedUsersRequest;
-import istanbul.codify.muudy.api.pojo.request.GetFollowersRequest;
-import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.AroundUsersResponse;
-import istanbul.codify.muudy.api.pojo.response.GetFollowedUsersResponse;
-import istanbul.codify.muudy.api.pojo.response.GetFollowersResponse;
+import istanbul.codify.muudy.api.pojo.request.*;
+import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Emotion;
 import istanbul.codify.muudy.model.User;
@@ -172,6 +167,106 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                             @Override
                             protected void success(GetFollowersResponse response) {
                                 mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void follow(User user) {
+        FollowRequest request = new FollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followtouserid = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .follow(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<FollowResponse>() {
+                            @Override
+                            protected void success(FollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void unfollow(User user) {
+        UnfollowRequest request = new UnfollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followtouserid = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .unfollow(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<UnfollowResponse>() {
+                            @Override
+                            protected void success(UnfollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void requestFollow(User user) {
+        SendFollowRequest request = new SendFollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userid = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sendFollowRequest(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SendFollowResponse>() {
+                            @Override
+                            protected void success(SendFollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void cancelRequestFollow(User user) {
+        CancelFollowRequest request = new CancelFollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followRequestedUserId = user.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .cancelFollowRequest(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<CancelFollowResponse>() {
+                            @Override
+                            protected void success(CancelFollowResponse response) {
+
                             }
 
                             @Override

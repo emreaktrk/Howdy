@@ -109,6 +109,13 @@
                                 android:gravity="center"/>
                     </android.support.v7.widget.LinearLayoutCompat>
 
+                    <istanbul.codify.muudy.view.FollowButton
+                            android:id="@+id/user_profile_follow"
+                            android:layout_marginTop="8dp"
+                            style="@style/Button.Blue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
                     <android.support.v7.widget.LinearLayoutCompat
                             android:id="@+id/user_profile_social_media"
                             android:layout_width="wrap_content"

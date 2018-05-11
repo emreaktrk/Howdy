@@ -13,16 +13,14 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.Category;
-import istanbul.codify.muudy.model.Post;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UsersScreenMode;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
+import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.List;
 
@@ -127,8 +125,55 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     }
 
     @Override
-    public void onFollowClicked() {
-        // TODO Follow user
+    public void onFollowClicked(FollowButton compound) {
+        switch (compound.getState()) {
+            case FOLLOW:
+                mPresenter.follow();
+                if (mPresenter.getUser().isprofilehidden == ProfileVisibility.VISIBLE) {
+                    compound.setState(FollowButton.State.UNFOLLOW);
+                } else {
+                    compound.setState(FollowButton.State.REQUEST_CANCEL);
+                }
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.FOLLOW);
+                return;
+            case UNFOLLOW:
+                mPresenter.unfollow();
+                if (mPresenter.getUser().isprofilehidden == ProfileVisibility.VISIBLE) {
+                    compound.setState(FollowButton.State.FOLLOW);
+                } else {
+                    compound.setState(FollowButton.State.REQUEST);
+                }
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.UNFOLLOW);
+                return;
+            case REQUEST:
+                mPresenter.requestFollow();
+                compound.setState(FollowButton.State.REQUEST_CANCEL);
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.FOLLOW);
+                return;
+            case REQUEST_CANCEL:
+                mPresenter.cancelRequestFollow();
+                if (mPresenter.getUser().isprofilehidden == ProfileVisibility.VISIBLE) {
+                    compound.setState(FollowButton.State.FOLLOW);
+                } else {
+                    compound.setState(FollowButton.State.REQUEST);
+                }
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.UNFOLLOW);
+                return;
+            default:
+                throw new IllegalArgumentException("Not implemented");
+        }
     }
 
     @Override
@@ -216,7 +261,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
     @Override
     public void onFacebookClicked() {
-        
+
     }
 
     @Override

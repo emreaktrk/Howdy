@@ -175,10 +175,18 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public PublishSubject<Follow> followClicks() {
+        if (mUsers == null) {
+            return PublishSubject.create();
+        }
+
         return mUsers.followClicks();
     }
 
     public PublishSubject<User> userClicks() {
+        if (mUsers == null) {
+            return PublishSubject.create();
+        }
+
         return mUsers.userClicks();
     }
 

@@ -24,6 +24,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.ui.profile.StarAdapter;
+import istanbul.codify.muudy.view.FollowButton;
 import istanbul.codify.muudy.view.NumberView;
 
 import java.util.ArrayList;
@@ -66,6 +67,16 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             setSelected(0);
                             view.onPostsClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_follow))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Follow clicked");
+
+                            view.onFollowClicked(findViewById(R.id.user_profile_follow, FollowButton.class));
                         }));
 
         mDisposables.add(
@@ -203,6 +214,18 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         findViewById(R.id.user_profile_username, AppCompatTextView.class).setText(user.username);
         findViewById(R.id.user_profile_fullname, AppCompatTextView.class).setText(user.namesurname);
+
+        switch (user.isfollowing) {
+            case FOLLOWING:
+                findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.UNFOLLOW);
+                break;
+            case NOT_FOLLOWING:
+                findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
+                break;
+            case REQUEST_SENT:
+                findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.REQUEST_CANCEL);
+                break;
+        }
 
         ArrayList<String> awards = new ArrayList<>();
         if (!TextUtils.isEmpty(user.award1Text)) {
@@ -445,6 +468,106 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<SayHiResponse>() {
                             @Override
                             protected void success(SayHiResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void follow() {
+        FollowRequest request = new FollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followtouserid = mUser.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .follow(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<FollowResponse>() {
+                            @Override
+                            protected void success(FollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void unfollow() {
+        UnfollowRequest request = new UnfollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followtouserid = mUser.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .unfollow(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<UnfollowResponse>() {
+                            @Override
+                            protected void success(UnfollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void requestFollow() {
+        SendFollowRequest request = new SendFollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userid = mUser.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .sendFollowRequest(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<SendFollowResponse>() {
+                            @Override
+                            protected void success(SendFollowResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void cancelRequestFollow() {
+        CancelFollowRequest request = new CancelFollowRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.followRequestedUserId = mUser.iduser;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .cancelFollowRequest(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<CancelFollowResponse>() {
+                            @Override
+                            protected void success(CancelFollowResponse response) {
 
                             }
 

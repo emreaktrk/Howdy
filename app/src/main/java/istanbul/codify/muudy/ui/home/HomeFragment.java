@@ -160,14 +160,17 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     public void onFollowClicked(Follow follow) {
         // TODO Follow
 
-        if (follow.isFollowed) {
-            Analytics
-                    .getInstance()
-                    .custom(Analytics.Events.FOLLOW);
-        } else {
-            Analytics
-                    .getInstance()
-                    .custom(Analytics.Events.UNFOLLOW);
+        switch (follow.mCompound.getState()) {
+            case FOLLOW:
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.FOLLOW);
+                return;
+            case UNFOLLOW:
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.UNFOLLOW);
+                return;
         }
     }
 

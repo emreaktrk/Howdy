@@ -26,7 +26,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="8dp"
             app:layout_constraintBottom_toTopOf="@id/user_namesurname"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/user_follow"
             app:layout_constraintStart_toEndOf="@id/user_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
@@ -41,8 +41,18 @@
             android:layout_marginStart="8dp"
             android:textColor="@color/rock"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/user_follow"
             app:layout_constraintStart_toEndOf="@id/user_image"
             app:layout_constraintTop_toBottomOf="@id/user_username"
             tools:text="@sample/user.json/data/namesurname"/>
+
+    <istanbul.codify.muudy.view.FollowButton
+            android:id="@+id/user_follow"
+            style="@style/Button.Blue"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>

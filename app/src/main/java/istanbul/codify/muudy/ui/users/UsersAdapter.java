@@ -11,14 +11,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.Follow;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
 
-    private final PublishSubject<User> mPublish = PublishSubject.create();
+    private final PublishSubject<User> mUserSubject = PublishSubject.create();
+    private final PublishSubject<Follow> mFollowSubject = PublishSubject.create();
     private List<User> mList;
 
     UsersAdapter(@Nullable List<User> list) {
@@ -41,6 +44,17 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
                 .into(holder.mImage);
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);
+        switch (user.isfollowing) {
+            case FOLLOWING:
+                holder.mFollow.setState(FollowButton.State.UNFOLLOW);
+                break;
+            case NOT_FOLLOWING:
+                holder.mFollow.setState(FollowButton.State.FOLLOW);
+                break;
+            case REQUEST_SENT:
+                holder.mFollow.setState(FollowButton.State.REQUEST_CANCEL);
+                break;
+        }
     }
 
     @Override
@@ -49,7 +63,11 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
     }
 
     PublishSubject<User> itemClicks() {
-        return mPublish;
+        return mUserSubject;
+    }
+
+    public PublishSubject<Follow> followClicks() {
+        return mFollowSubject;
     }
 
     void notifyDataSetChanged(List<User> list) {
@@ -57,11 +75,12 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
         notifyDataSetChanged();
     }
 
-    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener, FollowButton.OnFollowClickListener, FollowButton.OnUnfollowClickListener, FollowButton.OnRequestCancelClickListener, FollowButton.OnRequestClickListener {
 
         private CircleImageView mImage;
         private AppCompatTextView mUsername;
         private AppCompatTextView mNameSurname;
+        private FollowButton mFollow;
 
         Holder(View itemView) {
             super(itemView);
@@ -69,6 +88,12 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
             mImage = itemView.findViewById(R.id.user_image);
             mUsername = itemView.findViewById(R.id.user_username);
             mNameSurname = itemView.findViewById(R.id.user_namesurname);
+            mFollow = itemView.findViewById(R.id.user_follow);
+            mFollow
+                    .setFollowClickListener(this)
+                    .setUnfollowClickListener(this)
+                    .setRequestClickListener(this)
+                    .setRequestCancelClickListener(this);
 
             itemView.setOnClickListener(this);
         }
@@ -76,7 +101,31 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
         @Override
         public void onClick(View view) {
             User user = mList.get(getAdapterPosition());
-            mPublish.onNext(user);
+            mUserSubject.onNext(user);
+        }
+
+        @Override
+        public void onFollowClicked(FollowButton compound) {
+            User user = mList.get(getAdapterPosition());
+            mFollowSubject.onNext(new Follow(user, compound));
+        }
+
+        @Override
+        public void onUnfollowClicked(FollowButton compound) {
+            User user = mList.get(getAdapterPosition());
+            mFollowSubject.onNext(new Follow(user, compound));
+        }
+
+        @Override
+        public void onRequestClicked(FollowButton compound) {
+            User user = mList.get(getAdapterPosition());
+            mFollowSubject.onNext(new Follow(user, compound));
+        }
+
+        @Override
+        public void onRequestCancelClicked(FollowButton compound) {
+            User user = mList.get(getAdapterPosition());
+            mFollowSubject.onNext(new Follow(user, compound));
         }
     }
 }

@@ -3,7 +3,6 @@ package istanbul.codify.muudy.api;
 import io.reactivex.Single;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
-import istanbul.codify.muudy.api.pojo.response.GetFollowersResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -129,4 +128,19 @@ public interface ApiServices {
 
     @POST("aroundusers")
     Single<AroundUsersResponse> aroundUsers(@Body AroundUsersRequest request);
+
+    @POST("follow")
+    Single<FollowResponse> follow(@Body FollowRequest request);
+
+    @POST("unfollow")
+    Single<UnfollowResponse> unfollow(@Body UnfollowRequest request);
+
+    @POST("sendfollowrequest")
+    Single<SendFollowResponse> sendFollowRequest(@Body SendFollowRequest request);
+
+    @POST("cancelfollowrequest")
+    Single<CancelFollowResponse> cancelFollowRequest(@Body CancelFollowRequest request);
+
+    @POST("answerfollowrequest")
+    Single<AnswerFollowResponse> answerFollowRequest(@Body AnswerFollowRequest request);
 }

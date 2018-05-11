@@ -12,11 +12,9 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.Emotion;
-import istanbul.codify.muudy.model.Follow;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UsersScreenMode;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.List;
 
@@ -83,16 +81,53 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
 
     @Override
     public void onFollowClicked(Follow follow) {
-        // TODO Follow
+        switch (follow.mCompound.getState()) {
+            case FOLLOW:
+                mPresenter.follow(follow.mUser);
+                if (follow.mUser.isprofilehidden == ProfileVisibility.VISIBLE) {
+                    follow.mCompound.setState(FollowButton.State.UNFOLLOW);
+                } else {
+                    follow.mCompound.setState(FollowButton.State.REQUEST_CANCEL);
+                }
 
-        if (follow.isFollowed) {
-            Analytics
-                    .getInstance()
-                    .custom(Analytics.Events.FOLLOW);
-        } else {
-            Analytics
-                    .getInstance()
-                    .custom(Analytics.Events.UNFOLLOW);
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.FOLLOW);
+                return;
+            case UNFOLLOW:
+                mPresenter.unfollow(follow.mUser);
+                if (follow.mUser.isprofilehidden == ProfileVisibility.VISIBLE) {
+                    follow.mCompound.setState(FollowButton.State.FOLLOW);
+                } else {
+                    follow.mCompound.setState(FollowButton.State.REQUEST);
+                }
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.UNFOLLOW);
+                return;
+            case REQUEST:
+                mPresenter.requestFollow(follow.mUser);
+                follow.mCompound.setState(FollowButton.State.REQUEST_CANCEL);
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.FOLLOW);
+                return;
+            case REQUEST_CANCEL:
+                mPresenter.cancelRequestFollow(follow.mUser);
+                if (follow.mUser.isprofilehidden == ProfileVisibility.VISIBLE) {
+                    follow.mCompound.setState(FollowButton.State.FOLLOW);
+                } else {
+                    follow.mCompound.setState(FollowButton.State.REQUEST);
+                }
+
+                Analytics
+                        .getInstance()
+                        .custom(Analytics.Events.UNFOLLOW);
+                return;
+            default:
+                throw new IllegalArgumentException("Not implemented");
         }
     }
 

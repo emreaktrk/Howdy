@@ -1,12 +1,14 @@
 package istanbul.codify.muudy.model;
 
+import istanbul.codify.muudy.view.FollowButton;
+
 public final class Follow {
 
     public User mUser;
-    public boolean isFollowed;
+    public FollowButton mCompound;
 
-    public Follow(User user, boolean followed) {
+    public Follow(User user, FollowButton compound) {
         mUser = user;
-        isFollowed = followed;
+        mCompound = compound;
     }
 }

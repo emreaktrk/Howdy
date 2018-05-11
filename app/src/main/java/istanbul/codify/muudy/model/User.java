@@ -44,6 +44,7 @@ public final class User implements Selectable, Serializable {
     public String award1Text;
     public String award2Text;
     public String award3Text;
+    public FollowState isfollowing;
 
     @Override
     public long id() {
