@@ -10,6 +10,9 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
+import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
+import istanbul.codify.muudy.ui.response.ResponseActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 
 import java.util.List;
 
@@ -49,6 +52,30 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
 
     @Override
     public void onNotificationClicked(Notification notification) {
-        // TODO Deep link
+        switch (notification.notification_actiontype) {
+            case FOLLOW:
+                UserProfileActivity.start(notification.notification_fromuserid);
+                return;
+            case LIKE:
+                PostDetailActivity.start(notification.notification_postid);
+                return;
+            case SAY_HI:
+                ResponseActivity.start(notification.fromUser);
+                return;
+            case ANSWER_HI:
+                // TODO Navigate to response without selection.
+                return;
+            case COMMENT:
+                PostDetailActivity.start(notification.notification_postid);
+                return;
+            case GIVE_VOTE:
+                // TODO Rating Popup
+                return;
+            case TAG:
+                PostDetailActivity.start(notification.notification_postid);
+                return;
+            default:
+                return;
+        }
     }
 }
