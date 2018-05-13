@@ -19,6 +19,8 @@ interface UserProfileView extends MvpView {
 
     void onFollowingsClicked();
 
+    void onMoreClicked();
+
     void onPostsClicked();
 
     void onTopsClicked();
@@ -31,11 +33,7 @@ interface UserProfileView extends MvpView {
 
     void onBooksClicked();
 
-    void onHiddenProfile();
-
     void onFollowClicked(FollowButton compound);
-
-    void onUserFollowed();
 
     void onPictureClicked();
 
@@ -62,6 +60,7 @@ interface UserProfileView extends MvpView {
     void onTwitterClicked();
 
     void onInstagramClicked();
+
 
     void onBackClicked();
 

@@ -11,6 +11,7 @@ import istanbul.codify.muudy.model.MediaType;
 public final class MediaBottomSheet extends MuudyBottomSheet implements MediaView {
 
     private MediaPresenter mPresenter = new MediaPresenter();
+
     private OnMediaClickListener.OnGalleryClickListener mGallery;
     private OnMediaClickListener.OnCameraClickListener mCamera;
 

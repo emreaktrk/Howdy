@@ -214,6 +214,16 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             view.onInstagramClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_more))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("More clicked");
+
+                            view.onMoreClicked();
+                        }));
     }
 
     void load(@NonNull Long userId) {
@@ -550,7 +560,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<UnfollowResponse>() {
                             @Override
                             protected void success(UnfollowResponse response) {
-
+                                findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
                             }
 
                             @Override
@@ -614,5 +624,18 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
     void showNext() {
         findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
+    }
+
+    void block(boolean isBlocked) {
+
+    }
+
+    void notification(boolean isEnable) {
+
+    }
+
+    void report() {
+
+
     }
 }

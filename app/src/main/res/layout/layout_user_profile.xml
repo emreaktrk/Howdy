@@ -29,6 +29,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 tools:text="ilkem23"/>
+
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/user_profile_more"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="14dp"
+                android:layout_gravity="end
+"
+                android:src="@drawable/ic_more"/>
     </FrameLayout>
 
     <android.support.design.widget.CoordinatorLayout

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.main.MainActivity"
+        tools:background="@color/white"
+        android:theme="@style/SettingsTheme">
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/more_dialog_unfollow"
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Takibi Bırak"/>
+
+    <android.support.v7.widget.SwitchCompat
+            android:id="@+id/more_dialog_block"
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            tools:checked="true"
+            android:textOff="Engelle"
+            android:textOn="Engeli Kaldır"
+            android:text="Engelle"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/more_dialog_report"
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Şikayet et"/>
+
+    <android.support.v7.widget.SwitchCompat
+            android:id="@+id/more_dialog_notification"
+            style="@style/Text.Normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            tools:checked="true"
+            android:text="Paylaşım yaptığında bildirim gönder"/>
+</android.support.v7.widget.LinearLayoutCompat>
