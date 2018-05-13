@@ -15,6 +15,7 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
+import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
@@ -74,6 +75,22 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     }
 
     @Override
+    public void onMessageClicked() {
+        User user = mPresenter.getUser();
+        if (user != null) {
+            ChatActivity.start(user);
+        }
+    }
+
+    @Override
+    public void onMuudyClicked() {
+        User user = mPresenter.getUser();
+        if (user != null) {
+            mPresenter.sayHi(user.iduser);
+        }
+    }
+
+    @Override
     public void onFollowersClicked() {
         User user = mPresenter.getUser();
         if (user != null) {
@@ -129,6 +146,8 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         switch (compound.getState()) {
             case FOLLOW:
                 mPresenter.follow();
+
+                mPresenter.showNext();
                 if (mPresenter.getUser().isprofilehidden == ProfileVisibility.VISIBLE) {
                     compound.setState(FollowButton.State.UNFOLLOW);
                 } else {

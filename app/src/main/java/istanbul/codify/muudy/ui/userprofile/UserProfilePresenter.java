@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ViewSwitcher;
 import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
@@ -37,6 +38,36 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     @Override
     public void attachView(UserProfileView view, View root) {
         super.attachView(view, root);
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_number_followed))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Followers clicked");
+
+                            view.onFollowersClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_message))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Message clicked");
+
+                            view.onMessageClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.user_profile_muudy))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Muudy clicked");
+
+                            view.onMuudyClicked();
+                        }));
 
         mDisposables.add(
                 RxView
@@ -218,6 +249,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         switch (user.isfollowing) {
             case FOLLOWING:
                 findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.UNFOLLOW);
+                showNext();
                 break;
             case NOT_FOLLOWING:
                 findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
@@ -578,5 +610,9 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void showNext() {
+        findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
     }
 }

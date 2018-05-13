@@ -109,12 +109,43 @@
                                 android:gravity="center"/>
                     </android.support.v7.widget.LinearLayoutCompat>
 
-                    <istanbul.codify.muudy.view.FollowButton
-                            android:id="@+id/user_profile_follow"
-                            android:layout_marginTop="8dp"
-                            style="@style/Button.Blue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                    <ViewSwitcher
+                            android:id="@+id/user_profile_switcher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                        <istanbul.codify.muudy.view.FollowButton
+                                android:id="@+id/user_profile_follow"
+                                style="@style/Button.Blue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                tools:text="Takip Et"/>
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+                            <android.support.v7.widget.AppCompatButton
+                                    android:id="@+id/user_profile_message"
+                                    style="@style/Button.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Mesaj Gönder"
+                                    android:layout_marginEnd="8dp"/>
+
+                            <android.support.v7.widget.AppCompatButton
+                                    android:layout_marginStart="8dp"
+                                    android:id="@+id/user_profile_muudy"
+                                    style="@style/Button.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Muudy De"/>
+                        </android.support.v7.widget.LinearLayoutCompat>
+                    </ViewSwitcher>
+
 
                     <android.support.v7.widget.LinearLayoutCompat
                             android:id="@+id/user_profile_social_media"

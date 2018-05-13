@@ -11,6 +11,10 @@ import java.util.List;
 
 interface UserProfileView extends MvpView {
 
+    void onMessageClicked();
+
+    void onMuudyClicked();
+
     void onFollowersClicked();
 
     void onFollowingsClicked();
