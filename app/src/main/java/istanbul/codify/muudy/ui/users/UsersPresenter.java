@@ -18,6 +18,7 @@ import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Emotion;
+import istanbul.codify.muudy.model.FollowState;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.ui.base.BasePresenter;
@@ -70,6 +71,10 @@ final class UsersPresenter extends BasePresenter<UsersView> {
 
                             mView.onUserClicked(user);
                         }));
+        mDisposables.add(
+                adapter
+                        .followClicks()
+                        .subscribe(follow -> mView.onFollowClicked(follow)));
         findViewById(R.id.users_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
@@ -141,6 +146,10 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                         .subscribe(new ServiceConsumer<GetFollowedUsersResponse>() {
                             @Override
                             protected void success(GetFollowedUsersResponse response) {
+                                for (User user : response.data) {
+                                    user.isfollowing = FollowState.FOLLOWING;
+                                }
+
                                 mView.onLoaded(response.data);
                             }
 
@@ -206,7 +215,7 @@ final class UsersPresenter extends BasePresenter<UsersView> {
     void unfollow(User user) {
         UnfollowRequest request = new UnfollowRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
-        request.followtouserid = user.iduser;
+        request.unfollowtouserid = user.iduser;
 
         mDisposables.add(
                 ApiManager

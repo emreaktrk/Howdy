@@ -508,7 +508,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     void unfollow() {
         UnfollowRequest request = new UnfollowRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
-        request.followtouserid = mUser.iduser;
+        request.unfollowtouserid = mUser.iduser;
 
         mDisposables.add(
                 ApiManager
