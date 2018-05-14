@@ -21,7 +21,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.createuser.CreateUserActivity;
 import istanbul.codify.muudy.ui.forgotpassword.ForgotPasswordActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
-import istanbul.codify.muudy.ui.welcome.WelcomeFragment;
+import istanbul.codify.muudy.ui.register.RegisterFragment;
 
 import java.util.Arrays;
 
@@ -111,7 +111,7 @@ public final class LoginFragment extends MuudyFragment implements LoginView {
                     .getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(null)
-                    .replace(android.R.id.content, WelcomeFragment.newInstance())
+                    .replace(android.R.id.content, RegisterFragment.newInstance())
                     .commit();
         }
     }

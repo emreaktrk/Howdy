@@ -8,7 +8,7 @@ import android.view.View;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.ui.login.LoginFragment;
-import istanbul.codify.muudy.ui.welcome.WelcomeFragment;
+import istanbul.codify.muudy.ui.register.RegisterFragment;
 
 public final class LandingFragment extends MuudyFragment implements LandingView {
 
@@ -60,7 +60,7 @@ public final class LandingFragment extends MuudyFragment implements LandingView 
                     .getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(null)
-                    .replace(android.R.id.content, WelcomeFragment.newInstance())
+                    .replace(android.R.id.content, RegisterFragment.newInstance())
                     .commit();
         }
     }

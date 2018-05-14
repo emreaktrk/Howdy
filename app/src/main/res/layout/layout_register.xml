@@ -17,7 +17,7 @@
             style="@style/Button.Transparent"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_close_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
