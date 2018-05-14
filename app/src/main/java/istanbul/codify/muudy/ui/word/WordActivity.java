@@ -64,7 +64,7 @@ public final class WordActivity extends MuudyActivity implements WordView {
         }
     }
 
-    public static void start(@Nullable List<? extends Selectable> selecteds, @Nullable Activity activity, @ResultTo int to) {
+    public static void start(@Nullable List<? extends Selectable> selecteds, @ResultTo int to) {
         AppCompatActivity compat = (AppCompatActivity) ActivityUtils.getTopActivity();
 
         Intent starter = new Intent(compat, WordActivity.class);
@@ -77,11 +77,12 @@ public final class WordActivity extends MuudyActivity implements WordView {
                     Word word = (Word) selected;
                     ids[i] = word.words_top_category_id;
                 }
+
+                if (selected instanceof Activity) {
+                    starter.putExtra(Activity.class.getSimpleName(), (Activity) selected);
+                }
             }
             starter.putExtra(ids.getClass().getSimpleName(), ids);
-        }
-        if (activity != null) {
-            starter.putExtra(activity.getClass().getSimpleName(), activity);
         }
 
         switch (to) {

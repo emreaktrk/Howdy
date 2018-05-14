@@ -16,7 +16,6 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
-import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.compose.dialog.ComposeDialog;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.places.PlacesActivity;
@@ -75,7 +74,7 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     @Override
     public void onSearchClicked() {
-        WordActivity.start(mPresenter.getSelecteds(), null, ResultTo.ACTIVITY);
+        WordActivity.start(mPresenter.getSelecteds(), ResultTo.ACTIVITY);
     }
 
     @Override
