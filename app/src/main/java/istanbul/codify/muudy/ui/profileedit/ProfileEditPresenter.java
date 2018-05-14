@@ -32,6 +32,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.UpdateProfileResponse;
 import istanbul.codify.muudy.api.pojo.response.UploadImageResponse;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.ProfileImageType;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
@@ -107,35 +108,6 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                             Logcat.v("Change password clicked");
 
                             view.onChangePasswordClicked();
-                        }));
-    }
-
-    void uploadImage(Uri photo) {
-        String data = getMediaData(photo);
-        if (data == null) {
-            return;
-        }
-
-        UploadImageRequest request = new UploadImageRequest(data);
-        request.token = AccountUtils.tokenLegacy(getContext());
-
-        mDisposables.add(
-                ApiManager
-                        .getInstance()
-                        .uploadImage(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<UploadImageResponse>() {
-                            @Override
-                            protected void success(UploadImageResponse response) {
-                                mView.onLoaded(response.data);
-                            }
-
-                            @Override
-                            protected void error(ApiError error) {
-                                Logcat.e(error);
-
-                                mView.onError(error);
-                            }
                         }));
     }
 
@@ -229,10 +201,12 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                             String data = getMediaData(mPhoto1);
                             if (data == null) {
                                 observer.onSuccess(null);
+                                return;
                             }
 
                             UploadImageRequest request = new UploadImageRequest(data);
                             request.token = AccountUtils.tokenLegacy(getContext());
+                            request.profileImageType = ProfileImageType.PATH_1;
 
                             mDisposables.add(
                                     ApiManager
@@ -249,17 +223,19 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                                                 protected void error(ApiError error) {
                                                     Logcat.e(error);
 
-                                                    observer.onError(new Exception(error.message));
+                                                    mView.onError(error);
                                                 }
                                             }));
                         }, observer -> {
                             String data = getMediaData(mPhoto2);
                             if (data == null) {
                                 observer.onSuccess(null);
+                                return;
                             }
 
                             UploadImageRequest request = new UploadImageRequest(data);
                             request.token = AccountUtils.tokenLegacy(getContext());
+                            request.profileImageType = ProfileImageType.PATH_2;
 
                             mDisposables.add(
                                     ApiManager
@@ -276,17 +252,19 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                                                 protected void error(ApiError error) {
                                                     Logcat.e(error);
 
-                                                    observer.onError(new Exception(error.message));
+                                                    mView.onError(error);
                                                 }
                                             }));
                         }, observer -> {
                             String data = getMediaData(mPhoto3);
                             if (data == null) {
                                 observer.onSuccess(null);
+                                return;
                             }
 
                             UploadImageRequest request = new UploadImageRequest(data);
                             request.token = AccountUtils.tokenLegacy(getContext());
+                            request.profileImageType = ProfileImageType.PATH_3;
 
                             mDisposables.add(
                                     ApiManager
@@ -303,41 +281,56 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                                                 protected void error(ApiError error) {
                                                     Logcat.e(error);
 
-                                                    observer.onError(new Exception(error.message));
+                                                    mView.onError(error);
                                                 }
                                             }));
                         }, (Function3<String, String, String, UpdateProfileRequest>) (image1, image2, image3) -> {
+                            User me = AccountUtils.me(getContext());
+
                             UpdateProfileRequest request = new UpdateProfileRequest();
                             request.token = AccountUtils.tokenLegacy(getContext());
-                            request.namesurname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
-                            request.username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
-                            request.email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+
+                            String namesurname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
+                            request.namesurname = StringUtils.equals(me.username, namesurname) ? null : namesurname;
+
+                            String username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
+                            request.username = StringUtils.equals(me.username, username) ? null : username;
+
+                            String email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+                            request.email = StringUtils.equals(me.email, email) ? null : email;
+
                             request.imgpath1 = image1;
                             request.imgpath2 = image2;
                             request.imgpath3 = image3;
                             return request;
-                        }).subscribe(request ->
-                        mDisposables.add(
-                                ApiManager
-                                        .getInstance()
-                                        .updateProfile(request)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
-                                            @Override
-                                            protected void success(UpdateProfileResponse response) {
-                                                Logcat.v("Profile updated");
+                        })
+                        .subscribe((request, throwable) -> {
+                            if (throwable != null) {
+                                mView.onError(throwable);
+                                return;
+                            }
 
-                                                mView.onProfileUpdated();
-                                            }
+                            mDisposables.add(
+                                    ApiManager
+                                            .getInstance()
+                                            .updateProfile(request)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
+                                                @Override
+                                                protected void success(UpdateProfileResponse response) {
+                                                    Logcat.v("Profile updated");
 
-                                            @Override
-                                            protected void error(ApiError error) {
-                                                Logcat.e(error);
+                                                    mView.onProfileUpdated();
+                                                }
 
-                                                mView.onError(error);
-                                            }
-                                        })
-                        )));
+                                                @Override
+                                                protected void error(ApiError error) {
+                                                    Logcat.e(error);
+
+                                                    mView.onError(error);
+                                                }
+                                            }));
+                        }));
     }
 
     private boolean isValid() {
