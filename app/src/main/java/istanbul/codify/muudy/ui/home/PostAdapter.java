@@ -132,7 +132,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     return PostMediaType.RECOMMENDED_USERS.ordinal();
                 }
             } else {
-                if (position == getItemCount()) {
+                if (position == mPosts.size()) {
                     return PostMediaType.RECOMMENDED_USERS.ordinal();
                 }
             }
