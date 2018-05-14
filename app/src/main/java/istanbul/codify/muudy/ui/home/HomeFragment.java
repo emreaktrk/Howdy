@@ -240,7 +240,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
         User user = resolveResult(requestCode, resultCode, data, User.class, UserSearchActivity.REQUEST_CODE);
         if (user != null) {
-            UserProfileActivity.start(user);
+            UserProfileActivity.start(user.iduser);
         }
     }
 

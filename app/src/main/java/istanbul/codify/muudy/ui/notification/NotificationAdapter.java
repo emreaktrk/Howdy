@@ -41,6 +41,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<Notification
         Picasso
                 .with(holder.itemView.getContext())
                 .load(notification.fromUser == null ? null : BuildConfig.URL + notification.fromUser.imgpath1)
+                .placeholder(R.mipmap.ic_launcher_round)
                 .into(holder.mImage);
     }
 

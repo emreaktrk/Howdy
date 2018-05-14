@@ -143,4 +143,16 @@ public interface ApiServices {
 
     @POST("answerfollowrequest")
     Single<AnswerFollowResponse> answerFollowRequest(@Body AnswerFollowRequest request);
+
+    @POST("banuser")
+    Single<BanUserResponse> banUser(@Body BanUserRequest request);
+
+    @POST("report")
+    Single<ReportResponse> report(@Body ReportRequest request);
+
+    @POST("savesendnotificationonpost")
+    Single<SaveSendNotificationOnPostResponse> saveSendNotificationOnPost(@Body SaveSendNotificationOnPostRequest request);
+
+    @POST("deletesendnotificationonpost")
+    Single<DeleteSendNotificationOnPostResponse> deleteSendNotificationOnPost(@Body DeleteSendNotificationOnPostRequest request);
 }

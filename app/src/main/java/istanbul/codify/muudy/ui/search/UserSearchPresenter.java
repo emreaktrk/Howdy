@@ -6,7 +6,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -17,13 +19,9 @@ import istanbul.codify.muudy.api.pojo.response.SearchUserResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class UserSearchPresenter extends BasePresenter<UserSearchView> {
 
@@ -92,6 +90,7 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(user -> {
                             Logcat.v("User clicked");
+
                             mView.onUserClicked(user);
                         }));
         findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);

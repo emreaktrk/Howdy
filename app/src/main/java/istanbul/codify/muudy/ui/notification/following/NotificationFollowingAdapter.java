@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import istanbul.codify.muudy.BuildConfig;
-import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.model.NotificationFollowing;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
+import istanbul.codify.muudy.BuildConfig;
+import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.NotificationFollowing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,7 @@ final class NotificationFollowingAdapter extends RecyclerView.Adapter<Notificati
         Picasso
                 .with(holder.itemView.getContext())
                 .load(BuildConfig.URL + notification.fromUser.imgpath1)
+                .placeholder(R.mipmap.ic_launcher_round)
                 .into(holder.mImage);
     }
 

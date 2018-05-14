@@ -21,6 +21,8 @@ import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Post;
+import istanbul.codify.muudy.model.ReportType;
+import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
@@ -627,15 +629,110 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     }
 
     void block(boolean isBlocked) {
+        BanUserRequest request = new BanUserRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.otherUserId = mUser.iduser;
+        request.willBeBanned = isBlocked ? 1 : 0;
 
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .banUser(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<BanUserResponse>() {
+                            @Override
+                            protected void success(BanUserResponse response) {
+                                if (response.data.r == Result.OK) {
+                                    mUser.isbanned = isBlocked ? 1 : 0;
+                                }
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 
     void notification(boolean isEnable) {
+        if (isEnable) {
+            SaveSendNotificationOnPostRequest request = new SaveSendNotificationOnPostRequest();
+            request.token = AccountUtils.tokenLegacy(getContext());
+            request.otherUserId = mUser.iduser;
 
+            mDisposables.add(
+                    ApiManager
+                            .getInstance()
+                            .saveSendNotificationOnPost(request)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ServiceConsumer<SaveSendNotificationOnPostResponse>() {
+                                @Override
+                                protected void success(SaveSendNotificationOnPostResponse response) {
+                                    if (response.data.r == Result.OK) {
+                                        // TODO Change push settings on user
+                                    }
+                                }
+
+                                @Override
+                                protected void error(ApiError error) {
+                                    Logcat.e(error);
+
+                                    mView.onError(error);
+                                }
+                            }));
+        } else {
+            DeleteSendNotificationOnPostRequest request = new DeleteSendNotificationOnPostRequest();
+            request.token = AccountUtils.tokenLegacy(getContext());
+            request.otherUserId = mUser.iduser;
+
+            mDisposables.add(
+                    ApiManager
+                            .getInstance()
+                            .deleteSendNotificationOnPost(request)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ServiceConsumer<DeleteSendNotificationOnPostResponse>() {
+                                @Override
+                                protected void success(DeleteSendNotificationOnPostResponse response) {
+                                    if (response.data.r == Result.OK) {
+                                        // TODO Change push settings on user
+                                    }
+                                }
+
+                                @Override
+                                protected void error(ApiError error) {
+                                    Logcat.e(error);
+
+                                    mView.onError(error);
+                                }
+                            }));
+        }
     }
 
     void report() {
+        ReportRequest request = new ReportRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.itemId = mUser.iduser;
+        request.type = ReportType.USER;
 
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .report(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<ReportResponse>() {
+                            @Override
+                            protected void success(ReportResponse response) {
 
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

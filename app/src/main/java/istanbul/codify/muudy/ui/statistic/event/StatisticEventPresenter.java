@@ -94,12 +94,16 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
 
             PieDataSet set = new PieDataSet(entries, "");
             set.setColors(ColorTemplate.JOYFUL_COLORS);
+            set.setValueTextSize(0f);
 
             PieData data = new PieData(set);
 
             Description description = new Description();
             description.setText("");
             findViewById(R.id.statistic_event_chart, PieChart.class).setDescription(description);
+
+            findViewById(R.id.statistic_event_chart, PieChart.class).getLegend().setEnabled(false);
+            findViewById(R.id.statistic_event_chart, PieChart.class).setUsePercentValues(false);
 
             findViewById(R.id.statistic_event_chart, PieChart.class).setData(data);
             findViewById(R.id.statistic_event_chart, PieChart.class).invalidate();
