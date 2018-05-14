@@ -1,10 +1,13 @@
 package istanbul.codify.muudy.ui.profileedit;
 
 import android.Manifest;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -15,8 +18,10 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Function3;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -30,11 +35,15 @@ import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
-    private Uri mPhoto;
+    private Uri mPhoto1;
+    private Uri mPhoto2;
+    private Uri mPhoto3;
 
     @Override
     public void attachView(ProfileEditView view, View root) {
@@ -62,12 +71,32 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
         mDisposables.add(
                 RxView
-                        .clicks(findViewById(R.id.profile_edit_picture))
+                        .clicks(findViewById(R.id.profile_edit_picture_1))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Photo clicked");
 
-                            view.onPhotoClicked();
+                            view.onPhotoClicked(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit_picture_2))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Photo clicked");
+
+                            view.onPhotoClicked(findViewById(R.id.profile_edit_picture_2, CircleImageView.class));
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit_picture_3))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Photo clicked");
+
+                            view.onPhotoClicked(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
                         }));
 
         mDisposables.add(
@@ -81,10 +110,13 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         }));
     }
 
-    void uploadImage() {
-        // TODO Convert image to Base64
+    void uploadImage(Uri photo) {
+        String data = getMediaData(photo);
+        if (data == null) {
+            return;
+        }
 
-        UploadImageRequest request = new UploadImageRequest(null);
+        UploadImageRequest request = new UploadImageRequest(data);
         request.token = AccountUtils.tokenLegacy(getContext());
 
         mDisposables.add(
@@ -107,7 +139,27 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         }));
     }
 
-    void selectPhoto(@NonNull AppCompatActivity activity) {
+    private String getMediaData(Uri photo) {
+        if (photo == null) {
+            return null;
+        }
+
+        try {
+            InputStream input = getContext().getContentResolver().openInputStream(photo);
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            byte[] bytes = output.toByteArray();
+
+            return Base64.encodeToString(bytes, Base64.DEFAULT);
+        } catch (Exception e) {
+            Logcat.e(e);
+
+            return null;
+        }
+    }
+
+    void selectPhoto(@NonNull AppCompatActivity activity, CircleImageView view) {
         mDisposables.add(
                 new RxPermissions(activity)
                         .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -115,19 +167,31 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                         .subscribe(uris -> {
                             Uri uri = uris.get(0);
                             Logcat.v("Selected uri for photo is " + uri.toString());
-                            mView.onPhotoSelected(uri);
+                            mView.onPhotoSelected(uri, view);
                         })
         );
     }
 
-    void bind(Uri photo) {
-        mPhoto = photo;
-
+    void bind(Uri photo, CircleImageView view) {
         Picasso
                 .with(getContext())
-                .load(mPhoto)
+                .load(photo)
                 .placeholder(R.drawable.ic_avatar)
-                .into(findViewById(R.id.profile_edit_picture, CircleImageView.class));
+                .into(view);
+
+        switch (view.getId()) {
+            case R.id.profile_edit_picture_1:
+                mPhoto1 = photo;
+                return;
+            case R.id.profile_edit_picture_2:
+                mPhoto2 = photo;
+                return;
+            case R.id.profile_edit_picture_3:
+                mPhoto3 = photo;
+                return;
+            default:
+                throw new IllegalArgumentException("Not implemented");
+        }
     }
 
     void bind(User user) {
@@ -138,7 +202,20 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
         Picasso
                 .with(getContext())
                 .load(user.imgpath1)
-                .into(findViewById(R.id.profile_edit_picture, CircleImageView.class));
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
+
+        Picasso
+                .with(getContext())
+                .load(user.imgpath2)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_2, CircleImageView.class));
+
+        Picasso
+                .with(getContext())
+                .load(user.imgpath3)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
     }
 
     void save() {
@@ -146,34 +223,121 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
             return;
         }
 
-        UpdateProfileRequest request = new UpdateProfileRequest();
-        request.token = AccountUtils.tokenLegacy(getContext());
-        request.namesurname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
-        request.username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
-        request.email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+        mDisposables.add(
+                Single
+                        .zip(observer -> {
+                            String data = getMediaData(mPhoto1);
+                            if (data == null) {
+                                observer.onSuccess(null);
+                            }
 
-        mDisposables
-                .add(
-                        ApiManager
-                                .getInstance()
-                                .updateProfile(request)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
-                                    @Override
-                                    protected void success(UpdateProfileResponse response) {
-                                        Logcat.v("Profile updated");
+                            UploadImageRequest request = new UploadImageRequest(data);
+                            request.token = AccountUtils.tokenLegacy(getContext());
 
-                                        mView.onProfileUpdated();
-                                    }
+                            mDisposables.add(
+                                    ApiManager
+                                            .getInstance()
+                                            .uploadImage(request)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new ServiceConsumer<UploadImageResponse>() {
+                                                @Override
+                                                protected void success(UploadImageResponse response) {
+                                                    observer.onSuccess(response.data);
+                                                }
 
-                                    @Override
-                                    protected void error(ApiError error) {
-                                        Logcat.e(error);
+                                                @Override
+                                                protected void error(ApiError error) {
+                                                    Logcat.e(error);
 
-                                        mView.onError(error);
-                                    }
-                                })
-                );
+                                                    observer.onError(new Exception(error.message));
+                                                }
+                                            }));
+                        }, observer -> {
+                            String data = getMediaData(mPhoto2);
+                            if (data == null) {
+                                observer.onSuccess(null);
+                            }
+
+                            UploadImageRequest request = new UploadImageRequest(data);
+                            request.token = AccountUtils.tokenLegacy(getContext());
+
+                            mDisposables.add(
+                                    ApiManager
+                                            .getInstance()
+                                            .uploadImage(request)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new ServiceConsumer<UploadImageResponse>() {
+                                                @Override
+                                                protected void success(UploadImageResponse response) {
+                                                    observer.onSuccess(response.data);
+                                                }
+
+                                                @Override
+                                                protected void error(ApiError error) {
+                                                    Logcat.e(error);
+
+                                                    observer.onError(new Exception(error.message));
+                                                }
+                                            }));
+                        }, observer -> {
+                            String data = getMediaData(mPhoto3);
+                            if (data == null) {
+                                observer.onSuccess(null);
+                            }
+
+                            UploadImageRequest request = new UploadImageRequest(data);
+                            request.token = AccountUtils.tokenLegacy(getContext());
+
+                            mDisposables.add(
+                                    ApiManager
+                                            .getInstance()
+                                            .uploadImage(request)
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(new ServiceConsumer<UploadImageResponse>() {
+                                                @Override
+                                                protected void success(UploadImageResponse response) {
+                                                    observer.onSuccess(response.data);
+                                                }
+
+                                                @Override
+                                                protected void error(ApiError error) {
+                                                    Logcat.e(error);
+
+                                                    observer.onError(new Exception(error.message));
+                                                }
+                                            }));
+                        }, (Function3<String, String, String, UpdateProfileRequest>) (image1, image2, image3) -> {
+                            UpdateProfileRequest request = new UpdateProfileRequest();
+                            request.token = AccountUtils.tokenLegacy(getContext());
+                            request.namesurname = findViewById(R.id.profile_edit_fullname, TextInputEditText.class).getText().toString().trim();
+                            request.username = findViewById(R.id.profile_edit_username, TextInputEditText.class).getText().toString().trim();
+                            request.email = findViewById(R.id.profile_edit_email, TextInputEditText.class).getText().toString().trim();
+                            request.imgpath1 = image1;
+                            request.imgpath2 = image2;
+                            request.imgpath3 = image3;
+                            return request;
+                        }).subscribe(request ->
+                        mDisposables.add(
+                                ApiManager
+                                        .getInstance()
+                                        .updateProfile(request)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
+                                            @Override
+                                            protected void success(UpdateProfileResponse response) {
+                                                Logcat.v("Profile updated");
+
+                                                mView.onProfileUpdated();
+                                            }
+
+                                            @Override
+                                            protected void error(ApiError error) {
+                                                Logcat.e(error);
+
+                                                mView.onError(error);
+                                            }
+                                        })
+                        )));
     }
 
     private boolean isValid() {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import de.hdodenhof.circleimageview.CircleImageView;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -43,13 +44,13 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
     }
 
     @Override
-    public void onPhotoClicked() {
-        mPresenter.selectPhoto(this);
+    public void onPhotoClicked(CircleImageView view) {
+        mPresenter.selectPhoto(this, view);
     }
 
     @Override
-    public void onPhotoSelected(Uri uri) {
-        mPresenter.bind(uri);
+    public void onPhotoSelected(Uri uri, CircleImageView view) {
+        mPresenter.bind(uri, view);
     }
 
     @Override
@@ -75,11 +76,6 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
 
     @Override
     public void onLoaded(String imagePath) {
-
-    }
-
-    @Override
-    public void onLoaded(User user) {
 
     }
 

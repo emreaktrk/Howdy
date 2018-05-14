@@ -1,15 +1,17 @@
 package istanbul.codify.muudy.ui.profileedit;
 
 import android.net.Uri;
+import android.view.View;
+import de.hdodenhof.circleimageview.CircleImageView;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.MvpView;
 
 interface ProfileEditView extends MvpView {
 
-    void onPhotoClicked();
+    void onPhotoClicked(CircleImageView view);
 
-    void onPhotoSelected(Uri uri);
+    void onPhotoSelected(Uri uri, CircleImageView view);
 
     void onSaveClicked();
 
@@ -18,8 +20,6 @@ interface ProfileEditView extends MvpView {
     void onProfileUpdated();
 
     void onLoaded(String imagePath);
-
-    void onLoaded(User user);
 
     void onError(ApiError error);
 

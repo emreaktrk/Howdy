@@ -1,13 +1,12 @@
 package istanbul.codify.muudy.api.pojo.request;
 
-import java.util.Base64;
 
 public final class UploadImageRequest {
 
     public String token;
-    public Base64 data;
+    public String data;
 
-    public UploadImageRequest(Base64 data) {
+    public UploadImageRequest(String data) {
         this.data = data;
     }
 }
