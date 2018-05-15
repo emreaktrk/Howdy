@@ -125,12 +125,12 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
         }
 
         if (email.length() == 0) {
-            showAlert("E-posta boş olamaz");
+            showAlert("Email boş olamaz");
             return false;
         }
 
         if (!new Email(email).isValid()){
-            showAlert("Girilen E-posta adresi geçersiz.");
+            showAlert("Girilen Email adresi geçersiz.");
             return false;
         }
 

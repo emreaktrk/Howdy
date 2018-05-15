@@ -10,7 +10,9 @@ import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.ForgotPasswordRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.ForgotPasswordResponse;
+import istanbul.codify.muudy.helper.AlertDialogHelper;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.Email;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -35,10 +37,31 @@ final class ForgotPasswordPresenter extends BasePresenter<ForgotPasswordView> {
                 RxView
                         .clicks(findViewById(R.id.forgot_password_send))
                         .observeOn(AndroidSchedulers.mainThread())
+                        .filter(o -> {
+                            return checkFields();
+                        })
                         .subscribe(o -> {
                             Logcat.v("Send clicked");
                             view.onSendClicked();
                         }));
+
+
+    }
+
+    private boolean checkFields() {
+
+        String email = findViewById(R.id.forgot_password_email, TextInputEditText.class).getText().toString().trim();
+        if (email.length() == 0) {
+            AlertDialogHelper.showAlert("Email boş olamaz.",mRoot.getContext());
+            return false;
+        }else{
+            if (!new Email(email).isValid()){
+                AlertDialogHelper.showAlert("Girilen Email adresi geçersiz.",mRoot.getContext());
+                return false;
+            }else{
+                return  true;
+            }
+        }
     }
 
     void bind(@Nullable String email) {

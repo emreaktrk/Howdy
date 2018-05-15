@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -12,6 +13,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.helper.AlertDialogHelper;
+import istanbul.codify.muudy.model.Email;
 
 public final class ForgotPasswordActivity extends MuudyActivity implements ForgotPasswordView {
 
@@ -51,8 +54,9 @@ public final class ForgotPasswordActivity extends MuudyActivity implements Forgo
 
     @Override
     public void onSendClicked() {
-        mPresenter.sendEmail();
 
+
+        mPresenter.sendEmail();
         Analytics
                 .getInstance()
                 .custom(Analytics.Events.FORGOT_PASSWORD);

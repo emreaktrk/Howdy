@@ -115,7 +115,7 @@
                 android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="E-Posta">
+                android:hint="Email">
 
             <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_email"
@@ -204,4 +204,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

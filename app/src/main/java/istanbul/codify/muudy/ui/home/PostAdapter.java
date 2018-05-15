@@ -100,7 +100,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .placeholder(R.drawable.ic_avatar)
                     .into(none.mImage);
 
-
             SpannableStringBuilder str = new SpannableStringBuilder(post.post_text);
             str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             none.mMessage.setText(str);
