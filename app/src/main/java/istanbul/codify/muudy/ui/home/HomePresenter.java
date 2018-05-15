@@ -210,7 +210,18 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             mView.onMuudyClicked(cell);
                         }));
 
+
+/// TODO: 16.05.2018 Paging eklenecek
+       /* LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        findViewById(R.id.home_post_recycler, RecyclerView.class).setLayoutManager(linearLayoutManager);*/
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+  /*      findViewById(R.id.home_post_recycler, RecyclerView.class).setOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                    getWall(getContext());
+            }
+        });*/
+
     }
 
     void like(long postId) {
