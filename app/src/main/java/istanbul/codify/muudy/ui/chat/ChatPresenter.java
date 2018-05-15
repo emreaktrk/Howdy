@@ -96,7 +96,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         RecyclerView recycler = findViewById(R.id.chat_recycler, RecyclerView.class);
         recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true));
 
-        int space = SizeUtils.dp2px(16);
+        int space = SizeUtils.dp2px(0);
         recycler.addItemDecoration(new SideSpaceItemDecoration(space, LinearLayoutManager.HORIZONTAL));
         recycler.addItemDecoration(new SideSpaceItemDecoration(space / 2, LinearLayoutManager.VERTICAL));
     }

@@ -12,4 +12,5 @@ public final class Chat implements Serializable {
     public Date message_date;
     public int message_isreaded;
     public String message_img_path;
+    public String message_humanDate;
 }
