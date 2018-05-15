@@ -16,6 +16,7 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.changepassword.ChangePasswordActivity;
+import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 
 public final class ProfileEditActivity extends MuudyActivity implements ProfileEditView {
 
@@ -45,7 +46,11 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
 
     @Override
     public void onPhotoClicked(CircleImageView view) {
-        mPresenter.selectPhoto(this, view);
+        MediaBottomSheet
+                .newInstance()
+                .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
+                .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
+                .show(getSupportFragmentManager(), null);
     }
 
     @Override

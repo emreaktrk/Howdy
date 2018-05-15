@@ -22,6 +22,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
+import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -144,6 +145,19 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
         );
     }
 
+    void capturePhoto(@NonNull AppCompatActivity activity, CircleImageView view) {
+        mDisposables.add(
+                new RxPermissions(activity)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .flatMap((Function<Boolean, ObservableSource<Uri>>) granted -> granted ? RxGallery.photoCapture(activity).toObservable() : Observable.empty())
+                        .subscribe(uri -> {
+                            Logcat.v("Selected uri for photo is " + uri.toString());
+
+                            mView.onPhotoSelected(uri, view);
+                        })
+        );
+    }
+
     void bind(Uri photo, CircleImageView view) {
         Picasso
                 .with(getContext())
@@ -173,19 +187,19 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
 
         Picasso
                 .with(getContext())
-                .load(user.imgpath1)
+                .load(BuildConfig.URL + user.imgpath1)
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
 
         Picasso
                 .with(getContext())
-                .load(user.imgpath2)
+                .load(BuildConfig.URL + user.imgpath2)
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_edit_picture_2, CircleImageView.class));
 
         Picasso
                 .with(getContext())
-                .load(user.imgpath3)
+                .load(BuildConfig.URL + user.imgpath3)
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
     }
