@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
@@ -42,6 +43,14 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull @UsersScreenMode String mode) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UsersActivity.class);
+        starter.putExtra(String.class.getSimpleName(), mode);
+        ActivityUtils.startActivity(starter);
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_users;
@@ -52,13 +61,35 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
-        String mode = getSerializable(String.class);
-        User user = getSerializable(User.class);
-        mPresenter.bind(user, mode);
 
-        Emotion emotion = getSerializable(Emotion.class);
-        if (emotion != null) {
-            mPresenter.aroundUsers(emotion);
+        User user = getSerializable(User.class);
+        String mode = getSerializable(String.class);
+        mPresenter.bind(mode);
+
+        if (!StringUtils.isEmpty(mode)) {
+            switch (mode) {
+                case UsersScreenMode.FOLLOWER:
+                    if (user != null) {
+                        mPresenter.getFollowedUsers(user);
+                    }
+
+                    return;
+                case UsersScreenMode.FOLLOWING:
+                    if (user != null) {
+                        mPresenter.getFollowers(user);
+                    }
+
+                    return;
+                case UsersScreenMode.CONTACTS:
+                    mPresenter.getContacts(this);
+                    return;
+                case UsersScreenMode.AROUND_WITH_EMOTION:
+                    Emotion emotion = getSerializable(Emotion.class);
+                    mPresenter.aroundUsers(emotion);
+                    return;
+                default:
+                    throw new IllegalArgumentException("Not implemented");
+            }
         }
     }
 
@@ -145,6 +176,4 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
     public void onCloseClicked() {
         finish();
     }
-
-
 }

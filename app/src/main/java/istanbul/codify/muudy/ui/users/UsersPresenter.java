@@ -1,14 +1,18 @@
 package istanbul.codify.muudy.ui.users;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.database.Cursor;
 import android.location.Location;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.*;
 import android.view.View;
-import com.blankj.utilcode.util.StringUtils;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -23,6 +27,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -123,17 +128,63 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                 .addOnFailureListener(Logcat::e);
     }
 
-    public void bind(User user, @UsersScreenMode String mode) {
+    public void bind(@UsersScreenMode String mode) {
         findViewById(R.id.users_title, AppCompatTextView.class).setText(mode);
-
-        if (StringUtils.equals(mode, UsersScreenMode.FOLLOWER)) {
-            getFollowedUsers(user);
-        } else if (StringUtils.equals(mode, UsersScreenMode.FOLLOWING)) {
-            getFollowers(user);
-        }
     }
 
-    private void getFollowedUsers(User user) {
+    void getContacts(Activity activity) {
+        mDisposables.add(
+                new RxPermissions(activity)
+                        .request(Manifest.permission.READ_CONTACTS)
+                        .subscribe(granted -> {
+                            if (granted) {
+                                GetPhoneFriendsRequest request = new GetPhoneFriendsRequest(getPhoneBook(activity));
+                                request.token = AccountUtils.tokenLegacy(getContext());
+
+                                mDisposables.add(
+                                        ApiManager
+                                                .getInstance()
+                                                .getPhoneFriends(request)
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new ServiceConsumer<GetPhoneFriendsResponse>() {
+                                                    @Override
+                                                    protected void success(GetPhoneFriendsResponse response) {
+                                                        mView.onLoaded(response.data);
+                                                    }
+
+                                                    @Override
+                                                    protected void error(ApiError error) {
+                                                        Logcat.e(error);
+
+                                                        mView.onError(error);
+                                                    }
+                                                }));
+                            }
+                        })
+        );
+    }
+
+    private ArrayList<String> getPhoneBook(Activity activity) {
+        Cursor contacts = activity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        ArrayList<String> phones = new ArrayList<>();
+
+        if (contacts == null) {
+            return phones;
+        }
+
+        int columnIndex = contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+        while (contacts.moveToNext()) {
+            String number = contacts.getString(columnIndex);
+            phones.add(number);
+        }
+
+        contacts.close();
+
+        return phones;
+    }
+
+    void getFollowedUsers(User user) {
         GetFollowedUsersRequest request = new GetFollowedUsersRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
         request.userId = user.iduser;
@@ -162,7 +213,7 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                         }));
     }
 
-    private void getFollowers(User user) {
+    void getFollowers(User user) {
         GetFollowersRequest request = new GetFollowersRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
         request.userId = user.iduser;

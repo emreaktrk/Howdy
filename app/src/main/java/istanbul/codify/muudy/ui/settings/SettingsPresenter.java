@@ -43,6 +43,16 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.settins_contacts))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Contacts clicked");
+
+                            view.onContactsClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.settings_social_media))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(hidden -> {

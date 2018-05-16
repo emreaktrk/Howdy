@@ -86,13 +86,6 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             chart.mChart.setData(data);
             chart.mChart.invalidate();
-
-            GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setCornerRadius(SizeUtils.dp2px(5));
-            gradientDrawable.setStroke(SizeUtils.dp2px(1), holder.itemView.getContext().getResources().getColor(R.color.blue));
-            gradientDrawable.setColor(Color.WHITE);
-            chart.mButton.setBackgroundDrawable(gradientDrawable);
-
         } else if (holder instanceof StatsHolder) {
             StatsHolder stats = (StatsHolder) holder;
 

@@ -84,6 +84,9 @@ public interface ApiServices {
     @POST("getfollowers")
     Single<GetFollowersResponse> getFollowers(@Body GetFollowersRequest request);
 
+    @POST("getphonefriends")
+    Single<GetPhoneFriendsResponse> getPhoneFriends(@Body GetPhoneFriendsRequest request);
+
     @POST("getactivities")
     Single<GetActivitiesResponse> getActivities();
 

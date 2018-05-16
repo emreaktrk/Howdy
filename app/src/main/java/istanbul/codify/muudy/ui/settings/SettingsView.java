@@ -11,6 +11,8 @@ interface SettingsView extends MvpView {
 
     void onFeedbackClicked();
 
+    void onContactsClicked();
+
     void onSocialMediaClicked();
 
     void onChangePasswordClicked();

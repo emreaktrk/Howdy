@@ -20,6 +20,7 @@ import istanbul.codify.muudy.ui.notificationsettings.NotificationSettingsActivit
 import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.socialmedia.SocialMediaActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.web.WebActivity;
 
 public final class SettingsActivity extends MuudyActivity implements SettingsView {
@@ -63,6 +64,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     @Override
     public void onFeedbackClicked() {
         FeedbackActivity.start();
+    }
+
+    @Override
+    public void onContactsClicked() {
+        UsersActivity.start(UsersScreenMode.CONTACTS);
     }
 
     @Override

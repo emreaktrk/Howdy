@@ -110,6 +110,7 @@
                     android:text="Facebook Arkadaşları"/>
 
             <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settins_contacts"
                     style="@style/Text.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
