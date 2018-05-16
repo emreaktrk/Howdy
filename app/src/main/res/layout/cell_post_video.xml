@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:paddingStart="16dp"
+        android:paddingStart="8dp"
         android:paddingEnd="16dp"
         tools:context=".ui.main.MainActivity">
 
@@ -17,7 +17,7 @@
             android:layout_height="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
+            tools:src="@tools:sample/avatars"/>
 
 
     <android.support.constraint.ConstraintLayout
