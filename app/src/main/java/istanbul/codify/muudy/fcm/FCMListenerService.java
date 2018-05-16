@@ -6,18 +6,17 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
@@ -35,7 +34,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
-        Log.d("NOTIFICATONLOG",message.getData().toString());
+        Logcat.d(message.getData().toString());
+
         sendNotification(message);
     }
 
@@ -54,10 +54,11 @@ public final class FCMListenerService extends FirebaseMessagingService {
                     .post(event);
         }
 
-        if (isAppInForeground(getApplicationContext())){
-            Log.d("NOTIFICATONLOG","-app önde notification gösterilmiyor");
-        }else {
-            Log.d("NOTIFICATONLOG","-app arkada notification gösterilecek");
+        if (isAppInForeground(getApplicationContext())) {
+            Logcat.d("App is in foreground");
+        } else {
+            Logcat.d("App is in background");
+
             NotificationManager manager = getManager();
 
             Intent intent = new Intent(this, SplashActivity.class);
@@ -97,19 +98,18 @@ public final class FCMListenerService extends FirebaseMessagingService {
         }
     }
 
-    private boolean isAppInForeground(Context context)
-    {
-            ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
-            ActivityManager.getMyMemoryState(appProcessInfo);
-            if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE)
-            {
-                return true;
-            }
+    private boolean isAppInForeground(Context context) {
+        ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
+        ActivityManager.getMyMemoryState(appProcessInfo);
+        if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) {
+            return true;
+        }
 
-            KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-            // App is foreground, but screen is locked, so show notification
-            return km.inKeyguardRestrictedInputMode();
+        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        // App is foreground, but screen is locked, so show notification
+        return km.inKeyguardRestrictedInputMode();
     }
+
     private String getTitle(RemoteMessage message) {
         if (message.getNotification() == null
                 || TextUtils.isEmpty(message.getNotification().getTitle())) {

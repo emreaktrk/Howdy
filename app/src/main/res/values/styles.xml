@@ -111,6 +111,11 @@
         <item name="android:background">@drawable/button_transparent</item>
     </style>
 
+    <style name="Button.Blue.Outline">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/button_blue</item>
+    </style>
+
     <style name="Button.Transparent.Reverse">
         <item name="android:textColor">@color/orange</item>
     </style>

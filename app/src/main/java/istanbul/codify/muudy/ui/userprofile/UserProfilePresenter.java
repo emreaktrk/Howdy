@@ -6,9 +6,9 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -513,7 +513,8 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<SayHiResponse>() {
                             @Override
                             protected void success(SayHiResponse response) {
-                                Toast.makeText(getContext(), "Muudy de başarıyla yollandı!", Toast.LENGTH_SHORT).show();
+                                mView.onMuudySent();
+
                             }
 
                             @Override

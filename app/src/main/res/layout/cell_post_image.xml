@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="4dp"
-                tools:text="@tools:sample/date/ddmmyy" app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/date/ddmmyy"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="0dp"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -61,7 +62,8 @@
                 app:layout_constraintTop_toBottomOf="@id/post_date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/post_media"
-                tools:text="@sample/post.json/data/sentence" android:layout_marginEnd="4dp"
+                tools:text="@sample/post.json/data/sentence"
+                android:layout_marginEnd="4dp"
                 android:layout_marginStart="8dp"/>
 
         <istanbul.codify.muudy.view.LikeButton
@@ -93,11 +95,12 @@
                 android:drawablePadding="4dp"
                 android:gravity="center"
                 android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_chat"
+                android:drawableStart="@drawable/ic_comment"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/post_like"
                 app:layout_constraintTop_toBottomOf="@+id/post_message"
-                tools:text="@sample/post.json/comment/count" android:layout_marginTop="4dp"/>
+                tools:text="@sample/post.json/comment/count"
+                android:layout_marginTop="4dp"/>
 
         <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/post_media"
@@ -107,8 +110,11 @@
                 android:focusable="true"
                 tools:src="@tools:sample/backgrounds/scenic"
                 tools:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp" android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/post_like"/>
     </android.support.constraint.ConstraintLayout>
 

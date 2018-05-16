@@ -2,7 +2,6 @@ package istanbul.codify.muudy.ui.userprofile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +22,7 @@ import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.userprofile.more.MoreBottomSheet;
 import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
+import istanbul.codify.muudy.utils.AndroidUtils;
 import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.List;
@@ -90,6 +90,15 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         if (user != null) {
             mPresenter.sayHi(user.iduser);
         }
+    }
+
+    @Override
+    public void onMuudySent() {
+        ToastUtils.showShort("Muudy de başarıyla yollandı!");
+
+        Analytics
+                .getInstance()
+                .custom(Analytics.Events.MUUDY);
     }
 
     @Override
@@ -291,8 +300,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     public void onFacebookClicked() {
         User user = mPresenter.getUser();
         if (user != null) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com/" + user.facebooklink));
-            startActivity(browserIntent);
+            AndroidUtils.browser("http://www.facebook.com/" + user.facebooklink);
         }
     }
 
@@ -300,8 +308,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     public void onTwitterClicked() {
         User user = mPresenter.getUser();
         if (user != null) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com/" + user.twitterlink));
-            startActivity(browserIntent);
+            AndroidUtils.browser("http://www.twitter.com/" + user.twitterlink);
         }
     }
 
@@ -309,8 +316,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     public void onInstagramClicked() {
         User user = mPresenter.getUser();
         if (user != null) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/" + user.instagramlink));
-            startActivity(browserIntent);
+            AndroidUtils.browser("http://www.instagram.com/" + user.instagramlink);
         }
     }
 

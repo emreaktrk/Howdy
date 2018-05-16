@@ -4,12 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.ApiManager;
@@ -24,7 +18,6 @@ import istanbul.codify.muudy.model.ActivityStat;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.compose.ActivityAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
@@ -86,27 +79,6 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                             }));
 
             findViewById(R.id.statistic_event_word, RecyclerView.class).setAdapter(wordAdapter);
-
-       /*     List<PieEntry> entries = new ArrayList<>();
-            for (ActivityStat stat : stats) {
-                entries.add(new PieEntry(Float.valueOf(stat.percent + ""), stat.post_emoji_word));
-            }
-
-            PieDataSet set = new PieDataSet(entries, "");
-            set.setColors(ColorTemplate.JOYFUL_COLORS);
-            set.setValueTextSize(0f);
-
-            PieData data = new PieData(set);
-
-            Description description = new Description();
-            description.setText("");
-            findViewById(R.id.statistic_event_chart, PieChart.class).setDescription(description);
-
-            findViewById(R.id.statistic_event_chart, PieChart.class).getLegend().setEnabled(false);
-            findViewById(R.id.statistic_event_chart, PieChart.class).setUsePercentValues(false);
-
-            findViewById(R.id.statistic_event_chart, PieChart.class).setData(data);
-            findViewById(R.id.statistic_event_chart, PieChart.class).invalidate();*/
         }
     }
 

@@ -7,7 +7,7 @@ public final class RegisterForm {
     public CharSequence mBirthday;
     public Email mEmail;
     public CharSequence mUsername;
-    public CharSequence phone;
+    public CharSequence mPhone;
     public CharSequence mPassword;
     public CharSequence mPasswordConfirm;
 }

@@ -31,7 +31,6 @@ public class IncomingChatDecorator extends Decorator<View> {
     }
 
 
-
     @Override
     protected void decorate(View object, View object2, View object3) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) object.getLayoutParams();

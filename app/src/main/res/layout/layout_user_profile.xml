@@ -36,8 +36,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:padding="14dp"
-                android:layout_gravity="end
-"
+                android:layout_gravity="end"
                 android:src="@drawable/ic_more"/>
     </FrameLayout>
 
@@ -161,7 +160,6 @@
                                     android:text="Muudy de!"/>
                         </android.support.v7.widget.LinearLayoutCompat>
                     </ViewSwitcher>
-
 
                     <android.support.v7.widget.LinearLayoutCompat
                             android:id="@+id/user_profile_social_media"

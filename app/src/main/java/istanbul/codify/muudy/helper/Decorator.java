@@ -8,8 +8,8 @@ public abstract class Decorator<T> {
 
     protected abstract void decorate(T object);
 
-    public Decorator(T object,T object2,T object3) {
-        decorate(object,object2,object3);
+    public Decorator(T object, T object2, T object3) {
+        decorate(object, object2, object3);
     }
 
     protected abstract void decorate(T object, T object2, T object3);
