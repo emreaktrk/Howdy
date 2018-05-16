@@ -1,11 +1,25 @@
 package istanbul.codify.muudy.ui.statistic.event;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.blankj.utilcode.util.SizeUtils;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -16,11 +30,15 @@ import istanbul.codify.muudy.model.ActivityStat;
 import java.util.ArrayList;
 import java.util.List;
 
-final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapter.Holder> {
+final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<ActivityStat> mList;
     private final PublishSubject<ActivityStat> mPublish = PublishSubject.create();
     private List<ActivityStat> mFiltered;
+
+
+    private static final int TYPE_CHART= 0;
+    private static final int TYPE_STATS = 1;
 
     ActivityStatsAdapter(@Nullable List<ActivityStat> list) {
         mList = list == null ? new ArrayList<>() : list;
@@ -28,26 +46,77 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapt
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cell = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_activity_stat, parent, false);
-        return new Holder(cell);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        if (viewType == TYPE_CHART) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_statistic_event_chart, parent, false);
+            return new ChartHolder(itemView);
+        } else {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_activity_stat, parent, false);
+            return new StatsHolder(itemView);
+        }
+
+
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
-        ActivityStat stat = mFiltered.get(position);
+    public void onBindViewHolder(final RecyclerView.ViewHolder mHolder, int position) {
 
-        Picasso
-                .with(holder.itemView.getContext())
-                .load(BuildConfig.URL + stat.post_emoji)
-                .into(holder.mImage);
-        holder.mText.setText(stat.post_emoji_word);
-        holder.mPercent.setText(String.format("%.02f", stat.percent) + "%");
+        if(mHolder instanceof ChartHolder) {
+            final ChartHolder holder = (ChartHolder) mHolder;
+            List<PieEntry> entries = new ArrayList<>();
+            int postCount = 0;
+            for (ActivityStat stat : mFiltered) {
+                postCount += stat.postCount;
+                entries.add(new PieEntry(stat.percent, stat.post_emoji_word));
+            }
+
+            holder.textView.setText(postCount + " Paylaşım");
+
+            PieDataSet set = new PieDataSet(entries, "");
+            set.setColors(ColorTemplate.PASTEL_COLORS);
+            set.setSliceSpace(2);
+            set.setValueTextSize(0f);
+
+            PieData data = new PieData(set);
+            data.setValueFormatter(new PercentFormatter());
+            data.setValueTextSize(9);
+            data.setValueTextColor(Color.WHITE);
+
+            Description description = new Description();
+            description.setText("");
+            holder.chart.setDescription(description);
+
+            holder.chart.getLegend().setEnabled(true);
+            holder.chart.setUsePercentValues(true);
+
+            holder.chart.setData(data);
+            holder.chart.invalidate();
+
+            GradientDrawable gradientDrawable = new GradientDrawable();
+            gradientDrawable.setCornerRadius(SizeUtils.dp2px(5));
+            gradientDrawable.setStroke(SizeUtils.dp2px(1),holder.itemView.getContext().getResources().getColor(R.color.blue));
+            gradientDrawable.setColor(Color.WHITE);
+            holder.button.setBackgroundDrawable(gradientDrawable);
+
+        }else if(mHolder instanceof StatsHolder){
+            final StatsHolder holder = (StatsHolder) mHolder;
+
+            ActivityStat stat = mFiltered.get(position - 1);
+
+            Picasso
+                    .with(holder.itemView.getContext())
+                    .load(BuildConfig.URL + stat.post_emoji)
+                    .into(holder.mImage);
+            holder.mText.setText(stat.post_emoji_word);
+            holder.mPercent.setText(String.format("%.02f", stat.percent) + "%");
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mFiltered.size();
+        return mFiltered.size() + 1;
     }
 
     PublishSubject<ActivityStat> itemClicks() {
@@ -63,14 +132,22 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapt
         notifyDataSetChanged();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0 ) {
+            return TYPE_CHART;
+        }else{
+            return TYPE_STATS;
+        }
+    }
 
-    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class StatsHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
-        private AppCompatTextView mPercent;
+        AppCompatTextView mPercent;
 
-        Holder(View itemView) {
+        StatsHolder(View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.activity_stat_image);
@@ -82,8 +159,25 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<ActivityStatsAdapt
 
         @Override
         public void onClick(View view) {
-            ActivityStat stat = mFiltered.get(getAdapterPosition());
+            ActivityStat stat = mFiltered.get(getAdapterPosition() - 1);
             mPublish.onNext(stat);
         }
+    }
+
+    class ChartHolder extends RecyclerView.ViewHolder {
+
+        private PieChart chart;
+        private AppCompatButton button;
+        private AppCompatTextView textView;
+
+        ChartHolder(View itemView) {
+            super(itemView);
+
+            chart = itemView.findViewById(R.id.statistic_event_chart);
+            button = itemView.findViewById(R.id.statistic_event_see_all_post);
+            textView = itemView.findViewById(R.id.statistic_event_post_count);
+
+        }
+
     }
 }

@@ -87,7 +87,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
 
             findViewById(R.id.statistic_event_word, RecyclerView.class).setAdapter(wordAdapter);
 
-            List<PieEntry> entries = new ArrayList<>();
+       /*     List<PieEntry> entries = new ArrayList<>();
             for (ActivityStat stat : stats) {
                 entries.add(new PieEntry(Float.valueOf(stat.percent + ""), stat.post_emoji_word));
             }
@@ -106,7 +106,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
             findViewById(R.id.statistic_event_chart, PieChart.class).setUsePercentValues(false);
 
             findViewById(R.id.statistic_event_chart, PieChart.class).setData(data);
-            findViewById(R.id.statistic_event_chart, PieChart.class).invalidate();
+            findViewById(R.id.statistic_event_chart, PieChart.class).invalidate();*/
         }
     }
 

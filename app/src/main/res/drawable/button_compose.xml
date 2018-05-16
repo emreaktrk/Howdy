@@ -9,7 +9,7 @@
                 </shape>
             </item>
 
-            <item android:bottom="18dp" android:drawable="@drawable/ic_compose" android:left="18dp" android:right="18dp" android:top="18dp"/>
+            <item android:bottom="18dp" android:drawable="@drawable/ic_compose_new" android:left="8dp" android:right="8dp" android:top="20dp"/>
         </layer-list>
     </item>
 
@@ -22,7 +22,7 @@
                 </shape>
             </item>
 
-            <item android:bottom="18dp" android:drawable="@drawable/ic_compose" android:left="18dp" android:right="18dp" android:top="18dp"/>
+            <item android:bottom="18dp" android:drawable="@drawable/ic_compose_new" android:left="8dp" android:right="8dp" android:top="20dp"/>
         </layer-list>
     </item>
 </selector>
