@@ -70,13 +70,13 @@ public class FollowButton extends AppCompatButton implements View.OnClickListene
                 setText("Takip Et");
                 return;
             case UNFOLLOW:
-                setText("Takibi Bırak");
+                setText("Takip Ediliyor");
                 return;
             case REQUEST:
-                setText("Takip İsteği Gönder");
+                setText("İstek Gönderildi");
                 return;
             case REQUEST_CANCEL:
-                setText("Takip İsteğini İptal Et");
+                setText("Takip Et");
                 return;
             default:
                 throw new IllegalArgumentException("Not implemented");

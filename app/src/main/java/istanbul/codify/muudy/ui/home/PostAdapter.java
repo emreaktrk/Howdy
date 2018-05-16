@@ -3,11 +3,15 @@ package istanbul.codify.muudy.ui.home;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.solver.widgets.Helper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -26,6 +30,7 @@ import istanbul.codify.muudy.view.LikeButton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -94,10 +99,11 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .load(BuildConfig.URL + post.imgpath1)
                     .placeholder(R.drawable.ic_avatar)
                     .into(none.mImage);
-            Picasso
-                    .with(holder.itemView.getContext())
-                    .load(BuildConfig.URL + post.post_emoji)
-                    .into(none.mEmotion);
+
+            SpannableStringBuilder str = new SpannableStringBuilder(post.post_text);
+            str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            none.mMessage.setText(str);
+
 
             if (holder instanceof MediaHolder) {
                 MediaHolder media = (MediaHolder) holder;
@@ -107,6 +113,17 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .centerCrop()
                         .resize(180, 180)
                         .into(media.mMedia);
+            }else{
+                if (post.post_emoji != null){
+                    none.mEmotion.setVisibility(View.VISIBLE);
+                    Picasso
+                            .with(holder.itemView.getContext())
+                            .load(BuildConfig.URL + post.post_emoji)
+                            .into(none.mEmotion);
+                }else{
+                    none.mEmotion.setVisibility(View.GONE);
+
+                }
             }
         }
 

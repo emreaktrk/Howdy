@@ -17,28 +17,18 @@
             android:layout_height="48dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"/>
+            tools:src="@tools:sample/avatars" android:layout_marginTop="8dp" android:layout_marginStart="8dp"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/post_emotion"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="@id/post_image"
-            app:layout_constraintStart_toStartOf="@id/post_image"
-            app:layout_constraintTop_toBottomOf="@id/post_image"
-            tools:src="@sample/emotion.json/data/icon"/>
 
     <android.support.constraint.ConstraintLayout
             android:id="@+id/post_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:background="@drawable/background_post"
-            android:padding="8dp"
+            android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/post_image"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+    >
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/post_date"
@@ -46,8 +36,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp"
-                tools:text="@tools:sample/date/ddmmyy"/>
+                tools:text="@tools:sample/date/ddmmyy" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="4dp"/>
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/post_message"
@@ -55,14 +45,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="0dp"
-                android:paddingStart="8dp"
-                android:paddingBottom="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@id/post_date"
+                android:paddingBottom="4dp"
+                android:paddingEnd="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/post_media"
-                tools:text="@sample/post.json/data/sentence"/>
+                tools:text="@sample/post.json/data/sentence" app:layout_constraintTop_toBottomOf="@+id/post_date"
+                android:layout_marginStart="8dp"/>
 
         <istanbul.codify.muudy.view.LikeButton
                 android:id="@+id/post_like"
@@ -76,10 +64,12 @@
                 android:button="@drawable/button_like"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_media"
                 tools:checked="@sample/post.json/data/value"
                 tools:paddingStart="2dp"
-                tools:text="@sample/post.json/data/count"/>
+                tools:text="@sample/post.json/data/count"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/post_message"
+                android:layout_marginEnd="8dp"/>
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/post_comment"
@@ -91,33 +81,36 @@
                 android:textStyle="bold"
                 android:drawablePadding="4dp"
                 android:gravity="center"
-                android:layout_marginEnd="8dp"
-                android:drawableStart="@drawable/ic_comment"
+                android:drawableStart="@drawable/ic_chat"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/post_like"
-                app:layout_constraintTop_toBottomOf="@id/post_media"
-                tools:text="@sample/post.json/comment/count"/>
+                tools:text="@sample/post.json/comment/count"
+                app:layout_constraintEnd_toStartOf="@+id/post_like"
+                android:layout_marginEnd="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/post_message"
+                android:layout_marginTop="4dp"/>
 
         <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/post_media"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:clickable="true"
                 android:focusable="true"
                 tools:src="@tools:sample/backgrounds/scenic"
                 tools:scaleType="centerCrop"
                 android:foreground="@drawable/button_play"
-                app:layout_constraintTop_toTopOf="@id/post_message"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp" android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/post_like"/>
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.AppCompatImageView
-            app:layout_constraintTop_toTopOf="@id/post_image"
-            app:layout_constraintBottom_toBottomOf="@id/post_image"
-            app:layout_constraintEnd_toStartOf="@id/post_content"
             app:srcCompat="@drawable/ic_arrow"
             android:layout_width="8dp"
             android:rotation="180"
             android:scaleType="fitXY"
-            android:layout_height="12dp"/>
+
+            android:layout_height="12dp"
+            app:layout_constraintStart_toEndOf="@+id/post_image" android:layout_marginStart="12dp"
+            android:id="@+id/appCompatImageView" android:layout_marginTop="24dp"
+            app:layout_constraintTop_toTopOf="@+id/post_content"/>
 </android.support.constraint.ConstraintLayout>

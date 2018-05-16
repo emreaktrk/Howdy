@@ -35,7 +35,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/recommended_user_fullname"
-            app:layout_constraintStart_toStartOf="@id/recommended_user_fullname"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="@sample/user.json/data/username"/>
+            tools:text="@sample/user.json/data/username"
+            app:layout_constraintStart_toEndOf="@+id/recommended_user_image" android:layout_marginStart="8dp"/>
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/recommended_user_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/recommended_user_image"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="13sp"
+            app:layout_constraintTop_toBottomOf="@+id/recommended_user_username"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/white"
+            style="@style/Button"
+            android:text="+ Takip Et"
+    />
+
 </android.support.constraint.ConstraintLayout>

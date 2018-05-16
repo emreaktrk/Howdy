@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
@@ -56,24 +58,42 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Chat chat = mList.get(position);
-        if (chat.message_fromuserid == mUserId) {
-            new OutgoingChatDecorator(holder.getView());
-        } else {
-            new IncomingChatDecorator(holder.getView());
-        }
+
+
 
         if (holder instanceof TextHolder) {
             TextHolder view = (TextHolder) holder;
             view.mText.setText(chat.message_text);
+            view.mDate.setText(chat.message_humanDate);
+
+            if (chat.message_fromuserid == mUserId) {
+                new OutgoingChatDecorator(view.mRoot,view.mDate,view.mText);
+            } else {
+                new IncomingChatDecorator(view.mRoot,view.mDate,view.mText);
+            }
         } else if (holder instanceof ImageHolder) {
             ImageHolder view = (ImageHolder) holder;
 
+            if (chat.message_fromuserid == mUserId) {
+                new OutgoingChatDecorator(holder.getView());
+            } else {
+                new IncomingChatDecorator(holder.getView());
+            }
+
+            final int radius = SizeUtils.dp2px(8);
+            final int margin = 0;
+            final Transformation transformation = new RoundedCornersTransformation(radius, margin);
+            final int width = SizeUtils.dp2px(172);
             Picasso
                     .with(view.itemView.getContext())
                     .load(BuildConfig.URL + chat.message_img_path)
-                    .transform(new RoundedCornersTransformation(SizeUtils.dp2px(8), 0))
+                    .centerCrop()
+                    .resize(width,width)
+                    .transform(transformation)
                     .into(view.mImage);
         }
+
+
     }
 
     @Override
@@ -109,16 +129,21 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
         private static final int TYPE = 0;
 
         private AppCompatTextView mText;
+        private AppCompatTextView mDate;
+        private LinearLayout mRoot;
+
 
         TextHolder(View itemView) {
             super(itemView);
 
             mText = itemView.findViewById(R.id.chat_text);
+            mDate = itemView.findViewById(R.id.date_text);
+            mRoot = itemView.findViewById(R.id.chat_linear);
         }
 
         @Override
         View getView() {
-            return mText;
+            return mRoot;
         }
     }
 

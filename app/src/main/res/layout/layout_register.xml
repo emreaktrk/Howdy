@@ -64,20 +64,25 @@
                 android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputLayout
-                    style="@style/Input"
+                    style="@style/Widget.Design.TextInputLayout"
                     android:textColorHint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+
                     android:layout_weight="1"
                     android:hint="Cinsiyet">
 
                 <android.support.design.widget.TextInputEditText
                         android:id="@+id/register_gender"
                         android:textColor="@color/white"
+
                         style="@style/Input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:longClickable="false"
                         android:drawableEnd="@drawable/ic_down"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -110,7 +115,7 @@
                 android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="E-Posta">
+                android:hint="Email">
 
             <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_email"
@@ -126,7 +131,7 @@
                 android:textColorHint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Kullanici Adı">
+                android:hint="Kullanıcı Adı">
 
             <android.support.design.widget.TextInputEditText
                     android:id="@+id/register_username"
@@ -134,6 +139,22 @@
                     style="@style/Input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                style="@style/Input"
+                android:textColorHint="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefon Numarası">
+
+            <android.support.design.widget.TextInputEditText
+                    android:id="@+id/register_phone"
+                    android:textColor="@color/white"
+                    style="@style/Input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -175,7 +196,7 @@
 
     <android.support.v7.widget.AppCompatButton
             android:id="@+id/register_register"
-            style="@style/Button.Blue"
+            style="@style/Button.Orange"
             android:layout_width="260dp"
             android:layout_height="42dp"
             android:layout_marginBottom="16dp"
@@ -183,4 +204,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>

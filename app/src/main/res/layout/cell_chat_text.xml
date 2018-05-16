@@ -4,17 +4,38 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         tools:context=".ui.chat.ChatActivity">
 
-    <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/chat_text"
+    <LinearLayout
+            android:id="@+id/chat_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             tools:background="@drawable/background_chat_incoming"
-            tools:layout_margin="16dp"
-            tools:maxLength="200"
-            tools:text="@tools:sample/lorem/random"
-            tools:textColor="@color/semi_white"/>
+            android:orientation="vertical">
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                tools:maxLength="200"
+                android:text="şimdi"
+                android:textSize="12sp"
+                tools:textColor="@color/message_date"/>
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/chat_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:maxLength="200"
+                android:textSize="13sp"
+                tools:text="@tools:sample/lorem/random"
+                tools:textColor="@color/semi_white"/>
+    </LinearLayout>
 </FrameLayout>
 

@@ -43,7 +43,11 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
                 .placeholder(R.drawable.ic_avatar)
                 .into(holder.mImage);
         holder.mUsername.setText(message.otherUser.username);
-        holder.mLastMessage.setText(message.message_text);
+        if (message.message_text.equals("")) {
+            holder.mLastMessage.setText("\uD83D\uDCF7");
+        }else {
+            holder.mLastMessage.setText(message.message_text);
+        }
         holder.mDate.setText(message.message_humandate);
 
         holder.mUsername.setTypeface(holder.mUsername.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);

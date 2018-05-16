@@ -13,6 +13,7 @@
             android:scaleType="centerCrop"
             android:clickable="true"
             android:focusable="true"
+            android:layout_margin="8dp"
             tools:background="@drawable/background_chat_incoming"
             tools:src="@tools:sample/backgrounds/scenic"/>
 </FrameLayout>

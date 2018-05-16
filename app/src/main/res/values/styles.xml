@@ -5,9 +5,9 @@
         <item name="colorPrimaryDark">@color/dark_orange</item>
         <item name="colorAccent">@color/orange</item>
 
-        <item name="colorControlNormal">@color/orange</item>
-        <item name="colorControlActivated">@color/orange</item>
-        <item name="colorControlHighlight">@color/orange</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
 
         <item name="android:navigationBarColor">@color/dark_orange</item>
     </style>
@@ -92,6 +92,12 @@
     <style name="Button.Green">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/green</item>
+    </style>
+
+    <style name="Button.Profile">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/green</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="Button.Facebook">
