@@ -105,18 +105,20 @@
                                 android:gravity="center"/>
 
                         <istanbul.codify.muudy.view.NumberView
-                                android:id="@+id/user_profile_number_followed"
+                                android:id="@+id/user_profile_number_following"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"/>
 
                         <istanbul.codify.muudy.view.NumberView
-                                android:id="@+id/user_profile_number_following"
+                                android:id="@+id/user_profile_number_followed"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"/>
+
+
                     </android.support.v7.widget.LinearLayoutCompat>
 
                     <ViewSwitcher
@@ -129,7 +131,7 @@
                                 android:id="@+id/user_profile_follow"
                                 style="@style/Button.Blue"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 tools:text="Takip Et"/>
 
@@ -140,19 +142,23 @@
 
                             <android.support.v7.widget.AppCompatButton
                                     android:id="@+id/user_profile_message"
-                                    style="@style/Button.Blue"
+                                    style="@style/Button.Profile"
+                                    android:background="@drawable/button_message"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:textColor="@color/black"
                                     android:text="Mesaj Gönder"
                                     android:layout_marginEnd="8dp"/>
 
                             <android.support.v7.widget.AppCompatButton
                                     android:layout_marginStart="8dp"
                                     android:id="@+id/user_profile_muudy"
-                                    style="@style/Button.Blue"
+                                    style="@style/Button.Profile"
+                                    android:background="@drawable/button_muudy"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Muudy De"/>
+                                    android:layout_height="40dp"
+                                    android:textColor="@color/black"
+                                    android:text="Muudy de!"/>
                         </android.support.v7.widget.LinearLayoutCompat>
                     </ViewSwitcher>
 
