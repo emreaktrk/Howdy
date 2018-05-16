@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
-
 import android.widget.LinearLayout;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.helper.Decorator;
@@ -16,6 +15,7 @@ public class OutgoingChatDecorator extends Decorator<View> {
         super(object);
 
     }
+
     @Override
     protected void decorate(View object) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) object.getLayoutParams();
@@ -26,11 +26,9 @@ public class OutgoingChatDecorator extends Decorator<View> {
 
 
     public OutgoingChatDecorator(View object, View object2, View object3) {
-        super(object,object2,object3);
+        super(object, object2, object3);
 
     }
-
-
 
     @Override
     protected void decorate(View object, View object2, View object3) {
@@ -52,6 +50,4 @@ public class OutgoingChatDecorator extends Decorator<View> {
             text.setTextColor(Color.BLACK);
         }
     }
-
-
 }

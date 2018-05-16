@@ -29,7 +29,7 @@
             app:layout_constraintStart_toEndOf="@id/comment_avatar"
             app:layout_constraintTop_toTopOf="@id/comment_avatar"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="@tools:sample/lorem/random"/>
+            tools:text="@tools:sample/lorem"/>
 
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/comment_date"

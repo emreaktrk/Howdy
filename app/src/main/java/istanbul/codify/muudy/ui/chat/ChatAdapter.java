@@ -59,17 +59,15 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Chat chat = mList.get(position);
 
-
-
         if (holder instanceof TextHolder) {
             TextHolder view = (TextHolder) holder;
             view.mText.setText(chat.message_text);
             view.mDate.setText(chat.message_humanDate);
 
             if (chat.message_fromuserid == mUserId) {
-                new OutgoingChatDecorator(view.mRoot,view.mDate,view.mText);
+                new OutgoingChatDecorator(view.mRoot, view.mDate, view.mText);
             } else {
-                new IncomingChatDecorator(view.mRoot,view.mDate,view.mText);
+                new IncomingChatDecorator(view.mRoot, view.mDate, view.mText);
             }
         } else if (holder instanceof ImageHolder) {
             ImageHolder view = (ImageHolder) holder;
@@ -80,20 +78,17 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
                 new IncomingChatDecorator(holder.getView());
             }
 
-            final int radius = SizeUtils.dp2px(8);
-            final int margin = 0;
-            final Transformation transformation = new RoundedCornersTransformation(radius, margin);
-            final int width = SizeUtils.dp2px(172);
+            Transformation transformation = new RoundedCornersTransformation(SizeUtils.dp2px(8), 0);
+            int size = SizeUtils.dp2px(172);
+
             Picasso
                     .with(view.itemView.getContext())
                     .load(BuildConfig.URL + chat.message_img_path)
                     .centerCrop()
-                    .resize(width,width)
+                    .resize(size, size)
                     .transform(transformation)
                     .into(view.mImage);
         }
-
-
     }
 
     @Override

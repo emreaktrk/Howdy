@@ -81,7 +81,7 @@
                 android:textStyle="bold"
                 android:drawablePadding="4dp"
                 android:gravity="center"
-                android:drawableStart="@drawable/ic_chat"
+                android:drawableStart="@drawable/ic_comment"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="@sample/post.json/comment/count"
                 app:layout_constraintEnd_toStartOf="@+id/post_like"
