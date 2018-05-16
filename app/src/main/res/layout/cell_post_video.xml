@@ -5,10 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="16dp"
+        android:padding="8dp"
         tools:context=".ui.main.MainActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -19,7 +16,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars"/>
 
-
     <android.support.constraint.ConstraintLayout
             android:id="@+id/post_content"
             android:layout_width="0dp"
@@ -27,8 +23,8 @@
             android:background="@drawable/background_post"
             android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
-    >
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/post_arrow">
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/post_date"
@@ -36,7 +32,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="@tools:sample/date/ddmmyy" app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/date/ddmmyy"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="4dp"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -108,9 +105,10 @@
             android:layout_width="8dp"
             android:rotation="180"
             android:scaleType="fitXY"
-
             android:layout_height="12dp"
-            app:layout_constraintStart_toEndOf="@+id/post_image" android:layout_marginStart="12dp"
-            android:id="@+id/appCompatImageView" android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/post_image"
+            android:layout_marginStart="12dp"
+            android:id="@+id/post_arrow"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toTopOf="@+id/post_content"/>
 </android.support.constraint.ConstraintLayout>
