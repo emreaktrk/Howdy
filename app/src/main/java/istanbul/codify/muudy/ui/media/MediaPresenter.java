@@ -33,5 +33,27 @@ final class MediaPresenter extends BasePresenter<MediaView> {
 
                             view.onMediaTypeSelected(MediaType.CAMERA);
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.media_dialog_video))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Video clicked");
+
+                            view.onMediaTypeSelected(MediaType.VIDEO);
+                        }));
+    }
+
+    void hideGallery() {
+        findViewById(R.id.media_dialog_gallery).setVisibility(View.GONE);
+    }
+
+    void hideCamera() {
+        findViewById(R.id.media_dialog_capture).setVisibility(View.GONE);
+    }
+
+    void hideVideo() {
+        findViewById(R.id.media_dialog_video).setVisibility(View.GONE);
     }
 }

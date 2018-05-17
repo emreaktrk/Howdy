@@ -13,7 +13,10 @@ public class OutgoingChatDecorator extends Decorator<View> {
 
     public OutgoingChatDecorator(View object) {
         super(object);
+    }
 
+    public OutgoingChatDecorator(View object, View object2, View object3) {
+        super(object, object2, object3);
     }
 
     @Override
@@ -24,16 +27,8 @@ public class OutgoingChatDecorator extends Decorator<View> {
         object.setBackgroundResource(R.drawable.background_chat_outgoing);
     }
 
-
-    public OutgoingChatDecorator(View object, View object2, View object3) {
-        super(object, object2, object3);
-
-    }
-
     @Override
     protected void decorate(View object, View object2, View object3) {
-
-
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) object.getLayoutParams();
         params.gravity = Gravity.END;
 

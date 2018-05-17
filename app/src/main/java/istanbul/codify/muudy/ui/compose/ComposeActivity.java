@@ -147,17 +147,18 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
                 .newInstance()
                 .setOnCameraClickListener(() -> mPresenter.capturePhoto(ComposeActivity.this))
                 .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ComposeActivity.this))
+                .setOnVideoClickListener(() -> mPresenter.captureVideo(ComposeActivity.this))
                 .show(getSupportFragmentManager(), null);
     }
 
     @Override
     public void onPhotoSelected(Uri uri) {
-        mPresenter.bind(uri);
+        mPresenter.bindPhoto(uri);
     }
 
     @Override
-    public void onPhotoCancelClicked() {
-        mPresenter.cancelPhoto();
+    public void onMediaCancelClicked() {
+        mPresenter.cancel();
     }
 
     @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
@@ -183,6 +184,12 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         if (place != null) {
             mPresenter.addSelected(place);
             mPresenter.getWordsWithFilter();
+            return;
+        }
+
+        Uri video = mPresenter.resolveVideo(requestCode, resultCode, data);
+        if (video != null) {
+            mPresenter.bindVideo(video);
             return;
         }
     }

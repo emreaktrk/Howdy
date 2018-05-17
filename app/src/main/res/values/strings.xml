@@ -3,4 +3,7 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb227999104431873</string>
 
     <string name="app_name">Muudy</string>
+
+    <string name="compose_retry">Tekrar</string>
+    <string name="compose_ok">Tamam</string>
 </resources>

@@ -41,6 +41,6 @@ interface ComposeView extends MvpView {
 
     void onPhotoSelected(Uri uri);
 
-    void onPhotoCancelClicked();
+    void onMediaCancelClicked();
 
 }

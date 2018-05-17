@@ -3,9 +3,12 @@ package istanbul.codify.muudy.api;
 import io.reactivex.Single;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiServices {
 
@@ -62,6 +65,10 @@ public interface ApiServices {
 
     @POST("uploadimage")
     Single<UploadImageResponse> uploadImage(@Body UploadImageRequest request);
+
+    @Multipart
+    @POST("uploadvideo")
+    Call<UploadVideoResponse> uploadVideo(@Part MultipartBody.Part part);
 
     @POST("getnotifications")
     Single<GetNotificationsMeResponse> getNotificationsMe(@Body GetNotificationsMeRequest request);

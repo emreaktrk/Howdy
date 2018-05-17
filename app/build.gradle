@@ -57,6 +57,7 @@ android {
     }
     configurations.all {
         resolutionStrategy.force 'com.android.support:appcompat-v7:27.1.1'
+        resolutionStrategy.force 'com.android.support:support-v13:27.1.1'
         resolutionStrategy.force 'com.android.support:cardview-v7:27.1.1'
         resolutionStrategy.force 'com.android.support:animated-vector-drawable:27.1.1'
         resolutionStrategy.force 'com.android.support:customtabs:27.1.1'
@@ -94,6 +95,7 @@ dependencies {
     implementation 'com.binaryfork:spanny:1.0.4'
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.afollestad:material-camera:0.4.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

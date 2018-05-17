@@ -14,6 +14,7 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
 
     private OnMediaClickListener.OnGalleryClickListener mGallery;
     private OnMediaClickListener.OnCameraClickListener mCamera;
+    private OnMediaClickListener.OnVideoClickListener mVideo;
 
     public static MediaBottomSheet newInstance() {
         return new MediaBottomSheet();
@@ -29,6 +30,18 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, view);
+
+        if (mGallery == null) {
+            mPresenter.hideGallery();
+        }
+
+        if (mCamera == null) {
+            mPresenter.hideCamera();
+        }
+
+        if (mVideo == null) {
+            mPresenter.hideVideo();
+        }
     }
 
     @Override
@@ -51,6 +64,11 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
                     mGallery.onGalleryClick();
                 }
                 break;
+            case VIDEO:
+                if (mVideo != null) {
+                    mVideo.onVideoClick();
+                }
+                break;
             default:
                 throw new IllegalStateException("Not implemented");
         }
@@ -70,6 +88,12 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
         return this;
     }
 
+    public MediaBottomSheet setOnVideoClickListener(OnMediaClickListener.OnVideoClickListener listener) {
+        mVideo = listener;
+
+        return this;
+    }
+
     public interface OnMediaClickListener {
 
         interface OnGalleryClickListener {
@@ -78,6 +102,10 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
 
         interface OnCameraClickListener {
             void onCameraClick();
+        }
+
+        interface OnVideoClickListener {
+            void onVideoClick();
         }
     }
 }

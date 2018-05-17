@@ -17,7 +17,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
             android:name=".MuudyApplication"
@@ -140,6 +142,14 @@
         <activity
                 android:name=".ui.users.UsersActivity"
                 android:theme="@style/MainTheme"/>
+
+        <activity
+                android:name="com.afollestad.materialcamera.CaptureActivity"
+                android:theme="@style/MaterialCamera.CaptureActivity"/>
+
+        <activity
+                android:name="com.afollestad.materialcamera.CaptureActivity2"
+                android:theme="@style/MaterialCamera.CaptureActivity"/>
 
         <service
                 android:name=".account.AccountService"
