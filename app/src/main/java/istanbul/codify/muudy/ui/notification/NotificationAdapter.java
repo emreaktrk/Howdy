@@ -12,6 +12,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
 
 import java.util.ArrayList;
@@ -21,9 +22,16 @@ public final class NotificationAdapter extends RecyclerView.Adapter<Notification
 
     private final PublishSubject<Notification> mPublish = PublishSubject.create();
     private List<Notification> mList;
+    List<FollowRequest> mRequests;
 
     public NotificationAdapter(@Nullable List<Notification> list) {
         mList = list == null ? new ArrayList<>() : list;
+    }
+
+
+    public NotificationAdapter(@Nullable List<Notification> list, List<FollowRequest> requests) {
+        mList = list == null ? new ArrayList<>() : list;
+        mRequests = requests;
     }
 
     @NonNull

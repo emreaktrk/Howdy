@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.ResultTo;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UserMessage;
@@ -43,6 +45,25 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        handlePushNotification();
+
+    }
+
+    private void handlePushNotification(){
+
+        Intent intent = getIntent();
+        RemoteMessage message = intent.getParcelableExtra("notification");
+        NotificationActionType actionType = getNotificationActionType(message);
+
+
+        switch (actionType) {
+            case MESSAGE:
+                ChatActivity.start((long) getNotificatioItemId(message));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

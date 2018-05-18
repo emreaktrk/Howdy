@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.google.android.gms.location.LocationServices;
@@ -113,6 +114,14 @@ final class HomePresenter extends BasePresenter<HomeView> {
                 .addOnFailureListener(Logcat::e);
     }
 
+    void bind(Boolean hasMessage){
+        if (hasMessage){
+            findViewById(R.id.home_has_message_dot, AppCompatImageView.class).setVisibility(View.VISIBLE);
+        }else{
+            findViewById(R.id.home_has_message_dot, AppCompatImageView.class).setVisibility(View.GONE);
+        }
+
+    }
     void bind(Wall wall) {
         EmotionAdapter emotion = new EmotionAdapter(wall.nearEmotions);
         mDisposables.add(

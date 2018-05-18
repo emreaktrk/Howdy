@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
+import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -14,9 +15,12 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
+import istanbul.codify.muudy.model.NotificationActionType;
+import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
 import istanbul.codify.muudy.ui.home.HomeFragment;
+import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
@@ -56,7 +60,58 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
 
         mPresenter.attachView(this, this);
 
+        handlePushNotification();
+
         UpdatePushService.start();
+    }
+
+    private void handlePushNotification(){
+
+        Intent intent = getIntent();
+        PushNotification pushNotification = getSerializable(PushNotification.class);
+        String id = intent.getStringExtra("test");
+
+        if (pushNotification != null){
+            switch (pushNotification.actionType) {
+                case MESSAGE:
+                    Context context = Utils.getApp().getApplicationContext();
+
+                    Intent starter = new Intent(context, UserMessagesActivity.class);
+                    starter.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
+                    ActivityUtils.startActivity(starter);
+                    break;
+                case LIKE:
+                    break;
+                case FOLLOW:
+                    break;
+                case FOLLOW_REQUEST:
+                    break;
+                case TAG:
+                    break;
+                case COMMENT:
+                    break;
+                case SAY_HI:
+                    break;
+                case POST:
+                    break;
+                case ANSWER_HI:
+                    break;
+                case GIVE_VOTE:
+                    break;
+                case WEEK_TOP_USERS:
+                    break;
+                case GENERAL_ANNOUNCE:
+                    break;
+                case MESSAGE_READED:
+                    break;
+                case ACTIVITY_REMINDER:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
     }
 
     @Override

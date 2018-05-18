@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import com.blankj.utilcode.util.ActivityUtils;
+import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
@@ -18,9 +18,15 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
+import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
+import istanbul.codify.muudy.ui.chat.ChatActivity;
+import istanbul.codify.muudy.ui.main.MainActivity;
+import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.Serializable;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
@@ -40,62 +46,78 @@ public final class FCMListenerService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage message) {
-        NotificationEvent event = getEvent(message);
-        if (event != null) {
-            DeepLink link = event.getDeepLink();
-            if (link != null) {
-                DeepLinkManager
-                        .getInstance()
-                        .setPending(link);
-            }
 
-            EventBus
-                    .getDefault()
-                    .post(event);
-        }
-
-        if (isAppInForeground(getApplicationContext())) {
+     //   if (isAppInForeground(getApplicationContext())) {
             Logcat.d("App is in foreground");
-        } else {
+            NotificationEvent event = getEvent(message);
+            if (event != null) {
+                DeepLink link = event.getDeepLink();
+                if (link != null) {
+                    DeepLinkManager
+                            .getInstance()
+                            .setPending(link);
+                }
+
+                EventBus
+                        .getDefault()
+                        .post(event);
+
+            }
+    //    } else {
             Logcat.d("App is in background");
 
             NotificationManager manager = getManager();
 
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ChatActivity.class);
+          //  PushNotification notification = new PushNotification((long) getNotificatioItemId(message),getNotificationActionType(message));
+
+            PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message),getNotificationActionType(message));
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);/*
+            intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
+            intent.putExtra("test",getNotificatioItemId(message)+"");*/
+
+            Long userId = Long.valueOf(getNotificatioItemId(message));
+            intent.putExtra(userId.getClass().getSimpleName(), userId);
+
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
-                NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-                channel.enableLights(true);
-                channel.setLightColor(Color.parseColor("#B964EF"));
-                channel.enableVibration(true);
-                channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                channel.setShowBadge(true);
-                manager.createNotificationChannel(channel);
-            }
+            if (getNotificationActionType(message) != NotificationActionType.MESSAGE_READED) {
+                Log.d("NOTIFICATONLOG","bildirim basıldı");
 
-            Notification notification = new NotificationCompat
-                    .Builder(this, NOTIFICATION_CHANNEL_ID)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle(getTitle(message))
-                    .setContentText(getBody(message))
-                    .setAutoCancel(true)
-                    .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
-                    .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
-                    .setTicker(getString(R.string.app_name))
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentIntent(pendingIntent)
-                    .setColorized(true)
-                    .setStyle(new NotificationCompat.BigTextStyle())
-                    .setCategory("Default")
-                    .build();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
+                    NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                    channel.enableLights(true);
+                    channel.setLightColor(Color.parseColor("#B964EF"));
+                    channel.enableVibration(true);
+                    channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    channel.setShowBadge(true);
+                    manager.createNotificationChannel(channel);
 
-            if (manager != null) {
-                manager.notify(NOTIFICATION_ID, notification);
+                }
+
+                Notification notification = new NotificationCompat
+                        .Builder(this, NOTIFICATION_CHANNEL_ID)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentTitle(getTitle(message))
+                        .setContentText(getBody(message))
+                        .setAutoCancel(true)
+                        .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
+                        .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
+                        .setTicker(getString(R.string.app_name))
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setColorized(true)
+                        .setStyle(new NotificationCompat.BigTextStyle())
+                        .setCategory("Default")
+                        .build();
+
+                if (manager != null) {
+                    manager.notify(NOTIFICATION_ID, notification);
+                }
             }
-        }
+     //   }
     }
 
     private boolean isAppInForeground(Context context) {
@@ -138,6 +160,14 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
     private NotificationActionType getNotificationActionType(RemoteMessage message) {
         return NotificationActionType.value(message.getData().get("actiontype"));
+    }
+
+    private int getNotificatioItemId(RemoteMessage message) {
+        return Integer.parseInt(message.getData().get("itemid"));
+    }
+
+    private String getNotificationActionTypeAsString(RemoteMessage message) {
+        return message.getData().get("actiontype");
     }
 
     public @Nullable

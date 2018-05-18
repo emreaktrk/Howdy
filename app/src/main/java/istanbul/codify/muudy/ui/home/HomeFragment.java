@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
@@ -21,11 +23,13 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.event.PostEvent;
+import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
 import istanbul.codify.muudy.navigation.Navigator;
 import istanbul.codify.muudy.ui.around.AroundActivity;
+import istanbul.codify.muudy.ui.main.MainActivity;
 import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
@@ -75,11 +79,31 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
                 .check();
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(NotificationEvent event) {
+        if (getNotificationActionType(event.message) == NotificationActionType.MESSAGE) {
+           mPresenter.bind(true);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
         mPresenter.detachView();
+    }
+
+  /*  @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+*/
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -89,6 +113,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onMessagesClicked() {
+        mPresenter.bind(false);
         UserMessagesActivity.start();
     }
 
@@ -253,4 +278,6 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     public int getSelection() {
         return Navigation.HOME;
     }
+
+
 }
