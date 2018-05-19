@@ -5,14 +5,17 @@ import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.base.MvpView;
 
+import java.util.ArrayList;
+
 interface HomeView extends MvpView {
 
     void onSearchClicked();
 
     void onMessagesClicked();
 
-
     void onLoaded(Wall wall);
+
+    void onMoreLoaded(ArrayList<Post> posts, More more);
 
     void onError(ApiError error);
 
@@ -39,4 +42,7 @@ interface HomeView extends MvpView {
     void onPostDeleted();
 
     void onRefresh();
+
+    void onMorePage(More more);
+
 }

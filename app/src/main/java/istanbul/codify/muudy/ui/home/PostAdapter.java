@@ -3,7 +3,6 @@ package istanbul.codify.muudy.ui.home;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.solver.widgets.Helper;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -20,10 +18,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.exception.ImplementationMissingException;
 import istanbul.codify.muudy.helper.utils.InflaterUtils;
-import istanbul.codify.muudy.model.Follow;
-import istanbul.codify.muudy.model.Post;
-import istanbul.codify.muudy.model.PostMediaType;
-import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.view.LikeButton;
 
@@ -44,9 +39,11 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private PublishSubject<Post> mAvatarSubject = PublishSubject.create();
     private PublishSubject<Post> mMuudySubject = PublishSubject.create();
     private PublishSubject<Post> mDeleteSubject = PublishSubject.create();
+    private PublishSubject<More> mMoreSubject = PublishSubject.create();
     private List<Post> mPosts;
     private RecommendedUsersAdapter mUsers;
     private int mCommentVisibility = View.VISIBLE;
+    private More mMore = new More(0, true);
 
     public PostAdapter(@Nullable List<Post> posts) {
         mPosts = posts == null ? new ArrayList<>() : posts;
@@ -113,14 +110,14 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .centerCrop()
                         .resize(180, 180)
                         .into(media.mMedia);
-            }else{
-                if (post.post_emoji != null){
+            } else {
+                if (post.post_emoji != null) {
                     none.mEmotion.setVisibility(View.VISIBLE);
                     Picasso
                             .with(holder.itemView.getContext())
                             .load(BuildConfig.URL + post.post_emoji)
                             .into(none.mEmotion);
-                }else{
+                } else {
                     none.mEmotion.setVisibility(View.GONE);
 
                 }
@@ -131,6 +128,20 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             RecommendedHolder recommended = (RecommendedHolder) holder;
             recommended.mRecycler.setAdapter(mUsers);
         }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        if ((mMore != null && mMore.enable) && getItemCount() - holder.getAdapterPosition() < 5) {
+            mMoreSubject.onNext(mMore);
+            mMore = null;
+        }
+    }
+
+    public More getMore() {
+        return mMore;
     }
 
     @Override
@@ -191,6 +202,10 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mAvatarSubject;
     }
 
+    public PublishSubject<More> morePages() {
+        return mMoreSubject;
+    }
+
     public PublishSubject<Follow> followClicks() {
         if (mUsers == null) {
             return PublishSubject.create();
@@ -213,6 +228,11 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public PublishSubject<Post> deleteClicks() {
         return mDeleteSubject;
+    }
+
+    public void add(ArrayList<Post> posts, More more) {
+        mPosts.addAll(posts);
+        mMore = more;
     }
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {

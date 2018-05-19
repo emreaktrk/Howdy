@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,9 +23,12 @@ import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.More;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.Wall;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+
+import java.util.ArrayList;
 
 final class HomePresenter extends BasePresenter<HomeView> {
 
@@ -61,7 +65,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     @SuppressLint({"MissingPermission"})
-    void getWall(Context context) {
+    void getWall(Context context, @Nullable More more) {
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
@@ -86,6 +90,9 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                     .flatMap((Function<Location, SingleSource<GetWallResponse>>) point -> {
                                         GetWallRequest request = new GetWallRequest(point);
                                         request.token = AccountUtils.token(getContext());
+                                        if (more != null) {
+                                            request.page = more.page + 1;
+                                        }
 
                                         return ApiManager
                                                 .getInstance()
@@ -95,7 +102,11 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                     .subscribe(new ServiceConsumer<GetWallResponse>() {
                                         @Override
                                         protected void success(GetWallResponse response) {
-                                            mView.onLoaded(response.data);
+                                            if (more == null) {
+                                                mView.onLoaded(response.data);
+                                            } else {
+                                                mView.onMoreLoaded(response.data.posts, more);
+                                            }
 
                                             findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                                         }
@@ -209,19 +220,17 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
                             mView.onMuudyClicked(cell);
                         }));
+        mDisposables.add(
+                post
+                        .morePages()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(more -> {
+                            Logcat.v("More pages requested");
 
+                            mView.onMorePage(more);
+                        }));
 
-/// TODO: 16.05.2018 Paging eklenecek
-       /* LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        findViewById(R.id.home_post_recycler, RecyclerView.class).setLayoutManager(linearLayoutManager);*/
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
-  /*      findViewById(R.id.home_post_recycler, RecyclerView.class).setOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                    getWall(getContext());
-            }
-        });*/
-
     }
 
     void like(long postId) {
@@ -320,5 +329,14 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void add(ArrayList<Post> posts, More more) {
+        RecyclerView.Adapter adapter = findViewById(R.id.home_post_recycler, RecyclerView.class).getAdapter();
+        if (adapter instanceof PostAdapter) {
+            PostAdapter post = (PostAdapter) adapter;
+            post.add(posts, more);
+            post.notifyDataSetChanged();
+        }
     }
 }

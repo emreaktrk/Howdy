@@ -63,7 +63,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
-                            mPresenter.getWall(getContext());
+                            mPresenter.getWall(getContext(), null);
                         }
                     }
 
@@ -95,6 +95,16 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     @Override
     public void onLoaded(Wall wall) {
         mPresenter.bind(wall);
+    }
+
+    @Override
+    public void onMoreLoaded(ArrayList<Post> posts, More more) {
+        if (posts == null || posts.isEmpty()) {
+            more.enable = false;
+        }
+
+        more.page = more.page + 1;
+        mPresenter.add(posts, more);
     }
 
     @Override
@@ -221,12 +231,17 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onRefresh() {
-        mPresenter.getWall(getContext());
+        mPresenter.getWall(getContext(), null);
+    }
+
+    @Override
+    public void onMorePage(More more) {
+        mPresenter.getWall(getContext(), more);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
-        mPresenter.getWall(getContext());
+        mPresenter.getWall(getContext(), null);
 
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
         if (!around.isEmpty()) {
@@ -246,7 +261,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDeleteEvent(DeleteEvent event) {
-        mPresenter.getWall(getContext());
+        mPresenter.getWall(getContext(), null);
     }
 
     @Override
