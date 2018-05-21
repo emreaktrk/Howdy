@@ -11,10 +11,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.NotificationActionType;
-import istanbul.codify.muudy.model.ResultTo;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UserMessage;
+import istanbul.codify.muudy.fcm.FCMListenerService;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
@@ -53,16 +51,20 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
     private void handlePushNotification(){
 
         Intent intent = getIntent();
-        RemoteMessage message = intent.getParcelableExtra("notification");
-        NotificationActionType actionType = getNotificationActionType(message);
+
+        int itemId = intent.getIntExtra(FCMListenerService.NOTIFICATION_ITEMID,0);
+        NotificationActionType actionType = getNotificationActionType(intent.getIntExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,0));
+
+        if (actionType != null) {
 
 
-        switch (actionType) {
-            case MESSAGE:
-                ChatActivity.start((long) getNotificatioItemId(message));
-                break;
-            default:
-                break;
+            switch (actionType) {
+                case MESSAGE:
+                    ChatActivity.start((long) itemId);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -71,6 +73,7 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
         super.onResume();
 
         mPresenter.getMessages();
+
     }
 
     @Override

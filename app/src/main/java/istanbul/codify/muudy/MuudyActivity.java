@@ -116,7 +116,9 @@ public abstract class MuudyActivity extends AppCompatActivity {
         return NotificationActionType.value(message.getData().get("actiontype"));
     }
 
-    public int getNotificatioItemId(RemoteMessage message) {
-        return Integer.parseInt(message.getData().get("itemid"));
+
+    public NotificationActionType getNotificationActionType(int ordinal) {
+        return NotificationActionType.values()[ordinal];
     }
+
 }

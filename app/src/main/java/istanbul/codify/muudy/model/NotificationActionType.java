@@ -11,6 +11,7 @@ import istanbul.codify.muudy.model.event.notification.SayHiNotificationEvent;
 
 public enum NotificationActionType {
 
+    @SerializedName("none") NONE,
     @SerializedName("like") LIKE,
     @SerializedName("comment") COMMENT,
     @SerializedName("message") MESSAGE,

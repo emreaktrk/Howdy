@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
@@ -21,8 +23,10 @@ import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
+import istanbul.codify.muudy.ui.home.HomeFragment;
 import istanbul.codify.muudy.ui.main.MainActivity;
 import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
+import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,6 +41,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
     private static final int NOTIFICATION_ID = 876;
     private static final String NOTIFICATION_CHANNEL_ID = "612";
     private static final String NOTIFICATION_CHANNEL_NAME = "Default";
+    public static final String NOTIFICATION_ITEMID = "NOTIFICATION_ITEMID";
+    public static final String NOTIFICATION_ACTIONTYPE= "NOTIFICATION_ACTIONTYPE";
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
@@ -47,7 +53,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
     private void sendNotification(RemoteMessage message) {
 
-     //   if (isAppInForeground(getApplicationContext())) {
+        if (isAppInForeground(getApplicationContext())) {
             Logcat.d("App is in foreground");
             NotificationEvent event = getEvent(message);
             if (event != null) {
@@ -63,26 +69,24 @@ public final class FCMListenerService extends FirebaseMessagingService {
                         .post(event);
 
             }
-    //    } else {
+
+        } else {
             Logcat.d("App is in background");
 
             NotificationManager manager = getManager();
 
-            Intent intent = new Intent(this, ChatActivity.class);
-          //  PushNotification notification = new PushNotification((long) getNotificatioItemId(message),getNotificationActionType(message));
+            Intent intent = new Intent(this, MainActivity.class);
+         //   PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message), getNotificationActionType(message));
 
-            PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message),getNotificationActionType(message));
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);/*
-            intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
-            intent.putExtra("test",getNotificatioItemId(message)+"");*/
+          //  intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
+            intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID,getNotificatioItemId(message)+"");
+            intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,getNotificationActionType(message).ordinal());
 
-            Long userId = Long.valueOf(getNotificatioItemId(message));
-            intent.putExtra(userId.getClass().getSimpleName(), userId);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
             if (getNotificationActionType(message) != NotificationActionType.MESSAGE_READED) {
-                Log.d("NOTIFICATONLOG","bildirim basıldı");
+                Log.d("NOTIFICATONLOG", "bildirim basıldı");
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
                     NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -98,7 +102,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
                 Notification notification = new NotificationCompat
                         .Builder(this, NOTIFICATION_CHANNEL_ID)
                         .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
                         .setContentTitle(getTitle(message))
                         .setContentText(getBody(message))
                         .setAutoCancel(true)
@@ -117,7 +121,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
                     manager.notify(NOTIFICATION_ID, notification);
                 }
             }
-     //   }
+        }
     }
 
     private boolean isAppInForeground(Context context) {
@@ -135,8 +139,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
     private String getTitle(RemoteMessage message) {
         if (message.getNotification() == null
                 || TextUtils.isEmpty(message.getNotification().getTitle())) {
-            if (message.getData() != null && message.getData().containsKey("title")) {
-                return message.getData().get("title");
+            if (message.getData() != null && message.getData().containsKey("pushtitle")) {
+                return message.getData().get("pushtitle");
             } else {
                 return "";
             }
@@ -162,13 +166,12 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return NotificationActionType.value(message.getData().get("actiontype"));
     }
 
+
+
     private int getNotificatioItemId(RemoteMessage message) {
         return Integer.parseInt(message.getData().get("itemid"));
     }
 
-    private String getNotificationActionTypeAsString(RemoteMessage message) {
-        return message.getData().get("actiontype");
-    }
 
     public @Nullable
     NotificationEvent getEvent(RemoteMessage message) {
@@ -187,5 +190,9 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
     private NotificationManager getManager() {
         return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    public NotificationActionType getNotificationActionType(int ordinal) {
+        return NotificationActionType.values()[ordinal];
     }
 }
