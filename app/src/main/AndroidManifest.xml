@@ -73,6 +73,10 @@
                 android:theme="@style/MainTheme"/>
 
         <activity
+                android:name=".ui.posts.PostsActivity"
+                android:theme="@style/MainTheme"/>
+
+        <activity
                 android:name=".ui.profileedit.ProfileEditActivity"
                 android:theme="@style/MainTheme"/>
 

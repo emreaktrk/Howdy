@@ -1,7 +1,6 @@
 package istanbul.codify.muudy.ui.statistic.event;
 
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.blankj.utilcode.util.SizeUtils;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -30,9 +28,10 @@ import java.util.List;
 
 final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<ActivityStat> mList;
-    private final PublishSubject<ActivityStat> mPublish = PublishSubject.create();
+    private List<ActivityStat> mList;
     private List<ActivityStat> mFiltered;
+    private PublishSubject<ActivityStat> mPublish = PublishSubject.create();
+    private PublishSubject<View> mClicks = PublishSubject.create();
 
     ActivityStatsAdapter(@Nullable List<ActivityStat> list) {
         mList = list == null ? new ArrayList<>() : list;
@@ -109,6 +108,10 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mPublish;
     }
 
+    PublishSubject<View> showAllPostsClicks() {
+        return mClicks;
+    }
+
     List<ActivityStat> getWords() {
         return mList;
     }
@@ -152,7 +155,7 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    class ChartHolder extends RecyclerView.ViewHolder {
+    class ChartHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private static final int TYPE = 270;
 
@@ -167,7 +170,12 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mButton = itemView.findViewById(R.id.statistic_event_see_all_post);
             mTextView = itemView.findViewById(R.id.statistic_event_post_count);
 
+            mButton.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            mClicks.onNext(view);
+        }
     }
 }

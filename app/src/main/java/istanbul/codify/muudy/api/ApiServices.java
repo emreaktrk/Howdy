@@ -100,6 +100,9 @@ public interface ApiServices {
     @POST("getactivitystats")
     Single<GetActivityStatsResponse> getActivityStats(@Body GetActivityStatsRequest request);
 
+    @POST("getactivityposts")
+    Single<GetActivityPostsResponse> getActivityPosts(@Body GetActivityPostsRequest request);
+
     @POST("updateprofile")
     Single<UpdateProfileResponse> updateProfile(@Body UpdateProfileRequest request);
 

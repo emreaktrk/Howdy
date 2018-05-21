@@ -53,6 +53,11 @@ public final class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.
         return mPublish;
     }
 
+    public @Nullable
+    Activity getSelected() {
+        return mSelected;
+    }
+
     public void setSelected(@Nullable Activity selected) {
         mSelected = selected;
     }

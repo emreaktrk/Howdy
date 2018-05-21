@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Activity;
 import istanbul.codify.muudy.model.ActivityStat;
-import istanbul.codify.muudy.model.Word;
 import istanbul.codify.muudy.ui.base.MvpView;
 
 import java.util.List;
@@ -17,5 +16,8 @@ interface StatisticEventView extends MvpView {
 
     void onActivityClicked(Activity activity);
 
+    void onShowAllPostsClicked(Activity activity);
+
     void onActivityStatSelected(ActivityStat stat);
+
 }

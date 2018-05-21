@@ -10,6 +10,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Activity;
 import istanbul.codify.muudy.model.ActivityStat;
+import istanbul.codify.muudy.ui.posts.PostsActivity;
 
 import java.util.List;
 
@@ -51,6 +52,11 @@ public final class StatisticEventFragment extends MuudyFragment implements Stati
     public void onActivityClicked(Activity activity) {
         mPresenter.bind(activity);
         mPresenter.getStats(activity);
+    }
+
+    @Override
+    public void onShowAllPostsClicked(Activity activity) {
+        PostsActivity.start(activity);
     }
 
     @Override
