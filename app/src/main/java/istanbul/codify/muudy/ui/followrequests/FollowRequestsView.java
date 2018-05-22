@@ -1,22 +1,19 @@
-package istanbul.codify.muudy.ui.notification.me;
+package istanbul.codify.muudy.ui.followrequests;
 
 import istanbul.codify.muudy.api.pojo.response.AnswerFollowResponse;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
-import istanbul.codify.muudy.model.Notification;
 import istanbul.codify.muudy.ui.base.MvpView;
 
 import java.util.List;
 
-interface NotificationMeView extends MvpView {
-
-    void onLoaded(List<Notification> notifications, List<FollowRequest> requests);
-
-    void onRequestAcceptOrDecline(AnswerFollowResponse answerFollowResponse);
+public interface FollowRequestsView extends MvpView {
 
     void onError(ApiError error);
 
-    void onNotificationClicked(Notification notification);
+    void onBackClicked();
+
+    void onLoaded(List<FollowRequest> requests);
 
     void onFollowRequestClicked(FollowRequest request);
 
@@ -24,5 +21,5 @@ interface NotificationMeView extends MvpView {
 
     void onDeclineFollowRequestClicked(FollowRequest request);
 
-    void onSeeAllClicked(List<FollowRequest> requests);
+    void onRequestAcceptOrDecline(AnswerFollowResponse answerFollowResponse);
 }

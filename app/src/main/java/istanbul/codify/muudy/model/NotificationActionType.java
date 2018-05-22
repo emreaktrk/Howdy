@@ -5,11 +5,13 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
+import istanbul.codify.muudy.model.event.notification.MessageReadedNotificationEvent;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.model.event.notification.SayHiNotificationEvent;
 
 public enum NotificationActionType {
 
+    @SerializedName("none") NONE,
     @SerializedName("like") LIKE,
     @SerializedName("comment") COMMENT,
     @SerializedName("message") MESSAGE,
@@ -22,7 +24,8 @@ public enum NotificationActionType {
     @SerializedName("givevote") GIVE_VOTE,
     @SerializedName("tag") TAG,
     @SerializedName("generalAnnounce") GENERAL_ANNOUNCE,
-    @SerializedName("activityReminder") ACTIVITY_REMINDER;
+    @SerializedName("activityReminder") ACTIVITY_REMINDER,
+    @SerializedName("messagereaded") MESSAGE_READED;
 
     public @Nullable
     static NotificationActionType value(String value) {
@@ -39,6 +42,8 @@ public enum NotificationActionType {
                 return new MessageNotificationEvent();
             case SAY_HI:
                 return new SayHiNotificationEvent();
+            case MESSAGE_READED:
+                return new MessageReadedNotificationEvent();
             default:
                 return null;
         }

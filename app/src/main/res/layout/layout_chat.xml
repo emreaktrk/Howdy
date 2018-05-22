@@ -62,12 +62,32 @@
             android:id="@+id/chat_recycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/chat_bottom_divider"
+            app:layout_constraintBottom_toTopOf="@id/chat_message_readed_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chat_top_divider"
             app:reverseLayout="true"
             tools:listitem="@layout/cell_chat_text"/>
+    <LinearLayout
+            android:id="@+id/chat_message_readed_container"
+            android:layout_width="match_parent"
+            android:layout_height="21dp"
+            android:gravity="end"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/chat_recycler"
+            app:layout_constraintBottom_toTopOf="@+id/chat_bottom_divider"
+    >
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/chat_message_readed_text"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="#8d8d8d"
+                android:text="okundu"/>
+    </LinearLayout>
 
     <View
             android:id="@+id/chat_bottom_divider"

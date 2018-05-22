@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.account.sync.SyncListener;
+import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.SyncEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -62,6 +64,14 @@ public abstract class MuudyActivity extends AppCompatActivity {
 
         return null;
     }
+    protected final RemoteMessage getSerializableNotification(Class<RemoteMessage> clazz){
+        String key = clazz.getSimpleName();
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(key)) {
+            return clazz.cast(getIntent().getExtras().getSerializable(key));
+        }
+
+        return null;
+    }
 
     protected final long[] getLongArray() {
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(long[].class.getSimpleName())) {
@@ -100,4 +110,15 @@ public abstract class MuudyActivity extends AppCompatActivity {
             listener.onSync(me);
         }
     }
+
+    @Nullable
+    public NotificationActionType getNotificationActionType(RemoteMessage message) {
+        return NotificationActionType.value(message.getData().get("actiontype"));
+    }
+
+
+    public NotificationActionType getNotificationActionType(int ordinal) {
+        return NotificationActionType.values()[ordinal];
+    }
+
 }

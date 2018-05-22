@@ -148,6 +148,10 @@
                 android:theme="@style/MainTheme"/>
 
         <activity
+                android:name=".ui.followrequests.FollowRequestActivity"
+                android:theme="@style/MainTheme"/>
+
+        <activity
                 android:name="com.afollestad.materialcamera.CaptureActivity"
                 android:theme="@style/MaterialCamera.CaptureActivity"/>
 

@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.View;
+import android.widget.LinearLayout;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -125,6 +126,18 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                             mView.onImageClicked(cell);
                         }));
         findViewById(R.id.chat_recycler, RecyclerView.class).setAdapter(adapter);
+
+        Chat lastMessage = chats.get(0);
+        if (lastMessage.message_fromuserid == userId){
+            if(lastMessage.message_isreaded == 1){
+                findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Okundu");
+            }else{
+                findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Gönderildi");
+            }
+            findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.VISIBLE);
+        }else{
+            findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.GONE);
+        }
     }
 
     void send(String message) {

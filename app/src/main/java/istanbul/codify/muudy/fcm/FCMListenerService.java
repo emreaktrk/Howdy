@@ -10,7 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
@@ -18,9 +20,17 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
+import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
+import istanbul.codify.muudy.ui.chat.ChatActivity;
+import istanbul.codify.muudy.ui.home.HomeFragment;
+import istanbul.codify.muudy.ui.main.MainActivity;
+import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
+import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.splash.SplashActivity;
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.Serializable;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
@@ -31,6 +41,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
     private static final int NOTIFICATION_ID = 876;
     private static final String NOTIFICATION_CHANNEL_ID = "612";
     private static final String NOTIFICATION_CHANNEL_NAME = "Default";
+    public static final String NOTIFICATION_ITEMID = "NOTIFICATION_ITEMID";
+    public static final String NOTIFICATION_ACTIONTYPE= "NOTIFICATION_ACTIONTYPE";
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
@@ -40,60 +52,74 @@ public final class FCMListenerService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage message) {
-        NotificationEvent event = getEvent(message);
-        if (event != null) {
-            DeepLink link = event.getDeepLink();
-            if (link != null) {
-                DeepLinkManager
-                        .getInstance()
-                        .setPending(link);
-            }
-
-            EventBus
-                    .getDefault()
-                    .post(event);
-        }
 
         if (isAppInForeground(getApplicationContext())) {
             Logcat.d("App is in foreground");
+            NotificationEvent event = getEvent(message);
+            if (event != null) {
+                DeepLink link = event.getDeepLink();
+                if (link != null) {
+                    DeepLinkManager
+                            .getInstance()
+                            .setPending(link);
+                }
+
+                EventBus
+                        .getDefault()
+                        .post(event);
+
+            }
+
         } else {
             Logcat.d("App is in background");
 
             NotificationManager manager = getManager();
 
-            Intent intent = new Intent(this, SplashActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
+         //   PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message), getNotificationActionType(message));
+
+          //  intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
+            intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID,getNotificatioItemId(message)+"");
+            intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,getNotificationActionType(message).ordinal());
+
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
-                NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-                channel.enableLights(true);
-                channel.setLightColor(Color.parseColor("#B964EF"));
-                channel.enableVibration(true);
-                channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-                channel.setShowBadge(true);
-                manager.createNotificationChannel(channel);
-            }
+            if (getNotificationActionType(message) != NotificationActionType.MESSAGE_READED) {
+                Log.d("NOTIFICATONLOG", "bildirim basıldı");
 
-            Notification notification = new NotificationCompat
-                    .Builder(this, NOTIFICATION_CHANNEL_ID)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle(getTitle(message))
-                    .setContentText(getBody(message))
-                    .setAutoCancel(true)
-                    .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
-                    .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
-                    .setTicker(getString(R.string.app_name))
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentIntent(pendingIntent)
-                    .setColorized(true)
-                    .setStyle(new NotificationCompat.BigTextStyle())
-                    .setCategory("Default")
-                    .build();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
+                    NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                    channel.enableLights(true);
+                    channel.setLightColor(Color.parseColor("#B964EF"));
+                    channel.enableVibration(true);
+                    channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                    channel.setShowBadge(true);
+                    manager.createNotificationChannel(channel);
 
-            if (manager != null) {
-                manager.notify(NOTIFICATION_ID, notification);
+                }
+
+                Notification notification = new NotificationCompat
+                        .Builder(this, NOTIFICATION_CHANNEL_ID)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle(getTitle(message))
+                        .setContentText(getBody(message))
+                        .setAutoCancel(true)
+                        .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
+                        .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
+                        .setTicker(getString(R.string.app_name))
+                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        .setContentIntent(pendingIntent)
+                        .setDefaults(Notification.DEFAULT_SOUND)
+                        .setColorized(true)
+                        .setStyle(new NotificationCompat.BigTextStyle())
+                        .setCategory("Default")
+                        .build();
+
+                if (manager != null) {
+                    manager.notify(NOTIFICATION_ID, notification);
+                }
             }
         }
     }
@@ -113,8 +139,8 @@ public final class FCMListenerService extends FirebaseMessagingService {
     private String getTitle(RemoteMessage message) {
         if (message.getNotification() == null
                 || TextUtils.isEmpty(message.getNotification().getTitle())) {
-            if (message.getData() != null && message.getData().containsKey("title")) {
-                return message.getData().get("title");
+            if (message.getData() != null && message.getData().containsKey("pushtitle")) {
+                return message.getData().get("pushtitle");
             } else {
                 return "";
             }
@@ -140,6 +166,13 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return NotificationActionType.value(message.getData().get("actiontype"));
     }
 
+
+
+    private int getNotificatioItemId(RemoteMessage message) {
+        return Integer.parseInt(message.getData().get("itemid"));
+    }
+
+
     public @Nullable
     NotificationEvent getEvent(RemoteMessage message) {
         NotificationActionType type = getNotificationActionType(message);
@@ -157,5 +190,9 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
     private NotificationManager getManager() {
         return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    public NotificationActionType getNotificationActionType(int ordinal) {
+        return NotificationActionType.values()[ordinal];
     }
 }

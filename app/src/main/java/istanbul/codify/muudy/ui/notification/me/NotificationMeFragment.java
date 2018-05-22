@@ -7,9 +7,12 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.api.pojo.response.AnswerFollowResponse;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
+import istanbul.codify.muudy.model.UserProfile;
+import istanbul.codify.muudy.ui.followrequests.FollowRequestActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
@@ -29,8 +32,8 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPresenter.attachView(this, this);
-        mPresenter.getNotifications();
+        /*mPresenter.attachView(this, this);
+        mPresenter.getNotifications();*/
     }
 
     @Override
@@ -41,8 +44,21 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        mPresenter.attachView(this, this);
+        mPresenter.getNotifications();
+    }
+
+    @Override
     public void onLoaded(List<Notification> notifications, List<FollowRequest> requests) {
         mPresenter.bind(notifications, requests);
+    }
+
+    @Override
+    public void onRequestAcceptOrDecline(AnswerFollowResponse answerFollowResponse) {
+        mPresenter.getNotifications();
     }
 
     @Override
@@ -78,4 +94,25 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 return;
         }
     }
+
+    @Override
+    public void onFollowRequestClicked(FollowRequest request) {
+        UserProfileActivity.start(request.user);
+    }
+
+    @Override
+    public void onAcceptFollowRequestClicked(FollowRequest request) {
+        mPresenter.acceptFollowRequest(request);
+    }
+
+    @Override
+    public void onDeclineFollowRequestClicked(FollowRequest request) {
+        mPresenter.declineFollowRequest(request);
+    }
+
+    @Override
+    public void onSeeAllClicked(List<FollowRequest> requests) {
+        FollowRequestActivity.start(requests);
+    }
+
 }

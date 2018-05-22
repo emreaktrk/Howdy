@@ -11,5 +11,6 @@ public final class Notification {
     public long notification_postid;
     public String notification_answerhi_word_text;
     public String notification_answerhi_word_img;
+    public String humanDate;
     public User fromUser;
 }
