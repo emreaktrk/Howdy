@@ -7,24 +7,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
-import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.FCMListenerService;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
 import istanbul.codify.muudy.model.NotificationActionType;
-import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
 import istanbul.codify.muudy.ui.home.HomeFragment;
 import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
-import istanbul.codify.muudy.ui.response.ResponseActivity;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
 
 
@@ -66,21 +62,21 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         UpdatePushService.start();
     }
 
-    private void handlePushNotification(){
+    private void handlePushNotification() {
 
         Intent intent = getIntent();
 
-        int itemId = intent.getIntExtra(FCMListenerService.NOTIFICATION_ITEMID,0);
-        NotificationActionType actionType = getNotificationActionType(intent.getIntExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,0));
+        int itemId = intent.getIntExtra(FCMListenerService.NOTIFICATION_ITEMID, 0);
+        NotificationActionType actionType = getNotificationActionType(intent.getIntExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE, 0));
 
-        if (actionType != null){
+        if (actionType != null) {
             switch (actionType) {
                 case MESSAGE:
                     Context context = Utils.getApp().getApplicationContext();
 
                     Intent starter = new Intent(context, UserMessagesActivity.class);
-                    starter.putExtra(FCMListenerService.NOTIFICATION_ITEMID,itemId);
-                    starter.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,actionType.ordinal());
+                    starter.putExtra(FCMListenerService.NOTIFICATION_ITEMID, itemId);
+                    starter.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE, actionType.ordinal());
                     ActivityUtils.startActivity(starter);
                     break;
                 case LIKE:
@@ -141,7 +137,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                     break;
             }
         }
-
     }
 
     @Override
@@ -153,7 +148,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                 .getPending();
 
         if (pending != null) {
-            pending.navigate();
+            pending.navigate(this);
         }
     }
 

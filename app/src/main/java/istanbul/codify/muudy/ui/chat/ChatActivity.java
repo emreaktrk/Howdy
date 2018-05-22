@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
@@ -20,7 +19,6 @@ import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
-import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import org.greenrobot.eventbus.Subscribe;
@@ -71,8 +69,6 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
             mPresenter.getUser(userId);
         }
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -136,7 +132,7 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(NotificationEvent event) {
+    public void onMessageEvent(MessageNotificationEvent event) {
         User user = getSerializable(User.class);
         if (getNotificationActionType(event.message) == NotificationActionType.MESSAGE) {
             if (user != null) {
@@ -149,7 +145,7 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
             if (userId != null) {
                 mPresenter.getUser(userId);
             }
-        }else if (getNotificationActionType(event.message) == NotificationActionType.MESSAGE_READED) {
+        } else if (getNotificationActionType(event.message) == NotificationActionType.MESSAGE_READED) {
             if (user != null) {
                 mPresenter.bind(user);
                 mPresenter.getMessages(user.iduser);
@@ -171,5 +167,14 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    public Long getUserId() {
+        User user = getSerializable(User.class);
+        if (user != null) {
+            return user.iduser;
+        }
+
+        return getSerializable(Long.class);
     }
 }

@@ -11,8 +11,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.Utils;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.R;
@@ -20,17 +18,9 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
-import istanbul.codify.muudy.model.PushNotification;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
-import istanbul.codify.muudy.ui.chat.ChatActivity;
-import istanbul.codify.muudy.ui.home.HomeFragment;
 import istanbul.codify.muudy.ui.main.MainActivity;
-import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
-import istanbul.codify.muudy.ui.notification.NotificationFragment;
-import istanbul.codify.muudy.ui.splash.SplashActivity;
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.Serializable;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
@@ -38,11 +28,11 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 
 public final class FCMListenerService extends FirebaseMessagingService {
 
-    private static final int NOTIFICATION_ID = 876;
-    private static final String NOTIFICATION_CHANNEL_ID = "612";
-    private static final String NOTIFICATION_CHANNEL_NAME = "Default";
     public static final String NOTIFICATION_ITEMID = "NOTIFICATION_ITEMID";
-    public static final String NOTIFICATION_ACTIONTYPE= "NOTIFICATION_ACTIONTYPE";
+    public static final String NOTIFICATION_ACTIONTYPE = "NOTIFICATION_ACTIONTYPE";
+    private static final String NOTIFICATION_CHANNEL_ID = "612";
+    private static final int NOTIFICATION_ID = 876;
+    private static final String NOTIFICATION_CHANNEL_NAME = "Default";
 
     @Override
     public void onMessageReceived(RemoteMessage message) {
@@ -52,7 +42,6 @@ public final class FCMListenerService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage message) {
-
         if (isAppInForeground(getApplicationContext())) {
             Logcat.d("App is in foreground");
             NotificationEvent event = getEvent(message);
@@ -67,20 +56,18 @@ public final class FCMListenerService extends FirebaseMessagingService {
                 EventBus
                         .getDefault()
                         .post(event);
-
             }
-
         } else {
             Logcat.d("App is in background");
 
             NotificationManager manager = getManager();
 
             Intent intent = new Intent(this, MainActivity.class);
-         //   PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message), getNotificationActionType(message));
+            //   PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message), getNotificationActionType(message));
 
-          //  intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
-            intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID,getNotificatioItemId(message)+"");
-            intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,getNotificationActionType(message).ordinal());
+            //  intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
+            intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID, getNotificationItemId(message));
+            intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE, getNotificationActionType(message).ordinal());
 
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -166,12 +153,9 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return NotificationActionType.value(message.getData().get("actiontype"));
     }
 
-
-
-    private int getNotificatioItemId(RemoteMessage message) {
-        return Integer.parseInt(message.getData().get("itemid"));
+    private String getNotificationItemId(RemoteMessage message) {
+        return message.getData().get("itemid");
     }
-
 
     public @Nullable
     NotificationEvent getEvent(RemoteMessage message) {

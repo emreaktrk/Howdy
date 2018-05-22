@@ -10,4 +10,12 @@ public final class MessageNotificationEvent extends NotificationEvent {
     public DeepLink getDeepLink() {
         return null;
     }
+
+    public Long getUserId() {
+        if (message != null) {
+            return Long.parseLong(message.getData().get("itemid"));
+        }
+
+        return null;
+    }
 }

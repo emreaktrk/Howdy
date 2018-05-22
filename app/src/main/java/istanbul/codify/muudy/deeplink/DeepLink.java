@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.firebase.messaging.RemoteMessage;
+import istanbul.codify.muudy.ui.main.MainActivity;
 
 import java.io.Serializable;
 
@@ -15,9 +16,10 @@ public abstract class DeepLink implements Serializable {
         this.message = message;
     }
 
-    public abstract void navigate();
+    public abstract void navigate(MainActivity activity);
 
-    final @Nullable Long getItemId() {
+    final @Nullable
+    Long getItemId() {
         String itemId = message.getData().get("itemid");
         return TextUtils.isEmpty(itemId) ? null : Long.valueOf(itemId);
     }

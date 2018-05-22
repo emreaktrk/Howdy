@@ -2,7 +2,10 @@ package istanbul.codify.muudy.ui.notification;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.*;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +22,18 @@ import java.util.List;
 
 public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final int HEADER_COUNT = 2;
     private final PublishSubject<Notification> mPublish = PublishSubject.create();
     private final PublishSubject<FollowRequest> mPublishFollowRequest = PublishSubject.create();
     private final PublishSubject<FollowRequest> mPublishAcceptFollowRequest = PublishSubject.create();
     private final PublishSubject<FollowRequest> mPublishDeclineFollowRequest = PublishSubject.create();
     private final PublishSubject<List<FollowRequest>> mPublishSeeAllRequests = PublishSubject.create();
-
-    private List<Notification> mList;
     List<FollowRequest> mRequests;
-
-    private static final int HEADER_COUNT = 2;
+    private List<Notification> mList;
 
     public NotificationAdapter(@Nullable List<Notification> list) {
         mList = list == null ? new ArrayList<>() : list;
     }
-
 
     public NotificationAdapter(@Nullable List<Notification> list, List<FollowRequest> requests) {
         mList = list == null ? new ArrayList<>() : list;
@@ -67,7 +67,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
         if (mHolder instanceof FollowRequestHeaderHolder) {
             FollowRequest request = mRequests.get(getItemPosition(position));
             FollowRequestHeaderHolder holder = (FollowRequestHeaderHolder) mHolder;
-            holder.mText.setText("Takip İstekleri ("+mRequests.size()+")");
+            holder.mText.setText("Takip İstekleri (" + mRequests.size() + ")");
 
             holder.mButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,7 +75,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
                     mPublishSeeAllRequests.onNext(mRequests);
                 }
             });
-        }else if (mHolder instanceof FollowRequestHolder){
+        } else if (mHolder instanceof FollowRequestHolder) {
             FollowRequest request = mRequests.get(getItemPosition(position));
             FollowRequestHolder holder = (FollowRequestHolder) mHolder;
 
@@ -102,13 +102,12 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
             });
 
 
-
-        }else if (mHolder instanceof NotificationHeaderHolder){
+        } else if (mHolder instanceof NotificationHeaderHolder) {
             Notification notification = mList.get(getItemPosition(position));
             NotificationHeaderHolder holder = (NotificationHeaderHolder) mHolder;
 
             holder.mText.setText("Bildirimler");
-        }else if (mHolder instanceof NotificationHolder){
+        } else if (mHolder instanceof NotificationHolder) {
             Notification notification = mList.get(getItemPosition(position));
             NotificationHolder holder = (NotificationHolder) mHolder;
 
@@ -125,11 +124,11 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        if(mRequests.size() >= 2){
+        if (mRequests.size() >= 2) {
             return mList.size() + NotificationAdapter.HEADER_COUNT + 2;
-        }else if(mRequests.size() == 1) {
+        } else if (mRequests.size() == 1) {
             return mList.size() + NotificationAdapter.HEADER_COUNT + 1;
-        }else{
+        } else {
             return mList.size();
         }
 
@@ -137,54 +136,54 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemViewType(int position) {
-        if(mRequests.size() >= 2){
+        if (mRequests.size() >= 2) {
             if (position == 0) {
                 return NotificationAdapter.FollowRequestHeaderHolder.TYPE;
-            }else if(position == 1 || position == 2){
+            } else if (position == 1 || position == 2) {
                 return NotificationAdapter.FollowRequestHolder.TYPE;
-            }else if (position == 3) {
+            } else if (position == 3) {
                 return NotificationAdapter.NotificationHeaderHolder.TYPE;
-            }else {
+            } else {
                 return NotificationAdapter.NotificationHolder.TYPE;
             }
-        }else if(mRequests.size() == 1) {
+        } else if (mRequests.size() == 1) {
             if (position == 0) {
                 return NotificationAdapter.FollowRequestHeaderHolder.TYPE;
-            }else if(position == 1){
+            } else if (position == 1) {
                 return NotificationAdapter.FollowRequestHolder.TYPE;
-            }else if (position == 2) {
+            } else if (position == 2) {
                 return NotificationAdapter.NotificationHeaderHolder.TYPE;
-            }else {
+            } else {
                 return NotificationAdapter.NotificationHolder.TYPE;
             }
-        }else{
+        } else {
             return NotificationHolder.TYPE;
         }
 
     }
 
-    public int getItemPosition(int position){
-        if(mRequests.size() >= 2){
+    public int getItemPosition(int position) {
+        if (mRequests.size() >= 2) {
             if (position == 0) {
                 return 0;
-            }else if(position == 1 || position == 2){
+            } else if (position == 1 || position == 2) {
                 return position - 1;
-            }else if (position == 3) {
-                return  0;
-            }else {
+            } else if (position == 3) {
+                return 0;
+            } else {
                 return position - 4;
             }
-        }else if(mRequests.size() == 1) {
+        } else if (mRequests.size() == 1) {
             if (position == 0) {
                 return 0;
-            }else if(position == 1){
+            } else if (position == 1) {
                 return 0;
-            }else if (position == 2) {
+            } else if (position == 2) {
                 return 0;
-            }else {
+            } else {
                 return position - 3;
             }
-        }else{
+        } else {
             return position;
         }
     }
@@ -196,12 +195,15 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
     public PublishSubject<FollowRequest> followRequestClicks() {
         return mPublishFollowRequest;
     }
+
     public PublishSubject<FollowRequest> acceptFollowRequestClicks() {
         return mPublishAcceptFollowRequest;
     }
+
     public PublishSubject<FollowRequest> declineFollowRequestClicks() {
         return mPublishDeclineFollowRequest;
     }
+
     public PublishSubject<List<FollowRequest>> seeAllRequestsClick() {
         return mPublishSeeAllRequests;
     }
