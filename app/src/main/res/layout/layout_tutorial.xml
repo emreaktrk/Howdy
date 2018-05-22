@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.auth.AuthActivity"
+        android:gravity="center"
+        android:padding="16dp"
+        android:orientation="vertical"
+        tools:background="@drawable/image_background">
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Toolbar"
+            android:id="@+id/tutorial_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginBottom="16dp"
+            tools:text="Duygu Haritası"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            style="@style/Text.Normal"
+            android:id="@+id/tutorial_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+            tools:text="Dizi, film, kitap, oyun gibi başlıklarından yapacağın paylaşımlarda, 2 saat sonra gelecek bildirimle puanlamanı yap ve seni takip edenleri durumdan haberdar et!"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

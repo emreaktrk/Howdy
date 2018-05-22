@@ -1,11 +1,11 @@
 package istanbul.codify.muudy.ui.landing;
 
+import android.support.v4.view.ViewPager;
 import android.view.View;
-
+import com.jakewharton.rxbinding2.view.RxView;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import com.jakewharton.rxbinding2.view.RxView;
 
 final class LandingPresenter extends BasePresenter<LandingView> {
 
@@ -28,5 +28,8 @@ final class LandingPresenter extends BasePresenter<LandingView> {
                             Logcat.v("Register clicked");
                             view.onRegisterClicked();
                         }));
+
+        ViewPager pager = findViewById(R.id.landing_pager, ViewPager.class);
+        pager.setAdapter(view.create());
     }
 }

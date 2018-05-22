@@ -187,17 +187,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
             awards.add(user.award3Text);
         }
 
-        if (StringUtils.isEmpty(user.facebooklink)) {
-            findViewById(R.id.profile_facebook).setVisibility(View.GONE);
-        }
-
-        if (StringUtils.isEmpty(user.twitterlink)) {
-            findViewById(R.id.profile_twitter).setVisibility(View.GONE);
-        }
-
-        if (StringUtils.isEmpty(user.instagramlink)) {
-            findViewById(R.id.profile_instagram).setVisibility(View.GONE);
-        }
+        findViewById(R.id.profile_facebook).setVisibility(StringUtils.isEmpty(user.facebooklink) ? View.GONE : View.VISIBLE);
+        findViewById(R.id.profile_twitter).setVisibility(StringUtils.isEmpty(user.twitterlink) ? View.GONE : View.VISIBLE);
+        findViewById(R.id.profile_instagram).setVisibility(StringUtils.isEmpty(user.instagramlink) ? View.GONE : View.VISIBLE);
 
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < awards.size(); i++) {

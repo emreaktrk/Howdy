@@ -54,7 +54,7 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .skip(1)
                         .subscribe(word -> {
-                            Logcat.v("User searched : " + findViewById(R.id.search_search, AppCompatEditText.class).getText().toString());
+                            Logcat.v("User searched : " + findViewById(R.id.users_search, AppCompatEditText.class).getText().toString());
 
                             view.onUserSearched(word.toString());
                         }));
@@ -168,18 +168,16 @@ final class UsersPresenter extends BasePresenter<UsersView> {
         Cursor contacts = activity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         ArrayList<String> phones = new ArrayList<>();
 
-        if (contacts == null) {
-            return phones;
+        if (contacts != null && contacts.moveToFirst()) {
+            int columnIndex = contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+            while (contacts.moveToNext()) {
+                String number = contacts.getString(columnIndex);
+                phones.add(number);
+            }
+
+            contacts.close();
         }
-
-        int columnIndex = contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-        while (contacts.moveToNext()) {
-            String number = contacts.getString(columnIndex);
-            phones.add(number);
-        }
-
-        contacts.close();
 
         return phones;
     }

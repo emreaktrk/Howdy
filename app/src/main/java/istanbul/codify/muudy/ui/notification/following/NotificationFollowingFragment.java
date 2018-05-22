@@ -9,7 +9,8 @@ import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.NotificationFollowing;
-import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.ui.posts.PostsActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 
 import java.util.List;
 
@@ -51,7 +52,10 @@ public final class NotificationFollowingFragment extends MuudyFragment implement
     public void onNotificationFollowingClicked(NotificationFollowing notification) {
         switch (notification.notification_actiontype) {
             case FOLLOW:
-                UserProfileActivity.start(notification.notification_fromuserid);
+                UsersActivity.start(notification.followedUsers);
+                return;
+            case LIKE:
+                PostsActivity.start(notification.likedPosts);
                 return;
         }
     }

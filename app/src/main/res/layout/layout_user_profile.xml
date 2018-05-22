@@ -164,7 +164,7 @@
                     <android.support.v7.widget.LinearLayoutCompat
                             android:id="@+id/user_profile_social_media"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_margin="8dp">
 

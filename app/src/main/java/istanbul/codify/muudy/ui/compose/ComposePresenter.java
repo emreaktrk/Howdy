@@ -247,9 +247,13 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void bindPhoto(@Nullable Uri photo) {
         mPhoto = photo;
 
+        View picture = findViewById(R.id.compose_picture);
+
         Picasso
                 .with(getContext())
                 .load(mPhoto)
+                .resize(picture.getWidth(), picture.getHeight())
+                .centerCrop()
                 .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
 
         findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);

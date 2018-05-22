@@ -44,16 +44,22 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
                 .into(holder.mImage);
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);
-        switch (user.isfollowing) {
-            case FOLLOWING:
-                holder.mFollow.setState(FollowButton.State.UNFOLLOW);
-                break;
-            case NOT_FOLLOWING:
-                holder.mFollow.setState(FollowButton.State.FOLLOW);
-                break;
-            case REQUEST_SENT:
-                holder.mFollow.setState(FollowButton.State.REQUEST_CANCEL);
-                break;
+
+        if (user.isfollowing != null) {
+            holder.mFollow.setVisibility(View.VISIBLE);
+            switch (user.isfollowing) {
+                case FOLLOWING:
+                    holder.mFollow.setState(FollowButton.State.UNFOLLOW);
+                    break;
+                case NOT_FOLLOWING:
+                    holder.mFollow.setState(FollowButton.State.FOLLOW);
+                    break;
+                case REQUEST_SENT:
+                    holder.mFollow.setState(FollowButton.State.REQUEST_CANCEL);
+                    break;
+            }
+        } else {
+            holder.mFollow.setVisibility(View.GONE);
         }
     }
 

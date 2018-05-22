@@ -83,7 +83,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                             .showAllPostsClicks()
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(view -> {
-                                Logcat.v("Activity stat clicked");
+                                Logcat.v("Show all posts clicked");
 
                                 RecyclerView.Adapter adapter = findViewById(R.id.statistic_event_activity, RecyclerView.class).getAdapter();
                                 if (adapter instanceof ActivityAdapter) {
@@ -97,10 +97,17 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
             findViewById(R.id.statistic_event_word, RecyclerView.class).setAdapter(wordAdapter);
         }
     }
+
     void bind(Activity activity) {
         ActivityAdapter adapter = (ActivityAdapter) findViewById(R.id.statistic_event_activity, RecyclerView.class).getAdapter();
         adapter.setSelected(activity);
         adapter.notifyDataSetChanged();
+    }
+
+    @Nullable
+    Activity getSelectedActvity() {
+        ActivityAdapter adapter = (ActivityAdapter) findViewById(R.id.statistic_event_activity, RecyclerView.class).getAdapter();
+        return adapter.getSelected();
     }
 
     void bind(ActivityStat stat) {

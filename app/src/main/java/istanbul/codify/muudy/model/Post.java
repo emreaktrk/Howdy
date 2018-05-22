@@ -18,7 +18,6 @@ public final class Post implements Serializable {
     public long post_activityid;
     public double post_longitude;
     public double post_latitude;
-    public ArrayList<Word> post_words_json;
     public int post_likecount;
     public String post_emoji;
     public String post_emoji_word;

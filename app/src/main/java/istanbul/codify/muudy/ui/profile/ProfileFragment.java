@@ -26,6 +26,7 @@ import istanbul.codify.muudy.ui.settings.SettingsActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
+import istanbul.codify.muudy.utils.AndroidUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -188,17 +189,20 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
     @Override
     public void onFacebookClicked() {
-
+        User me = AccountUtils.me(getContext());
+        AndroidUtils.browser("http://www.facebook.com/" + me.facebooklink);
     }
 
     @Override
     public void onTwitterClicked() {
-
+        User me = AccountUtils.me(getContext());
+        AndroidUtils.browser("http://www.twitter.com/" + me.twitterlink);
     }
 
     @Override
     public void onInstagramClicked() {
-
+        User me = AccountUtils.me(getContext());
+        AndroidUtils.browser("http://www.instagram.com/" + me.instagramlink);
     }
 
     @Override

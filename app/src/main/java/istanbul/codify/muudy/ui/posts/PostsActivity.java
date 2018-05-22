@@ -26,6 +26,7 @@ import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class PostsActivity extends MuudyActivity implements PostsView {
@@ -40,12 +41,31 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull Activity activity, @Nullable String word) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, PostsActivity.class);
+        starter.putExtra(activity.getClass().getSimpleName(), activity);
+        if (word != null) {
+            starter.putExtra(word.getClass().getSimpleName(), word);
+        }
+        ActivityUtils.startActivity(starter);
+    }
+
+    public static void start(@NonNull ArrayList<Post> posts) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, PostsActivity.class);
+        starter.putExtra(posts.getClass().getSimpleName(), posts);
+        ActivityUtils.startActivity(starter);
+    }
 
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_posts;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +73,16 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
         mPresenter.attachView(this, this);
 
         Activity activity = getSerializable(Activity.class);
+        String word = getSerializable(String.class);
+        ArrayList<Post> posts = getSerializable(ArrayList.class);
         if (activity != null) {
-            mPresenter.getPosts(activity);
+            mPresenter.getPosts(activity, word);
+            return;
+        }
+
+        if (posts != null) {
+            mPresenter.bind(posts);
+            mPresenter.setTitle("Begenilen Paylasimlar");
         }
     }
 

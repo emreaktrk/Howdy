@@ -61,6 +61,9 @@ public final class StatisticEventFragment extends MuudyFragment implements Stati
 
     @Override
     public void onActivityStatSelected(ActivityStat stat) {
-        mPresenter.bind(stat);
+        Activity activity = mPresenter.getSelectedActvity();
+        if (activity != null) {
+            PostsActivity.start(activity, stat.post_emoji_word);
+        }
     }
 }

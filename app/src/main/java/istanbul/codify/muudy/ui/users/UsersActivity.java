@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -17,6 +18,7 @@ import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.view.FollowButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class UsersActivity extends MuudyActivity implements UsersView {
@@ -43,6 +45,15 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull ArrayList<User> users) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UsersActivity.class);
+        starter.putExtra(String.class.getSimpleName(), UsersScreenMode.USERS);
+        starter.putExtra(ArrayList.class.getSimpleName(), users);
+        ActivityUtils.startActivity(starter);
+    }
+
     public static void start(@NonNull @UsersScreenMode String mode) {
         Context context = Utils.getApp().getApplicationContext();
 
@@ -56,6 +67,7 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         return R.layout.layout_users;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +99,10 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
                     Emotion emotion = getSerializable(Emotion.class);
                     mPresenter.aroundUsers(emotion);
                     return;
+                case UsersScreenMode.USERS:
+                    ArrayList<User> users = getSerializable(ArrayList.class);
+                    mPresenter.bind(users);
+                    return;
                 default:
                     throw new IllegalArgumentException("Not implemented");
             }
@@ -107,7 +123,7 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
 
     @Override
     public void onUserClicked(User user) {
-        UserProfileActivity.start(user);
+        UserProfileActivity.start(user.iduser);
     }
 
     @Override
@@ -126,16 +142,24 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
                         .custom(Analytics.Events.FOLLOW);
                 return;
             case UNFOLLOW:
-                mPresenter.unfollow(follow.mUser);
-                if (follow.mUser.isprofilehidden == ProfileVisibility.VISIBLE) {
-                    follow.mCompound.setState(FollowButton.State.FOLLOW);
-                } else {
-                    follow.mCompound.setState(FollowButton.State.REQUEST);
-                }
+                new AlertDialog
+                        .Builder(this)
+                        .setMessage("Takip Etme?")
+                        .setPositiveButton("Evet", (dialogInterface, which) -> {
+                            mPresenter.unfollow(follow.mUser);
+                            if (follow.mUser.isprofilehidden == ProfileVisibility.VISIBLE) {
+                                follow.mCompound.setState(FollowButton.State.FOLLOW);
+                            } else {
+                                follow.mCompound.setState(FollowButton.State.REQUEST);
+                            }
 
-                Analytics
-                        .getInstance()
-                        .custom(Analytics.Events.UNFOLLOW);
+                            Analytics
+                                    .getInstance()
+                                    .custom(Analytics.Events.UNFOLLOW);
+                        })
+                        .setNegativeButton("Hayir", (dialog, which) -> dialog.dismiss())
+                        .create()
+                        .show();
                 return;
             case REQUEST:
                 mPresenter.requestFollow(follow.mUser);

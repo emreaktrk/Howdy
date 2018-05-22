@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
@@ -13,6 +14,8 @@ import istanbul.codify.muudy.ui.auth.AuthActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
 
 public final class SplashActivity extends MuudyActivity {
+
+    private static final int DURATION = 3000;
 
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();
@@ -30,11 +33,14 @@ public final class SplashActivity extends MuudyActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (AccountUtils.has(this)) {
-            MainActivity.start();
-        } else {
-            AuthActivity.start();
-        }
+        new Handler()
+                .postDelayed(() -> {
+                    if (AccountUtils.has(SplashActivity.this)) {
+                        MainActivity.start();
+                    } else {
+                        AuthActivity.start();
+                    }
+                }, DURATION);
     }
 
     @Override

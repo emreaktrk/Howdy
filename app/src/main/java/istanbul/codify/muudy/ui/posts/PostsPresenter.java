@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.posts;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,9 +38,12 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                         }));
     }
 
-    void getPosts(Activity activity) {
+    void getPosts(@NonNull Activity activity, @Nullable String word) {
         findViewById(R.id.posts_title, AppCompatTextView.class).setText(activity.activities_title);
         GetActivityPostsRequest request = new GetActivityPostsRequest(activity.idactivities);
+        if (word != null) {
+            request.word = word;
+        }
 
         mDisposables.add(
                 ApiManager
@@ -243,5 +248,9 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void setTitle(String title) {
+        findViewById(R.id.posts_title, AppCompatTextView.class).setText(title);
     }
 }
