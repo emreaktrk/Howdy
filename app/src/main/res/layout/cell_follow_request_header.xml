@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+    >
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/follow_request_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Takip İstekleri"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_alignParentStart="true"
+                android:gravity="center_vertical"
+                android:layout_toStartOf="@+id/follow_request_see_all_button"
+                android:layout_margin="8dp"
+        />
+
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/follow_request_see_all_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                style="@style/ButtonSeeAll"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/transparent"
+                android:text="Tümünü Gör"
+            />
+
+    </RelativeLayout>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/black"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

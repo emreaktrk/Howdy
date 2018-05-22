@@ -20,6 +20,7 @@
     <color name="star_green">#4caf50</color>
     <color name="message_background">#1e86ee</color>
     <color name="message_background_outgoing">#ededed</color>
+    <color name="date_color">#a8a8a8</color>
     <color name="transparent">#00ffffff</color>
 
 

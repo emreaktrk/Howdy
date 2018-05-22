@@ -2,8 +2,7 @@ package istanbul.codify.muudy.ui.notification;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,11 @@ import java.util.List;
 public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final PublishSubject<Notification> mPublish = PublishSubject.create();
+    private final PublishSubject<FollowRequest> mPublishFollowRequest = PublishSubject.create();
+    private final PublishSubject<FollowRequest> mPublishAcceptFollowRequest = PublishSubject.create();
+    private final PublishSubject<FollowRequest> mPublishDeclineFollowRequest = PublishSubject.create();
+    private final PublishSubject<List<FollowRequest>> mPublishSeeAllRequests = PublishSubject.create();
+
     private List<Notification> mList;
     List<FollowRequest> mRequests;
 
@@ -43,13 +47,13 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
         switch (viewType) {
             case NotificationAdapter.FollowRequestHeaderHolder.TYPE:
                 return new NotificationAdapter.FollowRequestHeaderHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_statistic_event_chart, parent, false));
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_follow_request_header, parent, false));
             case NotificationAdapter.FollowRequestHolder.TYPE:
                 return new NotificationAdapter.FollowRequestHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_activity_stat, parent, false));
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_follow_request, parent, false));
             case NotificationAdapter.NotificationHeaderHolder.TYPE:
                 return new NotificationAdapter.NotificationHeaderHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_activity_stat, parent, false));
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_notification_header, parent, false));
             case NotificationAdapter.NotificationHolder.TYPE:
                 return new NotificationAdapter.NotificationHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_notification, parent, false));
@@ -61,16 +65,55 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder mHolder, int position) {
         if (mHolder instanceof FollowRequestHeaderHolder) {
+            FollowRequest request = mRequests.get(getItemPosition(position));
+            FollowRequestHeaderHolder holder = (FollowRequestHeaderHolder) mHolder;
+            holder.mText.setText("Takip İstekleri ("+mRequests.size()+")");
 
+            holder.mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPublishSeeAllRequests.onNext(mRequests);
+                }
+            });
         }else if (mHolder instanceof FollowRequestHolder){
+            FollowRequest request = mRequests.get(getItemPosition(position));
+            FollowRequestHolder holder = (FollowRequestHolder) mHolder;
+
+            holder.mText.setText(request.msg);
+            holder.mDate.setText(request.humanDate);
+            Picasso
+                    .with(holder.itemView.getContext())
+                    .load(request.user == null ? null : BuildConfig.URL + request.user.imgpath1)
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .into(holder.mImage);
+
+            holder.accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPublishAcceptFollowRequest.onNext(request);
+                }
+            });
+
+            holder.decline.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPublishDeclineFollowRequest.onNext(request);
+                }
+            });
+
+
 
         }else if (mHolder instanceof NotificationHeaderHolder){
+            Notification notification = mList.get(getItemPosition(position));
+            NotificationHeaderHolder holder = (NotificationHeaderHolder) mHolder;
 
+            holder.mText.setText("Bildirimler");
         }else if (mHolder instanceof NotificationHolder){
-            Notification notification = mList.get(getPosition(position));
+            Notification notification = mList.get(getItemPosition(position));
             NotificationHolder holder = (NotificationHolder) mHolder;
 
             holder.mText.setText(notification.notification_msg);
+            holder.mDate.setText(notification.humanDate);
             Picasso
                     .with(holder.itemView.getContext())
                     .load(notification.fromUser == null ? null : BuildConfig.URL + notification.fromUser.imgpath1)
@@ -120,7 +163,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
     }
 
-    private int getPosition(int position){
+    public int getItemPosition(int position){
         if(mRequests.size() >= 2){
             if (position == 0) {
                 return 0;
@@ -146,8 +189,21 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-    public PublishSubject<Notification> itemClicks() {
+    public PublishSubject<Notification> notificationClicks() {
         return mPublish;
+    }
+
+    public PublishSubject<FollowRequest> followRequestClicks() {
+        return mPublishFollowRequest;
+    }
+    public PublishSubject<FollowRequest> acceptFollowRequestClicks() {
+        return mPublishAcceptFollowRequest;
+    }
+    public PublishSubject<FollowRequest> declineFollowRequestClicks() {
+        return mPublishDeclineFollowRequest;
+    }
+    public PublishSubject<List<FollowRequest>> seeAllRequestsClick() {
+        return mPublishSeeAllRequests;
     }
 
     class NotificationHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -156,12 +212,14 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
+        private AppCompatTextView mDate;
 
         NotificationHolder(View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.notification_image);
             mText = itemView.findViewById(R.id.notification_text);
+            mDate = itemView.findViewById(R.id.notification_date);
 
             itemView.setOnClickListener(this);
         }
@@ -180,66 +238,58 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
+        private AppCompatTextView mDate;
+        private AppCompatImageView accept;
+        private AppCompatImageView decline;
 
         FollowRequestHolder(View itemView) {
             super(itemView);
 
-            mImage = itemView.findViewById(R.id.notification_image);
-            mText = itemView.findViewById(R.id.notification_text);
+            mImage = itemView.findViewById(R.id.follow_request_image);
+            mText = itemView.findViewById(R.id.follow_request_text);
+            mDate = itemView.findViewById(R.id.follow_request_date);
+            accept = itemView.findViewById(R.id.follow_request_accept);
+            decline = itemView.findViewById(R.id.follow_request_decline);
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            Notification notification = mList.get(getAdapterPosition());
-            mPublish.onNext(notification);
+
+            FollowRequest request = mRequests.get(getItemPosition(getAdapterPosition()));
+            mPublishFollowRequest.onNext(request);
         }
     }
 
-    class FollowRequestHeaderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class FollowRequestHeaderHolder extends RecyclerView.ViewHolder {
 
         private static final int TYPE = 273;
 
-        private CircleImageView mImage;
+        private AppCompatButton mButton;
         private AppCompatTextView mText;
 
         FollowRequestHeaderHolder(View itemView) {
             super(itemView);
 
-            mImage = itemView.findViewById(R.id.notification_image);
-            mText = itemView.findViewById(R.id.notification_text);
+            mButton = itemView.findViewById(R.id.follow_request_see_all_button);
+            mText = itemView.findViewById(R.id.follow_request_header_text);
 
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            Notification notification = mList.get(getAdapterPosition());
-            mPublish.onNext(notification);
-        }
     }
 
-    class NotificationHeaderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class NotificationHeaderHolder extends RecyclerView.ViewHolder {
 
         private static final int TYPE = 274;
 
-        private CircleImageView mImage;
         private AppCompatTextView mText;
 
         NotificationHeaderHolder(View itemView) {
             super(itemView);
 
-            mImage = itemView.findViewById(R.id.notification_image);
-            mText = itemView.findViewById(R.id.notification_text);
+            mText = itemView.findViewById(R.id.notification_header_text);
 
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            Notification notification = mList.get(getAdapterPosition());
-            mPublish.onNext(notification);
         }
     }
 }

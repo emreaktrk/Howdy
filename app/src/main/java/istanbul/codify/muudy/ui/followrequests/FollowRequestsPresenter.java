@@ -1,6 +1,12 @@
-package istanbul.codify.muudy.ui.notification.me;
+package istanbul.codify.muudy.ui.followrequests;
 
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import com.jakewharton.rxbinding2.view.RxView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -13,14 +19,29 @@ import istanbul.codify.muudy.api.pojo.response.GetNotificationsMeResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.FollowResponse;
-import istanbul.codify.muudy.model.Notification;
 import istanbul.codify.muudy.ui.base.BasePresenter;
-import istanbul.codify.muudy.ui.notification.NotificationAdapter;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 
-final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
+public class FollowRequestsPresenter extends BasePresenter<FollowRequestsView> {
+    @Override
+    public void attachView(FollowRequestsView view, View root) {
+        super.attachView(view, root);
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.follow_request_back))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Back clicked");
+                            view.onBackClicked();
+                        }));
+
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
+        findViewById(R.id.follow_request_recycler, RecyclerView.class).addItemDecoration(divider);
+        findViewById(R.id.follow_request_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
+    }
 
     void getNotifications() {
         GetNotificationsMeRequest request = new GetNotificationsMeRequest();
@@ -34,7 +55,7 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         .subscribe(new ServiceConsumer<GetNotificationsMeResponse>() {
                             @Override
                             protected void success(GetNotificationsMeResponse response) {
-                                mView.onLoaded(response.data.userNotifications, response.data.followRequests);
+                                mView.onLoaded(response.data.followRequests);
                             }
 
                             @Override
@@ -46,16 +67,10 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         }));
     }
 
-    void bind(List<Notification> notifications, List<FollowRequest> requests) {
-        NotificationAdapter adapter = new NotificationAdapter(notifications,requests);
-        mDisposables.add(
-                adapter
-                        .notificationClicks()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(cell -> {
-                            Logcat.v("Notification clicked");
-                            mView.onNotificationClicked(cell);
-                        }));
+    void bind(List<FollowRequest> requests) {
+        FollowRequestAdapter adapter = new FollowRequestAdapter(requests);
+
+
         mDisposables.add(
                 adapter
                         .followRequestClicks()
@@ -80,20 +95,8 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                             mView.onDeclineFollowRequestClicked(cell);
                         }));
 
-        mDisposables.add(
-                adapter
-                        .seeAllRequestsClick()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(cell -> {
-                            mView.onSeeAllClicked(cell);
-                        }));
-
-
-        
-
-        findViewById(R.id.notification_me_notification_recycler, RecyclerView.class).setAdapter(adapter);
+        findViewById(R.id.follow_request_recycler, RecyclerView.class).setAdapter(adapter);
     }
-
 
     void acceptFollowRequest(FollowRequest followRequest){
         AnswerFollowRequest request = new AnswerFollowRequest();
@@ -108,7 +111,11 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         .subscribe(new ServiceConsumer<AnswerFollowResponse>() {
                             @Override
                             protected void success(AnswerFollowResponse response) {
-                                mView.onRequestAcceptOrDecline(response);
+                                if(response.data.r.toString().equals("OK")) {
+                                    mView.onRequestAcceptOrDecline(response);
+                                }else{
+                                    mView.onError(new ApiError(response.errMes));
+                                }
                             }
 
                             @Override
@@ -133,7 +140,11 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         .subscribe(new ServiceConsumer<AnswerFollowResponse>() {
                             @Override
                             protected void success(AnswerFollowResponse response) {
-                                mView.onRequestAcceptOrDecline(response);
+                                if(response.data.r.toString().equals("OK")) {
+                                    mView.onRequestAcceptOrDecline(response);
+                                }else{
+                                    mView.onError(new ApiError(response.errMes));
+                                }
                             }
 
                             @Override

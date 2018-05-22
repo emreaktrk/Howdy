@@ -140,6 +140,10 @@
                 android:name=".ui.users.UsersActivity"
                 android:theme="@style/MainTheme"/>
 
+        <activity
+                android:name=".ui.followrequests.FollowRequestActivity"
+                android:theme="@style/MainTheme"/>
+
         <service
                 android:name=".account.AccountService"
                 android:exported="false">
