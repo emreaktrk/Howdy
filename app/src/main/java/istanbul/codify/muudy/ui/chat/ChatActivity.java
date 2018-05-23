@@ -14,6 +14,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.Result;
@@ -68,6 +70,10 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
         if (userId != null) {
             mPresenter.getUser(userId);
         }
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(MessageLink.class);
     }
 
     @Override

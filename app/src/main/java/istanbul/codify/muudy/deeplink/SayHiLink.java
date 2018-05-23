@@ -2,7 +2,7 @@ package istanbul.codify.muudy.deeplink;
 
 import android.support.annotation.NonNull;
 import com.google.firebase.messaging.RemoteMessage;
-import istanbul.codify.muudy.ui.main.MainActivity;
+import android.app.Activity;
 
 public final class SayHiLink extends DeepLink {
 
@@ -11,8 +11,9 @@ public final class SayHiLink extends DeepLink {
     }
 
     @Override
-    public void navigate(MainActivity activity) {
+    public void navigate(Activity activity) {
         // TODO Get user from remote message
         // TODO Start Response activity
+
     }
 }

@@ -27,7 +27,7 @@ import istanbul.codify.muudy.ui.statistic.StatisticFragment;
 public final class MainActivity extends MuudyActivity implements MainView, Navigation.IController {
 
     private MainPresenter mPresenter = new MainPresenter();
-    private Pool<Fragment> mPool = new Pool<Fragment>() {
+    public Pool<Fragment> mPool = new Pool<Fragment>() {
         @Override
         protected Fragment supply(Class<? extends Fragment> clazz) throws Exception {
             return clazz.newInstance();

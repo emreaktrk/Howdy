@@ -106,6 +106,12 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
                 .Builder(this)
                 .setMessage("Çıkış yapmak istediğinize emin misiniz?")
                 .setPositiveButton("Evet", (dialogInterface, which) -> {
+                    AccountUtils.logout(this, future -> {
+                        if (future) {
+                            SplashActivity.start();
+                            ActivityUtils.finishOtherActivities(SplashActivity.class);
+                        }
+                    });
                     mPresenter.logout();
 
                     Analytics
@@ -120,12 +126,12 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     @Override
     public void onLogout(ApiResult result) {
         if (result.r == Result.OK) {
-            AccountUtils.logout(this, future -> {
+            /*AccountUtils.logout(this, future -> {
                 if (future) {
                     SplashActivity.start();
                     ActivityUtils.finishOtherActivities(SplashActivity.class);
                 }
-            });
+            });*/
         }
     }
 

@@ -46,12 +46,6 @@ public final class FCMListenerService extends FirebaseMessagingService {
             Logcat.d("App is in foreground");
             NotificationEvent event = getEvent(message);
             if (event != null) {
-                DeepLink link = event.getDeepLink();
-                if (link != null) {
-                    DeepLinkManager
-                            .getInstance()
-                            .setPending(link);
-                }
 
                 EventBus
                         .getDefault()
@@ -63,11 +57,21 @@ public final class FCMListenerService extends FirebaseMessagingService {
             NotificationManager manager = getManager();
 
             Intent intent = new Intent(this, MainActivity.class);
+
+            NotificationEvent event = getEvent(message);
+            if (event != null) {
+                DeepLink link = event.getDeepLink();
+                if (link != null) {
+                    DeepLinkManager
+                            .getInstance()
+                            .setPending(link);
+                }
+            }
             //   PushNotification pushNotification = new PushNotification((long) getNotificatioItemId(message), getNotificationActionType(message));
 
             //  intent.putExtra(pushNotification.getClass().getSimpleName(),pushNotification);
-            intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID, getNotificationItemId(message));
-            intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE, getNotificationActionType(message).ordinal());
+        //    intent.putExtra(FCMListenerService.NOTIFICATION_ITEMID, getNotificationItemId(message));
+        //    intent.putExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE, getNotificationActionType(message).ordinal());
 
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);

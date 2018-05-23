@@ -13,6 +13,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
@@ -67,6 +69,10 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         if (user != null) {
             mPresenter.bind(user);
         }
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(MessageLink.class);
     }
 
     @Override

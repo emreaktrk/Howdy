@@ -4,10 +4,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
-import istanbul.codify.muudy.model.event.notification.MessageReadedNotificationEvent;
-import istanbul.codify.muudy.model.event.notification.NotificationEvent;
-import istanbul.codify.muudy.model.event.notification.SayHiNotificationEvent;
+import istanbul.codify.muudy.model.event.notification.*;
 
 public enum NotificationActionType {
 
@@ -44,6 +41,35 @@ public enum NotificationActionType {
                 return new SayHiNotificationEvent();
             case MESSAGE_READED:
                 return new MessageReadedNotificationEvent();
+            case COMMENT:
+                return new PostDetailEvent();
+            case POST:
+                return new PostDetailEvent();
+            case LIKE:
+                return new PostDetailEvent();
+            case TAG:
+                return new PostDetailEvent();
+            case GENERAL_ANNOUNCE:
+                return new GeneralNotificationEvent();
+            case FOLLOW_REQUEST:
+                return new GeneralNotificationEvent();
+            case FOLLOW:
+                return new FollowEvent();
+            case ACTIVITY_REMINDER:
+                //TODO
+                return null;
+            case ANSWER_HI:
+                //TODO
+                return null;
+            case WEEK_TOP_USERS:
+                //TODO
+                return null;
+            case GIVE_VOTE:
+                //TODO
+                return null;
+            case NONE:
+                //TODO
+                return null;
             default:
                 return null;
         }
