@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.users;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.location.Location;
 import android.provider.ContactsContract;
@@ -165,18 +166,31 @@ final class UsersPresenter extends BasePresenter<UsersView> {
     }
 
     private ArrayList<String> getPhoneBook(Activity activity) {
-        Cursor contacts = activity.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         ArrayList<String> phones = new ArrayList<>();
 
-        if (contacts != null && contacts.moveToFirst()) {
-            int columnIndex = contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+        ContentResolver resolver = activity.getContentResolver();
+        Cursor cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
 
-            while (contacts.moveToNext()) {
-                String number = contacts.getString(columnIndex);
-                phones.add(number);
+        if ((cursor != null ? cursor.getCount() : 0) > 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+                if (cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
+                    Cursor query = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
+                    while (query != null && query.moveToNext()) {
+                        String phone = query.getString(query.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        phones.add(phone);
+                    }
+
+                    if (query != null && !query.isClosed()) {
+                        query.close();
+                    }
+                }
             }
-
-            contacts.close();
+        }
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
         }
 
         return phones;
