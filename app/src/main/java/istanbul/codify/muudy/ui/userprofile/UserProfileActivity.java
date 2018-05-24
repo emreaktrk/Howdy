@@ -14,6 +14,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.FollowLink;
 import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
@@ -72,7 +73,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
         DeepLinkManager
                 .getInstance()
-                .nullifyIf(MessageLink.class);
+                .nullifyIf(FollowLink.class);
     }
 
     @Override

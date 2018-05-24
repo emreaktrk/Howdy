@@ -7,6 +7,7 @@ import android.view.View;
 
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.GeneralNotificationLink;
 import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
@@ -37,7 +38,7 @@ public final class NotificationFragment extends NavigationFragment implements No
 
         DeepLinkManager
                 .getInstance()
-                .nullifyIf(MessageLink.class);
+                .nullifyIf(GeneralNotificationLink.class);
     }
 
     @Override

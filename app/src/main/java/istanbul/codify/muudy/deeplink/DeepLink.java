@@ -23,4 +23,9 @@ public abstract class DeepLink implements Serializable {
         String itemId = message.getData().get("itemid");
         return TextUtils.isEmpty(itemId) ? null : Long.valueOf(itemId);
     }
+    final @Nullable
+    String getNotificationMessage() {
+        String notificationMessage = message.getData().get("pushtitle");
+        return notificationMessage;
+    }
 }

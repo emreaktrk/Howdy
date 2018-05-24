@@ -12,6 +12,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
 import istanbul.codify.muudy.model.UserProfile;
+import istanbul.codify.muudy.ui.WeeklyTopUser.WeeklyTopUsersActivity;
 import istanbul.codify.muudy.ui.followrequests.FollowRequestActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
@@ -90,6 +91,8 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
             case TAG:
                 PostDetailActivity.start(notification.notification_postid);
                 return;
+            case WEEK_TOP_USERS:
+                WeeklyTopUsersActivity.start();
             default:
                 return;
         }

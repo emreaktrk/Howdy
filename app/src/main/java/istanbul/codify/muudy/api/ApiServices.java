@@ -168,4 +168,10 @@ public interface ApiServices {
 
     @POST("deletesendnotificationonpost")
     Single<DeleteSendNotificationOnPostResponse> deleteSendNotificationOnPost(@Body DeleteSendNotificationOnPostRequest request);
+
+    @POST("givepoint")
+    Single<GivePointResponse> givePoint(@Body GivePointRequest request);
+
+    @POST("getweeklytopusers")
+    Single<WeeklyTopsUsersResponse> getWeeklyTopUsers(@Body WeeklyTopUsersRequest request);
 }

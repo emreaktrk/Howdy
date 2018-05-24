@@ -36,21 +36,19 @@ public enum NotificationActionType {
     public NotificationEvent getEvent() {
         switch (this) {
             case MESSAGE:
-                return new MessageNotificationEvent();
+             //   return new MessageNotificationEvent();
+                return new GivePointEvent();
             case SAY_HI:
                 return new SayHiNotificationEvent();
             case MESSAGE_READED:
                 return new MessageReadedNotificationEvent();
             case COMMENT:
-                return new PostDetailEvent();
             case POST:
-                return new PostDetailEvent();
             case LIKE:
-                return new PostDetailEvent();
             case TAG:
                 return new PostDetailEvent();
+
             case GENERAL_ANNOUNCE:
-                return new GeneralNotificationEvent();
             case FOLLOW_REQUEST:
                 return new GeneralNotificationEvent();
             case FOLLOW:
@@ -66,7 +64,7 @@ public enum NotificationActionType {
                 return null;
             case GIVE_VOTE:
                 //TODO
-                return null;
+                return new GivePointEvent();
             case NONE:
                 //TODO
                 return null;

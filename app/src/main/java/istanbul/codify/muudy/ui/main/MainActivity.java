@@ -15,6 +15,7 @@ import istanbul.codify.muudy.fcm.FCMListenerService;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
 import istanbul.codify.muudy.model.NotificationActionType;
+import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
 import istanbul.codify.muudy.ui.home.HomeFragment;
@@ -22,6 +23,8 @@ import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 public final class MainActivity extends MuudyActivity implements MainView, Navigation.IController {
@@ -150,6 +153,11 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         if (pending != null) {
             pending.navigate(this);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ProfileEvent event) {
+        //TODO bildirimler tabına nokta ekle
     }
 
     @Override
