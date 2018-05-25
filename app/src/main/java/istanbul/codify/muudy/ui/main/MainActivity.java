@@ -60,7 +60,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
 
         mPresenter.attachView(this, this);
 
-        handlePushNotification();
+       // handlePushNotification();
 
         UpdatePushService.start();
     }
@@ -158,6 +158,8 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ProfileEvent event) {
         //TODO bildirimler tabına nokta ekle
+        mPresenter.showNotificationBadge();
+
     }
 
     @Override
@@ -236,6 +238,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                 return;
             case Navigation.NOTIFICATION:
                 onHomeClicked(false);
+                mPresenter.hideNotificationBadge();
                 return;
             case Navigation.PROFILE:
                 onProfileClicked(false);

@@ -47,6 +47,8 @@
         android:layout_height="48dp"
         android:layout_weight="1"/>
 
+    <RelativeLayout android:layout_width="48dp" android:layout_height="48dp">
+
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/navigation_notification"
         style="@style/Button.Transparent"
@@ -54,6 +56,14 @@
         android:layout_height="48dp"
         android:src="@drawable/button_notification"/>
 
+    <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/navigation_notification_dot"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_dot"/>
+    </RelativeLayout>
     <Space
         android:layout_width="0dp"
         android:layout_height="48dp"

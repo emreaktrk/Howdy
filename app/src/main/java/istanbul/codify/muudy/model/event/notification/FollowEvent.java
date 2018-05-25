@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.FollowLink;
 
-public class FollowEvent extends NotificationEvent {
+public class FollowEvent extends ProfileEvent {
 
     @Nullable
     @Override

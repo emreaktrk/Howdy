@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.GivePointLink;
 
-public class GivePointEvent extends NotificationEvent {
+public class GivePointEvent extends ProfileEvent {
 
     @Nullable
     @Override

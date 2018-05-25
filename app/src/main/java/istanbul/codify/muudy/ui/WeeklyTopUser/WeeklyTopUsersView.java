@@ -14,4 +14,6 @@ public interface WeeklyTopUsersView extends MvpView {
     void onLoaded(ArrayList<WeeklyTopUser> weeklyTopUsers);
 
     void onUserPhotoClicked(User user);
+
+    void onCloseClick();
 }

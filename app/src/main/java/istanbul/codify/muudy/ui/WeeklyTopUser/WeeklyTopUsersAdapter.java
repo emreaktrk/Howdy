@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,12 @@ public class WeeklyTopUsersAdapter extends  RecyclerView.Adapter<WeeklyTopUsersA
         WeeklyTopUser weeklyTopUser = mList.get(position);
 
         holder.mText.setText(weeklyTopUser.award.awards_top_user_text_for_other_users);
+
+        String awardText = weeklyTopUser.user.username + ", " + weeklyTopUser.award.awards_top_user_text_for_other_users;
+
+        SpannableStringBuilder str = new SpannableStringBuilder(awardText);
+        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, weeklyTopUser.user.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.mText.setText(str);
 
         Picasso
                 .with(holder.userPhoto.getContext())

@@ -64,7 +64,8 @@ public class GiveVoteDialog extends MuudyDialog implements GiveVoteView {
 
     @Override
     public void onPointGiven(GivePointResponse response) {
-        if (response.data.r.toString().equals("ok")) {
+
+        if (response.data.equals("ok")) {
             dismiss();
         }
 

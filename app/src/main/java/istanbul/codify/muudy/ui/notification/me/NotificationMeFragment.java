@@ -14,6 +14,7 @@ import istanbul.codify.muudy.model.Notification;
 import istanbul.codify.muudy.model.UserProfile;
 import istanbul.codify.muudy.ui.WeeklyTopUser.WeeklyTopUsersActivity;
 import istanbul.codify.muudy.ui.followrequests.FollowRequestActivity;
+import istanbul.codify.muudy.ui.givevote.GiveVoteDialog;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
@@ -86,7 +87,7 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case GIVE_VOTE:
-                // TODO Rating Popup
+                GiveVoteDialog.newInstance(notification.notification_msg,notification.notification_postid).show(getFragmentManager(),null);
                 return;
             case TAG:
                 PostDetailActivity.start(notification.notification_postid);

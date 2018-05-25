@@ -2,11 +2,9 @@ package istanbul.codify.muudy.ui.WeeklyTopUser;
 
 import android.support.annotation.MainThread;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.view.View;
+import com.jakewharton.rxbinding2.view.RxView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -45,6 +43,15 @@ public class WeeklyTopUsersPresenter extends BasePresenter<WeeklyTopUsersView> {
                         }));*/
         findViewById(R.id.weekly_top_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
 
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.weekly_top_close))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Back clicked");
+
+                            view.onCloseClick();
+                        }));
 
     }
 

@@ -9,6 +9,8 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.WeeklyTopLink;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.WeeklyTopUser;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
@@ -35,7 +37,7 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-        //getWindow().setBackgroundDrawable();
+    //    getWindow().setBackgroundDrawable(null);
         //TODO arkaplan ekle
     }
 
@@ -44,9 +46,10 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
         super.onCreate(savedInstanceState);
         mPresenter.attachView(this,this);
         mPresenter.getWeeklyTopUsers();
-          /*   DeepLinkManager
+
+        DeepLinkManager
                 .getInstance()
-                .nullifyIf(GivePointLink.class);*/
+                .nullifyIf(WeeklyTopLink.class);
     }
 
     @Override
@@ -68,5 +71,10 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
     @Override
     public void onUserPhotoClicked(User user) {
         UserProfileActivity.start(user.iduser);
+    }
+
+    @Override
+    public void onCloseClick() {
+        onBackPressed();
     }
 }
