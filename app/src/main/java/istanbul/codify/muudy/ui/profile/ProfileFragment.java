@@ -88,7 +88,7 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
     @Override
     public void onTopsClicked() {
-        //TODO Show tops in list
+        mPresenter.tops();
     }
 
     @Override
