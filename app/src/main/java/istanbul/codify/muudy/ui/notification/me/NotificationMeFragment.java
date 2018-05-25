@@ -78,7 +78,7 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case SAY_HI:
-                ResponseActivity.start(notification.fromUser);
+                ResponseActivity.start(notification);
                 return;
             case ANSWER_HI:
                 // TODO Navigate to response without selection.
@@ -117,6 +117,11 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
     @Override
     public void onSeeAllClicked(List<FollowRequest> requests) {
         FollowRequestActivity.start(requests);
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.getNotifications();
     }
 
 }

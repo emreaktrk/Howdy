@@ -19,6 +19,7 @@ import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
+import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.ui.main.MainActivity;
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,7 +48,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
             NotificationEvent event = getEvent(message);
             if (event != null) {
 
-                EventBus
+                              EventBus
                         .getDefault()
                         .post(event);
             }

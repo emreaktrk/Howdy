@@ -25,4 +25,6 @@ interface NotificationMeView extends MvpView {
     void onDeclineFollowRequestClicked(FollowRequest request);
 
     void onSeeAllClicked(List<FollowRequest> requests);
+
+    void onRefresh();
 }

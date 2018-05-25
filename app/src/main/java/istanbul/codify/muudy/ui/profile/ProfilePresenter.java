@@ -1,11 +1,13 @@
 package istanbul.codify.muudy.ui.profile;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -18,6 +20,7 @@ import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
@@ -29,6 +32,7 @@ import java.util.List;
 
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
+    private int selectedIndex = 0;
     @Override
     public void attachView(ProfileView view, View root) {
         super.attachView(view, root);
@@ -168,6 +172,15 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
                             view.onInstagramClicked();
                         }));
+
+        mDisposables.add(
+                RxSwipeRefreshLayout
+                        .refreshes(findViewById(R.id.profile_refresh))
+                        .subscribe(o -> {
+                            Logcat.v("Refresh clicked");
+
+                            mView.onRefresh();
+                        }));
     }
 
     void bind(User user) {
@@ -220,12 +233,32 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                 .into(findViewById(R.id.profile_picture, CircleImageView.class));
     }
 
+    void refresh(){
+        if(selectedIndex == 0){
+            posts();
+        }else{
+            Long categoryId = Category.GAME;
+            if (selectedIndex == 2){
+                categoryId = Category.GAME;
+            }else if (selectedIndex == 3){
+                categoryId = Category.GAME;
+            }else if (selectedIndex == 4){
+                categoryId = Category.GAME;
+            }else if (selectedIndex == 5){
+                categoryId = Category.GAME;
+            }
+            stars(categoryId);
+        }
+    }
+
     void posts() {
         User me = AccountUtils.me(getContext());
 
         GetUserProfileRequest request = new GetUserProfileRequest(me.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
+     //   findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(true);
+        selectedIndex = 0;
         mDisposables.add(
                 ApiManager
                         .getInstance()
@@ -234,13 +267,15 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
                             @Override
                             protected void success(GetUserProfileResponse response) {
-                                mView.onLoadedPosts(response.data.postlist);
+                                //mView.onLoadedPosts(response.data.postlist);
+                                mView.onLoaded(response.data.postlist,selectedIndex);
+                                findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
 
                             @Override
                             protected void error(ApiError error) {
                                 Logcat.e(error);
-
+                                findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                                 mView.onError(error);
                             }
                         }));
@@ -299,6 +334,17 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void stars(long categoryId) {
+        if (categoryId == Category.GAME){
+            selectedIndex = 2;
+        }else if (categoryId == Category.SERIES){
+            selectedIndex = 3;
+        }else if (categoryId == Category.FILM){
+            selectedIndex = 4;
+        }else if (categoryId == Category.BOOK){
+            selectedIndex = 5;
+        }
+
+        findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(true);
         User me = AccountUtils.me(getContext());
 
         GetUserPostsRequest request = new GetUserPostsRequest(me.iduser);
@@ -313,7 +359,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserPostsResponse>() {
                             @Override
                             protected void success(GetUserPostsResponse response) {
-                                mView.onLoadedStars(response.data);
+                             //   mView.onLoadedStars(response.data);
+                                mView.onLoaded(response.data,selectedIndex);
+                                findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
 
                             @Override
@@ -321,6 +369,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                                 Logcat.e(error);
 
                                 mView.onError(error);
+                                findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
                         }));
     }

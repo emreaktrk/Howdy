@@ -25,6 +25,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars"/>
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/response_username"
+            style="@style/Text.Toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/response_image"
+            tools:text="ilkem23"/>
 
     <android.support.v7.widget.AppCompatTextView
             android:id="@+id/response_mention"
@@ -36,7 +48,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/response_image"
+            app:layout_constraintTop_toBottomOf="@id/response_username"
             tools:text="mrs.mama, sana Muddy! dedi.\nHadi ona cevap ver"/>
 
     <android.support.v7.widget.AppCompatButton
@@ -53,6 +65,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/response_mention"/>
+
+    <LinearLayout
+            android:id="@+id/response_word_container"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/response_guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/response_mention"
+            android:visibility="gone"
+    >
+
+        <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/response_word_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="8dp"
+        />
+
+        <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/response_selected_word"
+                style="@style/Text.Normal"
+                android:textSize="26sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                tools:text="Mutlu"/>
+    </LinearLayout>
 
     <android.support.constraint.Guideline
             android:id="@+id/response_guideline"

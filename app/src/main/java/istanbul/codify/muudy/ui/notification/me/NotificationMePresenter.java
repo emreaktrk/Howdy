@@ -1,6 +1,8 @@
 package istanbul.codify.muudy.ui.notification.me;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
@@ -25,7 +27,7 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
     void getNotifications() {
         GetNotificationsMeRequest request = new GetNotificationsMeRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
-
+        findViewById(R.id.notification_refresh, SwipeRefreshLayout.class).setRefreshing(true);
         mDisposables.add(
                 ApiManager
                         .getInstance()
@@ -34,13 +36,14 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         .subscribe(new ServiceConsumer<GetNotificationsMeResponse>() {
                             @Override
                             protected void success(GetNotificationsMeResponse response) {
+                                findViewById(R.id.notification_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                                 mView.onLoaded(response.data.userNotifications, response.data.followRequests);
                             }
 
                             @Override
                             protected void error(ApiError error) {
                                 Logcat.e(error);
-
+                                findViewById(R.id.notification_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                                 mView.onError(error);
                             }
                         }));
@@ -86,6 +89,15 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             mView.onSeeAllClicked(cell);
+                        }));
+
+        mDisposables.add(
+                RxSwipeRefreshLayout
+                        .refreshes(findViewById(R.id.notification_refresh))
+                        .subscribe(o -> {
+                            Logcat.v("Refresh clicked");
+
+                            mView.onRefresh();
                         }));
 
 

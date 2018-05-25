@@ -1,6 +1,8 @@
 package istanbul.codify.muudy.model;
 
-public final class Notification {
+import java.io.Serializable;
+
+public final class Notification implements Serializable{
 
     public long idnotification;
     public long notification_fromuserid;
