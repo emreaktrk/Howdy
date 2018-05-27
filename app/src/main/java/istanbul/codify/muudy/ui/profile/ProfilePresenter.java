@@ -422,4 +422,30 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                             }
                         }));
     }
+
+    void tops() {
+        User me = AccountUtils.me(getContext());
+
+        GetUserWeeklyTopRequest request = new GetUserWeeklyTopRequest(me.iduser);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getUserWeeklyTop(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetUserWeeklyTopResponse>() {
+                            @Override
+                            protected void success(GetUserWeeklyTopResponse response) {
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
 }

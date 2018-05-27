@@ -54,6 +54,9 @@ public interface ApiServices {
     @POST("getuserposts")
     Single<GetUserPostsResponse> getUserPosts(@Body GetUserPostsRequest request);
 
+    @POST("getuserweeklytop")
+    Single<GetUserWeeklyTopResponse> getUserWeeklyTop(@Body GetUserWeeklyTopRequest request);
+
     @POST("getmessages")
     Single<GetMessagesResponse> getMessages(@Body GetMessagesRequest request);
 
