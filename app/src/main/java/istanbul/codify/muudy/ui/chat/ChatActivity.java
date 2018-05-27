@@ -23,6 +23,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -173,6 +174,11 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onProfileClicked(Long userId) {
+        UserProfileActivity.start(userId);
     }
 
     public Long getUserId() {

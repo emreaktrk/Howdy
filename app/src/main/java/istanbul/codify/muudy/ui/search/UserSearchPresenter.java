@@ -13,10 +13,13 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
+import istanbul.codify.muudy.api.pojo.request.GetFollowedUsersRequest;
 import istanbul.codify.muudy.api.pojo.request.SearchUserRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.api.pojo.response.GetFollowedUsersResponse;
 import istanbul.codify.muudy.api.pojo.response.SearchUserResponse;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.FollowState;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
@@ -94,5 +97,34 @@ final class UserSearchPresenter extends BasePresenter<UserSearchView> {
                             mView.onUserClicked(user);
                         }));
         findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);
+    }
+
+    void getFollowedUsers(Long userId) {
+        GetFollowedUsersRequest request = new GetFollowedUsersRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.userId = userId;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getFollowedUsers(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetFollowedUsersResponse>() {
+                            @Override
+                            protected void success(GetFollowedUsersResponse response) {
+                                for (User user : response.data) {
+                                    user.isfollowing = FollowState.FOLLOWING;
+                                }
+
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 }

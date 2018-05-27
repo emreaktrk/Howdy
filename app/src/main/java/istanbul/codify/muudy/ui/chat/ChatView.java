@@ -29,4 +29,6 @@ interface ChatView extends MvpView {
 
     void onBackClicked();
 
+    void onProfileClicked(Long userId);
+
 }

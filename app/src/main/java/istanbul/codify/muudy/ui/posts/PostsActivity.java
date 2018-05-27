@@ -147,7 +147,7 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
 
     @Override
     public void onUserClicked(User user) {
-        UserProfileActivity.start(user);
+        UserProfileActivity.start(user.iduser);
     }
 
     @Override

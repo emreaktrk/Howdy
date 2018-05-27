@@ -191,12 +191,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onUserClicked(User user) {
-        UserProfileActivity.start(user);
+        UserProfileActivity.start(user.iduser);
     }
 
     @Override
     public void onFollowClicked(Follow follow) {
-        // TODO Follow
 
         switch (follow.mCompound.getState()) {
             case FOLLOW:

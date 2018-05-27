@@ -78,10 +78,10 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case SAY_HI:
-                ResponseActivity.start(notification);
+                ResponseActivity.start(notification,false);
                 return;
             case ANSWER_HI:
-                // TODO Navigate to response without selection.
+                ResponseActivity.start(notification,true);
                 return;
             case COMMENT:
                 PostDetailActivity.start(notification.notification_postid);

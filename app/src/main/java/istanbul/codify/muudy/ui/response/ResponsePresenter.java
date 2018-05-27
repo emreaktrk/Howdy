@@ -112,7 +112,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         }));
     }
 
-    void bind(@NonNull Notification notification) {
+    void bind(@NonNull Notification notification, Boolean isAnswer) {
         User user = notification.fromUser;
         mUser = user;
         Picasso
@@ -131,7 +131,14 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                     }
                 }));
 
-
+        if (isAnswer) {
+            findViewById(R.id.response_word, AppCompatTextView.class).setText(notification.notification_answerhi_word_text);
+            Picasso
+                    .with(getContext())
+                    .load(BuildConfig.URL + notification.notification_answerhi_word_img)
+                    .placeholder(R.drawable.ic_avatar)
+                    .into(findViewById(R.id.response_word_image, CircleImageView.class));
+        }
 
     }
 

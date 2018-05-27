@@ -28,11 +28,12 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     private ResponsePresenter mPresenter = new ResponsePresenter();
 
-    public static void start(@NonNull Notification notification) {
+    public static void start(@NonNull Notification notification,Boolean isAnswer) {
         Context context = Utils.getApp().getApplicationContext();
 
         Intent starter = new Intent(context, ResponseActivity.class);
         starter.putExtra(notification.getClass().getSimpleName(), notification);
+        starter.putExtra(isAnswer.getClass().getSimpleName(), isAnswer);
         ActivityUtils.startActivity(starter);
     }
 
@@ -47,6 +48,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,8 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
         Notification notification = getSerializable(Notification.class);
         if (notification != null) {
-            mPresenter.bind(notification);
+            Boolean isAnswer = getSerializable(Boolean.class);
+            mPresenter.bind(notification,isAnswer);
         } else {
             Long userId = getSerializable(Long.class);
             if (userId != null) {

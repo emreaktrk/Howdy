@@ -20,6 +20,7 @@ import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 
 public final class PostDetailActivity extends MuudyActivity implements PostDetailView, KeyboardSupport {
@@ -121,7 +122,7 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
 
     @Override
     public void onImageClicked(Post post) {
-        PhotoActivity.start(post);
+        UserProfileActivity.start(post.iduser);
     }
 
     @Override

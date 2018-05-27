@@ -57,6 +57,9 @@ public final class AccountUtils {
 
     public synchronized static String tokenLegacy(Context context) {
         AccountManager manager = AccountManager.get(context);
+        if (manager.getAccountsByType(AccountContract.ACCOUNT_TYPE).length == 0){
+            return  "";
+        }
         Account account = manager.getAccountsByType(AccountContract.ACCOUNT_TYPE)[0];
         String json = manager.getUserData(account, AccountManager.KEY_USERDATA);
         return new Gson().fromJson(json, User.class).tokenstring;

@@ -37,8 +37,7 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
-    //    getWindow().setBackgroundDrawable(null);
-        //TODO arkaplan ekle
+
     }
 
     @Override

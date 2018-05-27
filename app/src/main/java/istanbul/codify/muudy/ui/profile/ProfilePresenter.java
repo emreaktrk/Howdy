@@ -331,6 +331,16 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                             mView.onDeleteClicked(cell);
                         }));
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
+
+        if (posts.size() == 0) {
+            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
+            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
+            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     void stars(long categoryId) {
@@ -377,6 +387,14 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     void bindStars(List<Post> stars) {
         StarAdapter post = new StarAdapter(stars);
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
+
+        if (stars.size() == 0) {
+            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
+            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
+            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        }
     }
 
     int getSelected() {
