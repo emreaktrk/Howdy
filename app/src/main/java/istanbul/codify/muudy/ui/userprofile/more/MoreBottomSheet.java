@@ -17,7 +17,6 @@ public final class MoreBottomSheet extends MuudyBottomSheet implements MoreView 
     private OnMoreClickListener.OnReportClickListener mReport;
     private OnMoreClickListener.OnNotificationClickListener mNotification;
 
-
     public static MoreBottomSheet newInstance(@NonNull User user) {
         Bundle args = new Bundle();
         args.putSerializable(User.class.getSimpleName(), user);

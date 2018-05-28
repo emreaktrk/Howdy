@@ -8,18 +8,11 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
-import istanbul.codify.muudy.account.AccountUtils;
-import istanbul.codify.muudy.api.ApiManager;
-import istanbul.codify.muudy.api.pojo.ServiceConsumer;
-import istanbul.codify.muudy.api.pojo.request.GetUserProfileRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.api.pojo.response.GetUserProfileResponse;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.deeplink.SayHiLink;
-import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.word.WordActivity;
@@ -28,7 +21,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     private ResponsePresenter mPresenter = new ResponsePresenter();
 
-    public static void start(@NonNull Notification notification,Boolean isAnswer) {
+    public static void start(@NonNull Notification notification, Boolean isAnswer) {
         Context context = Utils.getApp().getApplicationContext();
 
         Intent starter = new Intent(context, ResponseActivity.class);
@@ -46,9 +39,6 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
         ActivityUtils.startActivity(starter);
     }
 
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +48,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
         Notification notification = getSerializable(Notification.class);
         if (notification != null) {
             Boolean isAnswer = getSerializable(Boolean.class);
-            mPresenter.bind(notification,isAnswer);
+            mPresenter.bind(notification, isAnswer);
         } else {
             Long userId = getSerializable(Long.class);
             if (userId != null) {
@@ -91,7 +81,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     @Override
     public void onLoaded(User user, String text) {
-        mPresenter.bind(user,text);
+        mPresenter.bind(user, text);
     }
 
     @Override

@@ -66,6 +66,7 @@ final class MorePresenter extends BasePresenter<MoreView> {
 
     void bind(User user) {
         findViewById(R.id.more_dialog_unfollow).setVisibility(user.isfollowing == FollowState.FOLLOWING ? View.VISIBLE : View.GONE);
+        findViewById(R.id.more_dialog_notification).setVisibility(user.isfollowing == FollowState.FOLLOWING ? View.VISIBLE : View.GONE);
         findViewById(R.id.more_dialog_block, SwitchCompat.class).setChecked(user.isbanned == 1);
         findViewById(R.id.more_dialog_notification, SwitchCompat.class).setChecked(false);
     }

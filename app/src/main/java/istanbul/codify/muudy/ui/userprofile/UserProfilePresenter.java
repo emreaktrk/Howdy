@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.userprofile;
 
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.ViewSwitcher;
 import com.binaryfork.spanny.Spanny;
 import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.squareup.picasso.Picasso;
@@ -35,7 +35,6 @@ import istanbul.codify.muudy.ui.profile.StarAdapter;
 import istanbul.codify.muudy.view.FollowButton;
 import istanbul.codify.muudy.view.NumberView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,6 +44,34 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
     private User mUser;
     private int selectedIndex = 0;
+
+    public static int getAge(Date dateOfBirth) {
+
+        Calendar today = Calendar.getInstance();
+        Calendar birthDate = Calendar.getInstance();
+
+        int age = 0;
+
+        birthDate.setTime(dateOfBirth);
+        if (birthDate.after(today)) {
+            return 0;
+        }
+
+        age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
+
+        // If birth date is greater than todays date (after 2 days adjustment of leap year) then decrement age one year
+        if ((birthDate.get(Calendar.DAY_OF_YEAR) - today.get(Calendar.DAY_OF_YEAR) > 3) ||
+                (birthDate.get(Calendar.MONTH) > today.get(Calendar.MONTH))) {
+            age--;
+
+            // If birth date and todays date are of same month and birth day of month is greater than todays day of month then decrement age
+        } else if ((birthDate.get(Calendar.MONTH) == today.get(Calendar.MONTH)) &&
+                (birthDate.get(Calendar.DAY_OF_MONTH) > today.get(Calendar.DAY_OF_MONTH))) {
+            age--;
+        }
+
+        return age;
+    }
 
     @Override
     public void attachView(UserProfileView view, View root) {
@@ -243,9 +270,12 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
                             mView.onRefresh();
                         }));
+
+        findViewById(R.id.user_profile_appbar, AppBarLayout.class)
+                .addOnOffsetChangedListener((layout, offset) -> findViewById(R.id.user_profile_refresh).setEnabled(offset == 0));
     }
 
-    void load(@NonNull Long userId,Boolean isForPosts) {
+    void load(@NonNull Long userId, Boolean isForPosts) {
         GetUserProfileRequest request = new GetUserProfileRequest(userId);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -257,7 +287,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
                             @Override
                             protected void success(GetUserProfileResponse response) {
-                                mView.onLoaded(response.data.user,isForPosts);
+                                mView.onLoaded(response.data.user, isForPosts);
                             }
 
                             @Override
@@ -279,7 +309,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
             findViewById(R.id.user_profile_fullname, AppCompatTextView.class).setText(
                     new Spanny().append(user.namesurname + ", ", new StyleSpan(Typeface.BOLD)).append(age + ""));
-        }else{
+        } else {
             findViewById(R.id.user_profile_fullname, AppCompatTextView.class).setText(user.namesurname);
         }
 
@@ -289,9 +319,9 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                 showNext();
                 break;
             case NOT_FOLLOWING:
-                if(user.isprofilehidden == ProfileVisibility.HIDDEN){
+                if (user.isprofilehidden == ProfileVisibility.HIDDEN) {
                     findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.REQUEST);
-                }else{
+                } else {
                     findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
                 }
                 break;
@@ -353,43 +383,15 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.user_profile_picture, CircleImageView.class));
 
-        if (isVisibleProfile()){
+        if (isVisibleProfile()) {
             visibleRecycler();
-        }else{
+        } else {
             visibleHiddenProfile();
         }
     }
 
-    public static int getAge(Date dateOfBirth) {
-
-        Calendar today = Calendar.getInstance();
-        Calendar birthDate = Calendar.getInstance();
-
-        int age = 0;
-
-        birthDate.setTime(dateOfBirth);
-        if (birthDate.after(today)) {
-            return 0;
-        }
-
-        age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
-
-        // If birth date is greater than todays date (after 2 days adjustment of leap year) then decrement age one year
-        if ( (birthDate.get(Calendar.DAY_OF_YEAR) - today.get(Calendar.DAY_OF_YEAR) > 3) ||
-                (birthDate.get(Calendar.MONTH) > today.get(Calendar.MONTH ))){
-            age--;
-
-            // If birth date and todays date are of same month and birth day of month is greater than todays day of month then decrement age
-        }else if ((birthDate.get(Calendar.MONTH) == today.get(Calendar.MONTH )) &&
-                (birthDate.get(Calendar.DAY_OF_MONTH) > today.get(Calendar.DAY_OF_MONTH ))){
-            age--;
-        }
-
-        return age;
-    }
-
     void refresh() {
-        load(mUser.iduser,false);
+        load(mUser.iduser, false);
         if (selectedIndex == 0) {
             posts();
         } else {
@@ -499,7 +501,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         if (posts.size() == 0) {
             visibleNoPosts();
-        }else{
+        } else {
             visibleRecycler();
         }
     }
@@ -553,35 +555,36 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
             visibleHiddenProfile();
         }
     }
-    public boolean isVisibleProfile(){
-        if (mUser == null){
+
+    public boolean isVisibleProfile() {
+        if (mUser == null) {
             return false;
         }
 
-        if (mUser.isprofilehidden == ProfileVisibility.HIDDEN){
-            if (mUser.isfollowing == FollowState.FOLLOWING){
+        if (mUser.isprofilehidden == ProfileVisibility.HIDDEN) {
+            if (mUser.isfollowing == FollowState.FOLLOWING) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return true;
         }
     }
 
-    void visibleNoPosts(){
+    void visibleNoPosts() {
         findViewById(R.id.user_profile_hidden_container).setVisibility(View.GONE);
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setVisibility(View.GONE);
         findViewById(R.id.user_profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
     }
 
-    void visibleHiddenProfile(){
+    void visibleHiddenProfile() {
         findViewById(R.id.user_profile_hidden_container).setVisibility(View.VISIBLE);
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setVisibility(View.GONE);
         findViewById(R.id.user_profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
     }
 
-    void visibleRecycler(){
+    void visibleRecycler() {
         findViewById(R.id.user_profile_hidden_container).setVisibility(View.GONE);
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
         findViewById(R.id.user_profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
@@ -592,7 +595,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         findViewById(R.id.user_profile_recycler, RecyclerView.class).setAdapter(post);
         if (stars.size() == 0) {
             visibleNoPosts();
-        }else{
+        } else {
             visibleRecycler();
         }
     }
@@ -721,8 +724,8 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<UnfollowResponse>() {
                             @Override
                             protected void success(UnfollowResponse response) {
-                              //  findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
-                                load(mUser.iduser,false);
+                                //  findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
+                                load(mUser.iduser, false);
                             }
 
                             @Override
@@ -772,7 +775,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<CancelFollowResponse>() {
                             @Override
                             protected void success(CancelFollowResponse response) {
-                                load(mUser.iduser,false);
+                                load(mUser.iduser, false);
                             }
 
                             @Override

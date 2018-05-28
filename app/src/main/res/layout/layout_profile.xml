@@ -31,11 +31,12 @@
                 android:padding="14dp"
                 android:src="@drawable/ic_more"/>
     </FrameLayout>
+
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"
-    />
+            android:background="@color/grey"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/profile_refresh"
             android:layout_width="match_parent"
@@ -151,15 +152,14 @@
                                     android:background="@android:color/transparent"
                                     android:src="@drawable/ic_instagram"/>
                         </android.support.v7.widget.LinearLayoutCompat>
-
                     </android.support.v7.widget.LinearLayoutCompat>
-
                 </android.support.design.widget.CollapsingToolbarLayout>
+
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/grey"
-                />
+                        android:background="@color/grey"/>
+
                 <android.support.v7.widget.LinearLayoutCompat
                         android:id="@+id/profile_tabs"
                         android:layout_width="match_parent"
@@ -232,8 +232,8 @@
                     android:text="Henüz Paylaşım Yok"
                     android:textSize="16sp"
                     android:visibility="gone"
-                    android:gravity="center"
-            />
+                    android:gravity="center"/>
+
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/profile_recycler"
                     android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.profile;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -33,6 +34,7 @@ import java.util.List;
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
     private int selectedIndex = 0;
+
     @Override
     public void attachView(ProfileView view, View root) {
         super.attachView(view, root);
@@ -181,6 +183,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
                             mView.onRefresh();
                         }));
+
+        findViewById(R.id.profile_appbar, AppBarLayout.class)
+                .addOnOffsetChangedListener((layout, offset) -> findViewById(R.id.profile_refresh).setEnabled(offset == 0));
     }
 
     void bind(User user) {
@@ -233,18 +238,18 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                 .into(findViewById(R.id.profile_picture, CircleImageView.class));
     }
 
-    void refresh(){
-        if(selectedIndex == 0){
+    void refresh() {
+        if (selectedIndex == 0) {
             posts();
-        }else{
+        } else {
             Long categoryId = Category.GAME;
-            if (selectedIndex == 2){
+            if (selectedIndex == 2) {
                 categoryId = Category.GAME;
-            }else if (selectedIndex == 3){
+            } else if (selectedIndex == 3) {
                 categoryId = Category.GAME;
-            }else if (selectedIndex == 4){
+            } else if (selectedIndex == 4) {
                 categoryId = Category.GAME;
-            }else if (selectedIndex == 5){
+            } else if (selectedIndex == 5) {
                 categoryId = Category.GAME;
             }
             stars(categoryId);
@@ -257,7 +262,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         GetUserProfileRequest request = new GetUserProfileRequest(me.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
-     //   findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(true);
+        //   findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(true);
         selectedIndex = 0;
         mDisposables.add(
                 ApiManager
@@ -268,7 +273,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                             @Override
                             protected void success(GetUserProfileResponse response) {
                                 //mView.onLoadedPosts(response.data.postlist);
-                                mView.onLoaded(response.data.postlist,selectedIndex);
+                                mView.onLoaded(response.data.postlist, selectedIndex);
                                 findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
 
@@ -335,7 +340,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         if (posts.size() == 0) {
             findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
             findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
-        }else{
+        } else {
             findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
             findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
         }
@@ -344,13 +349,13 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void stars(long categoryId) {
-        if (categoryId == Category.GAME){
+        if (categoryId == Category.GAME) {
             selectedIndex = 2;
-        }else if (categoryId == Category.SERIES){
+        } else if (categoryId == Category.SERIES) {
             selectedIndex = 3;
-        }else if (categoryId == Category.FILM){
+        } else if (categoryId == Category.FILM) {
             selectedIndex = 4;
-        }else if (categoryId == Category.BOOK){
+        } else if (categoryId == Category.BOOK) {
             selectedIndex = 5;
         }
 
@@ -369,8 +374,8 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserPostsResponse>() {
                             @Override
                             protected void success(GetUserPostsResponse response) {
-                             //   mView.onLoadedStars(response.data);
-                                mView.onLoaded(response.data,selectedIndex);
+                                //   mView.onLoadedStars(response.data);
+                                mView.onLoaded(response.data, selectedIndex);
                                 findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
 
@@ -391,7 +396,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         if (stars.size() == 0) {
             findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
             findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
-        }else{
+        } else {
             findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
             findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
         }

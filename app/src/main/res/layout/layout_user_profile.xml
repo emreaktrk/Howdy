@@ -39,11 +39,12 @@
                 android:layout_gravity="end"
                 android:src="@drawable/ic_more"/>
     </FrameLayout>
+
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey"
-    />
+            android:background="@color/grey"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/user_profile_refresh"
             android:layout_width="match_parent"
@@ -78,6 +79,7 @@
                                 android:layout_height="90dp"
                                 android:clickable="true"
                                 android:focusable="true"
+                                android:layout_marginTop="8dp"
                                 tools:src="@tools:sample/avatars"/>
 
                         <android.support.v7.widget.AppCompatTextView
@@ -200,11 +202,12 @@
                         </android.support.v7.widget.LinearLayoutCompat>
                     </android.support.v7.widget.LinearLayoutCompat>
                 </android.support.design.widget.CollapsingToolbarLayout>
+
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/grey"
-                />
+                        android:background="@color/grey"/>
+
                 <android.support.v7.widget.LinearLayoutCompat
                         android:id="@+id/user_profile_tabs"
                         android:layout_width="match_parent"
@@ -276,22 +279,21 @@
                     android:text="Henüz Paylaşım Yok"
                     android:textSize="16sp"
                     android:visibility="gone"
-                    android:gravity="center"
-            />
+                    android:gravity="center"/>
+
             <RelativeLayout
                     android:id="@+id/user_profile_hidden_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:visibility="gone"
-                    android:layout_margin="8dp"
-            >
+                    android:layout_margin="8dp">
+
                 <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/user_profile_hidden_image"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_visibility"
-                />
+                        android:src="@drawable/ic_visibility"/>
 
                 <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/user_profile_hidden_title"
@@ -301,9 +303,7 @@
                         android:layout_toEndOf="@+id/user_profile_hidden_image"
                         android:layout_alignParentEnd="true"
                         android:text="Gizli Hesap"
-                        style="@style/Text.Toolbar"
-                />
-
+                        style="@style/Text.Toolbar"/>
 
                 <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/user_profile_hidden_description"
@@ -314,10 +314,9 @@
                         android:layout_below="@+id/user_profile_hidden_title"
                         android:layout_alignParentEnd="true"
                         android:text="Paylaşımları görebilmek için bu hesabı takip etmelisiniz"
-                        style="@style/Text.Normal"
-                />
-
+                        style="@style/Text.Normal"/>
             </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                     android:id="@+id/user_profile_recycler"
                     android:layout_width="match_parent"
