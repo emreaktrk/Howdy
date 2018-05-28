@@ -6,18 +6,14 @@ import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.ui.main.MainActivity;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
 
-public final class SayHiLink extends DeepLink {
-
-    public SayHiLink(@NonNull RemoteMessage message) {
+public class AnswerHiLink extends DeepLink {
+    public AnswerHiLink(@NonNull RemoteMessage message) {
         super(message);
     }
 
     @Override
     public void navigate(Activity activity) {
-        // TODO Get user from remote message
-        // TODO Start Response activity
-        if(activity instanceof MainActivity){
-            ResponseActivity.start(getItemId(),true,getAnswerHiWord(),getAnswerHiWordImage(),getNotificationMessage());
-        }
+        ResponseActivity.start(getItemId(),true,getNotificationMessage(),getAnswerHiWordImage(),getNotificationMessage());
+
     }
 }

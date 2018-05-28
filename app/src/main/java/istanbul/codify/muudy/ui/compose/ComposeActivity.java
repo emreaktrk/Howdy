@@ -110,13 +110,14 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     @Override
     public void onLoaded(NewPost post) {
+
         PostEvent event = new PostEvent(post);
 
         EventBus
                 .getDefault()
                 .post(event);
-
         finish();
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

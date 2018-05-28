@@ -10,6 +10,8 @@ interface ResponseView extends MvpView {
 
     void onLoaded(User user, String text);
 
+    void onLoaded(User user, String text, String wordText, String wordImage);
+
     void onSendClicked();
 
     void onSent();

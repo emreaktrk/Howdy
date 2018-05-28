@@ -65,6 +65,14 @@ public abstract class MuudyActivity extends AppCompatActivity {
         return null;
     }
 
+    protected final <T extends Serializable> T getSerializable(Class<? extends T> clazz, String key) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(key)) {
+            return clazz.cast(getIntent().getExtras().getSerializable(key));
+        }
+
+        return null;
+    }
+
     protected final RemoteMessage getSerializableNotification(Class<RemoteMessage> clazz){
         String key = clazz.getSimpleName();
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(key)) {

@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.AnswerHiLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.deeplink.SayHiLink;
 import istanbul.codify.muudy.model.*;
@@ -27,6 +28,18 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
         Intent starter = new Intent(context, ResponseActivity.class);
         starter.putExtra(notification.getClass().getSimpleName(), notification);
         starter.putExtra(isAnswer.getClass().getSimpleName(), isAnswer);
+        ActivityUtils.startActivity(starter);
+    }
+
+    public static void start(@NonNull Long userId, Boolean isAnswer, String wordText, String wordImage, String notificationMessage) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, ResponseActivity.class);
+        starter.putExtra(userId.getClass().getSimpleName(), userId);
+        starter.putExtra(isAnswer.getClass().getSimpleName(), isAnswer);
+        starter.putExtra("wordText", wordText);
+        starter.putExtra("wordImage", wordImage);
+        starter.putExtra(notificationMessage.getClass().getSimpleName(), notificationMessage);
         ActivityUtils.startActivity(starter);
     }
 
@@ -53,13 +66,25 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
             Long userId = getSerializable(Long.class);
             if (userId != null) {
                 String notificationMessage = getSerializable(String.class);
-                mPresenter.getUserProfile(userId, notificationMessage);
+                Boolean isAnswer = getSerializable(Boolean.class);
+                if (isAnswer != null) {
+                    String wordText = getSerializable(String.class, "wordText");
+                    String wordImage = getSerializable(String.class, "wordImage");
+                    mPresenter.getUserProfileForAnswer(userId, notificationMessage, wordText, wordImage);
+                } else {
+                    mPresenter.getUserProfile(userId, notificationMessage);
+                }
+
             }
         }
 
         DeepLinkManager
                 .getInstance()
                 .nullifyIf(SayHiLink.class);
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(AnswerHiLink.class);
     }
 
     @Override
@@ -82,6 +107,11 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
     @Override
     public void onLoaded(User user, String text) {
         mPresenter.bind(user, text);
+    }
+
+    @Override
+    public void onLoaded(User user, String text, String wordText, String wordImage) {
+
     }
 
     @Override
