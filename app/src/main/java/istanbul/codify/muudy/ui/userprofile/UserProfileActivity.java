@@ -28,6 +28,7 @@ import istanbul.codify.muudy.ui.video.VideoActivity;
 import istanbul.codify.muudy.utils.AndroidUtils;
 import istanbul.codify.muudy.view.FollowButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class UserProfileActivity extends MuudyActivity implements UserProfileView {
@@ -39,6 +40,16 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
         Intent starter = new Intent(context, UserProfileActivity.class);
         starter.putExtra(userId.getClass().getSimpleName(), userId);
+        ActivityUtils.startActivity(starter);
+    }
+
+    public static void startForMe(@NonNull Long userId) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UserProfileActivity.class);
+        starter.putExtra(userId.getClass().getSimpleName(), userId);
+        Boolean isForMe = true;
+        starter.putExtra(isForMe.getClass().getSimpleName(), isForMe);
         ActivityUtils.startActivity(starter);
     }
 
@@ -61,15 +72,22 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
         mPresenter.attachView(this, this);
 
+        Boolean isForMe = getSerializable(Boolean.class);
+
+        if (isForMe != null && isForMe) {
+            mPresenter.hideFollowView();
+        }
+
         Long userId = getSerializable(Long.class);
         if (userId != null) {
-            mPresenter.load(userId,true);
+            mPresenter.load(userId, true);
         }
 
         User user = getSerializable(User.class);
         if (user != null) {
             mPresenter.bind(user);
         }
+
 
         DeepLinkManager
                 .getInstance()
@@ -136,7 +154,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
                     .setOnReportClickListener(() -> mPresenter.report())
                     .setOnUnfollowClickListener(() -> {
                         mPresenter.unfollow();
-                        mPresenter.showNext();
+                        mPresenter.showNext(user.isfollowing);
                     })
                     .show(getSupportFragmentManager(), null);
         }
@@ -178,7 +196,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
             case FOLLOW:
                 mPresenter.follow();
-                mPresenter.showNext();
+                mPresenter.showNext(mPresenter.getUser().isfollowing);
                 if (mPresenter.getUser().isprofilehidden == ProfileVisibility.VISIBLE) {
                     compound.setState(FollowButton.State.UNFOLLOW);
                 } else {
@@ -248,18 +266,25 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     }
 
     @Override
+    public void onLoadedUserTops(ArrayList<UserTop> userTops) {
+        mPresenter.bindUserTops(userTops);
+    }
+
+    @Override
     public void onLoadedStars(List<Post> stars) {
         mPresenter.bindStars(stars);
     }
 
-    @Override
+    /*@Override
     public void onLoaded(List<Post> posts, int selectedIndex) {
         if (selectedIndex == 0){
             mPresenter.bindPosts(posts);
+        }else if (selectedIndex == 1){
+            mPresenter.bindUserTops();
         }else{
             mPresenter.bindStars(posts);
         }
-    }
+    }*/
 
     @Override
     public void onRefresh() {

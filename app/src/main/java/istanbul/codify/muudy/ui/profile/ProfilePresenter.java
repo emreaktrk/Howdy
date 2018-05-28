@@ -1,10 +1,9 @@
 package istanbul.codify.muudy.ui.profile;
 
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.text.TextUtils;
 import android.view.View;
 import com.blankj.utilcode.util.StringUtils;
@@ -24,6 +23,7 @@ import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Category;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UserTop;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.view.NumberView;
@@ -34,6 +34,8 @@ import java.util.List;
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
     private int selectedIndex = 0;
+
+    User mUser;
 
     @Override
     public void attachView(ProfileView view, View root) {
@@ -189,6 +191,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void bind(User user) {
+        mUser = user;
         findViewById(R.id.profile_username, AppCompatTextView.class).setText(user.username);
         findViewById(R.id.profile_fullname, AppCompatTextView.class).setText(user.namesurname);
 
@@ -241,6 +244,8 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     void refresh() {
         if (selectedIndex == 0) {
             posts();
+        } else if (selectedIndex == 1) {
+            tops();
         } else {
             Long categoryId = Category.GAME;
             if (selectedIndex == 2) {
@@ -289,6 +294,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     void bindPosts(List<Post> posts) {
         setSelected(0);
 
+        removeDiveder();
         PostAdapter post = new PostAdapter(posts);
         mDisposables.add(
                 post
@@ -338,11 +344,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
 
         if (posts.size() == 0) {
-            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
-            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
+            visibleNoPosts();
         } else {
-            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
-            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+            visibleRecycler();
         }
 
 
@@ -394,12 +398,51 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
 
         if (stars.size() == 0) {
-            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
-            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
+            visibleNoPosts();
         } else {
-            findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
-            findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+            visibleRecycler();
         }
+        addDiveder();
+    }
+
+    void bindUserTops(ArrayList<UserTop> userTops) {
+        UserWeeklyTopAdapter adapter = new UserWeeklyTopAdapter(userTops, mUser);
+        findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(adapter);
+        if (userTops.size() == 0) {
+            visibleNoPosts();
+        } else {
+            visibleRecycler();
+        }
+
+        addDiveder();
+    }
+
+    void addDiveder() {
+
+        if (findViewById(R.id.profile_recycler, RecyclerView.class).getItemDecorationCount() == 0) {
+
+            DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+            divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider2));
+            findViewById(R.id.profile_recycler, RecyclerView.class).addItemDecoration(divider);
+            findViewById(R.id.profile_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+    }
+
+    void removeDiveder() {
+        while (findViewById(R.id.profile_recycler, RecyclerView.class).getItemDecorationCount() > 0) {
+            findViewById(R.id.profile_recycler, RecyclerView.class).removeItemDecorationAt(0);
+        }
+    }
+
+    void visibleNoPosts() {
+        findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.GONE);
+        findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.VISIBLE);
+    }
+
+
+    void visibleRecycler() {
+        findViewById(R.id.profile_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        findViewById(R.id.profile_no_post_text, AppCompatTextView.class).setVisibility(View.GONE);
     }
 
     int getSelected() {
@@ -497,7 +540,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
     void tops() {
         User me = AccountUtils.me(getContext());
-
+        selectedIndex = 1;
         GetUserWeeklyTopRequest request = new GetUserWeeklyTopRequest(me.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -509,7 +552,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserWeeklyTopResponse>() {
                             @Override
                             protected void success(GetUserWeeklyTopResponse response) {
-
+                                mView.onLoadedUserTops(response.data);
                             }
 
                             @Override
@@ -519,5 +562,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                                 mView.onError(error);
                             }
                         }));
+
+
     }
+
+
 }

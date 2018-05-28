@@ -43,7 +43,7 @@
             android:id="@+id/around_container"
             android:layout_width="match_parent"
             android:layout_height="96dp"
-            android:gravity="center">
+            android:gravity="left">
 
         <istanbul.codify.muudy.view.AvatarView
                 android:layout_width="0dp"

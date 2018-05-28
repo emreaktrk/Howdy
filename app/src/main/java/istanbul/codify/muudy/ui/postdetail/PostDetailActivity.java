@@ -11,12 +11,14 @@ import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.KeyboardSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.deeplink.PostDetailLink;
 import istanbul.codify.muudy.model.Post;
+import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
@@ -122,7 +124,7 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
 
     @Override
     public void onImageClicked(Post post) {
-        UserProfileActivity.start(post.iduser);
+        PhotoActivity.start(post.imgpath1);
     }
 
     @Override
@@ -132,7 +134,12 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
 
     @Override
     public void onAvatarClicked(Post post) {
-        PhotoActivity.start(post.imgpath1);
+        User me = AccountUtils.me(this);
+        if (me.iduser == post.iduser){
+            UserProfileActivity.startForMe(post.iduser);
+        }else{
+            UserProfileActivity.start(post.iduser);
+        }
     }
 
     @Override

@@ -38,9 +38,8 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
 
     void bind(GoogleMap map) {
         LatLng center = new LatLng(39d, 34.75d);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 1);
-        map.moveCamera(update);
-
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 17f);
+        map.animateCamera(update);
         BigDecimal threshold = new BigDecimal(1.365772219865448E-5);
 
         mDisposables.add(

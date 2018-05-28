@@ -3,10 +3,9 @@ package istanbul.codify.muudy.ui.userprofile;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.*;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -32,6 +31,7 @@ import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.ui.profile.StarAdapter;
+import istanbul.codify.muudy.ui.profile.UserWeeklyTopAdapter;
 import istanbul.codify.muudy.view.FollowButton;
 import istanbul.codify.muudy.view.NumberView;
 
@@ -273,6 +273,30 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         findViewById(R.id.user_profile_appbar, AppBarLayout.class)
                 .addOnOffsetChangedListener((layout, offset) -> findViewById(R.id.user_profile_refresh).setEnabled(offset == 0));
+
+
+    }
+
+    void hideFollowView(){
+        findViewById(R.id.user_profile_switcher, ViewSwitcher.class).setVisibility(View.GONE);
+    }
+
+
+    void addDiveder(){
+
+        if(findViewById(R.id.user_profile_recycler, RecyclerView.class).getItemDecorationCount() == 0) {
+
+            DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+            divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider2));
+            findViewById(R.id.user_profile_recycler, RecyclerView.class).addItemDecoration(divider);
+            findViewById(R.id.user_profile_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
+        }
+    }
+
+    void removeDiveder(){
+        while (findViewById(R.id.user_profile_recycler, RecyclerView.class).getItemDecorationCount() > 0) {
+            findViewById(R.id.user_profile_recycler, RecyclerView.class).removeItemDecorationAt(0);
+        }
     }
 
     void load(@NonNull Long userId, Boolean isForPosts) {
@@ -316,7 +340,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         switch (user.isfollowing) {
             case FOLLOWING:
                 findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.UNFOLLOW);
-                showNext();
+                showNext(user.isfollowing);
                 break;
             case NOT_FOLLOWING:
                 if (user.isprofilehidden == ProfileVisibility.HIDDEN) {
@@ -394,7 +418,9 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         load(mUser.iduser, false);
         if (selectedIndex == 0) {
             posts();
-        } else {
+        }else if (selectedIndex == 1 ) {
+            tops();
+        }else {
             Long categoryId = Category.GAME;
             if (selectedIndex == 2) {
                 categoryId = Category.GAME;
@@ -417,6 +443,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
 
         setSelected(0);
 
+        selectedIndex = 0;
         if (isVisibleProfile()) {
             GetUserProfileRequest request = new GetUserProfileRequest(mUser.iduser);
             request.token = AccountUtils.tokenLegacy(getContext());
@@ -451,6 +478,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     }
 
     void bindPosts(List<Post> posts) {
+        removeDiveder();
         PostAdapter post = new PostAdapter(posts);
         mDisposables.add(
                 post
@@ -504,6 +532,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         } else {
             visibleRecycler();
         }
+
     }
 
     void stars(long categoryId) {
@@ -561,14 +590,19 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
             return false;
         }
 
-        if (mUser.isprofilehidden == ProfileVisibility.HIDDEN) {
-            if (mUser.isfollowing == FollowState.FOLLOWING) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        User me = AccountUtils.me(getContext());
+        if (me.iduser == mUser.iduser){
             return true;
+        }else {
+            if (mUser.isprofilehidden == ProfileVisibility.HIDDEN) {
+                if (mUser.isfollowing == FollowState.FOLLOWING) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
         }
     }
 
@@ -598,6 +632,49 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         } else {
             visibleRecycler();
         }
+        addDiveder();
+    }
+
+    void tops() {
+        selectedIndex = 1;
+        if (isVisibleProfile()) {
+            GetUserWeeklyTopRequest request = new GetUserWeeklyTopRequest(mUser.iduser);
+            request.token = AccountUtils.tokenLegacy(getContext());
+
+            mDisposables.add(
+                    ApiManager
+                            .getInstance()
+                            .getUserWeeklyTop(request)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new ServiceConsumer<GetUserWeeklyTopResponse>() {
+                                @Override
+                                protected void success(GetUserWeeklyTopResponse response) {
+                                    mView.onLoadedUserTops(response.data);
+                                }
+
+                                @Override
+                                protected void error(ApiError error) {
+                                    Logcat.e(error);
+
+                                    mView.onError(error);
+                                }
+                            }));
+        }else{
+            findViewById(R.id.user_profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
+            visibleHiddenProfile();
+        }
+    }
+
+    void bindUserTops(ArrayList<UserTop> userTops){
+        UserWeeklyTopAdapter adapter = new UserWeeklyTopAdapter(userTops,mUser);
+        findViewById(R.id.user_profile_recycler, RecyclerView.class).setAdapter(adapter);
+        if (userTops.size() == 0) {
+            visibleNoPosts();
+        } else {
+            visibleRecycler();
+        }
+
+        addDiveder();
     }
 
     User getUser() {
@@ -787,8 +864,24 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         }));
     }
 
-    void showNext() {
-        findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
+    void showNext(FollowState followState) {
+        switch (followState) {
+            case FOLLOWING:
+                if ((findViewById(R.id.user_profile_switcher, ViewSwitcher.class).getNextView() instanceof LinearLayoutCompat)){
+                    findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
+                }
+                break;
+            case NOT_FOLLOWING:
+                if ((findViewById(R.id.user_profile_switcher, ViewSwitcher.class).getNextView() instanceof FollowButton)){
+                    findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
+                }
+                break;
+            case REQUEST_SENT:
+                if ((findViewById(R.id.user_profile_switcher, ViewSwitcher.class).getNextView() instanceof FollowButton)){
+                    findViewById(R.id.user_profile_switcher, ViewSwitcher.class).showNext();
+                }
+                break;
+        }
     }
 
     void block(boolean isBlocked) {
@@ -899,27 +992,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         }));
     }
 
-    void tops() {
-        GetUserWeeklyTopRequest request = new GetUserWeeklyTopRequest(mUser.iduser);
-        request.token = AccountUtils.tokenLegacy(getContext());
 
-        mDisposables.add(
-                ApiManager
-                        .getInstance()
-                        .getUserWeeklyTop(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<GetUserWeeklyTopResponse>() {
-                            @Override
-                            protected void success(GetUserWeeklyTopResponse response) {
 
-                            }
 
-                            @Override
-                            protected void error(ApiError error) {
-                                Logcat.e(error);
-
-                                mView.onError(error);
-                            }
-                        }));
-    }
 }

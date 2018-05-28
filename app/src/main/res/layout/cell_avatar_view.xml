@@ -26,6 +26,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textColor="@color/white"
-            tools:textColor="@color/black"
+            tools:textColor="@color/white"
             tools:text="@sample/user.json/data/username"/>
 </merge>

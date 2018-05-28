@@ -2,9 +2,11 @@ package istanbul.codify.muudy.ui.profile;
 
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Post;
+import istanbul.codify.muudy.model.UserTop;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.base.MvpView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 interface ProfileView extends MvpView {
@@ -32,6 +34,8 @@ interface ProfileView extends MvpView {
     void onLoadedPosts(List<Post> posts);
 
     void onLoadedStars(List<Post> stars);
+
+    void onLoadedUserTops(ArrayList<UserTop> userTops);
 
     void onLoaded(List<Post> posts, int selectedIndex);
 

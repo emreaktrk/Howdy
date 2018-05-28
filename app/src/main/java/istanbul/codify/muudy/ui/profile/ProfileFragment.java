@@ -12,10 +12,7 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.account.sync.SyncListener;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.model.Category;
-import istanbul.codify.muudy.model.Post;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UsersScreenMode;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.navigation.Navigation;
@@ -30,6 +27,7 @@ import istanbul.codify.muudy.utils.AndroidUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -124,6 +122,11 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     @Override
     public void onLoadedStars(List<Post> stars) {
         mPresenter.bindStars(stars);
+    }
+
+    @Override
+    public void onLoadedUserTops(ArrayList<UserTop> userTops) {
+        mPresenter.bindUserTops(userTops);
     }
 
     @Override

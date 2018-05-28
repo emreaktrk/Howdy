@@ -11,6 +11,7 @@
     <color name="black">#000</color>
     <color name="semi_black">#48000000</color>
     <color name="grey">#ebebec</color>
+    <color name="grey2">#dedede</color>
     <color name="stone">#dcdcdc</color>
     <color name="rock">#b4b4b4</color>
     <color name="green">#2cb62d</color>
