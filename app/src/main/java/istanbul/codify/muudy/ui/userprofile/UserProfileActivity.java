@@ -141,7 +141,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
     @Override
     public void onTopsClicked() {
-        // TODO Request tops
+        mPresenter.tops();
     }
 
     @Override
