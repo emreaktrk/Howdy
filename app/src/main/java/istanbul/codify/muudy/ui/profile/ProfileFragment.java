@@ -127,6 +127,15 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     }
 
     @Override
+    public void onLoaded(List<Post> posts, int selectedIndex) {
+        if (selectedIndex == 0){
+            mPresenter.bindPosts(posts);
+        }else{
+            mPresenter.bindStars(posts);
+        }
+    }
+
+    @Override
     public void onPostClicked(Post post) {
         PostDetailActivity.start(post.idpost);
     }
@@ -203,6 +212,12 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     public void onInstagramClicked() {
         User me = AccountUtils.me(getContext());
         AndroidUtils.browser("http://www.instagram.com/" + me.instagramlink);
+    }
+
+    @Override
+    public void onRefresh() {
+        //mPresenter.posts();
+        mPresenter.refresh();
     }
 
     @Override

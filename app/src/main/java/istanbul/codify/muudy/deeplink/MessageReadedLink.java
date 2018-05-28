@@ -2,7 +2,7 @@ package istanbul.codify.muudy.deeplink;
 
 import android.support.annotation.NonNull;
 import com.google.firebase.messaging.RemoteMessage;
-import istanbul.codify.muudy.ui.main.MainActivity;
+import android.app.Activity;
 
 public class MessageReadedLink extends DeepLink {
 
@@ -11,7 +11,7 @@ public class MessageReadedLink extends DeepLink {
     }
 
     @Override
-    public void navigate(MainActivity activity) {
+    public void navigate(Activity activity) {
 
     }
 }

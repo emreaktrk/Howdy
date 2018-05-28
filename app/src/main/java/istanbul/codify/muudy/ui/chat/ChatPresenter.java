@@ -87,6 +87,26 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         }));
 
         mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.chat_user_image))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Media clicked");
+
+                            view.onProfileClicked(mUser.iduser);
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.chat_username))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Media clicked");
+
+                            view.onProfileClicked(mUser.iduser);
+                        }));
+
+        mDisposables.add(
                 RxTextView
                         .textChanges(findViewById(R.id.chat_message))
                         .flatMap((Function<CharSequence, ObservableSource<String>>) content -> Observable.just(StringUtils.isEmpty(content) ? "" : content.toString().trim()))

@@ -14,6 +14,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.model.Chat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.Result;
@@ -21,6 +23,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -68,6 +71,10 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
         if (userId != null) {
             mPresenter.getUser(userId);
         }
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(MessageLink.class);
     }
 
     @Override
@@ -167,6 +174,11 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     @Override
     public void onBackClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onProfileClicked(Long userId) {
+        UserProfileActivity.start(userId);
     }
 
     public Long getUserId() {

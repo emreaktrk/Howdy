@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.GeneralNotificationLink;
+import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
 import istanbul.codify.muudy.ui.notification.following.NotificationFollowingFragment;
@@ -32,6 +35,10 @@ public final class NotificationFragment extends NavigationFragment implements No
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, view);
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(GeneralNotificationLink.class);
     }
 
     @Override

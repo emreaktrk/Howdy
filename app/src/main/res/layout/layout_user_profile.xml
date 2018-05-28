@@ -39,226 +39,292 @@
                 android:layout_gravity="end"
                 android:src="@drawable/ic_more"/>
     </FrameLayout>
-
-    <android.support.design.widget.CoordinatorLayout
+    <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.main.MainActivity">
-
-        <android.support.design.widget.AppBarLayout
-                android:id="@+id/user_profile_appbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/user_profile_collapsing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:contentScrim="@color/white">
-
-                <android.support.v7.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/user_profile_picture"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:clickable="true"
-                            android:focusable="true"
-                            tools:src="@tools:sample/avatars"/>
-
-                    <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/user_profile_fullname"
-                            style="@style/Text.Toolbar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            tools:text="İlkem Tünay, 24"/>
-
-                    <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/user_profile_award"
-                            style="@style/Text.Secondary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            tools:text="Obur, Alkolik, Gezgin"/>
-
-                    <android.support.v7.widget.LinearLayoutCompat
-                            android:id="@+id/user_profile_numbers"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            tools:context=".ui.main.MainActivity">
-
-                        <istanbul.codify.muudy.view.NumberView
-                                android:id="@+id/user_profile_number_posts"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"/>
-
-                        <istanbul.codify.muudy.view.NumberView
-                                android:id="@+id/user_profile_number_following"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"/>
-
-                        <istanbul.codify.muudy.view.NumberView
-                                android:id="@+id/user_profile_number_followed"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"/>
-
-
-                    </android.support.v7.widget.LinearLayoutCompat>
-
-                    <ViewSwitcher
-                            android:id="@+id/user_profile_switcher"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp">
-
-                        <istanbul.codify.muudy.view.FollowButton
-                                android:id="@+id/user_profile_follow"
-                                style="@style/Button.Blue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                tools:text="Takip Et"/>
-
-                        <android.support.v7.widget.LinearLayoutCompat
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center">
-
-                            <android.support.v7.widget.AppCompatButton
-                                    android:id="@+id/user_profile_message"
-                                    style="@style/Button.Profile"
-                                    android:background="@drawable/button_message"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:textColor="@color/black"
-                                    android:text="Mesaj Gönder"
-                                    android:layout_marginEnd="8dp"/>
-
-                            <android.support.v7.widget.AppCompatButton
-                                    android:layout_marginStart="8dp"
-                                    android:id="@+id/user_profile_muudy"
-                                    style="@style/Button.Profile"
-                                    android:background="@drawable/button_muudy"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:textColor="@color/black"
-                                    android:text="Muudy de!"/>
-                        </android.support.v7.widget.LinearLayoutCompat>
-                    </ViewSwitcher>
-
-                    <android.support.v7.widget.LinearLayoutCompat
-                            android:id="@+id/user_profile_social_media"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_margin="8dp">
-
-                        <android.support.v7.widget.AppCompatImageButton
-                                android:id="@+id/user_profile_facebook"
-                                android:background="@android:color/transparent"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:src="@drawable/ic_facebook"/>
-
-                        <android.support.v7.widget.AppCompatImageButton
-                                android:id="@+id/user_profile_twitter"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:background="@android:color/transparent"
-                                android:src="@drawable/ic_twitter"/>
-
-                        <android.support.v7.widget.AppCompatImageButton
-                                android:id="@+id/user_profile_instagram"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:background="@android:color/transparent"
-                                android:src="@drawable/ic_instagram"/>
-                    </android.support.v7.widget.LinearLayoutCompat>
-                </android.support.v7.widget.LinearLayoutCompat>
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-            <android.support.v7.widget.LinearLayoutCompat
-                    android:id="@+id/user_profile_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp">
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_posts"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_posts"
-                        android:layout_height="match_parent"/>
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_tops"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_tops"
-                        android:layout_height="match_parent"/>
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_games"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_games"
-                        android:layout_height="match_parent"/>
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_series"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_series"
-                        android:layout_height="match_parent"/>
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_films"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_films"
-                        android:layout_height="match_parent"/>
-
-                <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/user_profile_books"
-                        style="@style/Button.Transparent"
-                        android:background="@android:color/transparent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/button_user_books"
-                        android:layout_height="match_parent"/>
-            </android.support.v7.widget.LinearLayoutCompat>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/user_profile_recycler"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+    />
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/user_profile_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/cell_post_none"/>
-    </android.support.design.widget.CoordinatorLayout>
+                tools:context=".ui.main.MainActivity">
+
+            <android.support.design.widget.AppBarLayout
+                    android:id="@+id/user_profile_appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                        android:id="@+id/user_profile_collapsing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                        app:contentScrim="@color/white">
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/user_profile_picture"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                tools:src="@tools:sample/avatars"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/user_profile_fullname"
+                                style="@style/Text.Normal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:textSize="20sp"
+                                tools:text="İlkem Tünay, 24"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/user_profile_award"
+                                style="@style/Text.Secondary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                tools:text="Obur, Alkolik, Gezgin"/>
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                                android:id="@+id/user_profile_numbers"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                tools:context=".ui.main.MainActivity">
+
+                            <istanbul.codify.muudy.view.NumberView
+                                    android:id="@+id/user_profile_number_posts"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"/>
+
+                            <istanbul.codify.muudy.view.NumberView
+                                    android:id="@+id/user_profile_number_following"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"/>
+
+                            <istanbul.codify.muudy.view.NumberView
+                                    android:id="@+id/user_profile_number_followed"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"/>
+
+
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+                        <ViewSwitcher
+                                android:id="@+id/user_profile_switcher"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp">
+
+                            <istanbul.codify.muudy.view.FollowButton
+                                    android:id="@+id/user_profile_follow"
+                                    style="@style/Button.Blue"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    tools:text="Takip Et"/>
+
+                            <android.support.v7.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center">
+
+                                <android.support.v7.widget.AppCompatButton
+                                        android:id="@+id/user_profile_message"
+                                        style="@style/Button.Profile"
+                                        android:background="@drawable/button_message"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="40dp"
+                                        android:textColor="@color/black"
+                                        android:text="Mesaj Gönder"
+                                        android:layout_marginEnd="8dp"/>
+
+                                <android.support.v7.widget.AppCompatButton
+                                        android:layout_marginStart="8dp"
+                                        android:id="@+id/user_profile_muudy"
+                                        style="@style/Button.Profile"
+                                        android:background="@drawable/button_muudy"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="40dp"
+                                        android:textColor="@color/black"
+                                        android:text="Muudy de!"/>
+                            </android.support.v7.widget.LinearLayoutCompat>
+                        </ViewSwitcher>
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                                android:id="@+id/user_profile_social_media"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_margin="8dp">
+
+                            <android.support.v7.widget.AppCompatImageButton
+                                    android:id="@+id/user_profile_facebook"
+                                    android:background="@android:color/transparent"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:src="@drawable/ic_facebook"/>
+
+                            <android.support.v7.widget.AppCompatImageButton
+                                    android:id="@+id/user_profile_twitter"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/ic_twitter"/>
+
+                            <android.support.v7.widget.AppCompatImageButton
+                                    android:id="@+id/user_profile_instagram"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/ic_instagram"/>
+                        </android.support.v7.widget.LinearLayoutCompat>
+                    </android.support.v7.widget.LinearLayoutCompat>
+                </android.support.design.widget.CollapsingToolbarLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey"
+                />
+                <android.support.v7.widget.LinearLayoutCompat
+                        android:id="@+id/user_profile_tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp">
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_posts"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_posts"
+                            android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_tops"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_tops"
+                            android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_games"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_games"
+                            android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_series"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_series"
+                            android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_films"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_films"
+                            android:layout_height="match_parent"/>
+
+                    <android.support.v7.widget.AppCompatImageButton
+                            android:id="@+id/user_profile_books"
+                            style="@style/Button.Transparent"
+                            android:background="@android:color/transparent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/button_user_books"
+                            android:layout_height="match_parent"/>
+                </android.support.v7.widget.LinearLayoutCompat>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/user_profile_no_post_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    style="@style/Text.Normal"
+                    android:layout_marginTop="16dp"
+                    android:text="Henüz Paylaşım Yok"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:gravity="center"
+            />
+            <RelativeLayout
+                    android:id="@+id/user_profile_hidden_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+            >
+                <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/user_profile_hidden_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_visibility"
+                />
+
+                <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/user_profile_hidden_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/user_profile_hidden_image"
+                        android:layout_alignParentEnd="true"
+                        android:text="Gizli Hesap"
+                        style="@style/Text.Toolbar"
+                />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/user_profile_hidden_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/user_profile_hidden_image"
+                        android:layout_below="@+id/user_profile_hidden_title"
+                        android:layout_alignParentEnd="true"
+                        android:text="Paylaşımları görebilmek için bu hesabı takip etmelisiniz"
+                        style="@style/Text.Normal"
+                />
+
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/user_profile_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/cell_post_none"/>
+        </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.v7.widget.LinearLayoutCompat>

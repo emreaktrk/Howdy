@@ -49,28 +49,6 @@
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_dot"/>
     </FrameLayout>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/home_emotion_recycler"
-            android:layout_width="0dp"
-            android:layout_height="86dp"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_toolbar"
-            tools:listitem="@layout/cell_emotion"/>
-
-    <View
-            android:id="@+id/home_emotion_divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_emotion_recycler"/>
-
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/home_refresh"
             android:layout_width="0dp"
@@ -78,14 +56,44 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_emotion_divider">
+            app:layout_constraintTop_toBottomOf="@id/home_toolbar">
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/home_emotion_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="86dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/home_emotion_divider"
+                    app:layout_constraintStart_toStartOf="parent"
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/home_post_recycler"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:listitem="@layout/cell_post_none"/>
+                    tools:listitem="@layout/cell_emotion"/>
+
+            <View
+                    android:id="@+id/home_emotion_divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/grey"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_emotion_recycler"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/home_post_recycler"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/home_emotion_divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/cell_post_none"/>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>

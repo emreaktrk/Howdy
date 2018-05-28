@@ -50,7 +50,7 @@ final class UserMessagesAdapter extends RecyclerView.Adapter<UserMessagesAdapter
         }
         holder.mDate.setText(message.message_humandate);
 
-        holder.mUsername.setTypeface(holder.mUsername.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);
+    //    holder.mUsername.setTypeface(holder.mUsername.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);
         holder.mLastMessage.setTypeface(holder.mLastMessage.getTypeface(), message.message_isreaded == Result.TRUE ? Typeface.NORMAL : Typeface.BOLD);
     }
 

@@ -33,6 +33,8 @@ interface ProfileView extends MvpView {
 
     void onLoadedStars(List<Post> stars);
 
+    void onLoaded(List<Post> posts, int selectedIndex);
+
     void onPostClicked(Post post);
 
     void onLikeClicked(Like like);
@@ -53,4 +55,5 @@ interface ProfileView extends MvpView {
 
     void onInstagramClicked();
 
+    void onRefresh();
 }

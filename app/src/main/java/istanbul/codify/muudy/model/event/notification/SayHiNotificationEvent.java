@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.SayHiLink;
 
-public final class SayHiNotificationEvent extends NotificationEvent {
+public final class SayHiNotificationEvent extends ProfileEvent {
 
     @Nullable
     @Override

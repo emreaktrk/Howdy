@@ -39,11 +39,15 @@ interface UserProfileView extends MvpView {
 
     void onPictureClicked();
 
-    void onLoaded(User user);
+    void onLoaded(User user, Boolean isForPosts);
 
     void onLoadedPosts(List<Post> posts);
 
     void onLoadedStars(List<Post> stars);
+
+    void onLoaded(List<Post> posts, int selectedIndex);
+
+    void onRefresh();
 
     void onPostClicked(Post post);
 

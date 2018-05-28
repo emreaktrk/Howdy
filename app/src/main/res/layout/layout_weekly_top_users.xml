@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:background="#aa000000"
+>
+    <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/weekly_top_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/ic_close_white"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginTop="12dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/weekly_top_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Haftanın Enleri"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            style="@style/Text.Toolbar"
+            android:textColor="@color/white"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/weekly_top_close"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/weekly_top_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignTop="@+id/weekly_top_title"
+            app:layout_constraintTop_toBottomOf="@+id/weekly_top_title"
+
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp">
+
+    </android.support.v7.widget.RecyclerView>
+</android.support.constraint.ConstraintLayout>

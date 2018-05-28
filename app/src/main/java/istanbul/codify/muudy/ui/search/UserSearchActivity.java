@@ -41,6 +41,25 @@ public final class UserSearchActivity extends MuudyActivity implements UserSearc
         }
     }
 
+
+    public static void startWithFollowedUsers(@ResultTo int to, Long userId) {
+        AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
+
+        Intent starter = new Intent(activity, UserSearchActivity.class);
+        starter.putExtra(userId.getClass().getSimpleName(), userId);
+
+        switch (to) {
+            case ResultTo.ACTIVITY:
+                activity.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            case ResultTo.FRAGMENT:
+                Fragment fragment = FragmentUtils.getTopShow(activity.getSupportFragmentManager());
+                fragment.startActivityForResult(starter, REQUEST_CODE);
+                return;
+            default:
+                throw new IllegalArgumentException("Unknown ResultTo value");
+        }
+    }
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_user_search;
@@ -51,6 +70,11 @@ public final class UserSearchActivity extends MuudyActivity implements UserSearc
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        Long userId = getSerializable(Long.class);
+        if (userId != null) {
+            mPresenter.getFollowedUsers(userId);
+        }
     }
 
     @Override

@@ -59,7 +59,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public PostAdapter(Post post) {
         mPosts = Collections.singletonList(post);
-        mCommentVisibility = View.GONE;
     }
 
     @NonNull

@@ -10,7 +10,10 @@ import com.blankj.utilcode.util.Utils;
 import com.google.firebase.messaging.RemoteMessage;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLink;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.FCMListenerService;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
@@ -74,6 +77,14 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
 
         mPresenter.getMessages();
 
+        DeepLink pending = DeepLinkManager
+                .getInstance()
+                .getPending();
+
+        if (pending != null) {
+            pending.navigate(this);
+        }
+
     }
 
     @Override
@@ -83,7 +94,10 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
 
     @Override
     public void onNewClicked() {
-        UserSearchActivity.start(ResultTo.ACTIVITY);
+        Long userId = AccountUtils.me(this).iduser;
+        if (userId != null) {
+            UserSearchActivity.startWithFollowedUsers(ResultTo.ACTIVITY, userId);
+        }
     }
 
     @Override

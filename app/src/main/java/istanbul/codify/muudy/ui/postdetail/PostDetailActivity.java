@@ -13,10 +13,14 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.MessageLink;
+import istanbul.codify.muudy.deeplink.PostDetailLink;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 
 public final class PostDetailActivity extends MuudyActivity implements PostDetailView, KeyboardSupport {
@@ -46,6 +50,10 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
         if (postId != null) {
             mPresenter.getPostDetail(postId);
         }
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(PostDetailLink.class);
     }
 
     @Override
@@ -114,7 +122,7 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
 
     @Override
     public void onImageClicked(Post post) {
-        PhotoActivity.start(post);
+        UserProfileActivity.start(post.iduser);
     }
 
     @Override

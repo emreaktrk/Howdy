@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.main;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 
@@ -75,8 +76,19 @@ final class MainPresenter extends BasePresenter<MainView> {
             if (child instanceof Space || child.getId() == R.id.navigation_compose) {
                 continue;
             }
+            if (child.getId() == findViewById(R.id.navigation_notificaton_container).getId()){
+                findViewById(R.id.navigation_notification).setSelected(findViewById(R.id.navigation_notificaton_container).getId() == navigation);
+            }
 
             child.setSelected(child.getId() == navigation);
         }
+    }
+
+    void showNotificationBadge(){
+        findViewById(R.id.navigation_notification_dot, AppCompatImageView.class).setVisibility(View.VISIBLE);
+    }
+
+    void hideNotificationBadge(){
+        findViewById(R.id.navigation_notification_dot, AppCompatImageView.class).setVisibility(View.GONE);
     }
 }
