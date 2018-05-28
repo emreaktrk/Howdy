@@ -14,8 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_visibility" />
-                            <entry key="sourceFile" value="D:\downloads\visibility (1).svg" />
+                            <entry key="height" value="137" />
+                            <entry key="outputName" value="ic_map" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="C:\Users\emrea\Desktop\map.svg" />
+                            <entry key="width" value="85" />
                           </map>
                         </option>
                       </PersistentState>

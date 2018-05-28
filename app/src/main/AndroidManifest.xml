@@ -113,7 +113,7 @@
 
         <activity
                 android:name=".ui.around.AroundActivity"
-                android:theme="@style/MainTheme"/>
+                android:theme="@style/TransparentTheme"/>
 
         <activity
                 android:name=".ui.userprofile.UserProfileActivity"
@@ -245,7 +245,7 @@
                    android:value="AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4"/>
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="5904c506754968c812b0e2926d9738e52b071f76" />
+                android:name="io.fabric.ApiKey"
+                android:value="5904c506754968c812b0e2926d9738e52b071f76"/>
     </application>
 </manifest>

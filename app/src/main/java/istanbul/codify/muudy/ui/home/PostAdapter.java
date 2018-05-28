@@ -99,7 +99,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             none.mMessage.setText(str);
 
-
             if (holder instanceof MediaHolder) {
                 MediaHolder media = (MediaHolder) holder;
                 Picasso
@@ -117,7 +116,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             .into(none.mEmotion);
                 } else {
                     none.mEmotion.setVisibility(View.GONE);
-
                 }
             }
         }

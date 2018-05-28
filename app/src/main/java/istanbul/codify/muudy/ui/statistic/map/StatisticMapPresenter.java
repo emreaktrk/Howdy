@@ -1,8 +1,13 @@
 package istanbul.codify.muudy.ui.statistic.map;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
@@ -32,6 +37,10 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
     }
 
     void bind(GoogleMap map) {
+        LatLng center = new LatLng(39d, 34.75d);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 1);
+        map.moveCamera(update);
+
         BigDecimal threshold = new BigDecimal(1.365772219865448E-5);
 
         mDisposables.add(
@@ -84,6 +93,7 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
         for (EmojiLocation location : locations) {
             map.addMarker(
                     new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map))
                             .title(location.post_emoji_word + " (" + location.emojiCount + ")")
                             .position(new LatLng(location.lat, location.lng)));
         }

@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.VisibleRegion;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.EmojiLocation;
 
 import java.util.List;
@@ -32,7 +33,6 @@ public final class StatisticMapFragment extends MuudyFragment implements Statist
                 .map()
                 .onCreate(savedInstanceState);
     }
-
 
     @Override
     public void onReady(GoogleMap map) {
@@ -97,6 +97,7 @@ public final class StatisticMapFragment extends MuudyFragment implements Statist
         mPresenter
                 .map()
                 .onDestroy();
+
         mPresenter.detachView();
     }
 }

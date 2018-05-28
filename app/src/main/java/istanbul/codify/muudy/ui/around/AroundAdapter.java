@@ -40,7 +40,7 @@ final class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.Holder> {
         holder.mTitle.setText(around.title);
         for (int i = 0; i < holder.mContainer.getChildCount(); i++) {
             AvatarView avatar = (AvatarView) holder.mContainer.getChildAt(i);
-            if (around.users.size() < i) {
+            if (around.users.size() <= i) {
                 avatar.setVisibility(View.GONE);
             } else {
                 avatar.setVisibility(View.VISIBLE);

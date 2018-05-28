@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.around.AroundActivity"
-        android:background="@color/white">
+        android:background="#aa000000">
 
     <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/around_close"
@@ -14,7 +14,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="start"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_close_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

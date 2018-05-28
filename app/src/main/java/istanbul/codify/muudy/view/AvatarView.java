@@ -63,7 +63,8 @@ public class AvatarView extends LinearLayoutCompat {
             mName.setText(user.username);
             Picasso
                     .with(getContext())
-                    .load(BuildConfig.URL +user.imgpath1)
+                    .load(BuildConfig.URL + user.imgpath1)
+                    .placeholder(R.drawable.ic_avatar)
                     .into(mImage);
         }
     }
