@@ -196,6 +196,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
 
     void bind(Word word) {
         mWord = word;
+
         findViewById(R.id.response_word_container, LinearLayout.class).setVisibility(View.VISIBLE);
         findViewById(R.id.response_word, AppCompatButton.class).setVisibility(View.GONE);
         findViewById(R.id.response_selected_word, AppCompatTextView.class).setText(word.words_word);

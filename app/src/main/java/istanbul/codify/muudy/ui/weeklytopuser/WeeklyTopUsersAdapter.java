@@ -1,4 +1,4 @@
-package istanbul.codify.muudy.ui.WeeklyTopUser;
+package istanbul.codify.muudy.ui.weeklytopuser;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -18,7 +18,6 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.WeeklyTopUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WeeklyTopUsersAdapter extends  RecyclerView.Adapter<WeeklyTopUsersAdapter.Holder>{
 

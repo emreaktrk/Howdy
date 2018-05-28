@@ -53,10 +53,8 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
     }
 
     @Override
-    public void onMoreClicked(List<User> users) {
-        ArrayList<User> mUsers = new ArrayList<>();
-        mUsers.addAll(users);
-        UsersActivity.start(mUsers);
+    public void onMoreClicked(ArrayList<User> users) {
+        UsersActivity.start(users);
     }
 
     @Override

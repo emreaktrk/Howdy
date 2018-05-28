@@ -52,10 +52,10 @@ public enum NotificationActionType {
             case FOLLOW:
                 return new FollowEvent();
             case ACTIVITY_REMINDER:
-                //TODO
+                // TODO
                 return null;
             case ANSWER_HI:
-                //TODO
+                // TODO
                 return null;
             case WEEK_TOP_USERS:
                 return new WeeklyTopEvent();

@@ -1,4 +1,4 @@
-package istanbul.codify.muudy.ui.WeeklyTopUser;
+package istanbul.codify.muudy.ui.weeklytopuser;
 
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.User;

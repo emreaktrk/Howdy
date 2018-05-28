@@ -8,7 +8,7 @@ import istanbul.codify.muudy.R;
 public @interface Navigation {
     int HOME = R.id.navigation_home;
     int STATISTIC = R.id.navigation_statistic;
-    int NOTIFICATION = R.id.navigation_notificaton_container;
+    int NOTIFICATION = R.id.navigation_notification_container;
     int PROFILE = R.id.navigation_profile;
 
     interface ISelectable {

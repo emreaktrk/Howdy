@@ -196,7 +196,6 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onFollowClicked(Follow follow) {
-
         switch (follow.mCompound.getState()) {
             case FOLLOW:
                 Analytics

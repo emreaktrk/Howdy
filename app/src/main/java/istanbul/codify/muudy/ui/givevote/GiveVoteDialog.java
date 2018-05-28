@@ -11,6 +11,7 @@ import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.GivePointResponse;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.deeplink.GivePointLink;
+
 public class GiveVoteDialog extends MuudyDialog implements GiveVoteView {
 
     private GiveVoteDialogPresenter mPresenter = new GiveVoteDialogPresenter();
@@ -18,7 +19,7 @@ public class GiveVoteDialog extends MuudyDialog implements GiveVoteView {
     public static GiveVoteDialog newInstance(String sentence, Long id) {
         Bundle args = new Bundle();
         args.putSerializable(String.class.getSimpleName(), sentence);
-        args.putSerializable(Long.class.getSimpleName(),id);
+        args.putSerializable(Long.class.getSimpleName(), id);
 
         GiveVoteDialog fragment = new GiveVoteDialog();
         fragment.setArguments(args);
@@ -53,7 +54,7 @@ public class GiveVoteDialog extends MuudyDialog implements GiveVoteView {
 
     @Override
     public void onGivePointClicked(Float point) {
-        mPresenter.givePoint(getSerializable(Long.class),point);
+        mPresenter.givePoint(getSerializable(Long.class), point);
     }
 
     @Override
@@ -64,11 +65,9 @@ public class GiveVoteDialog extends MuudyDialog implements GiveVoteView {
 
     @Override
     public void onPointGiven(GivePointResponse response) {
-
         if (response.data.equals("ok")) {
             dismiss();
         }
-
     }
 
     @Override

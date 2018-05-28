@@ -1,4 +1,4 @@
-package istanbul.codify.muudy.ui.WeeklyTopUser;
+package istanbul.codify.muudy.ui.weeklytopuser;
 
 import android.content.Context;
 import android.content.Intent;

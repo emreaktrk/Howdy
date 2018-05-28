@@ -12,15 +12,12 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
-import istanbul.codify.muudy.fcm.FCMListenerService;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
-import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
 import istanbul.codify.muudy.ui.home.HomeFragment;
-import istanbul.codify.muudy.ui.messages.UserMessagesActivity;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
@@ -30,13 +27,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public final class MainActivity extends MuudyActivity implements MainView, Navigation.IController, EventSupport {
 
-    private MainPresenter mPresenter = new MainPresenter();
     public Pool<Fragment> mPool = new Pool<Fragment>() {
         @Override
         protected Fragment supply(Class<? extends Fragment> clazz) throws Exception {
             return clazz.newInstance();
         }
     };
+    private MainPresenter mPresenter = new MainPresenter();
 
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();
@@ -63,8 +60,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
 
         UpdatePushService.start();
     }
-
-
 
     @Override
     protected void onResume() {

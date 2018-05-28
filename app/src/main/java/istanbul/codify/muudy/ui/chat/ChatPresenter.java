@@ -91,7 +91,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .clicks(findViewById(R.id.chat_user_image))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
-                            Logcat.v("Media clicked");
+                            Logcat.v("Profile clicked");
 
                             view.onProfileClicked(mUser.iduser);
                         }));
@@ -101,7 +101,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         .clicks(findViewById(R.id.chat_username))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
-                            Logcat.v("Media clicked");
+                            Logcat.v("Profile clicked");
 
                             view.onProfileClicked(mUser.iduser);
                         }));

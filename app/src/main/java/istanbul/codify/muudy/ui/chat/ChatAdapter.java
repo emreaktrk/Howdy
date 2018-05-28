@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +102,10 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
         return mList.size();
     }
 
+    PublishSubject<Chat> imageClicks() {
+        return mSubject;
+    }
+
     abstract class Holder extends RecyclerView.ViewHolder {
 
         Holder(View itemView) {
@@ -114,10 +117,6 @@ final class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.Holder> {
         }
 
         abstract View getView();
-    }
-
-    PublishSubject<Chat> imageClicks() {
-        return mSubject;
     }
 
     class TextHolder extends Holder {

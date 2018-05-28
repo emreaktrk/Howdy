@@ -18,7 +18,7 @@ import java.util.List;
 
 final class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.Holder> {
 
-    private PublishSubject<List<User>> mMoreSubject = PublishSubject.create();
+    private PublishSubject<ArrayList<User>> mMoreSubject = PublishSubject.create();
     private PublishSubject<User> mUserSubject = PublishSubject.create();
     private List<AroundUsers> mList;
 
@@ -56,7 +56,7 @@ final class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.Holder> {
         return mList.size();
     }
 
-    PublishSubject<List<User>> moreClicks() {
+    PublishSubject<ArrayList<User>> moreClicks() {
         return mMoreSubject;
     }
 

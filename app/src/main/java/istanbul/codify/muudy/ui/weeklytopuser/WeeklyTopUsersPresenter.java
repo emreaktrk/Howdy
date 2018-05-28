@@ -1,7 +1,5 @@
-package istanbul.codify.muudy.ui.WeeklyTopUser;
+package istanbul.codify.muudy.ui.weeklytopuser;
 
-import android.support.annotation.MainThread;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.*;
 import android.view.View;
 import com.jakewharton.rxbinding2.view.RxView;

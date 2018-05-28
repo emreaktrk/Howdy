@@ -177,7 +177,7 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     }
 
     @Override
-    public void onProfileClicked(Long userId) {
+    public void onProfileClicked(long userId) {
         UserProfileActivity.start(userId);
     }
 
