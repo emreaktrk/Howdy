@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.google.firebase.messaging.RemoteMessage;
 import android.app.Activity;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.Serializable;
 
@@ -27,5 +29,26 @@ public abstract class DeepLink implements Serializable {
     String getNotificationMessage() {
         String notificationMessage = message.getData().get("pushtitle");
         return notificationMessage;
+    }
+
+    final @Nullable
+    String getPlaceName() {
+        String placeName = "";
+        placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("palce_name").toString();
+        return placeName;
+    }
+
+    final @Nullable
+    String getAnswerHiWord() {
+        String placeName = "";
+        placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_text").toString();
+        return placeName;
+    }
+
+    final @Nullable
+    String getAnswerHiWordImage() {
+        String placeName = "";
+        placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_img").toString();
+        return placeName;
     }
 }

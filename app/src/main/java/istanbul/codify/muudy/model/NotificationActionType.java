@@ -22,7 +22,8 @@ public enum NotificationActionType {
     @SerializedName("tag") TAG,
     @SerializedName("generalAnnounce") GENERAL_ANNOUNCE,
     @SerializedName("activityReminder") ACTIVITY_REMINDER,
-    @SerializedName("messagereaded") MESSAGE_READED;
+    @SerializedName("messagereaded") MESSAGE_READED,
+    @SerializedName("placeRecommadition") PLACE_RECOMMADITION;
 
     public @Nullable
     static NotificationActionType value(String value) {
@@ -55,12 +56,13 @@ public enum NotificationActionType {
                 // TODO
                 return null;
             case ANSWER_HI:
-                // TODO
-                return null;
+                return new AnswerHiEvent();
             case WEEK_TOP_USERS:
                 return new WeeklyTopEvent();
             case GIVE_VOTE:
                 return new GivePointEvent();
+            case PLACE_RECOMMADITION:
+                return null;
             case NONE:
                 return null;
             default:

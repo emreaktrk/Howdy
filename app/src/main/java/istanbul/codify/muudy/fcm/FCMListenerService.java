@@ -48,7 +48,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
             NotificationEvent event = getEvent(message);
             if (event != null) {
 
-                              EventBus
+                   EventBus
                         .getDefault()
                         .post(event);
             }

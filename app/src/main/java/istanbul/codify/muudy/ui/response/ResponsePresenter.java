@@ -112,6 +112,32 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         }));
     }
 
+    public void getUserProfileForAnswer(Long userId, String notificationMessage, String wordText, String wordImage) {
+        GetUserProfileRequest request = new GetUserProfileRequest(userId);
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getUserProfile(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
+                            @Override
+                            protected void success(GetUserProfileResponse response) {
+                                mView.onLoaded(response.data.user, notificationMessage,wordText,wordImage);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+
+
     void bind(@NonNull Notification notification, Boolean isAnswer) {
         User user = notification.fromUser;
         mUser = user;
@@ -132,12 +158,17 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                 }));
 
         if (isAnswer) {
-            findViewById(R.id.response_word, AppCompatTextView.class).setText(notification.notification_answerhi_word_text);
+            findViewById(R.id.response_word_container).setVisibility(View.VISIBLE);
+            findViewById(R.id.response_word, AppCompatButton.class).setVisibility(View.GONE);
+            findViewById(R.id.response_selected_word, AppCompatTextView.class).setText(notification.notification_answerhi_word_text);
+            findViewById(R.id.response_send,AppCompatButton.class).setVisibility(View.GONE);
             Picasso
                     .with(getContext())
                     .load(BuildConfig.URL + notification.notification_answerhi_word_img)
                     .placeholder(R.drawable.ic_avatar)
-                    .into(findViewById(R.id.response_word_image, CircleImageView.class));
+                    .into(findViewById(R.id.response_word_image, AppCompatImageView.class));
+        }else{
+            findViewById(R.id.response_send,AppCompatButton.class).setVisibility(View.VISIBLE);
         }
 
     }
@@ -159,6 +190,39 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         return new StyleSpan(Typeface.BOLD);
                     }
                 }));
+
+
+    }
+
+    void bind(@NonNull User user, String text, String wordText, String wordImage) {
+        mUser = user;
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + user.imgpath1)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.response_image, CircleImageView.class));
+
+        findViewById(R.id.response_username, AppCompatTextView.class).setText(user.username);
+
+        findViewById(R.id.response_mention, AppCompatTextView.class).setText(
+                new Spanny(text).findAndSpan(user.username, new Spanny.GetSpan() {
+                    @Override
+                    public Object getSpan() {
+                        return new StyleSpan(Typeface.BOLD);
+                    }
+                }));
+
+
+        findViewById(R.id.response_send, AppCompatButton.class).setVisibility(View.GONE);
+        findViewById(R.id.response_word, AppCompatButton.class).setVisibility(View.GONE);
+        findViewById(R.id.response_word_container).setVisibility(View.VISIBLE);
+        findViewById(R.id.response_selected_word, AppCompatTextView.class).setText(wordText);
+
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + wordImage)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.response_word_image, CircleImageView.class));
 
 
     }
