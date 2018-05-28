@@ -68,7 +68,8 @@
                 tools:checked="@sample/post.json/data/value"
                 tools:paddingStart="2dp"
                 tools:text="@sample/post.json/data/count"
-                android:layout_marginTop="4dp" app:layout_constraintTop_toBottomOf="@+id/post_message"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/post_message"
                 android:layout_marginEnd="8dp"/>
 
         <android.support.v7.widget.AppCompatTextView

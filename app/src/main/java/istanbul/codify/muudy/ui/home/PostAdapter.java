@@ -42,7 +42,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private PublishSubject<More> mMoreSubject = PublishSubject.create();
     private List<Post> mPosts;
     private RecommendedUsersAdapter mUsers;
-    private int mCommentVisibility = View.VISIBLE;
     private More mMore = new More(0, true);
 
     public PostAdapter(@Nullable List<Post> posts) {
@@ -258,7 +257,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
             mComment = itemView.findViewById(R.id.post_comment);
-            mComment.setVisibility(mCommentVisibility);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

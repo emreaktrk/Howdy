@@ -19,6 +19,7 @@ import istanbul.codify.muudy.model.Follow;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.DeleteEvent;
+import istanbul.codify.muudy.model.event.OwnProfileEvent;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
@@ -139,7 +140,9 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
     public void onAvatarClicked(Post post) {
         boolean own = AccountUtils.own(this, post.iduser);
         if (own) {
-            // TODO Navigate own profile
+            EventBus
+                    .getDefault()
+                    .post(new OwnProfileEvent());
         } else {
             UserProfileActivity.start(post.iduser);
         }
@@ -148,24 +151,6 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
     @Override
     public void onUserClicked(User user) {
         UserProfileActivity.start(user.iduser);
-    }
-
-    @Override
-    public void onFollowClicked(Follow follow) {
-        // TODO Follow
-
-        switch (follow.mCompound.getState()) {
-            case FOLLOW:
-                Analytics
-                        .getInstance()
-                        .custom(Analytics.Events.FOLLOW);
-                return;
-            case UNFOLLOW:
-                Analytics
-                        .getInstance()
-                        .custom(Analytics.Events.UNFOLLOW);
-                return;
-        }
     }
 
     @Override

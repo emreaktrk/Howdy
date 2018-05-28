@@ -22,6 +22,7 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.DeleteEvent;
+import istanbul.codify.muudy.model.event.HomeReselectEvent;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
 import istanbul.codify.muudy.model.zipper.Like;
@@ -273,6 +274,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         if (!around.isEmpty()) {
             AroundActivity.start(around);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onHomeReselectEvent(HomeReselectEvent event) {
+        mPresenter.scrollToTop();
     }
 
     @Override

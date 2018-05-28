@@ -228,7 +228,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         } catch (Exception e) {
             Logcat.e(e);
 
-            // TODO Notify ui
+            mView.onError(new Throwable("Fotograf yuklenemedi."));
         }
     }
 

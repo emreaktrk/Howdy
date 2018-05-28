@@ -38,6 +38,14 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(Word word) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, ComposeActivity.class);
+        starter.putExtra(Word.class.getSimpleName(), word);
+        ActivityUtils.startActivity(starter);
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_compose;
@@ -48,6 +56,12 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        Word word = getSerializable(Word.class);
+        if (word != null){
+            mPresenter.addSelected(word);
+        }
+
         mPresenter.getWordsWithFilter();
     }
 

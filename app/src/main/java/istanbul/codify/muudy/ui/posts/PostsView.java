@@ -29,8 +29,6 @@ interface PostsView extends MvpView {
 
     void onUserClicked(User user);
 
-    void onFollowClicked(Follow follow);
-
     void onDeleteClicked(Post post);
 
     void onPostDeleted();

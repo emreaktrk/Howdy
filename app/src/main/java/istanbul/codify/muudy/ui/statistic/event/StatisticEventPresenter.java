@@ -105,13 +105,9 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
     }
 
     @Nullable
-    Activity getSelectedActvity() {
+    Activity getSelectedActivity() {
         ActivityAdapter adapter = (ActivityAdapter) findViewById(R.id.statistic_event_activity, RecyclerView.class).getAdapter();
         return adapter.getSelected();
-    }
-
-    void bind(ActivityStat stat) {
-        // TODO Bind pie chart
     }
 
     void getStats(Activity activity) {

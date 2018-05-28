@@ -7,14 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import com.blankj.utilcode.util.StringUtils;
+import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Mention;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.view.MentionButton;
-import com.squareup.picasso.Picasso;
-import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.subjects.PublishSubject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,11 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
 
     private final PublishSubject<Mention> mPublish = PublishSubject.create();
     private List<User> mList;
+    private List<User> mFilter;
 
     MentionAdapter(@Nullable List<User> list) {
         mList = list == null ? new ArrayList<>() : list;
+        mFilter = new ArrayList<>(mList);
     }
 
     @Override
@@ -36,7 +39,7 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        User user = mList.get(position);
+        User user = mFilter.get(position);
 
         Picasso
                 .with(holder.mImage.getContext())
@@ -48,7 +51,7 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mFilter.size();
     }
 
     PublishSubject<Mention> mentionClicks() {
@@ -57,6 +60,22 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
 
     void notifyDataSetChanged(List<User> list) {
         mList = list;
+        notifyDataSetChanged();
+    }
+
+    void setFiltered(String query) {
+        if (StringUtils.isEmpty(query)) {
+            mFilter = new ArrayList<>(mList);
+        } else {
+            mFilter.clear();
+
+            for (User user : mList) {
+                if (user.username.startsWith(query) || user.namesurname.startsWith(query)) {
+                    mFilter.add(user);
+                }
+            }
+        }
+
         notifyDataSetChanged();
     }
 
@@ -82,7 +101,7 @@ final class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.Holder> {
 
         @Override
         public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-            User user = mList.get(getAdapterPosition());
+            User user = mFilter.get(getAdapterPosition());
             Mention mention = new Mention(user, isChecked);
             mPublish.onNext(mention);
         }

@@ -30,6 +30,15 @@
             app:layout_constraintTop_toBottomOf="@id/compose_title"
             tools:text="egesert, keyifli hissediyor"/>
 
+    <android.support.v7.widget.AppCompatSpinner
+            style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
+            android:id="@+id/compose_dialog_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/compose_dialog_sentence"/>
+
     <android.support.v7.widget.AppCompatButton
             android:id="@+id/compose_dialog_share"
             style="@style/Button.Blue"
@@ -39,7 +48,7 @@
             android:layout_marginStart="80dp"
             android:layout_marginEnd="80dp"
             android:text="Paylaş"
-            app:layout_constraintTop_toBottomOf="@id/compose_dialog_sentence"
+            app:layout_constraintTop_toBottomOf="@id/compose_dialog_spinner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>

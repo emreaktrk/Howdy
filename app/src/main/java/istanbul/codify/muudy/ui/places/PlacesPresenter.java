@@ -2,12 +2,14 @@ package istanbul.codify.muudy.ui.places;
 
 import android.annotation.SuppressLint;
 import android.location.Location;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.blankj.utilcode.util.StringUtils;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -61,7 +63,7 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
     }
 
     void search(String query) {
-        // TODO Remote search
+        getPlaces(query);
     }
 
     void bind(List<Place> places) {
@@ -79,7 +81,7 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
     }
 
     @SuppressLint("MissingPermission")
-    void getPlaces() {
+    void getPlaces(@Nullable String query) {
         LocationServices
                 .getFusedLocationProviderClient(getContext())
                 .getLastLocation()
@@ -99,7 +101,7 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
                     request.token = AccountUtils.tokenLegacy(getContext());
                     request.lat = location.getLatitude();
                     request.lng = location.getLongitude();
-                    request.text = "";
+                    request.text = StringUtils.isEmpty(query) ? "" : query;
 
                     mDisposables.add(
                             ApiManager
@@ -121,30 +123,5 @@ final class PlacesPresenter extends BasePresenter<PlacesView> {
                                     }));
                 })
                 .addOnFailureListener(Logcat::e);
-    }
-
-    void getPlaces(String query) {
-        SearchPlacesRequest request = new SearchPlacesRequest();
-        request.token = AccountUtils.tokenLegacy(getContext());
-        request.text = query;
-
-        mDisposables.add(
-                ApiManager
-                        .getInstance()
-                        .searchPlaces(request)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new ServiceConsumer<SearchPlacesResponse>() {
-                            @Override
-                            protected void success(SearchPlacesResponse response) {
-                                mView.onLoaded(response.data);
-                            }
-
-                            @Override
-                            protected void error(ApiError error) {
-                                Logcat.e(error);
-
-                                mView.onError(error);
-                            }
-                        }));
     }
 }

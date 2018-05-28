@@ -1,9 +1,14 @@
 package istanbul.codify.muudy.analytics;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+
 public final class FabricAnalyst implements IAnalyst {
 
     @Override
     public void custom(String event) {
-        // TODO Add to fabric analytic
+        Answers
+                .getInstance()
+                .logCustom(new CustomEvent(event));
     }
 }

@@ -24,7 +24,6 @@ public final class PlacesActivity extends MuudyActivity implements PlacesView {
 
     public static void start(@ResultTo int to) {
         AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
-
         Intent starter = new Intent(activity, PlacesActivity.class);
 
         switch (to) {
@@ -50,7 +49,7 @@ public final class PlacesActivity extends MuudyActivity implements PlacesView {
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
-        mPresenter.getPlaces();
+        mPresenter.getPlaces(null);
     }
 
     @Override

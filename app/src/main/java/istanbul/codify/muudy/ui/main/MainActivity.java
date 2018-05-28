@@ -14,6 +14,8 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
+import istanbul.codify.muudy.model.event.HomeReselectEvent;
+import istanbul.codify.muudy.model.event.OwnProfileEvent;
 import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
@@ -21,6 +23,7 @@ import istanbul.codify.muudy.ui.home.HomeFragment;
 import istanbul.codify.muudy.ui.notification.NotificationFragment;
 import istanbul.codify.muudy.ui.profile.ProfileFragment;
 import istanbul.codify.muudy.ui.statistic.StatisticFragment;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -90,7 +93,9 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Override
     public void onHomeClicked(boolean reselect) {
         if (reselect) {
-            // TODO Event
+            EventBus
+                    .getDefault()
+                    .post(new HomeReselectEvent());
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -164,5 +169,10 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
             default:
                 throw new IllegalArgumentException("Unknown navigation");
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onOwnProfileEvent(OwnProfileEvent event) {
+        mPresenter.setSelected(Navigation.PROFILE);
     }
 }

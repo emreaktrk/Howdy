@@ -347,4 +347,8 @@ final class HomePresenter extends BasePresenter<HomeView> {
             post.notifyDataSetChanged();
         }
     }
+
+    void scrollToTop() {
+        findViewById(R.id.home_post_recycler, RecyclerView.class).scrollToPosition(0);
+    }
 }

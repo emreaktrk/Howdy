@@ -27,6 +27,8 @@ interface ChatView extends MvpView {
 
     void onError(ApiError error);
 
+    void onError(Throwable throwable);
+
     void onBackClicked();
 
     void onProfileClicked(long userId);

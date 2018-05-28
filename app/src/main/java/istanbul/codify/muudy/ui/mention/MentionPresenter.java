@@ -70,7 +70,11 @@ final class MentionPresenter extends BasePresenter<MentionView> {
     }
 
     void search(String query) {
-        // TODO Local search
+        RecyclerView.Adapter adapter = findViewById(R.id.mention_recycler, RecyclerView.class).getAdapter();
+        if (adapter instanceof MentionAdapter) {
+            MentionAdapter mention = (MentionAdapter) adapter;
+            mention.setFiltered(query);
+        }
     }
 
     void bind(List<User> users) {
@@ -94,9 +98,7 @@ final class MentionPresenter extends BasePresenter<MentionView> {
     }
 
     void remove(User user) {
-        if (mSelecteds.contains(user)) {
-            mSelecteds.remove(user);
-        }
+        mSelecteds.remove(user);
     }
 
     ArrayList<User> getSelecteds() {

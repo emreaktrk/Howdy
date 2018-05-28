@@ -41,6 +41,7 @@ final class PostsPresenter extends BasePresenter<PostsView> {
     void getPosts(@NonNull Activity activity, @Nullable String word) {
         findViewById(R.id.posts_title, AppCompatTextView.class).setText(activity.activities_title);
         GetActivityPostsRequest request = new GetActivityPostsRequest(activity.idactivities);
+        request.token = AccountUtils.tokenLegacy(getContext());
         if (word != null) {
             request.word = word;
         }
@@ -120,15 +121,6 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                             Logcat.v("Avatar clicked");
 
                             mView.onUserClicked(cell);
-                        }));
-        mDisposables.add(
-                adapter
-                        .followClicks()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(cell -> {
-                            Logcat.v("Follow clicked");
-
-                            mView.onFollowClicked(cell);
                         }));
         mDisposables.add(
                 adapter

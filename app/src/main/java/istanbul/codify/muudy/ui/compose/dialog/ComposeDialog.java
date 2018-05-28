@@ -49,8 +49,7 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
     public void onShareClicked() {
         ShareEvent event = new ShareEvent();
         event.sentence = getSerializable(String.class);
-        event.visibility = PostVisibility.ALL;
-        // TODO Set event properties like visibility etc.
+        event.visibility = mPresenter.getSelectedVisibility();
 
         EventBus
                 .getDefault()

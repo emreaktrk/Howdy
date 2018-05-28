@@ -172,6 +172,11 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
     }
 
     @Override
+    public void onError(Throwable throwable) {
+        ToastUtils.showShort(throwable.getMessage());
+    }
+
+    @Override
     public void onBackClicked() {
         onBackPressed();
     }
