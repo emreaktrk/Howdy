@@ -14,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="137" />
-                            <entry key="outputName" value="ic_map" />
+                            <entry key="height" value="267" />
+                            <entry key="outputName" value="ic_up_arrow" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\emrea\Desktop\map.svg" />
-                            <entry key="width" value="85" />
+                            <entry key="sourceFile" value="D:\downloads\up_arrow (1).svg" />
+                            <entry key="width" value="492" />
                           </map>
                         </option>
                       </PersistentState>

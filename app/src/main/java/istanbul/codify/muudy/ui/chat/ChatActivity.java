@@ -21,6 +21,7 @@ import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.Result;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.notification.MessageNotificationEvent;
+import istanbul.codify.muudy.model.event.notification.MessageReadedNotificationEvent;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
@@ -165,6 +166,18 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageReadedNotificationEvent event) {
+        User user = mPresenter.getmUser();
+            if (user != null) {
+                mPresenter.bind(user);
+                mPresenter.getMessages(user.iduser);
+                return;
+            }
+    }
+
+
 
     @Override
     public void onError(ApiError error) {

@@ -1,10 +1,8 @@
 package istanbul.codify.muudy.ui.word;
 
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.*;
 import android.text.TextUtils;
 import android.view.View;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -69,6 +67,11 @@ final class WordPresenter extends BasePresenter<WordView> {
 
                             view.onMentionClicked();
                         }));
+
+        DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider2));
+        findViewById(R.id.word_recycler, RecyclerView.class).addItemDecoration(divider);
+        findViewById(R.id.word_recycler, RecyclerView.class).setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     void bind(List<Word> words) {

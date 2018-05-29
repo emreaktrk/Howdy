@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:orientation="horizontal"
+              android:paddingTop="8dp"
+              android:layout_marginBottom="96dp"
+              android:paddingBottom="8dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:gravity="center"
+              android:background="@drawable/marker_popup_bg_shape"
+              android:layout_height="wrap_content"
+              tools:context="istanbul.codify.muudy.ui.MarkerCustomPopup.MarkerCustomPopupFragmentDialog">
+
+
+    <android.support.v7.widget.AppCompatImageView
+            android:layout_width="32dp" android:layout_height="32dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/img"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/txt"
+              android:layout_marginStart="16dp"
+              android:textSize="16sp"
+              android:textColor="@color/black"
+              android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

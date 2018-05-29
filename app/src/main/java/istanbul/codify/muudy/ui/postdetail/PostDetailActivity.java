@@ -124,7 +124,7 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
 
     @Override
     public void onImageClicked(Post post) {
-        PhotoActivity.start(post.imgpath1);
+        PhotoActivity.start(post.post_mediapath);
     }
 
     @Override

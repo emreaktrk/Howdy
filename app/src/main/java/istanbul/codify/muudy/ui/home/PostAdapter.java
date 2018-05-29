@@ -41,6 +41,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private PublishSubject<Post> mDeleteSubject = PublishSubject.create();
     private PublishSubject<More> mMoreSubject = PublishSubject.create();
     private List<Post> mPosts;
+    private List<User> mUsersList;
     private RecommendedUsersAdapter mUsers;
     private More mMore = new More(0, true);
 
@@ -50,6 +51,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public PostAdapter(@Nullable List<Post> posts, @Nullable List<User> users) {
         mPosts = posts == null ? new ArrayList<>() : posts;
+        mUsersList = users;
 
         if (users != null && !users.isEmpty()) {
             mUsers = new RecommendedUsersAdapter(users);
@@ -142,7 +144,19 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mUsers == null ? mPosts.size() : mPosts.size() + 1;
+        if (mPosts.size() > 0) {
+            if (mUsersList != null) {
+                if (mUsersList.size() > 0) {
+                    return mPosts.size() + 1;
+                } else {
+                    return mPosts.size();
+                }
+            }else{
+                return mPosts.size();
+            }
+        } else {
+            return 0;
+        }
     }
 
     @Override

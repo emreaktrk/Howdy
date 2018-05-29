@@ -1,16 +1,16 @@
 package istanbul.codify.muudy.ui.statistic.map;
 
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.VisibleRegion;
+import com.google.android.gms.maps.model.*;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.ApiManager;
@@ -21,6 +21,7 @@ import istanbul.codify.muudy.api.pojo.response.GetTopEmojisOnMapResponse;
 import istanbul.codify.muudy.helper.rx.map.RxGoogleMap;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.EmojiLocation;
+import istanbul.codify.muudy.ui.MarkerCustomPopup.MarkerCustomPopupFragmentDialog;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
 import java.math.BigDecimal;
@@ -37,11 +38,11 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
     }
 
     void bind(GoogleMap map) {
-        LatLng center = new LatLng(39d, 34.75d);
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 17f);
+        LatLng center = new LatLng(39.2d, 34.75d);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(center, 4.7f);
         map.animateCamera(update);
         BigDecimal threshold = new BigDecimal(1.365772219865448E-5);
-
+        map.getUiSettings().setMapToolbarEnabled(false);
         mDisposables.add(
                 RxGoogleMap
                         .cameraIdles(map)
@@ -53,6 +54,8 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
                         })
                         .debounce(500, TimeUnit.MILLISECONDS)
                         .subscribe(region -> mView.onArea(map, region)));
+
+
     }
 
     MapView map() {
@@ -89,12 +92,25 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
     void icons(GoogleMap map, List<EmojiLocation> locations) {
         map.clear();
 
-        for (EmojiLocation location : locations) {
-            map.addMarker(
+
+        for (int i = 0; i < locations.size(); i++) {
+
+            Marker temp = map.addMarker(
                     new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map))
-                            .title(location.post_emoji_word + " (" + location.emojiCount + ")")
-                            .position(new LatLng(location.lat, location.lng)));
+                            .position(new LatLng(locations.get(i).lat, locations.get(i).lng)));
+            temp.setTag(i);
         }
+
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                mView.onMarkerClicked(locations.get(Integer.parseInt(String.valueOf(marker.getTag()))));
+                return false;
+            }
+        });
+
     }
 }

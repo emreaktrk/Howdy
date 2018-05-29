@@ -5,6 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.google.android.gms.location.LocationServices;
@@ -239,6 +240,14 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         }));
 
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+
+        if (wall.posts.size() > 0){
+            findViewById(R.id.home_post_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+            findViewById(R.id.home_post_no_post, AppCompatTextView.class).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.home_post_recycler, RecyclerView.class).setVisibility(View.GONE);
+            findViewById(R.id.home_post_no_post, AppCompatTextView.class).setVisibility(View.VISIBLE);
+        }
     }
 
     void like(long postId) {

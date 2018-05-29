@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.word;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -66,6 +67,17 @@ final class WordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             row.mCategory.setVisibility(TextUtils.isEmpty(word.word_top_category_text) ? View.GONE : View.VISIBLE);
             row.mCategory.setText(word.word_top_category_text);
+
+            if(word.words_arrow.equals("up") ){
+                row.mArrow.setVisibility(View.VISIBLE);
+                row.mArrow.setImageResource(R.drawable.ic_up_arrow);
+            }else if((word.words_arrow.equals("down"))){
+                row.mArrow.setVisibility(View.VISIBLE);
+                row.mArrow.setImageResource(R.drawable.ic_down_arrow);
+            }else{
+
+                row.mArrow.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -100,6 +112,7 @@ final class WordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private CircleImageView mImage;
         private AppCompatTextView mText;
         private AppCompatTextView mCategory;
+        private AppCompatImageView mArrow;
 
         Row(View itemView) {
             super(itemView);
@@ -107,6 +120,7 @@ final class WordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mImage = itemView.findViewById(R.id.word_image);
             mText = itemView.findViewById(R.id.word_text);
             mCategory = itemView.findViewById(R.id.word_category);
+            mArrow = itemView.findViewById(R.id.word_arrow);
 
             itemView.setOnClickListener(this);
         }

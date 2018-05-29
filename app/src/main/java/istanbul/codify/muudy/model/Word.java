@@ -11,6 +11,7 @@ public final class Word implements Selectable, Serializable {
     public String words_emoji_url;
     public String words_verb_at_end;
     public String words_verb_in_middle;
+    public String words_arrow;
     public long words_top_category_id;
     public transient String word_top_category_text;
 

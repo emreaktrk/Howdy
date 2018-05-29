@@ -17,4 +17,6 @@ interface StatisticMapView extends MvpView {
     void onLoaded(GoogleMap map, List<EmojiLocation> locations);
 
     void onError(ApiError error);
+
+    void onMarkerClicked(EmojiLocation emojiLocation);
 }

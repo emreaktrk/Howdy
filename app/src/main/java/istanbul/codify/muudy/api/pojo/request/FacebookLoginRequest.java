@@ -21,5 +21,8 @@ public final class FacebookLoginRequest {
         gender = facebook.gender;
         profileImageUrl = facebook.picture.data.url;
         facebookID = facebook.id;
+        if (facebook.email != null){
+            email = facebook.email;
+        }
     }
 }

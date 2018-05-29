@@ -49,6 +49,10 @@ import java.util.List;
 
 final class ChatPresenter extends BasePresenter<ChatView> {
 
+    public User getmUser() {
+        return mUser;
+    }
+
     private User mUser;
 
     @Override
@@ -121,6 +125,7 @@ final class ChatPresenter extends BasePresenter<ChatView> {
         recycler.addItemDecoration(new SideSpaceItemDecoration(space, LinearLayoutManager.HORIZONTAL));
         recycler.addItemDecoration(new SideSpaceItemDecoration(space / 2, LinearLayoutManager.VERTICAL));
     }
+
 
     void bind(@NonNull User user) {
         mUser = user;

@@ -47,29 +47,11 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
 
         mPresenter.attachView(this, this);
 
-        handlePushNotification();
+
 
     }
 
-    private void handlePushNotification(){
 
-        Intent intent = getIntent();
-
-        int itemId = intent.getIntExtra(FCMListenerService.NOTIFICATION_ITEMID,0);
-        NotificationActionType actionType = getNotificationActionType(intent.getIntExtra(FCMListenerService.NOTIFICATION_ACTIONTYPE,0));
-
-        if (actionType != null) {
-
-
-            switch (actionType) {
-                case MESSAGE:
-                    ChatActivity.start((long) itemId);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
 
     @Override
     protected void onResume() {

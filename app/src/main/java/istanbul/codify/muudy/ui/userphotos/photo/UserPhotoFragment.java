@@ -35,6 +35,8 @@ public final class UserPhotoFragment extends MuudyFragment implements UserPhotoV
         String path = getSerializable(String.class);
         if (path != null) {
             mPresenter.bind(path);
+        }else{
+
         }
     }
 
