@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
+import istanbul.codify.muudy.account.sync.location.LocationContract;
 import istanbul.codify.muudy.account.sync.profile.ProfileContract;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.User;
@@ -28,6 +29,9 @@ public final class AccountUtils {
 
         ContentResolver.setSyncAutomatically(account, ProfileContract.AUTHORITY, true);
         ContentResolver.addPeriodicSync(account, ProfileContract.AUTHORITY, Bundle.EMPTY, 60L);
+
+        ContentResolver.setSyncAutomatically(account, LocationContract.AUTHORITY, true);
+        ContentResolver.addPeriodicSync(account, LocationContract.AUTHORITY, Bundle.EMPTY, 60L);
     }
 
     public synchronized static void update(Context context, User user) {

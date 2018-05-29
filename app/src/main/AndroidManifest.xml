@@ -192,6 +192,24 @@
                 android:label="Profile"
                 android:syncable="true"/>
 
+        <service
+                android:name=".account.sync.location.LocationSyncService"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                    android:name="android.content.SyncAdapter"
+                    android:resource="@xml/sync_location"/>
+        </service>
+
+        <provider
+                android:name=".account.sync.location.LocationProvider"
+                android:authorities="istanbul.codify.muudy.location"
+                android:exported="false"
+                android:label="Location"
+                android:syncable="true"/>
+
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"

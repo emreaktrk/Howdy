@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import android.view.ViewGroup;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.userphotos.photo.UserPhotoFragment;
-import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 
 public final class UserPhotosActivity extends MuudyActivity implements UserPhotosView {
 
@@ -56,16 +53,19 @@ public final class UserPhotosActivity extends MuudyActivity implements UserPhoto
 
     @Override
     public FragmentPagerItemAdapter create(User user) {
-        FragmentPagerItemAdapter pagerItemAdapter =  new FragmentPagerItemAdapter(
-                getSupportFragmentManager(),
-                FragmentPagerItems
-                        .with(this)
-                        .add("Resim 1", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath1))
-                        .add("Resim 2", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath2))
-                        .add("Resim 3", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath3))
-                        .create());
+        FragmentPagerItems.Creator creator = FragmentPagerItems
+                .with(this)
+                .add("Resim 1", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath1));
 
-                return pagerItemAdapter;
+        if (!StringUtils.isEmpty(user.imgpath2)) {
+            creator.add("Resim 2", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath2));
+        }
+
+        if (!StringUtils.isEmpty(user.imgpath3)) {
+            creator.add("Resim 3", UserPhotoFragment.class, UserPhotoFragment.args(user.imgpath3));
+        }
+
+        return new FragmentPagerItemAdapter(getSupportFragmentManager(), creator.create());
     }
 
     @Override

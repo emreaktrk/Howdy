@@ -177,4 +177,7 @@ public interface ApiServices {
 
     @POST("getweeklytopusers")
     Single<WeeklyTopsUsersResponse> getWeeklyTopUsers(@Body WeeklyTopUsersRequest request);
+
+    @POST("getrecomennedplaces")
+    Call<GetRecommendedPlacesResponse> getRecommendedPlaces(@Body GetRecommendedPlacesRequest request);
 }
