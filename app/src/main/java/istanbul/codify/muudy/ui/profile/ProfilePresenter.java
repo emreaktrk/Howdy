@@ -178,6 +178,16 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         }));
 
         mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Edit clicked");
+
+                            view.onEditClicked();
+                        }));
+
+        mDisposables.add(
                 RxSwipeRefreshLayout
                         .refreshes(findViewById(R.id.profile_refresh))
                         .subscribe(o -> {

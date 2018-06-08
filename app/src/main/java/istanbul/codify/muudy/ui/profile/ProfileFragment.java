@@ -19,6 +19,7 @@ import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.navigation.NavigationFragment;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
+import istanbul.codify.muudy.ui.profileedit.ProfileEditActivity;
 import istanbul.codify.muudy.ui.settings.SettingsActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.users.UsersActivity;
@@ -131,9 +132,9 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
     @Override
     public void onLoaded(List<Post> posts, int selectedIndex) {
-        if (selectedIndex == 0){
+        if (selectedIndex == 0) {
             mPresenter.bindPosts(posts);
-        }else{
+        } else {
             mPresenter.bindStars(posts);
         }
     }
@@ -218,8 +219,12 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     }
 
     @Override
+    public void onEditClicked() {
+        ProfileEditActivity.start();
+    }
+
+    @Override
     public void onRefresh() {
-        //mPresenter.posts();
         mPresenter.refresh();
     }
 

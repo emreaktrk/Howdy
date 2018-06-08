@@ -14,6 +14,15 @@
             android:layout_height="56dp"
             android:background="@color/white">
 
+        <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/profile_edit"
+                style="@style/Button.Transparent"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="start"
+                android:padding="14dp"
+                android:src="@drawable/ic_edit"/>
+
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/profile_username"
                 style="@style/Text.Toolbar"

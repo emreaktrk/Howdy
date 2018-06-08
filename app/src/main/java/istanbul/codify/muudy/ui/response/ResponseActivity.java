@@ -116,7 +116,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     @Override
     public void onSendClicked() {
-        User user = getSerializable(User.class);
+        User user = mPresenter.getUser();
         if (user != null) {
             mPresenter.answerHi(user.iduser);
         }

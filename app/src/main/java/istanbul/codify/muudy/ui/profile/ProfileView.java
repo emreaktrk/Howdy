@@ -59,5 +59,7 @@ interface ProfileView extends MvpView {
 
     void onInstagramClicked();
 
+    void onEditClicked();
+
     void onRefresh();
 }

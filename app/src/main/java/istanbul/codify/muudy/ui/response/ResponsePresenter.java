@@ -77,7 +77,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
 
     }
 
-    public void addClickToWordContainer(ResponseView view) {
+    void addClickToWordContainer(ResponseView view) {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.response_word_container))
@@ -88,7 +88,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         }));
     }
 
-    public void getUserProfile(Long userId, String notificationMessage) {
+    void getUserProfile(Long userId, String notificationMessage) {
         GetUserProfileRequest request = new GetUserProfileRequest(userId);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -112,7 +112,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         }));
     }
 
-    public void getUserProfileForAnswer(Long userId, String notificationMessage, String wordText, String wordImage) {
+    void getUserProfileForAnswer(Long userId, String notificationMessage, String wordText, String wordImage) {
         GetUserProfileRequest request = new GetUserProfileRequest(userId);
         request.token = AccountUtils.tokenLegacy(getContext());
 
@@ -124,7 +124,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
                             @Override
                             protected void success(GetUserProfileResponse response) {
-                                mView.onLoaded(response.data.user, notificationMessage,wordText,wordImage);
+                                mView.onLoaded(response.data.user, notificationMessage, wordText, wordImage);
                             }
 
                             @Override
@@ -135,8 +135,6 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                             }
                         }));
     }
-
-
 
     void bind(@NonNull Notification notification, Boolean isAnswer) {
         User user = notification.fromUser;
@@ -161,14 +159,14 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
             findViewById(R.id.response_word_container).setVisibility(View.VISIBLE);
             findViewById(R.id.response_word, AppCompatButton.class).setVisibility(View.GONE);
             findViewById(R.id.response_selected_word, AppCompatTextView.class).setText(notification.notification_answerhi_word_text);
-            findViewById(R.id.response_send,AppCompatButton.class).setVisibility(View.GONE);
+            findViewById(R.id.response_send, AppCompatButton.class).setVisibility(View.GONE);
             Picasso
                     .with(getContext())
                     .load(BuildConfig.URL + notification.notification_answerhi_word_img)
                     .placeholder(R.drawable.ic_avatar)
                     .into(findViewById(R.id.response_word_image, AppCompatImageView.class));
-        }else{
-            findViewById(R.id.response_send,AppCompatButton.class).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.response_send, AppCompatButton.class).setVisibility(View.VISIBLE);
         }
 
     }
@@ -271,5 +269,9 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.response_word_image, AppCompatImageView.class));
 
+    }
+
+    User getUser() {
+        return mUser;
     }
 }
