@@ -13,6 +13,8 @@ interface SettingsView extends MvpView {
 
     void onContactsClicked();
 
+    void onFacebookFriendsClicked();
+
     void onSocialMediaClicked();
 
     void onChangePasswordClicked();
@@ -32,5 +34,4 @@ interface SettingsView extends MvpView {
     void onError(ApiError error);
 
     void onCloseClicked();
-
 }

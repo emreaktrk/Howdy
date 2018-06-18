@@ -124,6 +124,9 @@ public interface ApiServices {
     @POST("facebooklogin")
     Single<FacebookLoginResponse> facebookLogin(@Body FacebookLoginRequest request);
 
+    @POST("getfacebookfriends")
+    Single<FacebookFriendsResponse> facebookFriends(@Body FacebookFriendsRequest request);
+
     @POST("logout")
     Single<LogoutResponse> logout(@Body LogoutRequest request);
 

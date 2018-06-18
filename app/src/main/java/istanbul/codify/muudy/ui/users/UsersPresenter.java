@@ -6,11 +6,16 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.location.Location;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.*;
 import android.view.View;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -20,13 +25,13 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
+import istanbul.codify.muudy.api.pojo.request.FollowRequest;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.api.pojo.response.FollowResponse;
 import istanbul.codify.muudy.logcat.Logcat;
-import istanbul.codify.muudy.model.Emotion;
-import istanbul.codify.muudy.model.FollowState;
-import istanbul.codify.muudy.model.User;
-import istanbul.codify.muudy.model.UsersScreenMode;
+import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -348,5 +353,64 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                                 mView.onError(error);
                             }
                         }));
+    }
+
+    void getFacebookFriends() {
+        GraphRequest request =
+                GraphRequest
+                        .newGraphPathRequest(
+                                AccessToken.getCurrentAccessToken(),
+                                "/me/friends",
+                                response -> {
+                                    try {
+                                        String data = response.getJSONObject().get("data").toString();
+                                        ArrayList<FacebookProfile> friends = new Gson().fromJson(data, new TypeToken<ArrayList<FacebookProfile>>() {
+                                        }.getType());
+
+                                        List<String> ids = new ArrayList<>();
+                                        for (FacebookProfile profile : friends) {
+                                            ids.add(profile.id);
+                                        }
+
+                                        requestFriends(ids);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        mView.onError(new ApiError("Facebook a baglanilamadi"));
+                                    }
+                                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void requestFriends(List<String> ids) {
+        FacebookFriendsRequest request = new FacebookFriendsRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.facebookIdArray = ids.toString().replace("[", "").replace("]", "");
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .facebookFriends(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<FacebookFriendsResponse>() {
+                            @Override
+                            protected void success(FacebookFriendsResponse response) {
+                                mView.onLoaded(response.data);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    void update(FacebookProfile facebook) {
+        // TODO Update profile with facebook id
     }
 }

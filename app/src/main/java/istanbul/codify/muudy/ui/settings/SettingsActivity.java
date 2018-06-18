@@ -72,6 +72,11 @@ public final class SettingsActivity extends MuudyActivity implements SettingsVie
     }
 
     @Override
+    public void onFacebookFriendsClicked() {
+        UsersActivity.start(UsersScreenMode.FACEBOOK);
+    }
+
+    @Override
     public void onSocialMediaClicked() {
         SocialMediaActivity.start();
     }

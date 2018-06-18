@@ -91,7 +91,7 @@ public final class LoginFragment extends MuudyFragment implements LoginView {
     public void onConnectWithFacebookClicked() {
         LoginManager
                 .getInstance()
-                .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+                .logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_friends"));
     }
 
     @Override
@@ -170,6 +170,4 @@ public final class LoginFragment extends MuudyFragment implements LoginView {
     private void loginWithFacebook(FacebookProfile facebook) {
         mPresenter.bind(facebook);
     }
-
-
 }

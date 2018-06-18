@@ -10,6 +10,10 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.facebook.*;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.gson.Gson;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
@@ -19,11 +23,13 @@ import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class UsersActivity extends MuudyActivity implements UsersView {
 
     private UsersPresenter mPresenter = new UsersPresenter();
+    private CallbackManager mCallback;
 
     public static void start(@Nullable Emotion emotion) {
         Context context = Utils.getApp().getApplicationContext();
@@ -102,6 +108,38 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
                 case UsersScreenMode.USERS:
                     ArrayList<User> users = getSerializable(ArrayList.class);
                     mPresenter.bind(users);
+                    return;
+                case UsersScreenMode.FACEBOOK:
+                    if (AccessToken.getCurrentAccessToken() == null) {
+                        mCallback = CallbackManager.Factory.create();
+
+                        LoginManager
+                                .getInstance()
+                                .registerCallback(mCallback, new FacebookCallback<LoginResult>() {
+                                    @Override
+                                    public void onSuccess(LoginResult result) {
+                                        fetchFacebookProfile();
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(FacebookException error) {
+                                        ToastUtils.showShort(error.getMessage());
+
+                                        finish();
+                                    }
+                                });
+
+                        LoginManager
+                                .getInstance()
+                                .logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_friends"));
+                    } else {
+                        mPresenter.getFacebookFriends();
+                    }
                     return;
                 default:
                     throw new IllegalArgumentException("Not implemented");
@@ -199,5 +237,31 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
     @Override
     public void onCloseClicked() {
         finish();
+    }
+
+    private void fetchFacebookProfile() {
+        GraphRequest request = GraphRequest
+                .newMeRequest(AccessToken.getCurrentAccessToken(), (object, response) -> {
+                    FacebookProfile facebook = new Gson().fromJson(object.toString(), FacebookProfile.class);
+                    loginWithFacebook(facebook);
+                });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,gender,link,location,timezone,updated_time,verified,picture.type(square).width(512).height(512),about,email");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
+    private void loginWithFacebook(FacebookProfile facebook) {
+        mPresenter.update(facebook);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (FacebookSdk.isFacebookRequestCode(requestCode)) {
+            mCallback.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

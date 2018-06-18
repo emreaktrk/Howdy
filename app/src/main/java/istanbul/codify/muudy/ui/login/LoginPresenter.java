@@ -106,10 +106,10 @@ final class LoginPresenter extends BasePresenter<LoginView> {
                             protected void success(FacebookLoginResponse response) {
                                 switch (response.data.type) {
                                     case USER_LOGINED:
-                                        mView.onLogin(response.data.user.get(0));
+                                        mView.onLogin(response.data.user);
                                         return;
                                     case USER_CREATED:
-                                        mView.onCreateUser(response.data.user.get(0));
+                                        mView.onCreateUser(response.data.user);
                                         return;
                                     default:
                                         throw new IllegalArgumentException("Unknown user type");

@@ -93,6 +93,16 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
 
         mDisposables.add(
                 RxView
+                        .clicks(findViewById(R.id.settings_facebook_friends))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Facebook friends clicked");
+
+                            view.onFacebookFriendsClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
                         .clicks(findViewById(R.id.settings_feedback))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {

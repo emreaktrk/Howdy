@@ -100,6 +100,7 @@
                     android:text="Takip Et"/>
 
             <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/settings_facebook_friends"
                     style="@style/Text.Normal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
