@@ -192,7 +192,7 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
     @Override
     public void onPostDeleted() {
-
+        AccountUtils.sync(getContext());
     }
 
     @Override
@@ -231,13 +231,6 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     @Override
     public void onSync(User me) {
         mPresenter.bind(me);
-        mPresenter.posts();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDeleteEvent(DeleteEvent event) {
-        if (mPresenter.getSelected() == 0) {
-            mPresenter.posts();
-        }
+        mPresenter.refresh();
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context=".ui.main.MainActivity"
+        android:gravity="center"
+        tools:parentTag="android.support.v7.widget.LinearLayoutCompat">
+
+    <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/like_view_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/button_like"
+            android:padding="4dp"
+            android:background="@android:color/transparent"/>
+
+    <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/like_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            tools:text="0"/>
+</merge>

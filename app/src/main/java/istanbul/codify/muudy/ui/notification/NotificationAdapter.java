@@ -28,16 +28,12 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
     private final PublishSubject<FollowRequest> mPublishAcceptFollowRequest = PublishSubject.create();
     private final PublishSubject<FollowRequest> mPublishDeclineFollowRequest = PublishSubject.create();
     private final PublishSubject<List<FollowRequest>> mPublishSeeAllRequests = PublishSubject.create();
-    List<FollowRequest> mRequests;
+    private List<FollowRequest> mRequests;
     private List<Notification> mList;
-
-    public NotificationAdapter(@Nullable List<Notification> list) {
-        mList = list == null ? new ArrayList<>() : list;
-    }
 
     public NotificationAdapter(@Nullable List<Notification> list, List<FollowRequest> requests) {
         mList = list == null ? new ArrayList<>() : list;
-        mRequests = requests;
+        mRequests = requests == null ? new ArrayList<>() : requests;
     }
 
     @NonNull
@@ -100,8 +96,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
                     mPublishDeclineFollowRequest.onNext(request);
                 }
             });
-
-
         } else if (mHolder instanceof NotificationHeaderHolder) {
             Notification notification = mList.get(getItemPosition(position));
             NotificationHeaderHolder holder = (NotificationHeaderHolder) mHolder;
@@ -119,7 +113,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
                     .placeholder(R.mipmap.ic_launcher_round)
                     .into(holder.mImage);
         }
-
     }
 
     @Override
@@ -131,7 +124,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             return mList.size();
         }
-
     }
 
     @Override
@@ -159,7 +151,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             return NotificationHolder.TYPE;
         }
-
     }
 
     public int getItemPosition(int position) {
@@ -228,7 +219,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View view) {
-            Notification notification = mList.get(getAdapterPosition());
+            Notification notification = mList.get(getItemPosition(getAdapterPosition()));
             mPublish.onNext(notification);
         }
     }
@@ -258,7 +249,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View view) {
-
             FollowRequest request = mRequests.get(getItemPosition(getAdapterPosition()));
             mPublishFollowRequest.onNext(request);
         }
@@ -291,7 +281,6 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
             super(itemView);
 
             mText = itemView.findViewById(R.id.notification_header_text);
-
         }
     }
 }

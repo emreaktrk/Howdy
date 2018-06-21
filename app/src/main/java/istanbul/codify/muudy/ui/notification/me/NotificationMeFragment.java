@@ -1,9 +1,5 @@
 package istanbul.codify.muudy.ui.notification.me;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
@@ -11,12 +7,12 @@ import istanbul.codify.muudy.api.pojo.response.AnswerFollowResponse;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
-import istanbul.codify.muudy.ui.weeklytopuser.WeeklyTopUsersActivity;
 import istanbul.codify.muudy.ui.followrequests.FollowRequestActivity;
 import istanbul.codify.muudy.ui.givevote.GiveVoteDialog;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.response.ResponseActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.ui.weeklytopuser.WeeklyTopUsersActivity;
 
 import java.util.List;
 
@@ -30,11 +26,11 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
-        /*mPresenter.attachView(this, this);
-        mPresenter.getNotifications();*/
+        mPresenter.attachView(this, this);
+        mPresenter.getNotifications();
     }
 
     @Override
@@ -42,14 +38,6 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
         super.onDestroyView();
 
         mPresenter.detachView();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        mPresenter.attachView(this, this);
-        mPresenter.getNotifications();
     }
 
     @Override
@@ -77,16 +65,16 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case SAY_HI:
-                ResponseActivity.start(notification,false);
+                ResponseActivity.start(notification, false);
                 return;
             case ANSWER_HI:
-                ResponseActivity.start(notification,true);
+                ResponseActivity.start(notification, true);
                 return;
             case COMMENT:
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case GIVE_VOTE:
-                GiveVoteDialog.newInstance(notification.notification_msg,notification.notification_postid).show(getFragmentManager(),null);
+                GiveVoteDialog.newInstance(notification.notification_msg, notification.notification_postid).show(getFragmentManager(), null);
                 return;
             case TAG:
                 PostDetailActivity.start(notification.notification_postid);

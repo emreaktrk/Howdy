@@ -19,7 +19,6 @@ import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
-import istanbul.codify.muudy.helper.OnSwipeDialogCallback;
 import istanbul.codify.muudy.helper.RecyclerViewHelper;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Category;
@@ -35,10 +34,9 @@ import java.util.List;
 
 final class ProfilePresenter extends BasePresenter<ProfileView> {
 
-    private int selectedIndex = 0;
-
     User mUser;
-    RecyclerViewHelper recyclerViewHelper;
+    RecyclerViewHelper mRecyclerHelper;
+    private int selectedIndex = 0;
 
     @Override
     public void attachView(ProfileView view, View root) {
@@ -280,7 +278,6 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         GetUserProfileRequest request = new GetUserProfileRequest(me.iduser);
         request.token = AccountUtils.tokenLegacy(getContext());
 
-        //   findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(true);
         selectedIndex = 0;
         mDisposables.add(
                 ApiManager
@@ -306,7 +303,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     void bindPosts(List<Post> posts) {
         setSelected(0);
 
-        removeDiveder();
+        removeDivider();
         PostAdapter post = new PostAdapter(posts);
         mDisposables.add(
                 post
@@ -347,27 +344,24 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
 
+        if (mRecyclerHelper != null) {
+            mRecyclerHelper.detachFromRecyclerView(findViewById(R.id.profile_recycler, RecyclerView.class));
+        }
 
+        mRecyclerHelper = new RecyclerViewHelper();
+        mRecyclerHelper.setItemViewSwipeEnable(true);
 
-        recyclerViewHelper = new RecyclerViewHelper();
-        recyclerViewHelper.setItemViewSwipeEnable(true);
-
-        recyclerViewHelper.initSwipe(findViewById(R.id.profile_recycler, RecyclerView.class),getContext(), posts, new OnSwipeDialogCallback() {
-            @Override
-            public void onDialogButtonClick(Boolean isYes, int position, Boolean isDelete) {
-                if(isYes) {
-                    if (isDelete) {
-                        mView.onDeleteClicked(posts.get(position));
-                        Logcat.d("silinecek post: " + posts.get(position).post_text + "");
-                    } else {
-
-                    }
-                    post.notifyDataSetChanged();
-                }else {
-                    post.notifyDataSetChanged();
+        mRecyclerHelper.initSwipe(findViewById(R.id.profile_recycler, RecyclerView.class), getContext(), posts, (isYes, position, isDelete) -> {
+            if (isYes) {
+                if (isDelete) {
+                    mView.onDeleteClicked(posts.get(position));
+                    Logcat.d("Deleting post: " + posts.get(position).post_text + "");
                 }
-            }
 
+                post.notifyDataSetChanged();
+            } else {
+                post.notifyDataSetChanged();
+            }
         });
 
         if (posts.size() == 0) {
@@ -375,12 +369,9 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         } else {
             visibleRecycler();
         }
-
-
     }
 
     void stars(long categoryId) {
-
         if (categoryId == Category.GAME) {
             selectedIndex = 2;
         } else if (categoryId == Category.SERIES) {
@@ -406,7 +397,6 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserPostsResponse>() {
                             @Override
                             protected void success(GetUserPostsResponse response) {
-                                //   mView.onLoadedStars(response.data);
                                 mView.onLoaded(response.data, selectedIndex);
                                 findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
@@ -422,8 +412,8 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void bindStars(List<Post> stars) {
-        recyclerViewHelper.setItemViewSwipeEnable(false);
-        recyclerViewHelper.detachFromRecyclerView(findViewById(R.id.profile_recycler, RecyclerView.class));
+        mRecyclerHelper.setItemViewSwipeEnable(false);
+        mRecyclerHelper.detachFromRecyclerView(findViewById(R.id.profile_recycler, RecyclerView.class));
         StarAdapter post = new StarAdapter(stars);
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
 
@@ -432,12 +422,12 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         } else {
             visibleRecycler();
         }
-        addDiveder();
+        addDivider();
     }
 
     void bindUserTops(ArrayList<UserTop> userTops) {
-        recyclerViewHelper.setItemViewSwipeEnable(false);
-        recyclerViewHelper.detachFromRecyclerView(findViewById(R.id.profile_recycler, RecyclerView.class));
+        mRecyclerHelper.setItemViewSwipeEnable(false);
+        mRecyclerHelper.detachFromRecyclerView(findViewById(R.id.profile_recycler, RecyclerView.class));
         UserWeeklyTopAdapter adapter = new UserWeeklyTopAdapter(userTops, mUser);
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(adapter);
         if (userTops.size() == 0) {
@@ -446,11 +436,10 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
             visibleRecycler();
         }
 
-        addDiveder();
+        addDivider();
     }
 
-    void addDiveder() {
-
+    void addDivider() {
         if (findViewById(R.id.profile_recycler, RecyclerView.class).getItemDecorationCount() == 0) {
 
             DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
@@ -460,7 +449,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         }
     }
 
-    void removeDiveder() {
+    void removeDivider() {
         while (findViewById(R.id.profile_recycler, RecyclerView.class).getItemDecorationCount() > 0) {
             findViewById(R.id.profile_recycler, RecyclerView.class).removeItemDecorationAt(0);
         }
@@ -558,9 +547,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<DeletePostResponse>() {
                             @Override
                             protected void success(DeletePostResponse response) {
-                               // mView.onPostDeleted();
-
-                                mView.onPostsClicked();
+                                mView.onPostDeleted();
                             }
 
                             @Override
@@ -596,8 +583,5 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                                 mView.onError(error);
                             }
                         }));
-
     }
-
-
 }

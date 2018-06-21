@@ -53,6 +53,11 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
     }
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.layout_response;
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -92,11 +97,6 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
         super.onDestroy();
 
         mPresenter.detachView();
-    }
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.layout_response;
     }
 
     @Override

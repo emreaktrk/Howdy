@@ -89,8 +89,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             NoneHolder none = (NoneHolder) holder;
             none.mMessage.setText(post.post_text);
             none.mLike.setLike(post.isliked);
+            none.mLike.setText(post.post_likecount + "");
             none.mDate.setText(post.humanDate);
-           // none.mLike.setText(post.post_likecount + "");
             none.mComment.setText(post.post_commentcount + "");
             Picasso
                     .with(holder.itemView.getContext())
@@ -154,7 +154,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 } else {
                     return mPosts.size();
                 }
-            }else{
+            } else {
                 return mPosts.size();
             }
         } else {
@@ -243,7 +243,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mDeleteSubject;
     }
 
-    public PublishSubject<Post> likeCountclick() {
+    public PublishSubject<Post> likeCountClick() {
         return mLikerSubject;
     }
 
@@ -251,6 +251,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         mPosts.addAll(posts);
         mMore = more;
     }
+
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {
 
@@ -260,7 +261,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private LikeButton mLike;
         private AppCompatTextView mComment;
         private AppCompatTextView mDate;
-        private AppCompatTextView mLikeCount;
 
         NoneHolder(View itemView) {
             super(itemView);
@@ -268,7 +268,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mMessage = itemView.findViewById(R.id.post_message);
             mEmotion = itemView.findViewById(R.id.post_emotion);
             mDate = itemView.findViewById(R.id.post_date);
-            mLikeCount = itemView.findViewById(R.id.post_like_count);
 
             mImage = itemView.findViewById(R.id.post_image);
             mImage.setOnClickListener(this);
@@ -280,7 +279,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mComment = itemView.findViewById(R.id.post_comment);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
-            mLikeCount.setOnClickListener(this);
         }
 
         @Override
@@ -290,9 +288,6 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 case R.id.post_image:
                     mAvatarSubject.onNext(post);
                     return;
-
-                case R.id.post_like_count:
-                    mLikerSubject.onNext(post);
                 default:
                     mPostSubject.onNext(post);
             }
@@ -303,6 +298,12 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Post post = getItem(getAdapterPosition());
             Like like = new Like(post, isLiked);
             mLikeSubject.onNext(like);
+        }
+
+        @Override
+        public void onLikeTextClicked() {
+            Post post = getItem(getAdapterPosition());
+            mLikerSubject.onNext(post);
         }
 
         @Override
@@ -318,6 +319,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return true;
         }
     }
+
 
     abstract class MediaHolder extends NoneHolder {
 

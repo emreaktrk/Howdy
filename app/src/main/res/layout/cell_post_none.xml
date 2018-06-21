@@ -80,29 +80,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/post_message"
-                tools:checked="@sample/post.json/data/value"
                 tools:paddingStart="8dp"
-                tools:text="@sample/post.json/data/count"
                 android:layout_marginEnd="8dp"/>
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/post_like_count"
-            android:layout_width="20sp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginTop="4dp"
-            android:background="@android:color/transparent"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="222"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_message"
-            tools:text="@sample/post.json/comment/count" />
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/post_comment"

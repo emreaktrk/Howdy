@@ -109,8 +109,6 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         }
     }
 
-
-
     @Override
     public void onSearchClicked() {
         UserSearchActivity.start(ResultTo.FRAGMENT);

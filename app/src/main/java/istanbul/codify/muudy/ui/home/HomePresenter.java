@@ -2,13 +2,11 @@ package istanbul.codify.muudy.ui.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.location.Location;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
@@ -25,10 +23,7 @@ import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
-import istanbul.codify.muudy.helper.OnSwipeDialogCallback;
 import istanbul.codify.muudy.helper.RecyclerViewHelper;
-import istanbul.codify.muudy.helper.SwipeController;
-import istanbul.codify.muudy.helper.SwipeControllerActions;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.More;
 import istanbul.codify.muudy.model.Post;
@@ -37,9 +32,9 @@ import istanbul.codify.muudy.ui.base.BasePresenter;
 
 import java.util.ArrayList;
 
-import static istanbul.codify.muudy.ui.home.PostAdapter.RECOMMENDED_USER_POSITION;
-
 final class HomePresenter extends BasePresenter<HomeView> {
+
+    private RecyclerViewHelper mHelper;
 
     @Override
     public void attachView(HomeView view, View root) {
@@ -204,7 +199,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
         mDisposables.add(
                 post
-                        .likeCountclick()
+                        .likeCountClick()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
                             Logcat.v("Avatar clicked");
@@ -261,40 +256,37 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
         findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
 
-        if (wall.posts.size() > 0){
+        if (wall.posts.size() > 0) {
             findViewById(R.id.home_post_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
             findViewById(R.id.home_post_no_post, AppCompatTextView.class).setVisibility(View.GONE);
-        }else{
+        } else {
             findViewById(R.id.home_post_recycler, RecyclerView.class).setVisibility(View.GONE);
             findViewById(R.id.home_post_no_post, AppCompatTextView.class).setVisibility(View.VISIBLE);
         }
 
+        if (mHelper != null) {
+            mHelper.detachFromRecyclerView(findViewById(R.id.home_post_recycler, RecyclerView.class));
+        }
 
-        RecyclerViewHelper recyclerViewHelper = new RecyclerViewHelper();
-        recyclerViewHelper.setItemViewSwipeEnable(true);
+        mHelper = new RecyclerViewHelper();
+        mHelper.setItemViewSwipeEnable(true);
 
-        recyclerViewHelper.initSwipe(findViewById(R.id.home_post_recycler, RecyclerView.class),getContext(), wall, new OnSwipeDialogCallback() {
-            @Override
-            public void onDialogButtonClick(Boolean isYes, int position, Boolean isDelete) {
-                if(isYes) {
-                    if (isDelete) {
-                        mView.onDeleteClicked(wall.posts.get(position));
-                        Logcat.d("silinecek post: " + wall.posts.get(position).post_text + "");
-                    } else {
-                        Logcat.d("muudy post: " + wall.posts.get(position).post_text + "");
-                        mView.onMuudyClicked(wall.posts.get(position));
-
-                    }
-                    post.notifyDataSetChanged();
-                }else {
-                    post.notifyDataSetChanged();
+        mHelper.initSwipe(findViewById(R.id.home_post_recycler, RecyclerView.class), getContext(), wall, (isYes, position, isDelete) -> {
+            if (isYes) {
+                if (isDelete) {
+                    mView.onDeleteClicked(wall.posts.get(position));
+                    Logcat.d("Deleting post: " + wall.posts.get(position).post_text + "");
+                } else {
+                    Logcat.d("Muudy post: " + wall.posts.get(position).post_text + "");
+                    mView.onMuudyClicked(wall.posts.get(position));
                 }
+
+                post.notifyDataSetChanged();
+            } else {
+                post.notifyDataSetChanged();
             }
-
-
         });
     }
-
 
     void like(long postId) {
         LikePostRequest request = new LikePostRequest(postId);
