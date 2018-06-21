@@ -183,4 +183,10 @@ public interface ApiServices {
 
     @POST("getrecomennedplaces")
     Call<GetRecommendedPlacesResponse> getRecommendedPlaces(@Body GetRecommendedPlacesRequest request);
+
+    @POST("deleteMessages")
+    Single<DeleteUserMessagesResponse> deleteUserMessages(@Body DeleteUserMessagesRequest request);
+
+    @POST("seelikers")
+    Single<SeeLikersResponse> seeLikers(@Body SeeLikersRequest request);
 }

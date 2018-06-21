@@ -12,4 +12,5 @@ public final class NotificationFollowing implements Serializable {
     public ArrayList<Post> likedPosts;
     public User fromUser;
     public String notification_msg;
+    public String humanDate;
 }

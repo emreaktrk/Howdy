@@ -176,6 +176,11 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         mPresenter.cancel();
     }
 
+    @Override
+    public void onGalleryPhotoSelected(Uri uri) {
+        mPresenter.bindGalleryPhoto(uri);
+    }
+
     @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

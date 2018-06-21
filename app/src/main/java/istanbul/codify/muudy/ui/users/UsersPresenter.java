@@ -138,6 +138,30 @@ final class UsersPresenter extends BasePresenter<UsersView> {
         findViewById(R.id.users_title, AppCompatTextView.class).setText(mode);
     }
 
+    void getLikers(Long postId){
+        SeeLikersRequest request = new SeeLikersRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.postId = postId;
+
+        mDisposables.add(
+          ApiManager
+                .getInstance()
+                .seeLikers(request)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ServiceConsumer<SeeLikersResponse>() {
+                    @Override
+                    protected void success(SeeLikersResponse response) {
+                        mView.onLoaded(response.data);
+                    }
+
+                    @Override
+                    protected void error(ApiError error) {
+
+                    }
+                })
+        );
+    }
+
     void getContacts(Activity activity) {
         mDisposables.add(
                 new RxPermissions(activity)

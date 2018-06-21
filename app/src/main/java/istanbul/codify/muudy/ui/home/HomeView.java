@@ -45,4 +45,6 @@ interface HomeView extends MvpView {
 
     void onMorePage(More more);
 
+    void onLikeCountClicked(Post post);
+
 }

@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.Random;
+
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceCallback;
@@ -39,7 +42,7 @@ public final class LocationSyncAdapter extends AbstractThreadedSyncAdapter {
                     request.token = AccountUtils.tokenLegacy(getContext());
                     request.lat = location.getLatitude();
                     request.lng = location.getLongitude();
-                    request.sendPush = 1;
+                    request.sendPush = new Random().nextInt(4);
 
                     ApiManager
                             .getInstance()

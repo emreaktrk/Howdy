@@ -30,7 +30,7 @@ import java.util.List;
 public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @IntRange(from = 0, to = Integer.MAX_VALUE)
-    private static final int RECOMMENDED_USER_POSITION = 14;
+    public static final int RECOMMENDED_USER_POSITION = 14;
 
     private PublishSubject<Post> mPostSubject = PublishSubject.create();
     private PublishSubject<Like> mLikeSubject = PublishSubject.create();
@@ -40,6 +40,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private PublishSubject<Post> mMuudySubject = PublishSubject.create();
     private PublishSubject<Post> mDeleteSubject = PublishSubject.create();
     private PublishSubject<More> mMoreSubject = PublishSubject.create();
+    private PublishSubject<Post> mLikerSubject = PublishSubject.create();
     private List<Post> mPosts;
     private List<User> mUsersList;
     private RecommendedUsersAdapter mUsers;
@@ -89,7 +90,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             none.mMessage.setText(post.post_text);
             none.mLike.setLike(post.isliked);
             none.mDate.setText(post.humanDate);
-            none.mLike.setText(post.post_likecount + "");
+           // none.mLike.setText(post.post_likecount + "");
             none.mComment.setText(post.post_commentcount + "");
             Picasso
                     .with(holder.itemView.getContext())
@@ -102,6 +103,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             none.mMessage.setText(str);
 
             if (holder instanceof MediaHolder) {
+
                 MediaHolder media = (MediaHolder) holder;
                 Picasso
                         .with(holder.itemView.getContext())
@@ -127,6 +129,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             recommended.mRecycler.setAdapter(mUsers);
         }
     }
+
 
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
@@ -240,6 +243,10 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mDeleteSubject;
     }
 
+    public PublishSubject<Post> likeCountclick() {
+        return mLikerSubject;
+    }
+
     public void add(ArrayList<Post> posts, More more) {
         mPosts.addAll(posts);
         mMore = more;
@@ -253,6 +260,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private LikeButton mLike;
         private AppCompatTextView mComment;
         private AppCompatTextView mDate;
+        private AppCompatTextView mLikeCount;
 
         NoneHolder(View itemView) {
             super(itemView);
@@ -260,6 +268,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mMessage = itemView.findViewById(R.id.post_message);
             mEmotion = itemView.findViewById(R.id.post_emotion);
             mDate = itemView.findViewById(R.id.post_date);
+            mLikeCount = itemView.findViewById(R.id.post_like_count);
 
             mImage = itemView.findViewById(R.id.post_image);
             mImage.setOnClickListener(this);
@@ -271,6 +280,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mComment = itemView.findViewById(R.id.post_comment);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+            mLikeCount.setOnClickListener(this);
         }
 
         @Override
@@ -280,6 +290,9 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 case R.id.post_image:
                     mAvatarSubject.onNext(post);
                     return;
+
+                case R.id.post_like_count:
+                    mLikerSubject.onNext(post);
                 default:
                     mPostSubject.onNext(post);
             }

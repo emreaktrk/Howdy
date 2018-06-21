@@ -68,6 +68,17 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull @UsersScreenMode String mode, Long postId) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UsersActivity.class);
+        starter.putExtra(String.class.getSimpleName(), mode);
+        starter.putExtra(Long.class.getSimpleName(),postId);
+        ActivityUtils.startActivity(starter);
+    }
+
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_users;
@@ -108,6 +119,10 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
                 case UsersScreenMode.USERS:
                     ArrayList<User> users = getSerializable(ArrayList.class);
                     mPresenter.bind(users);
+                    return;
+                case UsersScreenMode.LIKERS:
+                    Long postId = getSerializable(Long.class);
+                    mPresenter.getLikers(postId);
                     return;
                 case UsersScreenMode.FACEBOOK:
                     if (AccessToken.getCurrentAccessToken() == null) {

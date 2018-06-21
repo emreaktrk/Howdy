@@ -21,11 +21,14 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.event.OwnProfileEvent;
 import istanbul.codify.muudy.model.zipper.Like;
+import istanbul.codify.muudy.ui.home.PostAdapter;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,12 +157,12 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
     }
 
     @Override
-    public void onDeleteClicked(Post post) {
+    public void onDeleteClicked(Post post,PostAdapter adapter) {
         new AlertDialog
                 .Builder(this)
                 .setMessage("Silmek istiyor musunuz?")
                 .setPositiveButton("Evet", (dialogInterface, which) -> {
-                    mPresenter.delete(post);
+                    mPresenter.delete(post,adapter);
 
                     Analytics
                             .getInstance()
@@ -192,6 +195,14 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
         EventBus
                 .getDefault()
                 .post(new DeleteEvent());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDeleteEvent(DeleteEvent event) {
+
+        String word = getSerializable(String.class);
+        Activity activity = getSerializable(Activity.class);
+        mPresenter.getPosts(activity,word);
     }
 
     @Override

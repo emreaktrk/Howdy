@@ -42,6 +42,7 @@ public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCh
     public void setText(CharSequence text, BufferType type) {
         if (text.length() > 0 && text.charAt(0) != ' ') {
             text = " " + text;
+            text = "";
         }
 
         super.setText(text, type);
@@ -51,6 +52,7 @@ public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCh
         setOnCheckedChangeListener(null);
         setChecked(isLiked);
         setOnCheckedChangeListener(this);
+
     }
 
     public void setOnLikeClickListener(OnLikeClickListener listener) {
@@ -62,8 +64,9 @@ public class LikeButton extends AppCompatCheckBox implements CompoundButton.OnCh
         String text = getText().toString().replace(" ", "");
         if (!StringUtils.isEmpty(text)) {
             Integer count = Integer.valueOf(text);
-            setText(isChecked ? (count + 1) + "" : (count - 1) + "");
+            //setText(isChecked ? (count + 1) + "" : (count - 1) + "");
         }
+
 
         if (mListener != null) {
             mListener.onLike(isChecked);

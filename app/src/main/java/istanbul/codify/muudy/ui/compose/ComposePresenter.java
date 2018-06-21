@@ -13,8 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ViewUtils;
 import android.util.Base64;
 import android.view.View;
+import android.view.ViewGroup;
+
 import com.afollestad.materialcamera.MaterialCamera;
 import com.blankj.utilcode.util.StringUtils;
 import com.google.android.gms.location.LocationServices;
@@ -41,6 +44,7 @@ import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+import istanbul.codify.muudy.utils.AndroidUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -226,7 +230,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             Uri uri = uris.get(0);
                             Logcat.v("Selected uri for photo is " + uri.toString());
 
-                            mView.onPhotoSelected(uri);
+                            mView.onGalleryPhotoSelected(uri);
                         })
         );
     }
@@ -249,14 +253,50 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         View picture = findViewById(R.id.compose_picture);
 
+        int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
+
         Picasso
                 .with(getContext())
                 .load(mPhoto)
-                .resize(picture.getWidth(), picture.getHeight())
+                .resize(picture.getWidth(), height)
                 .centerCrop()
                 .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
 
         findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams params = picture.getLayoutParams();
+        params.height = height;
+
+        findViewById(R.id.compose_picture).setLayoutParams(params);
+    }
+
+    void bindGalleryPhoto(@Nullable Uri photo) {
+        mPhoto = photo;
+
+        View picture = findViewById(R.id.compose_picture);
+
+        int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
+
+     /*   Picasso
+                .with(getContext())
+                .load(mPhoto)
+                .resize(picture.getWidth(), height)
+                .centerCrop()
+                .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));*/
+
+        findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(BitmapFactory.decodeFile(photo.getPath()));
+
+        findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams params = picture.getLayoutParams();
+        params.height = height;
+
+        findViewById(R.id.compose_picture).setLayoutParams(params);
+
+
+
+
+
     }
 
     void bindVideo(@Nullable Uri video) {
@@ -276,6 +316,12 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageResource(R.drawable.ic_image_add);
         findViewById(R.id.compose_cancel).setVisibility(View.GONE);
+
+        int height = (int)Math.round(AndroidUtils.convertDpToPixel(50,getContext()));
+        ViewGroup.LayoutParams params = findViewById(R.id.compose_picture, AppCompatImageButton.class).getLayoutParams();
+        params.height = height;
+
+        findViewById(R.id.compose_picture, AppCompatImageButton.class).setLayoutParams(params);
     }
 
     void createTextPost() {
@@ -487,8 +533,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                     .videoEncodingBitRate(1024000)                     // Sets a custom bit rate for video recording.
                                     .audioEncodingBitRate(50000)                       // Sets a custom bit rate for audio recording.
                                     .videoFrameRate(24)                                // Sets a custom frame rate (FPS) for video recording.
-                                    .qualityProfile(MaterialCamera.QUALITY_HIGH)       // Sets a quality profile, manually setting bit rates or frame rates with other settings will overwrite individual quality profile settings
-                                    .videoPreferredHeight(720)                         // Sets a preferred height for the recorded video output.
+                                    .qualityProfile(MaterialCamera.QUALITY_480P)       // Sets a quality profile, manually setting bit rates or frame rates with other settings will overwrite individual quality profile settings
+                                    .videoPreferredHeight(480)                         // Sets a preferred height for the recorded video output.
                                     .videoPreferredAspect(4f / 3f)                     // Sets a preferred aspect ratio for the recorded video output.
                                     .maxAllowedFileSize(1024 * 1024 * 5)               // Sets a max file size of 5MB, recording will stop if file reaches this limit. Keep in mind, the FAT file system has a file size limit of 4GB.
                                     .iconRecord(R.drawable.mcam_action_capture)        // Sets a custom icon for the button used to start recording
@@ -501,7 +547,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                     .labelRetry(R.string.compose_retry)                              // Sets a custom button label for the button used to retry recording, when available
                                     .labelConfirm(R.string.compose_ok)                             // Sets a custom button label for the button used to confirm/submit a recording
                                     .autoRecordWithDelaySec(0)                         // The video camera will start recording automatically after a 5 second countdown. This disables switching between the front and back camera initially.
-                                    .autoRecordWithDelayMs(0)                          // Same as the above, expressed with milliseconds instead of seconds.
+                                    .autoRecordWithDelayMs(0)
+                                    .countdownSeconds(10)// Same as the above, expressed with milliseconds instead of seconds.
                                     .audioDisabled(false)                              // Set to true to record video without any audio.
                                     .start(VIDEO_REQUEST);
                         })

@@ -43,6 +43,8 @@ final class NotificationFollowingAdapter extends RecyclerView.Adapter<Notificati
                 .load(BuildConfig.URL + notification.fromUser.imgpath1)
                 .placeholder(R.mipmap.ic_launcher_round)
                 .into(holder.mImage);
+
+        holder.mDate.setText(notification.humanDate);
     }
 
     @Override
@@ -58,12 +60,14 @@ final class NotificationFollowingAdapter extends RecyclerView.Adapter<Notificati
 
         private CircleImageView mImage;
         private AppCompatTextView mText;
+        private AppCompatTextView mDate;
 
         Holder(View itemView) {
             super(itemView);
 
             mImage = itemView.findViewById(R.id.notification_image);
             mText = itemView.findViewById(R.id.notification_text);
+            mDate = itemView.findViewById(R.id.notification_date);
 
             itemView.setOnClickListener(this);
 

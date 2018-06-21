@@ -6,6 +6,7 @@ import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.base.MvpView;
+import istanbul.codify.muudy.ui.home.PostAdapter;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ interface PostsView extends MvpView {
 
     void onUserClicked(User user);
 
-    void onDeleteClicked(Post post);
+    void onDeleteClicked(Post post, PostAdapter adapter);
 
     void onPostDeleted();
 

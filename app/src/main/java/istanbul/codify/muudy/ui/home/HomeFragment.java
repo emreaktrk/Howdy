@@ -268,6 +268,11 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         mPresenter.getWall(getContext(), more);
     }
 
+    @Override
+    public void onLikeCountClicked(Post post) {
+        UsersActivity.start(UsersScreenMode.LIKERS, post.idpost);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
         mPresenter.getWall(getContext(), null);

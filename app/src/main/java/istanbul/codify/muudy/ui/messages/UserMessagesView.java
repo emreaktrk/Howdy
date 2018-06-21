@@ -14,6 +14,8 @@ interface UserMessagesView extends MvpView {
 
     void onUserMessageClicked(UserMessage message);
 
+    void onUserMessagesDeleted(UserMessage userMessage);
+
     void onLoaded(List<UserMessage> messages);
 
     void onError(ApiError error);

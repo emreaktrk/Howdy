@@ -88,6 +88,11 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
     }
 
     @Override
+    public void onUserMessagesDeleted(UserMessage userMessage) {
+        mPresenter.deleteUserMessage(userMessage);
+    }
+
+    @Override
     public void onLoaded(List<UserMessage> messages) {
         mPresenter.bind(messages);
     }

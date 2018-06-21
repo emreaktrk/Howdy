@@ -7,12 +7,15 @@ import android.support.annotation.StringDef;
         UsersScreenMode.FOLLOWING,
         UsersScreenMode.CONTACTS,
         UsersScreenMode.USERS,
-        UsersScreenMode.FACEBOOK})
+        UsersScreenMode.LIKERS,
+        UsersScreenMode.FACEBOOK
+})
 public @interface UsersScreenMode {
     String AROUND_WITH_EMOTION = "Etrafındakiler";
     String FOLLOWER = "Takip Edilenler";
     String FOLLOWING = "Takipçiler";
     String CONTACTS = "Kişilerim";
     String USERS = "Takip Ettikleri";
+    String LIKERS = "Beğenenler";
     String FACEBOOK = "Facebook Kişilerim";
 }

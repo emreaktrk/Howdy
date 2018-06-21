@@ -13,6 +13,8 @@ import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.helper.OnSwipeDialogCallback;
+import istanbul.codify.muudy.helper.RecyclerViewHelper;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Activity;
 import istanbul.codify.muudy.model.Post;
@@ -37,8 +39,12 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                             view.onCloseClicked();
                         }));
     }
+    String mWord;
+    Activity mActivity;
 
     void getPosts(@NonNull Activity activity, @Nullable String word) {
+        mWord = word;
+        mActivity = activity;
         findViewById(R.id.posts_title, AppCompatTextView.class).setText(activity.activities_title);
         GetActivityPostsRequest request = new GetActivityPostsRequest(activity.idactivities);
         request.token = AccountUtils.tokenLegacy(getContext());
@@ -122,7 +128,7 @@ final class PostsPresenter extends BasePresenter<PostsView> {
 
                             mView.onUserClicked(cell);
                         }));
-        mDisposables.add(
+      /*  mDisposables.add(
                 adapter
                         .deleteClicks()
                         .observeOn(AndroidSchedulers.mainThread())
@@ -139,9 +145,31 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                             Logcat.v("Muudy clicked");
 
                             mView.onMuudyClicked(cell);
-                        }));
+                        }));*/
 
         findViewById(R.id.posts_recycler, RecyclerView.class).setAdapter(adapter);
+
+        RecyclerViewHelper recyclerViewHelper = new RecyclerViewHelper();
+        recyclerViewHelper.setItemViewSwipeEnable(true);
+
+        recyclerViewHelper.initSwipe(findViewById(R.id.posts_recycler, RecyclerView.class),getContext(), posts, new OnSwipeDialogCallback() {
+            @Override
+            public void onDialogButtonClick(Boolean isYes, int position, Boolean isDelete) {
+                adapter.notifyDataSetChanged();
+                if(isYes) {
+                    if (isDelete) {
+                        mView.onDeleteClicked(posts.get(position), adapter);
+                        Logcat.d("silinecek post: " + posts.get(position).post_text + "");
+                    } else {
+                        Logcat.d("muudy post: " + posts.get(position).post_text + "");
+                        mView.onMuudyClicked(posts.get(position));
+
+                    }
+                }
+            }
+
+
+        });
     }
 
     void like(long postId) {
@@ -217,7 +245,7 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                         }));
     }
 
-    void delete(Post post) {
+    void delete(Post post,PostAdapter adapter) {
         DeletePostRequest request = new DeletePostRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
         request.postid = post.idpost;
@@ -230,7 +258,8 @@ final class PostsPresenter extends BasePresenter<PostsView> {
                         .subscribe(new ServiceConsumer<DeletePostResponse>() {
                             @Override
                             protected void success(DeletePostResponse response) {
-                                mView.onPostDeleted();
+                                getPosts(mActivity,mWord);
+
                             }
 
                             @Override
