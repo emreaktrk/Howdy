@@ -11,6 +11,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.model.Follow;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.view.FollowButton;
@@ -45,7 +46,8 @@ final class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.Holder> {
         holder.mUsername.setText(user.username);
         holder.mNameSurname.setText(user.namesurname);
 
-        if (user.isfollowing != null) {
+        if (user.isfollowing != null && user.iduser != AccountUtils.me(holder.mFollow.getContext()).iduser) {
+
             holder.mFollow.setVisibility(View.VISIBLE);
             switch (user.isfollowing) {
                 case FOLLOWING:

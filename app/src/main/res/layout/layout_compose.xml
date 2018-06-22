@@ -1,63 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.MainActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainActivity">
 
     <FrameLayout
-            android:id="@+id/home_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:id="@+id/home_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/compose_close"
-                style="@style/Button.Transparent"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:src="@drawable/ic_close"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/compose_close"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.AppCompatTextView
-                style="@style/Text.Toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Yeni Durum Yarat"/>
+            style="@style/Text.Toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Yeni Durum Yarat" />
 
         <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/compose_send"
-                style="@style/Button.Transparent"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="end"
-                android:padding="14dp"
-                android:src="@drawable/button_send"/>
+            android:id="@+id/compose_send"
+            style="@style/Button.Transparent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end"
+            android:padding="14dp"
+            android:src="@drawable/button_send" />
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey"
-                android:layout_gravity="bottom"/>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/grey" />
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/compose_selected_word_recycler"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_toolbar"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/cell_selected_word"/>
+        android:id="@+id/compose_selected_word_recycler"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        tools:listitem="@layout/cell_selected_word" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/compose_no_selected_word"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="Henüz durum seçmediniz" />
 
     <View
         android:id="@+id/compose_divider"
@@ -90,7 +104,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/compose_picture"
         app:layout_constraintTop_toTopOf="@id/compose_picture"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/compose_now"
@@ -103,7 +117,7 @@
         android:gravity="center_vertical"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:text="Şu Anki Etkinlikler"
+        android:text="Şu Anki Programlar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/compose_picture" />
@@ -117,15 +131,29 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/compose_now"
         tools:listitem="@layout/cell_activity" />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/compose_no_activity_selected"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="Programlar sadece duygu ile seçilebilir"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/compose_now" />
+
     <android.support.constraint.Guideline
-            android:id="@+id/home_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".5"/>
+        android:id="@+id/home_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
 
     <FrameLayout
         android:id="@+id/home_search_container"
@@ -158,15 +186,31 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/compose_category_recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_search_container"
-            app:layoutManager="istanbul.codify.muudy.helper.layoutmanager.CategoryLayoutManager"
-            tools:listitem="@layout/cell_category"/>
+        android:id="@+id/compose_category_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layoutManager="istanbul.codify.muudy.helper.layoutmanager.CategoryLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_search_container"
+        tools:listitem="@layout/cell_category" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/compose_no_situation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layoutManager="istanbul.codify.muudy.helper.layoutmanager.CategoryLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_search_container"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:text="Seçilebilecek durum yok"/>
+
 </android.support.constraint.ConstraintLayout>

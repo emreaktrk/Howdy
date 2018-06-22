@@ -35,4 +35,6 @@ interface PostsView extends MvpView {
     void onPostDeleted();
 
     void onMuudyClicked(Post post);
+
+    void onLikeCountClicked(Post post);
 }

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewUtils;
@@ -185,6 +186,55 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             mView.onActivityClicked(activity);
                         }));
         findViewById(R.id.compose_activity_recycler, RecyclerView.class).setAdapter(activityAdapter);
+
+        if(mSelecteds.size() == 0){
+            hideSelectedWords();
+        }else{
+            showSelectedWords();
+        }
+
+        if(categories.size() == 0) {
+            hideActivities();
+        }else{
+            showActivities();
+        }
+
+        if(categories.size() == 0){
+            hideCategories();
+        }else{
+            showCategories();
+        }
+    }
+
+    void showSelectedWords(){
+        findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        findViewById(R.id.compose_no_selected_word, AppCompatTextView.class).setVisibility(View.INVISIBLE);
+    }
+
+    void hideSelectedWords(){
+        findViewById(R.id.compose_selected_word_recycler, RecyclerView.class).setVisibility(View.INVISIBLE);
+        findViewById(R.id.compose_no_selected_word, AppCompatTextView.class).setVisibility(View.VISIBLE);
+    }
+
+
+    void showActivities(){
+        findViewById(R.id.compose_activity_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        findViewById(R.id.compose_no_activity_selected, AppCompatTextView.class).setVisibility(View.INVISIBLE);
+    }
+
+    void hideActivities(){
+        findViewById(R.id.compose_activity_recycler, RecyclerView.class).setVisibility(View.INVISIBLE);
+        findViewById(R.id.compose_no_activity_selected, AppCompatTextView.class).setVisibility(View.VISIBLE);
+    }
+
+    void showCategories(){
+        findViewById(R.id.compose_category_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
+        findViewById(R.id.compose_no_situation, AppCompatTextView.class).setVisibility(View.INVISIBLE);
+    }
+
+    void hideCategories(){
+        findViewById(R.id.compose_category_recycler, RecyclerView.class).setVisibility(View.INVISIBLE);
+        findViewById(R.id.compose_no_situation, AppCompatTextView.class).setVisibility(View.VISIBLE);
     }
 
     void addSelected(Selectable selectable) {
@@ -496,6 +546,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
             }
 
             if (selected instanceof User) {
+                return true;
+            }
+
+            if (selected instanceof Place){
                 return true;
             }
         }

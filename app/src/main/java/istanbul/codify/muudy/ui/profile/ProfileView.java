@@ -62,4 +62,6 @@ interface ProfileView extends MvpView {
     void onEditClicked();
 
     void onRefresh();
+
+    void onLikeCountClicked(Post post);
 }

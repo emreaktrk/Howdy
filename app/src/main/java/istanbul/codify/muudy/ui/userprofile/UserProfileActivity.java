@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
@@ -21,6 +22,7 @@ import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.chat.ChatActivity;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
+import istanbul.codify.muudy.ui.settings.SettingsActivity;
 import istanbul.codify.muudy.ui.userphotos.UserPhotosActivity;
 import istanbul.codify.muudy.ui.userprofile.more.MoreBottomSheet;
 import istanbul.codify.muudy.ui.users.UsersActivity;
@@ -147,16 +149,20 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
     public void onMoreClicked() {
         User user = mPresenter.getUser();
         if (user != null) {
-            MoreBottomSheet
-                    .newInstance(user)
-                    .setOnBlockClickListener(isBlocked -> mPresenter.block(isBlocked))
-                    .setOnNotificationClickListener(isEnable -> mPresenter.notification(isEnable))
-                    .setOnReportClickListener(() -> mPresenter.report())
-                    .setOnUnfollowClickListener(() -> {
-                        mPresenter.unfollow();
-                        mPresenter.showNext(user.isfollowing);
-                    })
-                    .show(getSupportFragmentManager(), null);
+            if (user.iduser == AccountUtils.me(this).iduser){
+                SettingsActivity.start();
+            }else {
+                MoreBottomSheet
+                        .newInstance(user)
+                        .setOnBlockClickListener(isBlocked -> mPresenter.block(isBlocked))
+                        .setOnNotificationClickListener(isEnable -> mPresenter.notification(isEnable))
+                        .setOnReportClickListener(() -> mPresenter.report())
+                        .setOnUnfollowClickListener(() -> {
+                            mPresenter.unfollow();
+                            mPresenter.showNext(user.isfollowing);
+                        })
+                        .show(getSupportFragmentManager(), null);
+            }
         }
     }
 

@@ -128,6 +128,17 @@ final class PostsPresenter extends BasePresenter<PostsView> {
 
                             mView.onUserClicked(cell);
                         }));
+
+        mDisposables.add(
+                adapter
+                        .likeCountClick()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("likeCount clicked");
+
+                            mView.onLikeCountClicked(cell);
+                        }));
+
       /*  mDisposables.add(
                 adapter
                         .deleteClicks()

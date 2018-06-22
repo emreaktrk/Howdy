@@ -225,6 +225,17 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                             Logcat.v("Avatar clicked");
                             mView.onAvatarClicked(cell);
                         }));
+
+        mDisposables.add(
+                post
+                        .likeCountClick()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("likeCount clicked");
+
+                            mView.onLikeCountClicked(cell);
+                        }));
+
         findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
 
         CommentAdapter comment = new CommentAdapter(detail.comments);

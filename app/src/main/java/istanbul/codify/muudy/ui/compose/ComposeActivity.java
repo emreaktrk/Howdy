@@ -13,6 +13,8 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.deeplink.PlaceRecommedationLink;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
@@ -46,6 +48,15 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(Place place) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, ComposeActivity.class);
+        starter.putExtra(Place.class.getSimpleName(), place);
+        ActivityUtils.startActivity(starter);
+    }
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_compose;
@@ -57,12 +68,23 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
         mPresenter.attachView(this, this);
 
+
+
         Word word = getSerializable(Word.class);
         if (word != null){
             mPresenter.addSelected(word);
         }
 
+        Place place = getSerializable(Place.class);
+        if (place != null){
+            mPresenter.addSelected(place);
+        }
+
         mPresenter.getWordsWithFilter();
+
+        DeepLinkManager
+                .getInstance()
+                .nullifyIf(PlaceRecommedationLink.class);
     }
 
     @Override

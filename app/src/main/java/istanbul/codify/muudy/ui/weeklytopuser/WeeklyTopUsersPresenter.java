@@ -3,6 +3,7 @@ package istanbul.codify.muudy.ui.weeklytopuser;
 import android.support.v7.widget.*;
 import android.view.View;
 import com.jakewharton.rxbinding2.view.RxView;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;

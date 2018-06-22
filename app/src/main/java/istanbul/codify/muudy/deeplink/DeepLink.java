@@ -35,6 +35,9 @@ public abstract class DeepLink implements Serializable {
     String getPlaceName() {
         String placeName = "";
         placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("palce_name").toString();
+        if (placeName.contains("\"")){
+            placeName = placeName.replace("\"","");
+        }
         return placeName;
     }
 

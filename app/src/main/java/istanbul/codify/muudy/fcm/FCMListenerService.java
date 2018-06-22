@@ -157,6 +157,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return message.getData().get("itemid");
     }
 
+
     public @Nullable
     NotificationEvent getEvent(RemoteMessage message) {
         NotificationActionType type = getNotificationActionType(message);

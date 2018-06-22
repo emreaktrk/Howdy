@@ -46,6 +46,7 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
         mPresenter.attachView(this,this);
         mPresenter.getWeeklyTopUsers();
 
+
         DeepLinkManager
                 .getInstance()
                 .nullifyIf(WeeklyTopLink.class);

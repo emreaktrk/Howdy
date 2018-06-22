@@ -191,6 +191,12 @@ public final class ProfileFragment extends NavigationFragment implements Profile
     }
 
     @Override
+    public void onLikeCountClicked(Post post) {
+        UsersActivity.start(UsersScreenMode.LIKERS, post.idpost);
+    }
+
+
+    @Override
     public void onPostDeleted() {
         AccountUtils.sync(getContext());
     }

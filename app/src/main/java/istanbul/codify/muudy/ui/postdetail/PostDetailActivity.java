@@ -19,10 +19,12 @@ import istanbul.codify.muudy.deeplink.MessageLink;
 import istanbul.codify.muudy.deeplink.PostDetailLink;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
+import istanbul.codify.muudy.model.UsersScreenMode;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 
 public final class PostDetailActivity extends MuudyActivity implements PostDetailView, KeyboardSupport {
@@ -77,6 +79,12 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
             mPresenter.getPostDetail(postId);
         }
     }
+
+    @Override
+    public void onLikeCountClicked(Post post) {
+        UsersActivity.start(UsersScreenMode.LIKERS, post.idpost);
+    }
+
 
     @Override
     public void onError(ApiError error) {

@@ -28,6 +28,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 final class UserMessagesPresenter extends BasePresenter<UserMessagesView> {
 
+    RecyclerViewHelper recyclerViewHelper;
+
     @Override
     public void attachView(UserMessagesView view, View root) {
         super.attachView(view, root);
@@ -92,7 +94,11 @@ final class UserMessagesPresenter extends BasePresenter<UserMessagesView> {
                         }));
         findViewById(R.id.user_search_recycler, RecyclerView.class).setAdapter(adapter);
 
-        RecyclerViewHelper recyclerViewHelper = new RecyclerViewHelper();
+        if (recyclerViewHelper != null) {
+            recyclerViewHelper.detachFromRecyclerView(findViewById(R.id.user_search_recycler, RecyclerView.class));
+        }
+
+        recyclerViewHelper = new RecyclerViewHelper();
         recyclerViewHelper.setItemViewSwipeEnable(true);
 
         recyclerViewHelper.initSwipeForMessages(findViewById(R.id.user_search_recycler, RecyclerView.class),getContext(), messages, new OnSwipeDialogCallback() {

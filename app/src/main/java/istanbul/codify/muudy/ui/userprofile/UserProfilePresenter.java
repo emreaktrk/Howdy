@@ -326,6 +326,11 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     void bind(User user) {
         mUser = user;
 
+        if (user.iduser == AccountUtils.me(getContext()).iduser) {
+            findViewById(R.id.user_profile_switcher, ViewSwitcher.class).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.user_profile_switcher, ViewSwitcher.class).setVisibility(View.VISIBLE);
+        }
         findViewById(R.id.user_profile_username, AppCompatTextView.class).setText(user.username);
 
         if (user.birtDate != null) {

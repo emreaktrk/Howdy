@@ -29,4 +29,6 @@ interface PostDetailView extends MvpView {
     void onAvatarClicked(Post post);
 
     void onBackClicked();
+
+    void onLikeCountClicked(Post post);
 }

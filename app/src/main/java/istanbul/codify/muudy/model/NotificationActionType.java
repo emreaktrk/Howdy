@@ -23,7 +23,7 @@ public enum NotificationActionType {
     @SerializedName("generalAnnounce") GENERAL_ANNOUNCE,
     @SerializedName("activityReminder") ACTIVITY_REMINDER,
     @SerializedName("messagereaded") MESSAGE_READED,
-    @SerializedName("placeRecommadition") PLACE_RECOMMADITION;
+    @SerializedName("placeRecommendation") PLACE_RECOMMADITION;
 
     public @Nullable
     static NotificationActionType value(String value) {
@@ -62,7 +62,7 @@ public enum NotificationActionType {
             case GIVE_VOTE:
                 return new GivePointEvent();
             case PLACE_RECOMMADITION:
-                return null;
+                return new PlaceRecommedationEvet();
             case NONE:
                 return null;
             default:

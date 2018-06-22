@@ -15,7 +15,7 @@ import istanbul.codify.muudy.ui.main.MainActivity;
 
 public final class SplashActivity extends MuudyActivity {
 
-    private static final int DURATION = 3000;
+    private static final int DURATION = 1500;
 
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();

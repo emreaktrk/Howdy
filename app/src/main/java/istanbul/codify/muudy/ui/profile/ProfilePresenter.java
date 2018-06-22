@@ -342,6 +342,15 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                             mView.onVideoClicked(cell);
                         }));
 
+        mDisposables.add(
+                post
+                        .likeCountClick()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("likeCount clicked");
+
+                            mView.onLikeCountClicked(cell);
+                        }));
         findViewById(R.id.profile_recycler, RecyclerView.class).setAdapter(post);
 
         if (mRecyclerHelper != null) {

@@ -202,7 +202,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .likeCountClick()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
-                            Logcat.v("Avatar clicked");
+                            Logcat.v("likeCount clicked");
 
                             mView.onLikeCountClicked(cell);
                         }));
