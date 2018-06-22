@@ -233,6 +233,8 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".deeplink.action.ShareAction"/>
+
         <service
                 android:name=".fcm.FCMRegisterService"
                 android:enabled="true">

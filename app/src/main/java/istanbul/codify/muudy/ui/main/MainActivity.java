@@ -68,13 +68,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     protected void onResume() {
         super.onResume();
 
-        boolean isFromPush = getIntent().getBooleanExtra(DeepLink.class.getSimpleName(), false);
-        if (!isFromPush) {
-            DeepLinkManager
-                    .getInstance()
-                    .nullify();
-        }
-
         DeepLink pending = DeepLinkManager
                 .getInstance()
                 .getPending();
