@@ -11,8 +11,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
@@ -21,6 +23,8 @@ import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
 import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.ui.main.MainActivity;
+import istanbul.codify.muudy.ui.splash.SplashActivity;
+
 import org.greenrobot.eventbus.EventBus;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
@@ -48,7 +52,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
             NotificationEvent event = getEvent(message);
             if (event != null) {
 
-                   EventBus
+                EventBus
                         .getDefault()
                         .post(event);
             }
@@ -57,15 +61,14 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
             NotificationManager manager = getManager();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, SplashActivity.class);
 
             NotificationEvent event = getEvent(message);
             if (event != null) {
                 DeepLink link = event.getDeepLink();
                 if (link != null) {
-                    DeepLinkManager
-                            .getInstance()
-                            .setPending(link);
+                    intent.putExtra(DeepLink.class.getSimpleName(), link);
+
                 }
             }
 
