@@ -62,7 +62,7 @@ public enum NotificationActionType {
             case GIVE_VOTE:
                 return new GivePointEvent();
             case PLACE_RECOMMADITION:
-                return new PlaceRecommedationEvet();
+                return new PlaceRecommendationEvent();
             case NONE:
                 return null;
             default:

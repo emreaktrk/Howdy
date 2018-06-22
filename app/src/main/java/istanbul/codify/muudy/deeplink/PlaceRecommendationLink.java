@@ -2,18 +2,13 @@ package istanbul.codify.muudy.deeplink;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-
 import com.google.firebase.messaging.RemoteMessage;
-
 import istanbul.codify.muudy.model.Place;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
 
-/**
- * Created by egesert on 22.06.2018.
- */
+public class PlaceRecommendationLink extends DeepLink {
 
-public class PlaceRecommedationLink extends DeepLink {
-    public PlaceRecommedationLink(@NonNull RemoteMessage message) {
+    public PlaceRecommendationLink(@NonNull RemoteMessage message) {
         super(message);
     }
 

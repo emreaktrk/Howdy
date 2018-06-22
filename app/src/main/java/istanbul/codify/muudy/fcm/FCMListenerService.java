@@ -61,14 +61,16 @@ public final class FCMListenerService extends FirebaseMessagingService {
 
             NotificationManager manager = getManager();
 
-            Intent intent = new Intent(this, SplashActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
 
             NotificationEvent event = getEvent(message);
             if (event != null) {
                 DeepLink link = event.getDeepLink();
                 if (link != null) {
-                    intent.putExtra(DeepLink.class.getSimpleName(), link);
-
+                    intent.putExtra(DeepLink.class.getSimpleName(), true);
+                    DeepLinkManager
+                            .getInstance()
+                            .setPending(link);
                 }
             }
 

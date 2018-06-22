@@ -35,13 +35,6 @@ public final class SplashActivity extends MuudyActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DeepLink link = getSerializable(DeepLink.class);
-
-        if (link != null) {
-            DeepLinkManager
-                    .getInstance()
-                    .setPending(link);
-        }
         new Handler()
                 .postDelayed(() -> {
                     if (AccountUtils.has(SplashActivity.this)) {

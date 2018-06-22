@@ -68,6 +68,13 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     protected void onResume() {
         super.onResume();
 
+        boolean isFromPush = getIntent().getBooleanExtra(DeepLink.class.getSimpleName(), false);
+        if (!isFromPush) {
+            DeepLinkManager
+                    .getInstance()
+                    .nullify();
+        }
+
         DeepLink pending = DeepLinkManager
                 .getInstance()
                 .getPending();
@@ -80,7 +87,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ProfileEvent event) {
         mPresenter.showNotificationBadge();
-
     }
 
     @Override
@@ -130,6 +136,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                     .addToBackStack(null)
                     .commit();
         }
+
         mPresenter.hideNotificationBadge();
     }
 
@@ -152,7 +159,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Override
     public void setSelected(@Navigation int selection) {
         mPresenter.setSelected(selection);
-
         switch (selection) {
             case Navigation.HOME:
                 onHomeClicked(false);

@@ -31,4 +31,8 @@ public final class DeepLinkManager {
             sInstance = null;
         }
     }
+
+    public void nullify() {
+        sInstance = null;
+    }
 }

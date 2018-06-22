@@ -177,8 +177,6 @@ public final class ChatActivity extends MuudyActivity implements ChatView, Event
             }
     }
 
-
-
     @Override
     public void onError(ApiError error) {
         ToastUtils.showShort(error.message);

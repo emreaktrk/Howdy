@@ -14,7 +14,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
-import istanbul.codify.muudy.deeplink.PlaceRecommedationLink;
+import istanbul.codify.muudy.deeplink.PlaceRecommendationLink;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
@@ -84,7 +84,7 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
         DeepLinkManager
                 .getInstance()
-                .nullifyIf(PlaceRecommedationLink.class);
+                .nullifyIf(PlaceRecommendationLink.class);
     }
 
     @Override
