@@ -45,6 +45,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         ActivityUtils.finishAllActivities();
     }
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_main;
@@ -59,22 +60,33 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                 .replace(R.id.home_frame, mPool.get(HomeFragment.class))
                 .commit();
 
+
         mPresenter.attachView(this, this);
 
         UpdatePushService.start();
+
+        boolean isFromPush = getIntent().getBooleanExtra("isFromPush", false);
+
+        if (isFromPush) {
+            DeepLink pending = DeepLinkManager
+                    .getInstance()
+                    .getPending();
+
+            if (pending != null) {
+                pending.navigate(this);
+            }
+
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        DeepLink pending = DeepLinkManager
-                .getInstance()
-                .getPending();
 
-        if (pending != null) {
-            pending.navigate(this);
-        }
+
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

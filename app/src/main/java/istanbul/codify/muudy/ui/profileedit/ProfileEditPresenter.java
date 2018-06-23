@@ -50,7 +50,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
     @Override
     public void attachView(ProfileEditView view, View root) {
         super.attachView(view, root);
-
+        mView = view;
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.profile_edit_back))
@@ -81,25 +81,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                             view.onPhotoClicked(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
                         }));
 
-        mDisposables.add(
-                RxView
-                        .clicks(findViewById(R.id.profile_edit_picture_2))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(o -> {
-                            Logcat.v("Photo clicked");
 
-                            view.onPhotoClicked(findViewById(R.id.profile_edit_picture_2, CircleImageView.class));
-                        }));
-
-        mDisposables.add(
-                RxView
-                        .clicks(findViewById(R.id.profile_edit_picture_3))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(o -> {
-                            Logcat.v("Photo clicked");
-
-                            view.onPhotoClicked(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
-                        }));
 
         mDisposables.add(
                 RxView
@@ -148,7 +130,7 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
     void capturePhoto(@NonNull AppCompatActivity activity, CircleImageView view) {
         mDisposables.add(
                 new RxPermissions(activity)
-                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                         .flatMap((Function<Boolean, ObservableSource<Uri>>) granted -> granted ? RxGallery.photoCapture(activity).toObservable() : Observable.empty())
                         .subscribe(uri -> {
                             Logcat.v("Selected uri for photo is " + uri.toString());
@@ -202,6 +184,108 @@ final class ProfileEditPresenter extends BasePresenter<ProfileEditView> {
                 .load(BuildConfig.URL + user.imgpath3)
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit_picture_2))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Photo clicked");
+
+                            mView.onPhoto2Clicked(findViewById(R.id.profile_edit_picture_2, CircleImageView.class),user);
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.profile_edit_picture_3))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Photo clicked");
+
+                            mView.onPhoto3Clicked(findViewById(R.id.profile_edit_picture_3, CircleImageView.class),user);
+                        }));
+    }
+
+    void makeSecondPhotoProfileImage(User user){
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + AccountUtils.me(getContext()).imgpath2)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
+
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + AccountUtils.me(getContext()).imgpath1)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_2, CircleImageView.class));
+
+        UpdateProfileRequest request = new UpdateProfileRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        request.imgpath1 = AccountUtils.me(getContext()).imgpath2;
+        request.imgpath2 = AccountUtils.me(getContext()).imgpath1;
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .updateProfile(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
+                            @Override
+                            protected void success(UpdateProfileResponse response) {
+                                Logcat.v("Profile updated");
+
+                                mView.onProfileUpdated();
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+
+
+    }
+
+    void makeThirdPhotoProfileImage(User user){
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + AccountUtils.me(getContext()).imgpath3)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_1, CircleImageView.class));
+
+        Picasso
+                .with(getContext())
+                .load(BuildConfig.URL + AccountUtils.me(getContext()).imgpath1)
+                .placeholder(R.drawable.ic_avatar)
+                .into(findViewById(R.id.profile_edit_picture_3, CircleImageView.class));
+
+        UpdateProfileRequest request = new UpdateProfileRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+
+        request.imgpath1 = AccountUtils.me(getContext()).imgpath3;
+        request.imgpath3 = AccountUtils.me(getContext()).imgpath1;
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .updateProfile(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<UpdateProfileResponse>() {
+                            @Override
+                            protected void success(UpdateProfileResponse response) {
+                                Logcat.v("Profile updated");
+
+                                mView.onProfileUpdated();
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
     }
 
     void save() {

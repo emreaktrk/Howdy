@@ -11,6 +11,10 @@ interface ProfileEditView extends MvpView {
 
     void onPhotoClicked(CircleImageView view);
 
+    void onPhoto2Clicked(CircleImageView view,User user);
+
+    void onPhoto3Clicked(CircleImageView view, User user);
+
     void onPhotoSelected(Uri uri, CircleImageView view);
 
     void onSaveClicked();

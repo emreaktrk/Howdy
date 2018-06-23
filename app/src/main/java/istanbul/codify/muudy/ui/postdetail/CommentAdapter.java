@@ -8,14 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Comment;
+import istanbul.codify.muudy.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
+
+    private final PublishSubject<Long> mUserSubject = PublishSubject.create();
 
     private List<Comment> mList;
 
@@ -43,12 +47,16 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
                 .into(holder.mAvatar);
     }
 
+    PublishSubject<Long> imageClick() {
+        return mUserSubject;
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();
     }
 
-    class Holder extends RecyclerView.ViewHolder {
+    class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private CircleImageView mAvatar;
         private AppCompatTextView mText;
@@ -60,6 +68,15 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
             mAvatar = itemView.findViewById(R.id.comment_avatar);
             mText = itemView.findViewById(R.id.comment_text);
             mDate = itemView.findViewById(R.id.comment_date);
+
+            mAvatar.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Long userId = mList.get(getAdapterPosition()).postcomment_commenterid;
+            mUserSubject.onNext(userId);
         }
     }
 }

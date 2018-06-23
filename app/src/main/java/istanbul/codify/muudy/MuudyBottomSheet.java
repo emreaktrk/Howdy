@@ -13,11 +13,15 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
+import istanbul.codify.muudy.model.User;
+
 
 public abstract class MuudyBottomSheet extends BottomSheetDialogFragment {
 
     abstract protected @LayoutRes
     int getLayoutResId();
+
+    public User mUser;
 
     @Nullable
     @Override
@@ -34,6 +38,13 @@ public abstract class MuudyBottomSheet extends BottomSheetDialogFragment {
                     .getDefault()
                     .register(this);
         }
+
+        User user = getSerializable(User.class);
+
+        if (user != null) {
+            mUser = user;
+        }
+
     }
 
     @Override

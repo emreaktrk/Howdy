@@ -53,4 +53,19 @@
             android:clickable="true"
             android:focusable="true"
             android:text="Video"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/media_dialog_make_profile_image"
+        style="@style/Text.Normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawablePadding="16dp"
+        android:drawableStart="@drawable/ic_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/media_dialog_gallery"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Profil Resmi Yap"/>
 </android.support.v7.widget.LinearLayoutCompat>

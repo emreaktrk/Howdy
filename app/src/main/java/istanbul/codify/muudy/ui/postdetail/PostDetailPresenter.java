@@ -239,6 +239,14 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
         findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
 
         CommentAdapter comment = new CommentAdapter(detail.comments);
+        mDisposables.add(
+                comment
+                        .imageClick()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Avatar clicked");
+                            mView.onCommentImageclicked(cell);
+                        }));
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
         findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).addItemDecoration(divider);

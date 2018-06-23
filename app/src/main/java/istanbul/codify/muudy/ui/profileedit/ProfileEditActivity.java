@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
@@ -51,6 +53,43 @@ public final class ProfileEditActivity extends MuudyActivity implements ProfileE
                 .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
                 .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
                 .show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onPhoto2Clicked(CircleImageView view, User user) {
+        if (user.imgpath2 != null) {
+            MediaBottomSheet
+                    .newInstance(user)
+                    .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
+                    .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
+                    .setOnMakeProfileImageListener((mUser) -> mPresenter.makeSecondPhotoProfileImage(mUser))
+                    .show(getSupportFragmentManager(), null);
+        } else {
+            MediaBottomSheet
+                    .newInstance()
+                    .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
+                    .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
+                    .show(getSupportFragmentManager(), null);
+        }
+    }
+
+
+    @Override
+    public void onPhoto3Clicked(CircleImageView view, User user) {
+        if (user.imgpath3 != null) {
+            MediaBottomSheet
+                    .newInstance(user)
+                    .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
+                    .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
+                    .setOnMakeProfileImageListener((mUser) -> mPresenter.makeThirdPhotoProfileImage(mUser))
+                    .show(getSupportFragmentManager(), null);
+        } else {
+            MediaBottomSheet
+                    .newInstance()
+                    .setOnCameraClickListener(() -> mPresenter.capturePhoto(ProfileEditActivity.this, view))
+                    .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ProfileEditActivity.this, view))
+                    .show(getSupportFragmentManager(), null);
+        }
     }
 
     @Override

@@ -193,9 +193,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
             showSelectedWords();
         }
 
-        if(categories.size() == 0) {
+        if(activities.size() == 0) {
             hideActivities();
         }else{
+
             showActivities();
         }
 
@@ -288,7 +289,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void capturePhoto(@NonNull AppCompatActivity activity) {
         mDisposables.add(
                 new RxPermissions(activity)
-                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA)
+
                         .flatMap((Function<Boolean, ObservableSource<Uri>>) granted -> granted ? RxGallery.photoCapture(activity).toObservable() : Observable.empty())
                         .subscribe(uri -> {
                             Logcat.v("Selected uri for photo is " + uri.toString());

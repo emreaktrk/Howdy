@@ -10,8 +10,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
@@ -19,7 +22,10 @@ import istanbul.codify.muudy.deeplink.action.ShareAction;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
+import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.ui.main.MainActivity;
+import istanbul.codify.muudy.ui.splash.SplashActivity;
+
 import org.greenrobot.eventbus.EventBus;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
@@ -28,9 +34,9 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 
 public final class FCMListenerService extends FirebaseMessagingService {
 
-    public static final int NOTIFICATION_ID = 876;
 
     private static final String NOTIFICATION_CHANNEL_ID = "612";
+    public static final int NOTIFICATION_ID = 876;
     private static final String NOTIFICATION_CHANNEL_NAME = "Default";
 
     @Override
@@ -61,17 +67,20 @@ public final class FCMListenerService extends FirebaseMessagingService {
             if (event != null) {
                 DeepLink link = event.getDeepLink();
                 if (link != null) {
+                    intent.putExtra("isFromPush", true);
+
+                    intent.setAction("pushaction");
                     DeepLinkManager
                             .getInstance()
                             .setPending(link);
                 }
             }
 
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
             if (getNotificationActionType(message) != NotificationActionType.MESSAGE_READED) {
-                Logcat.d("Notification clicked");
+                Log.d("NOTIFICATONLOG", "bildirim basıldı");
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && manager != null) {
                     NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -81,29 +90,55 @@ public final class FCMListenerService extends FirebaseMessagingService {
                     channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
                     channel.setShowBadge(true);
                     manager.createNotificationChannel(channel);
+
                 }
 
-                Notification notification = new NotificationCompat
-                        .Builder(this, NOTIFICATION_CHANNEL_ID)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                        .setContentTitle(getTitle(message))
-                        .setContentText(getBody(message))
-                        .setAutoCancel(true)
-                        .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
-                        .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
-                        .setTicker(getString(R.string.app_name))
-                        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                        .setContentIntent(pendingIntent)
-                        .setDefaults(Notification.DEFAULT_SOUND)
-                        .setColorized(true)
-                        .setStyle(new NotificationCompat.BigTextStyle())
-                        .setCategory("Default")
-                        .addAction(R.drawable.ic_launcher_foreground, "CHECK IN", new ShareAction(message).getPendingIntent(this))
-                        .build();
+                if (getNotificationActionType(message) == NotificationActionType.PLACE_RECOMMADITION) {
+                    Notification notification = new NotificationCompat
+                            .Builder(this, NOTIFICATION_CHANNEL_ID)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
+                            .setSmallIcon(R.mipmap.ic_launcher_round)
+                            .setContentTitle(getTitle(message))
+                            .setContentText(getBody(message))
+                            .setAutoCancel(true)
+                            .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
+                            .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
+                            .setTicker(getString(R.string.app_name))
+                            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                            .setContentIntent(pendingIntent)
+                            .setDefaults(Notification.DEFAULT_SOUND)
+                            .setColorized(true)
+                            .setStyle(new NotificationCompat.BigTextStyle())
+                            .setCategory("Default")
+                            .addAction(R.drawable.ic_capture, "CHECK IN YAP", new ShareAction(message).getPendingIntent(this))
 
-                if (manager != null) {
-                    manager.notify(NOTIFICATION_ID, notification);
+                            .build();
+
+                    if (manager != null) {
+                        manager.notify(NOTIFICATION_ID, notification);
+                    }
+                }else{
+                    Notification notification = new NotificationCompat
+                            .Builder(this, NOTIFICATION_CHANNEL_ID)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
+                            .setSmallIcon(R.mipmap.ic_launcher_round)
+                            .setContentTitle(getTitle(message))
+                            .setContentText(getBody(message))
+                            .setAutoCancel(true)
+                            .setColor(ContextCompat.getColor(getBaseContext(), R.color.blue))
+                            .setLights(ContextCompat.getColor(getBaseContext(), R.color.blue), 1000, 1000)
+                            .setTicker(getString(R.string.app_name))
+                            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                            .setContentIntent(pendingIntent)
+                            .setDefaults(Notification.DEFAULT_SOUND)
+                            .setColorized(true)
+                            .setStyle(new NotificationCompat.BigTextStyle())
+                            .setCategory("Default")
+                            .build();
+
+                    if (manager != null) {
+                        manager.notify(NOTIFICATION_ID, notification);
+                    }
                 }
             }
         }
@@ -117,6 +152,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         }
 
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        // App is foreground, but screen is locked, so show notification
         return km.inKeyguardRestrictedInputMode();
     }
 

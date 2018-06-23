@@ -85,6 +85,11 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
         UsersActivity.start(UsersScreenMode.LIKERS, post.idpost);
     }
 
+    @Override
+    public void onCommentImageclicked(Long userId) {
+        UserProfileActivity.start(userId);
+    }
+
 
     @Override
     public void onError(ApiError error) {

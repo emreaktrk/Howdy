@@ -43,6 +43,16 @@ final class MediaPresenter extends BasePresenter<MediaView> {
 
                             view.onMediaTypeSelected(MediaType.VIDEO);
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.media_dialog_make_profile_image))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("MakeProfileImage clicked");
+
+                            view.onMakeProfileImage();
+                        }));
     }
 
     void hideGallery() {
@@ -55,5 +65,9 @@ final class MediaPresenter extends BasePresenter<MediaView> {
 
     void hideVideo() {
         findViewById(R.id.media_dialog_video).setVisibility(View.GONE);
+    }
+
+    void hideMakeProfileImage(){
+        findViewById(R.id.media_dialog_make_profile_image).setVisibility(View.GONE);
     }
 }

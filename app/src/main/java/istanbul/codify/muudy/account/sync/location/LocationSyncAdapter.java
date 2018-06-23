@@ -42,8 +42,8 @@ public final class LocationSyncAdapter extends AbstractThreadedSyncAdapter {
                     request.token = AccountUtils.tokenLegacy(getContext());
                     request.lat = location.getLatitude();
                     request.lng = location.getLongitude();
-                    request.sendPush = 1;
-                    //request.sendPush = new Random().nextInt(4);
+                    //request.sendPush = 1;
+                    request.sendPush = new Random().nextInt(4);
 
                     ApiManager
                             .getInstance()

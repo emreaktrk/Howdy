@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.media;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,17 +8,35 @@ import android.view.View;
 import istanbul.codify.muudy.MuudyBottomSheet;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.MediaType;
+import istanbul.codify.muudy.model.User;
 
 public final class MediaBottomSheet extends MuudyBottomSheet implements MediaView {
 
+    private User user;
     private MediaPresenter mPresenter = new MediaPresenter();
 
     private OnMediaClickListener.OnGalleryClickListener mGallery;
     private OnMediaClickListener.OnCameraClickListener mCamera;
     private OnMediaClickListener.OnVideoClickListener mVideo;
+    private OnMediaClickListener.OnMakeProfileImageListener mMakeProfileImage;
+
+    @SuppressLint("ValidFragment")
+    public MediaBottomSheet(User user) {
+        super();
+        this.user = user;
+    }
+
+    public MediaBottomSheet() {
+        super();
+    }
 
     public static MediaBottomSheet newInstance() {
         return new MediaBottomSheet();
+    }
+
+    public static MediaBottomSheet newInstance(User user) {
+
+        return new MediaBottomSheet(user);
     }
 
     @Override
@@ -41,6 +60,10 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
 
         if (mVideo == null) {
             mPresenter.hideVideo();
+        }
+
+        if(mMakeProfileImage == null){
+            mPresenter.hideMakeProfileImage();
         }
     }
 
@@ -69,10 +92,18 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
                     mVideo.onVideoClick();
                 }
                 break;
+
+
             default:
                 throw new IllegalStateException("Not implemented");
         }
 
+        dismiss();
+    }
+
+    @Override
+    public void onMakeProfileImage() {
+        mMakeProfileImage.onMakeProfileImageClick(user);
         dismiss();
     }
 
@@ -94,6 +125,13 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
         return this;
     }
 
+    public MediaBottomSheet setOnMakeProfileImageListener(OnMediaClickListener.OnMakeProfileImageListener listener) {
+        mMakeProfileImage = listener;
+
+        return this;
+    }
+
+
     public interface OnMediaClickListener {
 
         interface OnGalleryClickListener {
@@ -106,6 +144,10 @@ public final class MediaBottomSheet extends MuudyBottomSheet implements MediaVie
 
         interface OnVideoClickListener {
             void onVideoClick();
+        }
+
+        interface OnMakeProfileImageListener {
+            void onMakeProfileImageClick(User user);
         }
     }
 }
