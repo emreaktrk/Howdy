@@ -11,10 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
@@ -22,10 +20,7 @@ import istanbul.codify.muudy.deeplink.action.ShareAction;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.NotificationActionType;
 import istanbul.codify.muudy.model.event.notification.NotificationEvent;
-import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.ui.main.MainActivity;
-import istanbul.codify.muudy.ui.splash.SplashActivity;
-
 import org.greenrobot.eventbus.EventBus;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
@@ -35,8 +30,8 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 public final class FCMListenerService extends FirebaseMessagingService {
 
 
-    private static final String NOTIFICATION_CHANNEL_ID = "612";
     public static final int NOTIFICATION_ID = 876;
+    private static final String NOTIFICATION_CHANNEL_ID = "612";
     private static final String NOTIFICATION_CHANNEL_NAME = "Default";
 
     @Override
@@ -90,7 +85,6 @@ public final class FCMListenerService extends FirebaseMessagingService {
                     channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
                     channel.setShowBadge(true);
                     manager.createNotificationChannel(channel);
-
                 }
 
                 if (getNotificationActionType(message) == NotificationActionType.PLACE_RECOMMADITION) {
@@ -111,13 +105,12 @@ public final class FCMListenerService extends FirebaseMessagingService {
                             .setStyle(new NotificationCompat.BigTextStyle())
                             .setCategory("Default")
                             .addAction(R.drawable.ic_capture, "CHECK IN YAP", new ShareAction(message).getPendingIntent(this))
-
                             .build();
 
                     if (manager != null) {
                         manager.notify(NOTIFICATION_ID, notification);
                     }
-                }else{
+                } else {
                     Notification notification = new NotificationCompat
                             .Builder(this, NOTIFICATION_CHANNEL_ID)
                             .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_round))
@@ -190,7 +183,6 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return message.getData().get("itemid");
     }
 
-
     public @Nullable
     NotificationEvent getEvent(RemoteMessage message) {
         NotificationActionType type = getNotificationActionType(message);
@@ -210,7 +202,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
         return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public NotificationActionType getNotificationActionType(int ordinal) {
+    private NotificationActionType getNotificationActionType(int ordinal) {
         return NotificationActionType.values()[ordinal];
     }
 }
