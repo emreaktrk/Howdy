@@ -33,14 +33,6 @@ import java.util.List;
 
 public class ShareAction extends Action {
 
-    public ShareAction() {
-        // Empty block
-    }
-
-    public ShareAction(RemoteMessage message) {
-        super(message);
-    }
-
     @NonNull
     @Override
     protected String getAction() {
@@ -77,10 +69,8 @@ public class ShareAction extends Action {
                     @Override
                     protected void error(ApiError error) {
                         Logcat.e(error);
-
                     }
                 });
-        // TODO Request api
     }
 
     void post(ShareEvent event, List<Selectable> selecteds, Context context) {
@@ -134,11 +124,11 @@ public class ShareAction extends Action {
     }
 
     private String getPlaceName(RemoteMessage message) {
-        String placeName = "";
-        placeName = new Gson().fromJson(message.getData().get("extraData"), JsonObject.class).get("palce_name").toString();
+        String placeName = new Gson().fromJson(message.getData().get("extraData"), JsonObject.class).get("palce_name").toString();
         if (placeName.contains("\"")) {
             placeName = placeName.replace("\"", "");
         }
+
         return placeName;
     }
 }

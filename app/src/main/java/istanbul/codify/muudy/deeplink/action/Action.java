@@ -12,20 +12,12 @@ import istanbul.codify.muudy.fcm.FCMListenerService;
 
 public abstract class Action extends BroadcastReceiver {
 
-    private RemoteMessage mMessage;
-
-    public Action() {
-        // Empty block
-    }
-
-    public Action(RemoteMessage message) {
-        this.mMessage = message;
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (StringUtils.equals(getAction(), intent.getAction())) {
-            execute(context, mMessage);
+            RemoteMessage message = intent.getParcelableExtra(RemoteMessage.class.getSimpleName());
+            execute(context, message);
 
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (manager != null) {
@@ -39,10 +31,10 @@ public abstract class Action extends BroadcastReceiver {
 
     public abstract void execute(Context context, RemoteMessage message);
 
-    public final PendingIntent getPendingIntent(@NonNull Context context) {
+    public final PendingIntent getPendingIntent(@NonNull RemoteMessage message, @NonNull Context context) {
         Intent intent = new Intent(context, this.getClass());
-        intent.putExtra("Test", "Hello");
+        intent.putExtra(RemoteMessage.class.getSimpleName(), message);
         intent.setAction(getAction());
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

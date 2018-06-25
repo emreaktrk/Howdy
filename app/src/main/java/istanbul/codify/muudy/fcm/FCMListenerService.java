@@ -104,7 +104,7 @@ public final class FCMListenerService extends FirebaseMessagingService {
                             .setColorized(true)
                             .setStyle(new NotificationCompat.BigTextStyle())
                             .setCategory("Default")
-                            .addAction(R.drawable.ic_capture, "CHECK IN YAP", new ShareAction(message).getPendingIntent(this))
+                            .addAction(R.drawable.ic_capture, "CHECK IN YAP", new ShareAction().getPendingIntent(message, this))
                             .build();
 
                     if (manager != null) {

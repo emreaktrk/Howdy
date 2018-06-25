@@ -3,8 +3,6 @@ package istanbul.codify.muudy.ui.statistic.map;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,7 +10,6 @@ import com.google.android.gms.maps.model.VisibleRegion;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
-import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.EmojiLocation;
 import istanbul.codify.muudy.ui.MarkerCustomPopup.MarkerCustomPopupFragmentDialog;
 
@@ -59,9 +56,8 @@ public final class StatisticMapFragment extends MuudyFragment implements Statist
 
     @Override
     public void onMarkerClicked(EmojiLocation emojiLocation) {
-        FragmentManager manager = getFragmentManager();
-        MarkerCustomPopupFragmentDialog markerCustomPopupFragmentDialog = new MarkerCustomPopupFragmentDialog(emojiLocation);
-        markerCustomPopupFragmentDialog.show(manager , "tag");
+        new MarkerCustomPopupFragmentDialog(emojiLocation)
+                .show(getChildFragmentManager(), null);
     }
 
     @Override
