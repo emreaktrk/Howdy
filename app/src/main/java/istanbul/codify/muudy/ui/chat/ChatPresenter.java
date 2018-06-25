@@ -152,14 +152,19 @@ final class ChatPresenter extends BasePresenter<ChatView> {
                         }));
         findViewById(R.id.chat_recycler, RecyclerView.class).setAdapter(adapter);
 
-        Chat lastMessage = chats.get(0);
-        if (lastMessage.message_fromuserid == userId){
-            if(lastMessage.message_isreaded == 1){
-                findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Okundu");
-            }else{
-                findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Gönderildi");
+        if (chats.size() > 0) {
+            Chat lastMessage = chats.get(0);
+
+            if (lastMessage.message_fromuserid == userId) {
+                if (lastMessage.message_isreaded == 1) {
+                    findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Okundu");
+                } else {
+                    findViewById(R.id.chat_message_readed_text, AppCompatTextView.class).setText("Gönderildi");
+                }
+                findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.VISIBLE);
+            } else {
+                findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.GONE);
             }
-            findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.VISIBLE);
         }else{
             findViewById(R.id.chat_message_readed_container, LinearLayout.class).setVisibility(View.GONE);
         }
