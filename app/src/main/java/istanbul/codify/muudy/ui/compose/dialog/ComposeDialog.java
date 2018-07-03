@@ -57,4 +57,16 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
 
         dismiss();
     }
+
+    @Override
+    public void onFacebookClicked() {
+        mPresenter.changeFacebookImage();
+    }
+
+    @Override
+    public void onTwitterClicked() {
+        mPresenter.changeTwitterImage();
+    }
+
+
 }

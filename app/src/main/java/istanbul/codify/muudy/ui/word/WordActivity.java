@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -108,6 +110,8 @@ public final class WordActivity extends MuudyActivity implements WordView {
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+
 
         Category category = getSerializable(Category.class);
         if (category != null) {

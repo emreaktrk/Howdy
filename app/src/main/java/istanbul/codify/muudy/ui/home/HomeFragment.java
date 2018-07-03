@@ -3,11 +3,15 @@ package istanbul.codify.muudy.ui.home;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewTreeObserver;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.karumi.dexter.Dexter;
@@ -20,6 +24,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.DeleteEvent;
 import istanbul.codify.muudy.model.event.HomeReselectEvent;
@@ -271,13 +276,19 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         UsersActivity.start(UsersScreenMode.LIKERS, post.idpost);
     }
 
+    @Override
+    public void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap) {
+
+        AroundActivity.start(arounds, bitmap);
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
         mPresenter.getWall(getContext(), null);
-
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
         if (!around.isEmpty()) {
-            AroundActivity.start(around);
+            mPresenter.takeBlurredImage(around);
         }
     }
 

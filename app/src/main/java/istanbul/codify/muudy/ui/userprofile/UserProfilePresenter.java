@@ -348,14 +348,17 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                 showNext(user.isfollowing);
                 break;
             case NOT_FOLLOWING:
+                showNext(user.isfollowing);
                 if (user.isprofilehidden == ProfileVisibility.HIDDEN) {
                     findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.REQUEST);
                 } else {
                     findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.FOLLOW);
                 }
+
                 break;
             case REQUEST_SENT:
                 findViewById(R.id.user_profile_follow, FollowButton.class).setState(FollowButton.State.REQUEST_CANCEL);
+                showNext(user.isfollowing);
                 break;
         }
 

@@ -2,9 +2,12 @@ package istanbul.codify.muudy.ui.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,8 +26,10 @@ import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.helper.RecyclerViewHelper;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.model.More;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.Wall;
@@ -40,6 +45,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     public void attachView(HomeView view, View root) {
         super.attachView(view, root);
 
+        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setVisibility(View.GONE);
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.home_search))
@@ -85,8 +91,8 @@ final class HomePresenter extends BasePresenter<HomeView> {
                     return result;
                 })
                 .addOnSuccessListener(location -> {
-                    findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
-
+                    //findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
+//TODO
                     mDisposables.add(
                             Single
                                     .just(location)
@@ -134,6 +140,13 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
     boolean hasNewMessageDot() {
         return findViewById(R.id.home_has_message_dot).getVisibility() == View.VISIBLE;
+    }
+
+    void takeBlurredImage(ArrayList<AroundUsers> arounds){
+        View content = findViewById(R.id.home_refresh).getRootView();
+
+        Bitmap bitmap = BlurBuilder.blur(content);
+        mView.onBlurredImageTaken(arounds, bitmap);
     }
 
     void bind(Wall wall) {

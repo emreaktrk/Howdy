@@ -1,5 +1,8 @@
 package istanbul.codify.muudy.ui.around;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -50,5 +53,9 @@ final class AroundPresenter extends BasePresenter<AroundView> {
                             mView.onUserClicked(user);
                         }));
         findViewById(R.id.around_recycler, RecyclerView.class).setAdapter(adapter);
+    }
+
+    void addBlurredBackground(Bitmap bitmap){
+        findViewById(R.id.around_background_image, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
     }
 }

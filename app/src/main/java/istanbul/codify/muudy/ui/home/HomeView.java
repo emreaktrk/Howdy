@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.home;
 
+import android.graphics.Bitmap;
+
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
@@ -46,5 +48,7 @@ interface HomeView extends MvpView {
     void onMorePage(More more);
 
     void onLikeCountClicked(Post post);
+
+    void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap);
 
 }

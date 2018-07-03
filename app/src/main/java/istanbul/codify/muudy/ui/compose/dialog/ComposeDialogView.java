@@ -6,4 +6,8 @@ import istanbul.codify.muudy.ui.base.MvpView;
 interface ComposeDialogView extends MvpView {
 
     void onShareClicked();
+
+    void onFacebookClicked();
+
+    void onTwitterClicked();
 }

@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.compose.dialog;
 
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
@@ -12,6 +13,9 @@ import istanbul.codify.muudy.model.PostVisibility;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 
 final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
+
+    private Boolean isFacebookSelected = false;
+    private Boolean isTwitterSelected = false;
 
     @Override
     public void attachView(ComposeDialogView view, View root) {
@@ -26,12 +30,33 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
 
                             view.onShareClicked();
                         }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.compose_dialog_facebook))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Share clicked");
+
+                            view.onFacebookClicked();
+                        }));
+
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.compose_dialog_twitter))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Share clicked");
+
+                            view.onTwitterClicked();
+                        }));
     }
 
     void bind(String sentence) {
         findViewById(R.id.compose_dialog_sentence, AppCompatTextView.class).setText(sentence);
 
-        ArrayAdapter<PostVisibility> adapter = new ArrayAdapter<>(getContext(), R.layout.md_listitem, R.id.md_title, PostVisibility.values());
+        ArrayAdapter<PostVisibility> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_item,R.id.spinner_item_text, PostVisibility.values());
         findViewById(R.id.compose_dialog_spinner, AppCompatSpinner.class).setAdapter(adapter);
     }
 
@@ -42,5 +67,23 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
         }
 
         return PostVisibility.ALL;
+    }
+
+    void changeFacebookImage(){
+        isFacebookSelected = !isFacebookSelected;
+        if (isFacebookSelected){
+            findViewById(R.id.compose_dialog_facebook, AppCompatImageView.class).setImageDrawable(getContext().getResources().getDrawable(R.drawable.facebook_selected));
+        }else{
+            findViewById(R.id.compose_dialog_facebook, AppCompatImageView.class).setImageDrawable(getContext().getResources().getDrawable(R.drawable.facebook_unselected));
+        }
+    }
+
+    void changeTwitterImage(){
+        isTwitterSelected = !isTwitterSelected;
+        if (isTwitterSelected ){
+            findViewById(R.id.compose_dialog_twitter, AppCompatImageView.class).setImageDrawable(getContext().getResources().getDrawable(R.drawable.twitter_selected));
+        }else{
+            findViewById(R.id.compose_dialog_twitter, AppCompatImageView.class).setImageDrawable(getContext().getResources().getDrawable(R.drawable.twitter_unselected));
+        }
     }
 }
