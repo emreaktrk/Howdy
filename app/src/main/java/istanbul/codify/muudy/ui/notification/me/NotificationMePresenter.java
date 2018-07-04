@@ -1,7 +1,10 @@
 package istanbul.codify.muudy.ui.notification.me;
 
+import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
@@ -12,6 +15,7 @@ import istanbul.codify.muudy.api.pojo.request.GetNotificationsMeRequest;
 import istanbul.codify.muudy.api.pojo.response.AnswerFollowResponse;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.api.pojo.response.GetNotificationsMeResponse;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.FollowResponse;
@@ -106,6 +110,12 @@ final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
         findViewById(R.id.notification_me_notification_recycler, RecyclerView.class).setAdapter(adapter);
     }
 
+    void takeScreenShot(Notification notification){
+        View content = findViewById(R.id.notification_refresh).getRootView();
+
+        Bitmap bitmap = BlurBuilder.blur(content);
+        mView.openWeeklyTop(notification,bitmap);
+    }
 
     void acceptFollowRequest(FollowRequest followRequest){
         AnswerFollowRequest request = new AnswerFollowRequest();

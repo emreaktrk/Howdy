@@ -275,12 +275,11 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void selectPhoto(@NonNull AppCompatActivity activity) {
         mDisposables.add(
                 new RxPermissions(activity)
-                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
                         .flatMap((Function<Boolean, ObservableSource<List<Uri>>>) granted -> granted ? RxGallery.gallery(activity, false).toObservable() : Observable.empty())
                         .subscribe(uris -> {
                             Uri uri = uris.get(0);
                             Logcat.v("Selected uri for photo is " + uri.toString());
-
                             mView.onGalleryPhotoSelected(uri);
                         })
         );

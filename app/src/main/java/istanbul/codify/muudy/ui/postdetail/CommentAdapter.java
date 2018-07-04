@@ -47,9 +47,7 @@ final class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> {
                 .into(holder.mAvatar);
     }
 
-    PublishSubject<Long> imageClick() {
-        return mUserSubject;
-    }
+
 
     @Override
     public int getItemCount() {

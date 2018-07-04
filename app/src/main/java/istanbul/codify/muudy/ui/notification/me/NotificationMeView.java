@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.notification.me;
 
+import android.graphics.Bitmap;
+
 import istanbul.codify.muudy.api.pojo.response.AnswerFollowResponse;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.FollowRequest;
@@ -27,4 +29,6 @@ interface NotificationMeView extends MvpView {
     void onSeeAllClicked(List<FollowRequest> requests);
 
     void onRefresh();
+
+    void openWeeklyTop(Notification notification, Bitmap bitmap);
 }

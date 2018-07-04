@@ -6,10 +6,19 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e1000000"
         tools:context=".ui.weeklytopuser.WeeklyTopUsersActivity">
-
-
+<android.support.v7.widget.AppCompatImageView
+    android:id="@+id/weekly_top_background_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    />
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="#9a000000"
+        />
     <FrameLayout
             android:id="@+id/weekly_top_toolbar"
             android:layout_width="0dp"

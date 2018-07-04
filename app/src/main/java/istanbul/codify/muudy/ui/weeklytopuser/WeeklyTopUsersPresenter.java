@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.weeklytopuser;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.*;
 import android.view.View;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -91,5 +93,9 @@ public class WeeklyTopUsersPresenter extends BasePresenter<WeeklyTopUsersView> {
                         )
         );
         findViewById(R.id.weekly_top_recycler, RecyclerView.class).setAdapter(weeklyTopUsersAdapter);
+    }
+
+    void addBlurredBackground(Bitmap bitmap){
+        findViewById(R.id.weekly_top_background_image, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
     }
 }

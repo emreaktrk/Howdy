@@ -91,4 +91,8 @@ final class MainPresenter extends BasePresenter<MainView> {
     void hideNotificationBadge(){
         findViewById(R.id.navigation_notification_dot, AppCompatImageView.class).setVisibility(View.GONE);
     }
+
+    void openHomeFragment(){
+        mView.onHomeClicked(findViewById(R.id.navigation_home).isSelected());
+    }
 }

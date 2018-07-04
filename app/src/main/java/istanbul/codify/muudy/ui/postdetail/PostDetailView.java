@@ -33,4 +33,6 @@ interface PostDetailView extends MvpView {
     void onLikeCountClicked(Post post);
 
     void onCommentImageclicked(Long userId);
+
+    void onDeleteComment(Long commentId);
 }

@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.notification.me;
 
+import android.graphics.Bitmap;
+
 import com.blankj.utilcode.util.ToastUtils;
 import istanbul.codify.muudy.MuudyFragment;
 import istanbul.codify.muudy.R;
@@ -80,7 +82,7 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
                 PostDetailActivity.start(notification.notification_postid);
                 return;
             case WEEK_TOP_USERS:
-                WeeklyTopUsersActivity.start();
+                mPresenter.takeScreenShot(notification);
             default:
                 return;
         }
@@ -109,6 +111,12 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
     @Override
     public void onRefresh() {
         mPresenter.getNotifications();
+    }
+
+    @Override
+    public void openWeeklyTop(Notification notification, Bitmap bitmap) {
+
+        WeeklyTopUsersActivity.start(bitmap);
     }
 
 }

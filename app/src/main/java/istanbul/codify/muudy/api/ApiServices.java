@@ -118,6 +118,9 @@ public interface ApiServices {
     @POST("deletepost")
     Single<DeletePostResponse> deletePost(@Body DeletePostRequest request);
 
+    @POST("commentpost")
+    Single<DeleteCommentResponse> deleteComment(@Body DeleteCommentRequest request);
+
     @POST("suggest")
     Single<SuggestResponse> suggest(@Body SuggestRequest request);
 

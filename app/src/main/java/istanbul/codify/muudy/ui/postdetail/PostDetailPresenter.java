@@ -18,12 +18,16 @@ import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
 import istanbul.codify.muudy.api.pojo.request.*;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.helper.OnSwipeDialogCallback;
+import istanbul.codify.muudy.helper.RecyclerViewHelper;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
 
 final class PostDetailPresenter extends BasePresenter<PostDetailView> {
+
+    RecyclerViewHelper recyclerViewHelper;
 
     @Override
     public void attachView(PostDetailView view, View root) {
@@ -193,8 +197,9 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
 
     void bind(@NonNull PostDetail detail) {
         PostAdapter post = new PostAdapter(detail.post);
+        PostDetailAdapter postDetailAdapter = new PostDetailAdapter(detail.post,detail.comments,detail.post.rozetler);
         mDisposables.add(
-                post
+                postDetailAdapter
                         .likeClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
@@ -202,7 +207,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                             mView.onLikeClicked(cell);
                         }));
         mDisposables.add(
-                post
+                postDetailAdapter
                         .imageClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
@@ -210,7 +215,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                             mView.onImageClicked(cell);
                         }));
         mDisposables.add(
-                post
+                postDetailAdapter
                         .videoClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
@@ -218,7 +223,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                             mView.onVideoClicked(cell);
                         }));
         mDisposables.add(
-                post
+                postDetailAdapter
                         .avatarClicks()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
@@ -227,7 +232,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         }));
 
         mDisposables.add(
-                post
+                postDetailAdapter
                         .likeCountClick()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(cell -> {
@@ -235,10 +240,18 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
 
                             mView.onLikeCountClicked(cell);
                         }));
+        mDisposables.add(
+                postDetailAdapter
+                        .commentAvatarClick()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(cell -> {
+                            Logcat.v("Avatar clicked");
+                            mView.onCommentImageclicked(cell);
+                        }));
 
-        findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(post);
+        findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(postDetailAdapter);
 
-        CommentAdapter comment = new CommentAdapter(detail.comments);
+    /*    CommentAdapter comment = new CommentAdapter(detail.comments);
         mDisposables.add(
                 comment
                         .imageClick()
@@ -246,25 +259,72 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
                         .subscribe(cell -> {
                             Logcat.v("Avatar clicked");
                             mView.onCommentImageclicked(cell);
-                        }));
+                        }));*/
         DividerItemDecoration divider = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.background_divider));
-        findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).addItemDecoration(divider);
-        findViewById(R.id.post_detail_comment_recycler, RecyclerView.class).setAdapter(comment);
+        findViewById(R.id.post_detail_post, RecyclerView.class).addItemDecoration(divider);
+        findViewById(R.id.post_detail_post, RecyclerView.class).setAdapter(postDetailAdapter);
 
-        BadgeAdapter badge = new BadgeAdapter(detail.post.rozetler);
+     /*   BadgeAdapter badge = new BadgeAdapter(detail.post.rozetler);
         findViewById(R.id.post_detail_badge, RecyclerView.class).setAdapter(badge);
-
+*/
         findViewById(R.id.post_detail_username, AppCompatTextView.class).setText(detail.post.username);
+
+        if (recyclerViewHelper != null) {
+            recyclerViewHelper.detachFromRecyclerView(findViewById(R.id.post_detail_post, RecyclerView.class));
+        }
+
+        recyclerViewHelper = new RecyclerViewHelper();
+        recyclerViewHelper.setItemViewSwipeEnable(true);
+
+        recyclerViewHelper.initSwipeForPostDetail(findViewById(R.id.post_detail_post, RecyclerView.class),getContext(), detail, new OnSwipeDialogCallback() {
+            @Override
+            public void onDialogButtonClick(Boolean isYes, int position, Boolean isDelete) {
+                postDetailAdapter.notifyDataSetChanged();
+                if(isYes) {
+                    if (isDelete) {
+
+                        mView.onDeleteComment(detail.comments.get(position).idpostcomment);
+                    }
+                }
+            }
+
+
+        });
+    }
+
+    void deleteComment(long id){
+        DeleteCommentRequest request = new DeleteCommentRequest();
+        request.token = AccountUtils.token(getContext());
+        request.commentid = id;
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .deleteComment(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<DeleteCommentResponse>() {
+                            @Override
+                            protected void success(DeleteCommentResponse response) {
+                                mView.onLoaded();
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+
     }
 
     void collapse() {
-        findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.GONE);
-        findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.GONE);
+        //findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.GONE);
+       // findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.GONE);
     }
 
     void expand() {
-        findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.VISIBLE);
-        findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.VISIBLE);
+        //findViewById(R.id.post_detail_post, RecyclerView.class).setVisibility(View.VISIBLE);
+        //findViewById(R.id.post_detail_badge, RecyclerView.class).setVisibility(View.VISIBLE);
     }
 }

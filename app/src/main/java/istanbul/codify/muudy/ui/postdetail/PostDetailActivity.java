@@ -90,6 +90,10 @@ public final class PostDetailActivity extends MuudyActivity implements PostDetai
         UserProfileActivity.start(userId);
     }
 
+    @Override
+    public void onDeleteComment(Long commentId) {
+        mPresenter.deleteComment(commentId);
+    }
 
     @Override
     public void onError(ApiError error) {

@@ -35,44 +35,18 @@
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/post_detail_post"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post_detail_toolbar"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/cell_post_none"
-            tools:layout_height="150dp"
-            tools:itemCount="1"/>
+        android:id="@+id/post_detail_post"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/post_detail_bottom_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_detail_toolbar"
+        tools:itemCount="1"
+        tools:listitem="@layout/cell_post_none" />
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/post_detail_badge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/post_detail_comment_recycler"
-            app:layout_constraintTop_toBottomOf="@id/post_detail_post"
-            tools:listitem="@layout/cell_badge"
-            tools:itemCount="2"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/post_detail_comment_recycler"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/post_detail_badge"
-            app:layout_constraintBottom_toTopOf="@id/post_detail_bottom_divider"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            app:reverseLayout="false"
-            app:stackFromEnd="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/cell_comment"/>
 
     <View
             android:id="@+id/post_detail_bottom_divider"

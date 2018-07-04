@@ -255,6 +255,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {
 
+        public static final int TYPE = 279;
+
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
         private CircleImageView mEmotion;

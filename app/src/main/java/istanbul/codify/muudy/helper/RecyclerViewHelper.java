@@ -14,6 +14,7 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.UserMessage;
 import istanbul.codify.muudy.model.Wall;
+import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.utils.AndroidUtils;
 
 import java.util.List;
@@ -327,8 +328,7 @@ public class RecyclerViewHelper {
                         public void onCancel(DialogInterface dialog) {
                             onSwipeDialogCallbackk.onDialogButtonClick(false, position, true);
                         }
-                    })
-                            .show();
+                    }).show();
 
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     onSwipeDialogCallbackk.onDialogButtonClick(true, position, false);
@@ -375,5 +375,111 @@ public class RecyclerViewHelper {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+
+    public void initSwipeForPostDetail(final RecyclerView recyclerView, final Context context, PostDetail postDetail, OnSwipeDialogCallback onSwipeDialogCallback) {
+        setOnSwipeDialogCallback(onSwipeDialogCallback);
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+
+                return isItemViewSwipeEnable;
+            }
+
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+                int position = viewHolder.getAdapterPosition();
+                int swipeFlags = 0;
+                int notErasableItemCount = 1;
+                if(postDetail.post.rozetler.size() > 0){
+                    notErasableItemCount += postDetail.post.rozetler.size();
+                }
+
+                if (position >= postDetail.post.rozetler.size() + 1){
+                    if (postDetail.comments.get(position - postDetail.post.rozetler.size() - 1).commenterUser.iduser == AccountUtils.me(context).iduser) {
+                        swipeFlags = ItemTouchHelper.LEFT;
+                    }else{
+                        swipeFlags = 0;
+                    }
+                }else{
+                    swipeFlags = 0;
+                }
+                return makeMovementFlags(0, swipeFlags);
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+
+                if (direction == ItemTouchHelper.LEFT) {
+
+                    new AlertDialog.Builder(context)
+                            .setMessage(postDetail.comments.get(position - postDetail.post.rozetler.size() - 1).postcomment_text+ " Yorumunuzu silmek istediğinizden emin misiniz?")
+                            .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    onSwipeDialogCallbackk.onDialogButtonClick(true, position - postDetail.post.rozetler.size() - 1, true);
+                                }
+                            })
+                            .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    onSwipeDialogCallbackk.onDialogButtonClick(false, position - postDetail.post.rozetler.size() - 1, true);
+                                }
+                            }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            onSwipeDialogCallbackk.onDialogButtonClick(false, position - postDetail.post.rozetler.size() - 1, true);
+                        }
+                    }).show();
+
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    onSwipeDialogCallbackk.onDialogButtonClick(true, position - postDetail.post.rozetler.size() - 1, false);
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    Paint p = new Paint();
+                    if (dX > 0) {
+                        p.setColor(Color.parseColor("#263892"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width, (float) itemView.getTop() + width, (float) itemView.getLeft() + 2 * width, (float) itemView.getBottom() - width);
+                        Paint paint = new Paint();
+                        paint.setColor(Color.WHITE);
+                        paint.setTextSize(AndroidUtils.convertDpToPixel(22, context));
+                        c.drawText("MUUDY DE", icon_dest.left - 80, icon_dest.centerY() + 20, paint);
+                    } else {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background, p);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
+                        Paint paint = new Paint();
+                        paint.setColor(Color.WHITE);
+                        paint.setTextSize(AndroidUtils.convertDpToPixel(22, context));
+                        c.drawText("SİL", icon_dest.left - 80, icon_dest.centerY() + 20, paint);
+
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+
+        itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
 
 }

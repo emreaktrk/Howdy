@@ -784,7 +784,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<FollowResponse>() {
                             @Override
                             protected void success(FollowResponse response) {
-
+                                load(mUser.iduser, false);
                             }
 
                             @Override

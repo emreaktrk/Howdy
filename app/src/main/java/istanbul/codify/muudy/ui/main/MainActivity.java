@@ -14,8 +14,10 @@ import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.fcm.UpdatePushService;
 import istanbul.codify.muudy.helper.Pool;
+import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.model.event.HomeReselectEvent;
 import istanbul.codify.muudy.model.event.OwnProfileEvent;
+import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.notification.ProfileEvent;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.compose.ComposeActivity;
@@ -26,6 +28,8 @@ import istanbul.codify.muudy.ui.statistic.StatisticFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 
 
 public final class MainActivity extends MuudyActivity implements MainView, Navigation.IController, EventSupport {
@@ -85,7 +89,14 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
 
 
 
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPostEvent(PostEvent event) {
+        ArrayList<AroundUsers> around = event.newPost.aroundUsers;
+        if (around.isEmpty()) {
+            mPresenter.openHomeFragment();
+        }
 
     }
 
