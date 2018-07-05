@@ -11,6 +11,8 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewTreeObserver;
+
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -75,7 +77,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     @SuppressLint({"MissingPermission"})
-    void getWall(Context context, @Nullable More more) {
+    void getWall(Context context, @Nullable More more, @Nullable ArrayList<AroundUsers> aroundUsers) {
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
@@ -91,7 +93,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                     return result;
                 })
                 .addOnSuccessListener(location -> {
-                    //findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
+                    findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
 //TODO
                     mDisposables.add(
                             Single
@@ -113,7 +115,11 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                         @Override
                                         protected void success(GetWallResponse response) {
                                             if (more == null) {
-                                                mView.onLoaded(response.data);
+                                                if (aroundUsers != null && !aroundUsers.isEmpty()){
+                                                    mView.onLoaded(response.data,aroundUsers);
+                                                }else {
+                                                    mView.onLoaded(response.data);
+                                                }
                                             } else {
                                                 mView.onMoreLoaded(response.data.posts, more);
                                             }
@@ -149,7 +155,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
         mView.onBlurredImageTaken(arounds, bitmap);
     }
 
-    void bind(Wall wall) {
+    void bind(Wall wall, @Nullable ArrayList<AroundUsers> aroundUsers) {
         EmotionAdapter emotion = new EmotionAdapter(wall.nearEmotions);
         mDisposables.add(
                 emotion
@@ -299,6 +305,21 @@ final class HomePresenter extends BasePresenter<HomeView> {
                 post.notifyDataSetChanged();
             }
         });
+
+        final boolean[] isLoaded = {false};
+        findViewById(R.id.home_post_recycler, RecyclerView.class).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Logcat.d("recycler yüklendi");
+                if (!isLoaded[0] && aroundUsers != null && !aroundUsers.isEmpty()) {
+
+                    Logcat.d("recycler yüklendi if içi");
+                    isLoaded[0] = true;
+                    mView.onPostsLoaded(aroundUsers);
+                }
+            }
+        });
+
     }
 
     void like(long postId) {

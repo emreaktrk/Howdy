@@ -1,15 +1,20 @@
 package istanbul.codify.muudy.ui.main;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 
 import android.widget.Space;
 import istanbul.codify.muudy.R;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.logcat.Logcat;
+import istanbul.codify.muudy.model.AroundUsers;
 import istanbul.codify.muudy.navigation.Navigation;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.ArrayList;
 
 final class MainPresenter extends BasePresenter<MainView> {
 
@@ -92,7 +97,14 @@ final class MainPresenter extends BasePresenter<MainView> {
         findViewById(R.id.navigation_notification_dot, AppCompatImageView.class).setVisibility(View.GONE);
     }
 
-    void openHomeFragment(){
-        mView.onHomeClicked(findViewById(R.id.navigation_home).isSelected());
+    void openHomeFragment(ArrayList<AroundUsers> around){
+        mView.openHome(findViewById(R.id.navigation_home).isSelected(),around);
+    }
+
+    void takeBlurredImage(ArrayList<AroundUsers> arounds){
+        View content = findViewById(R.id.home_refresh).getRootView();
+
+        Bitmap bitmap = BlurBuilder.blur(content);
+        //mView.onBlurredImageTaken(arounds, bitmap);
     }
 }

@@ -295,7 +295,7 @@ final class PostDetailPresenter extends BasePresenter<PostDetailView> {
 
     void deleteComment(long id){
         DeleteCommentRequest request = new DeleteCommentRequest();
-        request.token = AccountUtils.token(getContext());
+        request.token = AccountUtils.tokenLegacy(getContext());
         request.commentid = id;
         mDisposables.add(
                 ApiManager

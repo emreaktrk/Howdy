@@ -17,6 +17,10 @@ interface HomeView extends MvpView {
 
     void onLoaded(Wall wall);
 
+    void onLoaded(Wall wall,ArrayList<AroundUsers> aroundUsers);
+
+    void onPostsLoaded(ArrayList<AroundUsers> aroundUsers);
+
     void onMoreLoaded(ArrayList<Post> posts, More more);
 
     void onError(ApiError error);

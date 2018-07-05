@@ -299,7 +299,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
         }
     }
 
-    void load(@NonNull Long userId, Boolean isForPosts) {
+    void    load(@NonNull Long userId, Boolean isForPosts) {
         GetUserProfileRequest request = new GetUserProfileRequest(userId);
         request.token = AccountUtils.tokenLegacy(getContext());
 

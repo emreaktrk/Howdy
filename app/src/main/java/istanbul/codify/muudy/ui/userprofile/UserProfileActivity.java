@@ -87,7 +87,8 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
         User user = getSerializable(User.class);
         if (user != null) {
-            mPresenter.bind(user);
+            mPresenter.load(user.iduser, true);
+           // mPresenter.bind(user);
         }
 
 

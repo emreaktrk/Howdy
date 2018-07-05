@@ -212,7 +212,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             @Override
             public void onClick(View v) {
-                Long userId = mComments.get(getAdapterPosition()).postcomment_commenterid;//TODO pozisyon çek
+                Long userId = mComments.get(getAdapterPosition() - mBadges.size() - 1).postcomment_commenterid;//TODO pozisyon çek
                 mUserSubject.onNext(userId);
             }
         }

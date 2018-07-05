@@ -1,8 +1,10 @@
 package istanbul.codify.muudy.ui.main;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -49,7 +51,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         ActivityUtils.finishAllActivities();
     }
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_main;
@@ -63,7 +64,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                 .beginTransaction()
                 .replace(R.id.home_frame, mPool.get(HomeFragment.class))
                 .commit();
-
 
         mPresenter.attachView(this, this);
 
@@ -87,18 +87,17 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     protected void onResume() {
         super.onResume();
 
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
         if (around.isEmpty()) {
-            mPresenter.openHomeFragment();
-        }
 
+        }
+        mPresenter.openHomeFragment(around);
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ProfileEvent event) {
@@ -124,6 +123,25 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                     .replace(R.id.home_frame, mPool.get(HomeFragment.class))
                     .addToBackStack(null)
                     .commit();
+        }
+    }
+
+    @Override
+    public void openHome(boolean reselect, ArrayList<AroundUsers> around) {
+
+
+        if (!reselect) {
+            HomeFragment fragment = new HomeFragment();
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(around.getClass().getSimpleName(), around);
+            fragment.setArguments(arguments);
+
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_frame, fragment)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
         }
     }
 
