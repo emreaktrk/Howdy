@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.compose;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +10,12 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
@@ -31,11 +38,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public final class ComposeActivity extends MuudyActivity implements ComposeView, EventSupport {
 
     private final ComposePresenter mPresenter = new ComposePresenter();
+    private static final int PICK_IMAGE_FROM_GALLERY_ACTIVITY_REQUEST_CODE = 333;
 
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();
@@ -237,6 +246,32 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     }
 
+    @Override
+    public void onOpenGallery() {
+        Dexter
+                .withActivity(this)
+                .withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+
+                            Intent openGallery = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                            startActivityForResult(openGallery, PICK_IMAGE_FROM_GALLERY_ACTIVITY_REQUEST_CODE);
+
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        // Empty block
+                    }
+                })
+                .check();
+
+    }
+
+
     @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -271,6 +306,11 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         if (video != null) {
             mPresenter.bindVideo(video);
             return;
+        }
+
+        if (requestCode == PICK_IMAGE_FROM_GALLERY_ACTIVITY_REQUEST_CODE) {
+            Uri photo = data.getData();
+            mPresenter.bindGalleryPhoto(photo);
         }
     }
 }

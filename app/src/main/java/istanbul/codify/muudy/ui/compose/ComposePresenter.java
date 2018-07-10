@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.compose;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -68,6 +69,7 @@ import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import istanbul.codify.muudy.utils.AndroidUtils;
+import istanbul.codify.muudy.utils.ImageOrientationUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -80,6 +82,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -318,7 +321,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     }
 
     void selectPhoto(@NonNull AppCompatActivity activity) {
-        mDisposables.add(
+
+     /*   mDisposables.add(
                 new RxPermissions(activity)
                         .request(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
                         .flatMap((Function<Boolean, ObservableSource<List<Uri>>>) granted -> granted ? RxGallery.gallery(activity, false).toObservable() : Observable.empty())
@@ -327,7 +331,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                             Logcat.v("Selected uri for photo is " + uri.toString());
                             mView.onGalleryPhotoSelected(uri);
                         })
-        );
+        );*/
+        mView.onOpenGallery();
+
+
     }
 
     void capturePhoto(@NonNull AppCompatActivity activity) {
@@ -394,7 +401,17 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
             System.out.println("Error Code: 13");
         }
     }
+    private int getRotationInDegrees(Uri uri)
+    {
+        return ImageOrientationUtil
+                .getExifRotation(ImageOrientationUtil
+                        .getFromMediaUri(
+                                getContext(),
+                                getContext().getContentResolver(),
+                                uri));
 
+
+    }
     public void saveImage(Bitmap finalBitmap, File _image) {
         if (_image.exists()) _image.delete();
         try {
@@ -464,19 +481,21 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void bindGalleryPhoto(@Nullable Uri photo) {
         mPhoto = photo;
 
+
         File file = createDirAndImageFile();
         try {
-            copyFile(new File(getRealPathFromURI(photo)), file);
+            copyFile(new File(getRealPathFromURI(photo)),file);
             adjustImageOrientation(file);
+            mPhoto = Uri.fromFile(file);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error Code: 12");
         }
+
         View picture = findViewById(R.id.compose_picture);
 
         int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
 
-       Picasso
+        Picasso
                 .with(getContext())
                 .load(Uri.fromFile(file))
                 .resize(picture.getWidth(), height)
@@ -615,6 +634,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
     @SuppressLint("MissingPermission")
     void post(ShareEvent event) {
+        ProgressDialog dialog = ProgressDialog.show(getContext(), "",
+                "Yükleniyor", true);
+
         LocationServices
                 .getFusedLocationProviderClient(getContext())
                 .getLastLocation()
@@ -657,6 +679,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                         .subscribe(new ServiceConsumer<NewPostResponse>() {
                                             @Override
                                             protected void success(NewPostResponse response) {
+                                                dialog.dismiss();
                                                 Logcat.v("New post created with id " + response.data.id);
 
                                                 mView.onLoaded(response.data);
@@ -665,7 +688,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                             @Override
                                             protected void error(ApiError error) {
                                                 Logcat.e(error);
-
+                                                dialog.dismiss();
                                                 mView.onError(error);
                                             }
                                         })))
@@ -696,6 +719,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
             Bitmap bitmap = BitmapFactory.decodeStream(input);
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+
             byte[] bytes = output.toByteArray();
 
             return Base64.encodeToString(bytes, Base64.DEFAULT);

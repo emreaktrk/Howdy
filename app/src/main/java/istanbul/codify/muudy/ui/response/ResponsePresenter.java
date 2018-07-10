@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.response;
 
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -79,7 +80,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                             view.onProfilePhotoClicked(mUser);
                         }));
 
-
+    findViewById(R.id.response_container, ConstraintLayout.class).setVisibility(View.GONE);
     }
 
     void addClickToWordContainer() {
@@ -174,6 +175,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
             findViewById(R.id.response_send, AppCompatButton.class).setVisibility(View.VISIBLE);
         }
 
+        findViewById(R.id.response_container, ConstraintLayout.class).setVisibility(View.VISIBLE);
     }
 
     void bind(@NonNull User user, String text) {
@@ -193,7 +195,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         return new StyleSpan(Typeface.BOLD);
                     }
                 }));
-
+        findViewById(R.id.response_container, ConstraintLayout.class).setVisibility(View.VISIBLE);
 
     }
 
@@ -225,8 +227,8 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                 .with(getContext())
                 .load(BuildConfig.URL + wordImage)
                 .placeholder(R.drawable.ic_avatar)
-                .into(findViewById(R.id.response_word_image, CircleImageView.class));
-
+                .into(findViewById(R.id.response_word_image, AppCompatImageView.class));
+        findViewById(R.id.response_container, ConstraintLayout.class).setVisibility(View.VISIBLE);
 
     }
 

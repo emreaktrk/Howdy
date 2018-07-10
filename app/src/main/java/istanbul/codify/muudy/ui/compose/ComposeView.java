@@ -50,5 +50,6 @@ interface ComposeView extends MvpView {
 
     void openSeasonSelection(Bitmap bitmap);
 
+    void onOpenGallery();
 
 }

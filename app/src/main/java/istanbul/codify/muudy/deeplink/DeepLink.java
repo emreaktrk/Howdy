@@ -43,15 +43,17 @@ public abstract class DeepLink implements Serializable {
 
     final @Nullable
     String getAnswerHiWord() {
-        String placeName = "";
-        placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_text").toString();
-        return placeName;
+        String answerHiWord = "";
+        answerHiWord = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_text").toString();
+        answerHiWord = answerHiWord.replace("\"","");
+        return answerHiWord;
     }
 
     final @Nullable
     String getAnswerHiWordImage() {
-        String placeName = "";
-        placeName = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_img").toString();
-        return placeName;
+        String wordImage = "";
+        wordImage = new Gson().fromJson(message.getData().get("extraData"),JsonObject.class).get("notification_answerhi_word_img").toString();
+        wordImage = wordImage.replace("\"","");
+        return wordImage;
     }
 }

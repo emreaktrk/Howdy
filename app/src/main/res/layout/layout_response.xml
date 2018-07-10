@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+    android:id="@+id/response_container"
         tools:context=".ui.response.ResponseActivity">
 
     <android.support.v7.widget.AppCompatImageButton
