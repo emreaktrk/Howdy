@@ -7,12 +7,11 @@
     tools:context=".ui.compose.ComposeActivity">
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/compose_dialog_background"
+        android:id="@+id/choose_season_dialog_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/compose_dialog_layer"
+        android:id="@+id/choose_season_dialog_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#9a000000"/>
@@ -21,47 +20,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:padding="16dp"
         android:background="@drawable/dialog_choose_season_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:context=".ui.compose.ComposeActivity">
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/compose_title"
+            android:id="@+id/choose_season_title"
             style="@style/Text.Normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paylaşım Detayı"
+            android:text="Bölüm Seç"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/compose_dialog_sentence"
-            style="@style/Text.Normal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/compose_title"
-            tools:text="egesert, keyifli hissediyor" />
-
         <RelativeLayout
             android:id="@+id/temp_layout"
             android:layout_width="125dp"
             android:layout_height="36dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
             android:background="@drawable/spinner_border"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/compose_dialog_sentence">
+            app:layout_constraintTop_toBottomOf="@+id/choose_season_title">
 
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/compose_dialog_spinner"
+                android:id="@+id/choose_season_dialog_episode_spinner"
                 style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -77,36 +65,47 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/compose_dialog_facebook"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/facebook_unselected"
-            app:layout_constraintTop_toBottomOf="@+id/compose_dialog_sentence" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/compose_dialog_twitter"
-            android:layout_width="36dp"
+        <RelativeLayout
+            android:id="@+id/temp_layout2"
+            android:layout_width="125dp"
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/twitter_unselected"
-            app:layout_constraintLeft_toRightOf="@+id/compose_dialog_facebook"
-            app:layout_constraintTop_toBottomOf="@+id/compose_dialog_sentence" />
+            android:background="@drawable/spinner_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/choose_season_title">
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/choose_season_dialog_season_spinner"
+                style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@color/white" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_down" />
+
+        </RelativeLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/compose_dialog_share"
-            style="@style/Button.Blue"
+            android:id="@+id/choose_season_dialog_share"
+            style="@style/Button.Transparent"
+            android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginEnd="80dp"
             android:layout_marginStart="80dp"
             android:layout_marginTop="16dp"
-            android:text="Paylaş"
+            android:text="Tamam"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/temp_layout" />
     </android.support.constraint.ConstraintLayout>
+
 
 </android.support.constraint.ConstraintLayout>

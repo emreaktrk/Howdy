@@ -10,4 +10,6 @@ interface ComposeDialogView extends MvpView {
     void onFacebookClicked();
 
     void onTwitterClicked();
+
+    void onCloseClicked();
 }

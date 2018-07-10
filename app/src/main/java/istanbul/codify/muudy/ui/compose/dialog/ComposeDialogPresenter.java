@@ -1,5 +1,7 @@
 package istanbul.codify.muudy.ui.compose.dialog;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
@@ -41,7 +43,6 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
                             view.onFacebookClicked();
                         }));
 
-
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.compose_dialog_twitter))
@@ -50,6 +51,15 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
                             Logcat.v("Share clicked");
 
                             view.onTwitterClicked();
+                        }));
+
+        mDisposables.add(
+                RxView
+                        .clicks(findViewById(R.id.compose_dialog_layer))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> {
+                            Logcat.v("Close clicked");
+                            view.onCloseClicked();
                         }));
     }
 
@@ -67,6 +77,10 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
         }
 
         return PostVisibility.ALL;
+    }
+
+    void addBlurredBackground(Bitmap bitmap){
+        findViewById(R.id.compose_dialog_background, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
     }
 
     void changeFacebookImage(){

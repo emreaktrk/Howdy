@@ -13,7 +13,7 @@ public class AnswerHiLink extends DeepLink {
 
     @Override
     public void navigate(Activity activity) {
-        ResponseActivity.start(getItemId(),true,getNotificationMessage(),getAnswerHiWordImage(),getNotificationMessage());
+        ResponseActivity.start(getItemId(),true,getAnswerHiWord(),getAnswerHiWordImage(),getNotificationMessage());
 
     }
 }

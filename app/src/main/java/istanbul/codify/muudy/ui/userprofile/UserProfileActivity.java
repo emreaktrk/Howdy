@@ -63,6 +63,14 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull String username) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UserProfileActivity.class);
+        starter.putExtra(username.getClass().getSimpleName(), username);
+        ActivityUtils.startActivity(starter);
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_user_profile;
@@ -89,6 +97,11 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
         if (user != null) {
             mPresenter.load(user.iduser, true);
            // mPresenter.bind(user);
+        }
+
+        String username = getSerializable(String.class);
+        if (username != null){
+            mPresenter.load(username);
         }
 
 

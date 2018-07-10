@@ -111,7 +111,7 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     @Override
     public void onLoaded(User user, String text, String wordText, String wordImage) {
-
+        mPresenter.bind(user,text,wordText,wordImage);
     }
 
     @Override
@@ -129,7 +129,8 @@ public final class ResponseActivity extends MuudyActivity implements ResponseVie
 
     @Override
     public void onError(ApiError error) {
-        ToastUtils.showShort(error.message);
+
+        //ToastUtils.showShort(error.message);
     }
 
     @Override

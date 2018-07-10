@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.home;
 
+import android.graphics.Color;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,8 +9,15 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+
+import com.binaryfork.spanny.Spanny;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -20,6 +28,9 @@ import istanbul.codify.muudy.exception.ImplementationMissingException;
 import istanbul.codify.muudy.helper.utils.InflaterUtils;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.ui.users.UsersActivity;
+import istanbul.codify.muudy.utils.WordToSpan;
 import istanbul.codify.muudy.view.LikeButton;
 
 import java.util.ArrayList;
@@ -98,12 +109,53 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .placeholder(R.drawable.ic_avatar)
                     .into(none.mImage);
 
-            SpannableStringBuilder str = new SpannableStringBuilder(post.post_text);
+
+            WordToSpan wordToSpan = new WordToSpan();
+            wordToSpan.setColorMENTION(holder.itemView.getContext().getResources().getColor(R.color.blue));
+
+            wordToSpan.setLink(post.post_text,none.mMessage, post.username);
+
+            wordToSpan.setClickListener(new WordToSpan.ClickListener() {
+                @Override
+                public void onClick(String type, String text) {
+                    Toast.makeText(none.itemView.getContext(),text,Toast.LENGTH_LONG).show();
+                    if(type.equals("mention")){
+
+                        String username = text.substring(1);
+                        UserProfileActivity.start(username);
+
+                    }
+                }
+            });
+
+        /*    SpannableStringBuilder str = new SpannableStringBuilder(post.post_text);
             str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    Toast.makeText(none.itemView.getContext(),"username tıklandı",Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                    ds.setColor(none.itemView.getContext().getResources().getColor(R.color.black));
+
+
+
+                }
+            };
+
+            str.setSpan(clickableSpan,0,post.username.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            str.setSpan(new ForegroundColorSpan(Color.BLACK), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
             none.mMessage.setText(str);
+*/
+
 
             if (holder instanceof MediaHolder) {
-
                 MediaHolder media = (MediaHolder) holder;
                 Picasso
                         .with(holder.itemView.getContext())
@@ -122,6 +174,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     none.mEmotion.setVisibility(View.GONE);
                 }
             }
+
+
         }
 
         if (holder instanceof RecommendedHolder) {

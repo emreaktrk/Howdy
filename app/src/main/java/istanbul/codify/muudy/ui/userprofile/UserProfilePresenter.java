@@ -77,6 +77,8 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
     public void attachView(UserProfileView view, View root) {
         super.attachView(view, root);
 
+        findViewById(R.id.user_profile_coordinator).setVisibility(View.INVISIBLE);
+
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.user_profile_number_followed))
@@ -323,9 +325,35 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         }));
     }
 
+    void  load(@NonNull String username) {
+        GetUserProfileWithUsernameRequest request = new GetUserProfileWithUsernameRequest();
+        request.token = AccountUtils.tokenLegacy(getContext());
+        request.otherUserUsername = username;
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .getUserProfileWithUsername(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
+                            @Override
+                            protected void success(GetUserProfileResponse response) {
+                                mView.onLoaded(response.data.user, true);
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
+
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
     void bind(User user) {
         mUser = user;
 
+        findViewById(R.id.user_profile_coordinator).setVisibility(View.VISIBLE);
         if (user.iduser == AccountUtils.me(getContext()).iduser) {
             findViewById(R.id.user_profile_switcher, ViewSwitcher.class).setVisibility(View.GONE);
         }else{

@@ -43,8 +43,6 @@ public class WeeklyTopUsersActivity extends MuudyActivity implements WeeklyTopUs
         ActivityUtils.startActivity(starter);
     }
 
-
-
     @Override
     protected int getLayoutResId() {
         return R.layout.layout_weekly_top_users;

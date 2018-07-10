@@ -74,6 +74,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
                             view.onRefresh();
                         }));
+
     }
 
     @SuppressLint({"MissingPermission"})

@@ -2,22 +2,40 @@ package istanbul.codify.muudy.ui.compose;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.media.ExifInterface;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ViewUtils;
 import android.util.Base64;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.blankj.utilcode.util.StringUtils;
@@ -41,10 +59,14 @@ import istanbul.codify.muudy.api.pojo.request.CreatePostTextRequest;
 import istanbul.codify.muudy.api.pojo.request.GetWordsWithFilterRequest;
 import istanbul.codify.muudy.api.pojo.request.NewPostRequest;
 import istanbul.codify.muudy.api.pojo.response.*;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.*;
+import istanbul.codify.muudy.model.event.SeasonSelectionEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+import istanbul.codify.muudy.ui.photo.PhotoActivity;
+import istanbul.codify.muudy.ui.video.VideoActivity;
 import istanbul.codify.muudy.utils.AndroidUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -53,8 +75,15 @@ import retrofit2.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -64,9 +93,11 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
     private final List<Selectable> mSelecteds = new ArrayList<>();
     private final SelectedAdapter mAdapter = new SelectedAdapter(mSelecteds);
-    private Uri mPhoto;
-    private Uri mVideo;
+    public Uri mPhoto;
+    public Uri mVideo;
+    String selectedSeason = "";
 
+    private Boolean isMediaSelected = false;
     @Override
     public void attachView(ComposeView view, View root) {
         super.attachView(view, root);
@@ -97,7 +128,6 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Search clicked");
-
                             view.onSearchClicked();
                         }));
 
@@ -268,8 +298,23 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         }
     }
 
+    void removeSeries(){
+        if (mSelecteds.size() - 1 != -1) {
+            mSelecteds.remove(mSelecteds.size() - 1);
+            mAdapter.notifyDataSetChanged(mSelecteds);
+        }
+    }
+
     List<Selectable> getSelecteds() {
         return mSelecteds;
+    }
+
+    void mediaClick(){
+        if(getMediaType() == PostMediaType.IMAGE){
+            PhotoActivity.start(mPhoto.toString(),true);
+        }else if (getMediaType() == PostMediaType.VIDEO){
+            VideoActivity.start(mVideo);
+        }
     }
 
     void selectPhoto(@NonNull AppCompatActivity activity) {
@@ -294,6 +339,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(uri -> {
                             Logcat.v("Selected uri for photo is " + uri.toString());
 
+
                             mView.onPhotoSelected(uri);
                         })
         );
@@ -303,12 +349,14 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         mPhoto = photo;
 
         View picture = findViewById(R.id.compose_picture);
-
+        File file = new File(getRealPathFromURI(photo));
+        adjustImageOrientation(file);
         int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
+
 
         Picasso
                 .with(getContext())
-                .load(mPhoto)
+                .load(Uri.fromFile(file))
                 .resize(picture.getWidth(), height)
                 .centerCrop()
                 .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
@@ -319,23 +367,123 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         params.height = height;
 
         findViewById(R.id.compose_picture).setLayoutParams(params);
+    }
+
+    public void adjustImageOrientation(File _image) {
+
+        try {
+            ExifInterface exif = new ExifInterface(Uri.fromFile(_image).getEncodedPath());
+            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            int rotationInDegrees;
+            if (rotation == ExifInterface.ORIENTATION_ROTATE_90) {
+                rotationInDegrees = 90;
+            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_180) {
+                rotationInDegrees = 180;
+            } else if (rotation == ExifInterface.ORIENTATION_ROTATE_270) {
+                rotationInDegrees = 270;
+            } else {
+                rotationInDegrees = 0;
+            }
+            if (rotation != 0f) {
+                Bitmap bitmap = BitmapFactory.decodeFile(_image.getAbsolutePath(), new BitmapFactory.Options());
+                Bitmap finalBitmap = changeRotate(bitmap, rotationInDegrees);
+                saveImage(finalBitmap, _image);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error Code: 13");
+        }
+    }
+
+    public void saveImage(Bitmap finalBitmap, File _image) {
+        if (_image.exists()) _image.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(_image);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error Code: 14");
+        }
+    }
+
+    public Bitmap changeRotate(Bitmap bitmap, int rotationInDegrees) {
+
+        Bitmap mBitmap = bitmap;
+        try {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotationInDegrees);
+            mBitmap = Bitmap.createBitmap(mBitmap , 0, 0, mBitmap.getWidth(), mBitmap.getHeight(), matrix, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mBitmap;
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Video.Media.DATA};
+        Cursor cursor = getContext().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
+    public File createDirAndImageFile() {
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Muudy");
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(imagesFolder, timeStamp + ".jpg");
+    }
+
+    public void copyFile(File sourceFile, File destFile) throws IOException {
+        if (!sourceFile.exists()) {
+            return;
+        }
+        FileChannel source;
+        FileChannel destination;
+        source = new FileInputStream(sourceFile).getChannel();
+        destination = new FileOutputStream(destFile).getChannel();
+        if (destination != null && source != null) {
+            destination.transferFrom(source, 0, source.size());
+        }
+        if (source != null) {
+            source.close();
+        }
+        if (destination != null) {
+            destination.close();
+        }
     }
 
     void bindGalleryPhoto(@Nullable Uri photo) {
         mPhoto = photo;
 
+        File file = createDirAndImageFile();
+        try {
+            copyFile(new File(getRealPathFromURI(photo)), file);
+            adjustImageOrientation(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error Code: 12");
+        }
         View picture = findViewById(R.id.compose_picture);
 
         int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
 
-     /*   Picasso
+       Picasso
                 .with(getContext())
-                .load(mPhoto)
+                .load(Uri.fromFile(file))
                 .resize(picture.getWidth(), height)
                 .centerCrop()
-                .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));*/
+                .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
 
-        findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(BitmapFactory.decodeFile(photo.getPath()));
+        //findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(BitmapFactory.decodeFile(photo.getPath()));
 
         findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
 
@@ -344,21 +492,75 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         findViewById(R.id.compose_picture).setLayoutParams(params);
 
-
-
-
-
     }
 
     void bindVideo(@Nullable Uri video) {
         mVideo = video;
+        Bitmap videoBitmap;
+        try {
+            videoBitmap = ThumbnailUtils.createVideoThumbnail(video.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
 
-        Picasso
-                .with(getContext())
-                .load(mVideo)
-                .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
+            //findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(videoBitmap);
+
+            View picture = findViewById(R.id.compose_picture);
+
+            int height = (int)Math.round(AndroidUtils.convertDpToPixel(150,getContext()));
+
+
+
+            findViewById(R.id.compose_picture, AppCompatImageButton.class).setScaleType(AppCompatImageView.ScaleType.CENTER_CROP);
+
+            findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
+
+            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            ViewGroup.LayoutParams params = picture.getLayoutParams();
+            params.height = height;
+            params.width = width;
+            findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(scaleCenterCrop(videoBitmap,150,width));
+
+            findViewById(R.id.compose_picture,AppCompatImageView.class).setLayoutParams(params);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
 
         findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
+    }
+
+    public Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
+        int sourceWidth = source.getWidth();
+        int sourceHeight = source.getHeight();
+
+        // Compute the scaling factors to fit the new height and width, respectively.
+        // To cover the final image, the final scaling will be the bigger
+        // of these two.
+        float xScale = (float) newWidth / sourceWidth;
+        float yScale = (float) newHeight / sourceHeight;
+        float scale = Math.max(xScale, yScale);
+
+        // Now get the size of the source bitmap when scaled
+        float scaledWidth = scale * sourceWidth;
+        float scaledHeight = scale * sourceHeight;
+
+        // Let's find out the upper left coordinates if the scaled bitmap
+        // should be centered in the new size give by the parameters
+        float left = (newWidth - scaledWidth) / 2;
+        float top = (newHeight - scaledHeight) / 2;
+
+        // The target rectangle for the new, scaled version of the source bitmap will now
+        // be
+        RectF targetRect = new RectF(left, top, left + scaledWidth, top + scaledHeight);
+
+        // Finally, we create a new bitmap of the specified size and draw our new,
+        // scaled bitmap onto it.
+        Bitmap dest = Bitmap.createBitmap(newWidth, newHeight, source.getConfig());
+        Canvas canvas = new Canvas(dest);
+        canvas.drawBitmap(source, null, targetRect, null);
+
+        return dest;
     }
 
     void cancel() {
@@ -373,6 +575,9 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         params.height = height;
 
         findViewById(R.id.compose_picture, AppCompatImageButton.class).setLayoutParams(params);
+
+        findViewById(R.id.compose_picture, AppCompatImageButton.class).setScaleType(AppCompatImageView.ScaleType.CENTER);
+
     }
 
     void createTextPost() {
@@ -384,6 +589,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         CreatePostTextRequest request = new CreatePostTextRequest(mSelecteds);
         request.token = AccountUtils.tokenLegacy(getContext());
+        request.extraStringForSeries = selectedSeason;
 
         mDisposables.add(
                 ApiManager
@@ -393,13 +599,15 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(new ServiceConsumer<CreateTextPostResponse>() {
                             @Override
                             protected void success(CreateTextPostResponse response) {
-                                mView.onLoaded(response.data);
+                                View content = findViewById(R.id.compose_main_container).getRootView();
+
+                                Bitmap bitmap = BlurBuilder.blur(content);
+                                mView.onLoaded(response.data, bitmap);
                             }
 
                             @Override
                             protected void error(ApiError error) {
                                 Logcat.e(error);
-
                                 mView.onError(error);
                             }
                         }));
@@ -524,7 +732,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         return null;
     }
 
-    private PostMediaType getMediaType() {
+    public PostMediaType getMediaType() {
         if (mPhoto != null) {
             return PostMediaType.IMAGE;
         }
@@ -536,7 +744,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         return PostMediaType.NONE;
     }
 
-    private boolean isValid() {
+    public boolean isValid() {
         for (Selectable selected : mSelecteds) {
             if (selected instanceof Activity) {
                 return true;
@@ -588,9 +796,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                     .videoEncodingBitRate(1024000)                     // Sets a custom bit rate for video recording.
                                     .audioEncodingBitRate(50000)                       // Sets a custom bit rate for audio recording.
                                     .videoFrameRate(24)                                // Sets a custom frame rate (FPS) for video recording.
-                                    .qualityProfile(MaterialCamera.QUALITY_480P)       // Sets a quality profile, manually setting bit rates or frame rates with other settings will overwrite individual quality profile settings
-                                    .videoPreferredHeight(480)                         // Sets a preferred height for the recorded video output.
-                                    .videoPreferredAspect(4f / 3f)                     // Sets a preferred aspect ratio for the recorded video output.
+                                    .qualityProfile(MaterialCamera.QUALITY_720P)       // Sets a quality profile, manually setting bit rates or frame rates with other settings will overwrite individual quality profile settings
+                                    .videoPreferredHeight(480)                      // Sets a preferred aspect ratio for the recorded video output.
                                     .maxAllowedFileSize(1024 * 1024 * 5)               // Sets a max file size of 5MB, recording will stop if file reaches this limit. Keep in mind, the FAT file system has a file size limit of 4GB.
                                     .iconRecord(R.drawable.mcam_action_capture)        // Sets a custom icon for the button used to start recording
                                     .iconStop(R.drawable.mcam_action_stop)             // Sets a custom icon for the button used to stop recording
@@ -601,10 +808,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                     .iconRestart(R.drawable.evp_action_restart)        // Sets a custom icon used to restart playback
                                     .labelRetry(R.string.compose_retry)                              // Sets a custom button label for the button used to retry recording, when available
                                     .labelConfirm(R.string.compose_ok)                             // Sets a custom button label for the button used to confirm/submit a recording
-                                    .autoRecordWithDelaySec(0)                         // The video camera will start recording automatically after a 5 second countdown. This disables switching between the front and back camera initially.
-                                    .autoRecordWithDelayMs(0)
+                                    .showPortraitWarning(false)
                                     .countdownSeconds(10)// Same as the above, expressed with milliseconds instead of seconds.
-                                    .audioDisabled(false)                              // Set to true to record video without any audio.
+                                    .audioDisabled(false)
+                                    .countdownImmediately(false)// Set to true to record video without any audio.
                                     .start(VIDEO_REQUEST);
                         })
         );
@@ -623,5 +830,41 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         }
 
         return null;
+    }
+
+    void openSeasonSelection(){
+        View content = findViewById(R.id.compose_main_container).getRootView();
+
+        Bitmap bitmap = BlurBuilder.blur(content);
+        mView.openSeasonSelection(bitmap);
+    }
+
+
+    void onSeasonSelect(SeasonSelectionEvent event){
+        selectedSeason = event.selectedSeasonAndEpisode;
+    }
+
+    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
+            throws Throwable {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever mediaMetadataRetriever = null;
+        try {
+            mediaMetadataRetriever = new MediaMetadataRetriever();
+
+            mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
+
+            bitmap = mediaMetadataRetriever.getFrameAtTime(2, MediaMetadataRetriever.OPTION_CLOSEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Throwable(
+                    "Exception in retriveVideoFrameFromVideo(String videoPath)"
+                            + e.getMessage());
+
+        } finally {
+            if (mediaMetadataRetriever != null) {
+                mediaMetadataRetriever.release();
+            }
+        }
+        return bitmap;
     }
 }

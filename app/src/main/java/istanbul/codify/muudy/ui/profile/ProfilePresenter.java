@@ -42,6 +42,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     public void attachView(ProfileView view, View root) {
         super.attachView(view, root);
 
+        findViewById(R.id.profile_coordinator).setVisibility(View.INVISIBLE);
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.profile_settings))
@@ -100,7 +101,6 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Games clicked");
-
                             setSelected(2);
                             view.onGamesClicked();
                         }));
@@ -202,6 +202,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
     }
 
     void bind(User user) {
+        findViewById(R.id.profile_coordinator).setVisibility(View.VISIBLE);
         mUser = user;
         findViewById(R.id.profile_username, AppCompatTextView.class).setText(user.username);
         findViewById(R.id.profile_fullname, AppCompatTextView.class).setText(user.namesurname);
@@ -224,6 +225,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         findViewById(R.id.profile_instagram).setVisibility(StringUtils.isEmpty(user.instagramlink) ? View.GONE : View.VISIBLE);
 
         StringBuilder text = new StringBuilder();
+
         for (int i = 0; i < awards.size(); i++) {
             text.append(awards.get(i));
 

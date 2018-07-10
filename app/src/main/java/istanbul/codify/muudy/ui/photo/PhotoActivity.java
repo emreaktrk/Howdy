@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.photo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,15 @@ public final class PhotoActivity extends MuudyActivity implements PhotoView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull String url, Boolean isUri) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, PhotoActivity.class);
+        starter.putExtra(url.getClass().getSimpleName(),url);
+        starter.putExtra(isUri.getClass().getSimpleName(),isUri);
+        ActivityUtils.startActivity(starter);
+    }
+
     public static void start(@NonNull User user) {
         start(user.imgpath1);
     }
@@ -44,10 +54,22 @@ public final class PhotoActivity extends MuudyActivity implements PhotoView {
 
         mPresenter.attachView(this, this);
 
-        String url = getSerializable(String.class);
-        if (!StringUtils.isEmpty(url)) {
-            mPresenter.bind(url);
+        Boolean isUri = getSerializable(Boolean.class);
+        if (isUri != null && isUri){
+            String url = getSerializable(String.class);
+            if (!StringUtils.isEmpty(url)) {
+                Uri fileUri = Uri.parse(url);
+                mPresenter.bind(fileUri);
+            }
+
+        }else{
+            String url = getSerializable(String.class);
+            if (!StringUtils.isEmpty(url)) {
+                mPresenter.bind(url);
+            }
+
         }
+
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -33,6 +34,13 @@ public final class VideoActivity extends PlayerActivity {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull Uri url) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = PlayerActivity.getVideoPlayerIntent(context, url.toString(), "");
+        starter.setClass(context, VideoActivity.class);
+        ActivityUtils.startActivity(starter);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

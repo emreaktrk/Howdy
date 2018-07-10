@@ -31,13 +31,18 @@ import istanbul.codify.muudy.ui.base.BasePresenter;
 
 final class ResponsePresenter extends BasePresenter<ResponseView> {
 
+    public Word getmWord() {
+        return mWord;
+    }
+
     private Word mWord;
     private User mUser;
 
+    ResponseView mView;
     @Override
     public void attachView(ResponseView view, View root) {
         super.attachView(view, root);
-
+        mView = view;
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.response_close))
@@ -77,14 +82,14 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
 
     }
 
-    void addClickToWordContainer(ResponseView view) {
+    void addClickToWordContainer() {
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.response_word_container))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o -> {
                             Logcat.v("Word select clicked");
-                            view.onWordSelectClicked();
+                            mView.onWordSelectClicked();
                         }));
     }
 
@@ -234,7 +239,7 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
         AnswerHiRequest request = new AnswerHiRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
         request.toUserId = userId;
-        request.wordId = userId;
+        request.wordId = mWord.idwords;
 
         mDisposables.add(
                 ApiManager
@@ -244,13 +249,15 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                         .subscribe(new ServiceConsumer<AnswerHiResponse>() {
                             @Override
                             protected void success(AnswerHiResponse response) {
-                                mView.onSent();
+                                if(response.data.r.equals("ok")) {
+                                    mView.onSent();
+                                }
                             }
 
                             @Override
                             protected void error(ApiError error) {
                                 Logcat.e(error);
-
+                                mView.onSent();
                                 mView.onError(error);
                             }
                         }));
@@ -269,7 +276,10 @@ final class ResponsePresenter extends BasePresenter<ResponseView> {
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.response_word_image, AppCompatImageView.class));
 
+        addClickToWordContainer();
     }
+
+
 
     User getUser() {
         return mUser;

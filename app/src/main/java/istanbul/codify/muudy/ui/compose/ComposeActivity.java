@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.compose;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,9 +16,12 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
 import istanbul.codify.muudy.deeplink.PlaceRecommendationLink;
+import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.PostEvent;
+import istanbul.codify.muudy.model.event.SeasonSelectionEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
+import istanbul.codify.muudy.ui.compose.dialog.ChooseSeasonDialog;
 import istanbul.codify.muudy.ui.compose.dialog.ComposeDialog;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
 import istanbul.codify.muudy.ui.places.PlacesActivity;
@@ -124,9 +128,9 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
     }
 
     @Override
-    public void onLoaded(String sentence) {
+    public void onLoaded(String sentence, Bitmap bitmap) {
         ComposeDialog
-                .newInstance(sentence)
+                .newInstance(sentence,bitmap)
                 .show(getSupportFragmentManager(), null);
     }
 
@@ -145,6 +149,16 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShareEvent(ShareEvent event) {
         mPresenter.post(event);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSeasonSelectionEvent(SeasonSelectionEvent event){
+        if(event.selectedSeasonAndEpisode != null) {
+            mPresenter.onSeasonSelect(event);
+        }else{
+            mPresenter.removeSeries();
+            mPresenter.getWordsWithFilter();
+        }
     }
 
     @Override
@@ -180,12 +194,20 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     @Override
     public void onPictureClicked() {
-        MediaBottomSheet
-                .newInstance()
-                .setOnCameraClickListener(() -> mPresenter.capturePhoto(ComposeActivity.this))
-                .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ComposeActivity.this))
-                .setOnVideoClickListener(() -> mPresenter.captureVideo(ComposeActivity.this))
-                .show(getSupportFragmentManager(), null);
+
+        if(mPresenter.getMediaType() == PostMediaType.NONE){
+            MediaBottomSheet
+                    .newInstance()
+                    .setOnCameraClickListener(() -> mPresenter.capturePhoto(ComposeActivity.this))
+                    .setOnGalleryClickListener(() -> mPresenter.selectPhoto(ComposeActivity.this))
+                    .setOnVideoClickListener(() -> mPresenter.captureVideo(ComposeActivity.this))
+                    .show(getSupportFragmentManager(), null);
+        }else if (mPresenter.getMediaType() == PostMediaType.IMAGE){
+            mPresenter.mediaClick();
+        }else if (mPresenter.getMediaType() == PostMediaType.VIDEO){
+            mPresenter.mediaClick();
+        }
+
     }
 
     @Override
@@ -203,6 +225,18 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         mPresenter.bindGalleryPhoto(uri);
     }
 
+    @Override
+    public void onSelectMedia() {
+
+    }
+
+    @Override
+    public void openSeasonSelection(Bitmap bitmap) {
+        ChooseSeasonDialog.newInstance(bitmap)
+                .show(getSupportFragmentManager(), null);
+
+    }
+
     @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -211,6 +245,10 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         Word word = resolveResult(requestCode, resultCode, data, Word.class, WordActivity.REQUEST_CODE);
         if (word != null) {
             mPresenter.addSelected(word);
+            if (word.words_top_category_id == 20){
+                mPresenter.openSeasonSelection();
+
+            }
             mPresenter.getWordsWithFilter();
             return;
         }

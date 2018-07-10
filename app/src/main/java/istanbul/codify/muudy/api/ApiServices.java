@@ -49,6 +49,9 @@ public interface ApiServices {
     Single<GetUserProfileResponse> getUserProfile(@Body GetUserProfileRequest request);
 
     @POST("getuserprofile")
+    Single<GetUserProfileResponse> getUserProfileWithUsername(@Body GetUserProfileWithUsernameRequest request);
+
+    @POST("getuserprofile")
     Call<GetUserProfileResponse> me(@Body GetUserProfileRequest request);
 
     @POST("getuserposts")
@@ -136,7 +139,7 @@ public interface ApiServices {
     @POST("sayhi")
     Single<SayHiResponse> sayHi(@Body SayHiRequest request);
 
-    @POST("sayhi")
+    @POST("asnwerhi")
     Single<AnswerHiResponse> answerHi(@Body AnswerHiRequest request);
 
     @POST("sendfeedback")

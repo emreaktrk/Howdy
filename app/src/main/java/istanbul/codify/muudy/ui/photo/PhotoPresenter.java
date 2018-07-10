@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.photo;
 
+import android.net.Uri;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import istanbul.codify.muudy.BuildConfig;
@@ -31,5 +32,10 @@ final class PhotoPresenter extends BasePresenter<PhotoView> {
                 .with(getContext())
                 .load(BuildConfig.URL + url)
                 .into(findViewById(R.id.photo_image, AppCompatImageView.class));
+    }
+
+    void bind(Uri uri) {
+
+        findViewById(R.id.photo_image, AppCompatImageView.class).setImageURI(uri);
     }
 }

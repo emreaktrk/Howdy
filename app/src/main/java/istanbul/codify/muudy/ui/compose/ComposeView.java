@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.compose;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Activity;
@@ -23,7 +24,7 @@ interface ComposeView extends MvpView {
 
     void onLoaded(ArrayList<Category> filtered);
 
-    void onLoaded(String sentence);
+    void onLoaded(String sentence,Bitmap bitmap);
 
     void onLoaded(NewPost post);
 
@@ -44,5 +45,10 @@ interface ComposeView extends MvpView {
     void onMediaCancelClicked();
 
     void onGalleryPhotoSelected(Uri uri);
+
+    void onSelectMedia();
+
+    void openSeasonSelection(Bitmap bitmap);
+
 
 }

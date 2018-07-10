@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +30,8 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.model.zipper.PostDetail;
 import istanbul.codify.muudy.ui.home.PostAdapter;
+import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
+import istanbul.codify.muudy.utils.WordToSpan;
 import istanbul.codify.muudy.view.LikeButton;
 
 /**
@@ -130,9 +133,23 @@ public class PostDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         .placeholder(R.drawable.ic_avatar)
                         .into(none.mImage);
 
-                SpannableStringBuilder str = new SpannableStringBuilder(post.post_text);
-                str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, post.username.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                none.mMessage.setText(str);
+                WordToSpan wordToSpan = new WordToSpan();
+                wordToSpan.setColorMENTION(mHolder.itemView.getContext().getResources().getColor(R.color.blue));
+
+                wordToSpan.setLink(post.post_text,none.mMessage, post.username);
+
+                wordToSpan.setClickListener(new WordToSpan.ClickListener() {
+                    @Override
+                    public void onClick(String type, String text) {
+                        Toast.makeText(none.itemView.getContext(),text,Toast.LENGTH_LONG).show();
+                        if(type.equals("mention")){
+
+                            String username = text.substring(1);
+                            UserProfileActivity.start(username);
+
+                        }
+                    }
+                });
 
                 if (mHolder instanceof MediaHolder) {
 

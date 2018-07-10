@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/user_profile_coordinator"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".ui.main.MainActivity">

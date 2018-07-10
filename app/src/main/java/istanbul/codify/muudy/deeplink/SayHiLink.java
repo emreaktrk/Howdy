@@ -17,7 +17,8 @@ public final class SayHiLink extends DeepLink {
         // TODO Get user from remote message
         // TODO Start Response activity
         if(activity instanceof MainActivity){
-            ResponseActivity.start(getItemId(),true,getAnswerHiWord(),getAnswerHiWordImage(),getNotificationMessage());
+
+            ResponseActivity.start(getItemId(),getNotificationMessage());
         }
     }
 }

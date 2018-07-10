@@ -26,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import java.util.List;
 
-final class NotificationMePresenter extends BasePresenter<NotificationMeView> {
+final class  NotificationMePresenter extends BasePresenter<NotificationMeView> {
 
     void getNotifications() {
         GetNotificationsMeRequest request = new GetNotificationsMeRequest();

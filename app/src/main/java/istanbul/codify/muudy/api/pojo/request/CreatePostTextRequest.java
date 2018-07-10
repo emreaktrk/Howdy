@@ -13,6 +13,7 @@ public final class CreatePostTextRequest {
     public ArrayList<Long> words;
     public ArrayList<Long> otherUsers;
     public Long activityid;
+    public String extraStringForSeries;
 
     public CreatePostTextRequest() {
         words = new ArrayList<>();
