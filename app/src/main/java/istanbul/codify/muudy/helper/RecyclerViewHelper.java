@@ -1,16 +1,20 @@
 package istanbul.codify.muudy.helper;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import istanbul.codify.muudy.account.AccountUtils;
+import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.UserMessage;
 import istanbul.codify.muudy.model.Wall;
@@ -71,7 +75,7 @@ public class RecyclerViewHelper {
 
     }
 
-    public void initSwipe(final RecyclerView recyclerView, final Context context, Wall wall, OnSwipeDialogCallback onSwipeDialogCallback) {
+    public void initSwipe(final RecyclerView recyclerView, final Context context, Wall wall, SwipeRefreshLayout swipeRefreshLayout, OnSwipeDialogCallback onSwipeDialogCallback) {
         setOnSwipeDialogCallback(onSwipeDialogCallback);
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
@@ -86,16 +90,20 @@ public class RecyclerViewHelper {
                 return isItemViewSwipeEnable;
             }
 
+
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
                 int position = viewHolder.getAdapterPosition();
                 int swipeFlags = 0;
                 if (wall.recomendedUsers == null) {
                     Post post = wall.posts.get(position);
                     if (post.post_userid == AccountUtils.me(context).iduser) {
                         swipeFlags = ItemTouchHelper.LEFT;
+
                     } else {
                         swipeFlags = ItemTouchHelper.RIGHT;
+
                     }
                 } else {
                     if (getItemCount(wall) > RECOMMENDED_USER_POSITION) {
@@ -105,8 +113,10 @@ public class RecyclerViewHelper {
                             Post post = wall.posts.get(position > 15 ? position - 1 : position);
                             if (post.post_userid == AccountUtils.me(context).iduser) {
                                 swipeFlags = ItemTouchHelper.LEFT;
+
                             } else {
                                 swipeFlags = ItemTouchHelper.RIGHT;
+
                             }
                         }
                     } else {
@@ -124,7 +134,6 @@ public class RecyclerViewHelper {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
-
                 if (direction == ItemTouchHelper.LEFT) {
                     onSwipeDialogCallbackk.onDialogButtonClick(true, getPostPosition(wall, position), true);
                     /*new AlertDialog.Builder(context)
@@ -151,11 +160,40 @@ public class RecyclerViewHelper {
                 } else {
 
                 }
+
+                Logcat.d("----+ onSwiped");
+            }
+
+
+            @Override
+            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                Logcat.d("----+2 farklı"+actionState);
             }
 
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
+
+                if(actionState == ItemTouchHelper.ACTION_STATE_DRAG){
+                    swipeRefreshLayout.setEnabled(false);
+
+                    Logcat.d("----+ ACTION_STATE_DRAG");
+                }else if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+                    Logcat.d("----+ ACTION_STATE_SWIPE");
+                    swipeRefreshLayout.setEnabled(false);
+                }else if(actionState == ItemTouchHelper.ACTION_STATE_IDLE){
+                    Logcat.d("----+ ACTION_STATE_IDLE");
+                    swipeRefreshLayout.setEnabled(true);
+                }else if(actionState == ItemTouchHelper.ANIMATION_TYPE_SWIPE_CANCEL){
+                    Logcat.d("----+ ANIMATION_TYPE_SWIPE_CANCEL");
+                    swipeRefreshLayout.setEnabled(true);
+                }else if(actionState == ItemTouchHelper.ANIMATION_TYPE_SWIPE_SUCCESS){
+                    Logcat.d("----+ ANIMATION_TYPE_SWIPE_SUCCESS");
+                    swipeRefreshLayout.setEnabled(true);
+                }else{
+                    Logcat.d("----+ farklı"+actionState);
+                }
 
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
 
@@ -188,6 +226,7 @@ public class RecyclerViewHelper {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
         };
+
 
         itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);

@@ -6,4 +6,6 @@ public final class ShareEvent {
 
     public String sentence;
     public PostVisibility visibility;
+    public boolean shareFacebook;
+    public boolean shareTwitter;
 }

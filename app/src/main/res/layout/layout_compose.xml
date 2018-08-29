@@ -57,6 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible"
+        android:background="#ededed"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         tools:listitem="@layout/cell_selected_word" />
 
@@ -94,6 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         android:scaleType="center"
+        android:background="#ededed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/compose_divider" />
 
@@ -130,6 +132,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal"
+        android:background="#ededed"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

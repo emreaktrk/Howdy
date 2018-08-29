@@ -8,9 +8,11 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 final class StatisticPresenter extends BasePresenter<StatisticView> {
 
+
     @Override
     public void attachView(StatisticView view, View root) {
         super.attachView(view, root);
+
 
         ViewPager pager = findViewById(R.id.statistic_pager, ViewPager.class);
         pager.setAdapter(view.create());

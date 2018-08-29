@@ -16,8 +16,8 @@ import istanbul.codify.muudy.ui.base.BasePresenter;
 
 final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
 
-    private Boolean isFacebookSelected = false;
-    private Boolean isTwitterSelected = false;
+    public Boolean isFacebookSelected = false;
+    public Boolean isTwitterSelected = false;
 
     @Override
     public void attachView(ComposeDialogView view, View root) {

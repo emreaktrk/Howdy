@@ -40,6 +40,8 @@ import android.widget.ImageView;
 
 import com.afollestad.materialcamera.MaterialCamera;
 import com.blankj.utilcode.util.StringUtils;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.marchinram.rxgallery.RxGallery;
@@ -69,6 +71,7 @@ import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.photo.PhotoActivity;
 import istanbul.codify.muudy.ui.video.VideoActivity;
 import istanbul.codify.muudy.utils.AndroidUtils;
+import istanbul.codify.muudy.utils.DESedeEncryption;
 import istanbul.codify.muudy.utils.ImageOrientationUtil;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -618,7 +621,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                         .subscribe(new ServiceConsumer<CreateTextPostResponse>() {
                             @Override
                             protected void success(CreateTextPostResponse response) {
-                                View content = findViewById(R.id.compose_main_container).getRootView();
+                                View content = findViewById(R.id.compose_main_container);
 
                                 Bitmap bitmap = BlurBuilder.blur(content);
                                 mView.onLoaded(response.data, bitmap);
@@ -636,6 +639,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void post(ShareEvent event) {
         ProgressDialog dialog = ProgressDialog.show(getContext(), "",
                 "Yükleniyor", true);
+
 
         LocationServices
                 .getFusedLocationProviderClient(getContext())
@@ -682,7 +686,26 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                                 dialog.dismiss();
                                                 Logcat.v("New post created with id " + response.data.id);
 
-                                                mView.onLoaded(response.data);
+                                                if (event.shareFacebook){
+                                                    try {
+                                                        DESedeEncryption deSedeEncryption = new DESedeEncryption();
+                                                        String decrytedId = deSedeEncryption.encrypt(response.data.id + "");
+                                                        String link = "http://muudyapp.com/share/post.aspx?id="+decrytedId;
+
+
+                                                        mView.onFacebookShare(response.data, event.shareTwitter,link);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                }
+
+                                                if (event.shareTwitter){
+
+                                                }
+
+                                               // mView.onLoaded(response.data);
                                             }
 
                                             @Override
@@ -693,6 +716,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                             }
                                         })))
                 .addOnFailureListener(Logcat::e);
+    }
+
+    void facebookShareCompleted(NewPost newPostResponse, boolean isTwitterSelected, boolean isSuccess){
+        mView.onLoaded(newPostResponse);
     }
 
     private Activity getSelectedActivity() {

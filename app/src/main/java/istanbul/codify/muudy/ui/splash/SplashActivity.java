@@ -2,6 +2,7 @@ package istanbul.codify.muudy.ui.splash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.deeplink.DeepLink;
 import istanbul.codify.muudy.deeplink.DeepLinkManager;
+import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.ui.auth.AuthActivity;
 import istanbul.codify.muudy.ui.main.MainActivity;
 
@@ -43,6 +45,11 @@ public final class SplashActivity extends MuudyActivity {
                         AuthActivity.start();
                     }
                 }, DURATION);
+        // ATTENTION: This was auto-generated to handle app links.
+     /*   Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        Logcat.d("----applink" + appLinkData.toString());*/
     }
 
     @Override

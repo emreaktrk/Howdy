@@ -15,6 +15,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 public final class StatisticFragment extends NavigationFragment implements StatisticView {
 
     private StatisticPresenter mPresenter = new StatisticPresenter();
+    FragmentPagerItemAdapter adapter;
 
     @Override
     protected int getLayoutResId() {
@@ -42,12 +43,18 @@ public final class StatisticFragment extends NavigationFragment implements Stati
 
     @Override
     public FragmentPagerItemAdapter create() {
-        return new FragmentPagerItemAdapter(
-                getChildFragmentManager(),
-                FragmentPagerItems
-                        .with(getContext())
-                        .add("Etkinlik", StatisticEventFragment.class)
-                        .add("Harita", StatisticMapFragment.class)
-                        .create());
+        if (adapter == null){
+           adapter = new FragmentPagerItemAdapter(
+                    getChildFragmentManager(),
+                    FragmentPagerItems
+                            .with(getContext())
+                            .add("Etkinlik", StatisticEventFragment.class)
+                            .add("Harita", StatisticMapFragment.class)
+                            .create());
+            return adapter;
+       }else{
+            return adapter;
+        }
     }
+
 }

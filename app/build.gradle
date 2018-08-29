@@ -6,11 +6,12 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "istanbul.codify.muudy"
-        minSdkVersion 22
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         buildConfigField "String", "API_URL", '"http://188.166.97.94:3017/api/"'
         buildConfigField "String", "URL", '"http://188.166.97.94:3017/"'
     }
@@ -102,6 +103,10 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.github.alex-townsend:SwipeOpenItemTouchHelper:1.4.0'
     implementation 'com.bunk3r:spanez:2.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
+    implementation 'com.facebook.android:facebook-share:[4,5)'
 
 }
 

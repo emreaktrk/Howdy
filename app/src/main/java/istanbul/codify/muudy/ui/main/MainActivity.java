@@ -44,6 +44,11 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     };
     private MainPresenter mPresenter = new MainPresenter();
 
+    HomeFragment homeFragment = new HomeFragment();
+    StatisticFragment statisticFragment = new StatisticFragment();
+    NotificationFragment notificationFragment = new NotificationFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
+
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();
         Intent starter = new Intent(context, MainActivity.class);
@@ -98,7 +103,6 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         mPresenter.openHomeFragment(around);
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ProfileEvent event) {
         mPresenter.showNotificationBadge();
@@ -120,15 +124,16 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.home_frame, mPool.get(HomeFragment.class))
+                    .replace(R.id.home_frame, homeFragment,"1")
                     .addToBackStack(null)
                     .commit();
+
+
         }
     }
 
     @Override
     public void openHome(boolean reselect, ArrayList<AroundUsers> around) {
-
 
         if (!reselect) {
             HomeFragment fragment = new HomeFragment();
@@ -150,7 +155,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         if (!reselect) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.home_frame, mPool.get(StatisticFragment.class))
+                    .replace(R.id.home_frame, statisticFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -166,7 +171,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         if (!reselect) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.home_frame, mPool.get(NotificationFragment.class))
+                    .replace(R.id.home_frame, notificationFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -179,7 +184,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         if (!reselect) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.home_frame, mPool.get(ProfileFragment.class))
+                    .replace(R.id.home_frame, profileFragment)
                     .addToBackStack(null)
                     .commit();
         }

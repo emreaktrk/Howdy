@@ -9,6 +9,8 @@ import istanbul.codify.muudy.analytics.Analytics;
 import istanbul.codify.muudy.analytics.FabricAnalyst;
 import istanbul.codify.muudy.analytics.FirebaseAnalyst;
 import com.google.firebase.FirebaseApp;
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 
 public final class MuudyApplication extends Application {
@@ -25,5 +27,12 @@ public final class MuudyApplication extends Application {
                 .getInstance()
                 .add(new FirebaseAnalyst())
                 .add(new FabricAnalyst());
+
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.downloader(new OkHttp3Downloader(this,Integer.MAX_VALUE));
+        Picasso built = builder.build();
+        built.setIndicatorsEnabled(false);
+        built.setLoggingEnabled(true);
+        Picasso.setSingletonInstance(built);
     }
 }

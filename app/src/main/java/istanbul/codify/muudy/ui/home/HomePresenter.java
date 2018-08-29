@@ -43,6 +43,10 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
     private RecyclerViewHelper mHelper;
 
+    Wall mWall;
+    EmotionAdapter emotion;
+    PostAdapter post;
+
     @Override
     public void attachView(HomeView view, View root) {
         super.attachView(view, root);
@@ -78,7 +82,11 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     @SuppressLint({"MissingPermission"})
-    void getWall(Context context, @Nullable More more, @Nullable ArrayList<AroundUsers> aroundUsers) {
+    void getWall(Context context, @Nullable More more, @Nullable ArrayList<AroundUsers> aroundUsers, @Nullable Boolean isRefreshing) {
+        if(isRefreshing == null){
+            isRefreshing = false;
+        }
+        Boolean finalIsRefreshing = isRefreshing;
         LocationServices
                 .getFusedLocationProviderClient(context)
                 .getLastLocation()
@@ -94,8 +102,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                     return result;
                 })
                 .addOnSuccessListener(location -> {
-                    findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(true);
-//TODO
+                    findViewById(R.id.home_refresh, SwipeRefreshLayout.class).setRefreshing(finalIsRefreshing);
                     mDisposables.add(
                             Single
                                     .just(location)
@@ -116,6 +123,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                         @Override
                                         protected void success(GetWallResponse response) {
                                             if (more == null) {
+
                                                 if (aroundUsers != null && !aroundUsers.isEmpty()){
                                                     mView.onLoaded(response.data,aroundUsers);
                                                 }else {
@@ -157,7 +165,11 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     void bind(Wall wall, @Nullable ArrayList<AroundUsers> aroundUsers) {
-        EmotionAdapter emotion = new EmotionAdapter(wall.nearEmotions);
+        mWall = wall;
+
+            emotion = new EmotionAdapter(wall.nearEmotions);
+            findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);
+
         mDisposables.add(
                 emotion
                         .itemClicks()
@@ -167,10 +179,13 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
                             mView.onEmotionClicked(cell);
                         }));
-        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);
+
         findViewById(R.id.home_emotion_recycler, RecyclerView.class).setVisibility((wall.nearEmotions == null || wall.nearEmotions.isEmpty()) ? View.GONE : View.VISIBLE);
 
-        PostAdapter post = new PostAdapter(wall.posts, wall.recomendedUsers);
+
+            post = new PostAdapter(wall.posts, wall.recomendedUsers);
+            findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+
         mDisposables.add(
                 post
                         .itemClicks()
@@ -274,7 +289,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                             mView.onMorePage(more);
                         }));
 
-        findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+
 
         if (wall.posts.size() > 0) {
             findViewById(R.id.home_post_recycler, RecyclerView.class).setVisibility(View.VISIBLE);
@@ -291,7 +306,8 @@ final class HomePresenter extends BasePresenter<HomeView> {
         mHelper = new RecyclerViewHelper();
         mHelper.setItemViewSwipeEnable(true);
 
-        mHelper.initSwipe(findViewById(R.id.home_post_recycler, RecyclerView.class), getContext(), wall, (isYes, position, isDelete) -> {
+        mHelper.initSwipe(findViewById(R.id.home_post_recycler, RecyclerView.class), getContext(), wall, findViewById(R.id.home_refresh, SwipeRefreshLayout.class), (isYes, position, isDelete) -> {
+
             if (isYes) {
                 if (isDelete) {
                     mView.onDeleteClicked(wall.posts.get(position));

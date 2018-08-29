@@ -12,12 +12,15 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 
 import com.binaryfork.spanny.Spanny;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
@@ -109,6 +112,35 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .placeholder(R.drawable.ic_avatar)
                     .into(none.mImage);
 
+/*
+            Picasso.with(holder.itemView.getContext())
+                    .load(BuildConfig.URL + post.imgpath1)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(none.mImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            //Try again online if cache failed
+                            Picasso.with(holder.itemView.getContext())
+                                    .load(BuildConfig.URL + post.imgpath1)
+                                    .into(none.mImage, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError() {
+                                            Log.v("Picasso","Could not fetch image");
+                                        }
+                                    });
+                        }
+                    });*/
+
 
             WordToSpan wordToSpan = new WordToSpan();
             wordToSpan.setColorMENTION(holder.itemView.getContext().getResources().getColor(R.color.blue));
@@ -118,7 +150,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             wordToSpan.setClickListener(new WordToSpan.ClickListener() {
                 @Override
                 public void onClick(String type, String text) {
-                    Toast.makeText(none.itemView.getContext(),text,Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(none.itemView.getContext(),text,Toast.LENGTH_LONG).show();
                     if(type.equals("mention")){
 
                         String username = text.substring(1);

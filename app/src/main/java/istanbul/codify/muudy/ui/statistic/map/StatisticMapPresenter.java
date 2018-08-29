@@ -92,7 +92,6 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
     void icons(GoogleMap map, List<EmojiLocation> locations) {
         map.clear();
 
-
         for (int i = 0; i < locations.size(); i++) {
 
             Marker temp = map.addMarker(

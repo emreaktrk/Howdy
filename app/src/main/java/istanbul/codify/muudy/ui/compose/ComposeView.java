@@ -52,4 +52,6 @@ interface ComposeView extends MvpView {
 
     void onOpenGallery();
 
+    void onFacebookShare(NewPost newPostResponse, boolean isTwitterSelected, String link);
+
 }

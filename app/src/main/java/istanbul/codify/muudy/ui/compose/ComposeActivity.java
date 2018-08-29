@@ -10,6 +10,12 @@ import android.support.annotation.Nullable;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -69,6 +75,9 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         ActivityUtils.startActivity(starter);
     }
 
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
+
 
     @Override
     protected int getLayoutResId() {
@@ -98,6 +107,11 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         DeepLinkManager
                 .getInstance()
                 .nullifyIf(PlaceRecommendationLink.class);
+
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+
     }
 
     @Override
@@ -271,6 +285,39 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     }
 
+    @Override
+    public void onFacebookShare(NewPost newPostResponse, boolean isTwitterSelected, String link) {
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,true);
+
+            }
+
+            @Override
+            public void onCancel() {
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false);
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false);
+            }
+        });
+
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(link))
+                    .build();
+            shareDialog = new ShareDialog(this);
+
+            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+        }
+
+
+    }
+
 
     @SuppressWarnings({"unchecked", "UnnecessaryReturnStatement"})
     @Override
@@ -312,5 +359,8 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
             Uri photo = data.getData();
             mPresenter.bindGalleryPhoto(photo);
         }
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
     }
 }

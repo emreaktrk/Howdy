@@ -90,6 +90,8 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
         ShareEvent event = new ShareEvent();
         event.sentence = getSerializable(String.class);
         event.visibility = mPresenter.getSelectedVisibility();
+        event.shareFacebook = mPresenter.isFacebookSelected;
+        event.shareTwitter = mPresenter.isTwitterSelected;
 
         EventBus
                 .getDefault()
