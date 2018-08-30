@@ -125,7 +125,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                             if (more == null) {
 
                                                 if (aroundUsers != null && !aroundUsers.isEmpty()){
-                                                    mView.onLoaded(response.data,aroundUsers);
+                                                    mView.onLoaded(response.data,aroundUsers,null);
                                                 }else {
                                                     mView.onLoaded(response.data);
                                                 }
@@ -157,14 +157,14 @@ final class HomePresenter extends BasePresenter<HomeView> {
         return findViewById(R.id.home_has_message_dot).getVisibility() == View.VISIBLE;
     }
 
-    void takeBlurredImage(ArrayList<AroundUsers> arounds){
+    void takeBlurredImage(ArrayList<AroundUsers> arounds, Long postId){
         View content = findViewById(R.id.home_refresh).getRootView();
 
         Bitmap bitmap = BlurBuilder.blur(content);
-        mView.onBlurredImageTaken(arounds, bitmap);
+        mView.onBlurredImageTaken(arounds, bitmap, postId);
     }
 
-    void bind(Wall wall, @Nullable ArrayList<AroundUsers> aroundUsers) {
+    void bind(Wall wall, @Nullable ArrayList<AroundUsers> aroundUsers, @Nullable Long postId) {
         mWall = wall;
 
             emotion = new EmotionAdapter(wall.nearEmotions);
@@ -332,7 +332,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
                     Logcat.d("recycler yüklendi if içi");
                     isLoaded[0] = true;
-                    mView.onPostsLoaded(aroundUsers);
+                    mView.onPostsLoaded(aroundUsers, postId);
                 }
             }
         });

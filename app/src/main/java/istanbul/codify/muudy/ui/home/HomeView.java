@@ -17,9 +17,9 @@ interface HomeView extends MvpView {
 
     void onLoaded(Wall wall);
 
-    void onLoaded(Wall wall,ArrayList<AroundUsers> aroundUsers);
+    void onLoaded(Wall wall,ArrayList<AroundUsers> aroundUsers, Long postId);
 
-    void onPostsLoaded(ArrayList<AroundUsers> aroundUsers);
+    void onPostsLoaded(ArrayList<AroundUsers> aroundUsers, Long postId);
 
     void onMoreLoaded(ArrayList<Post> posts, More more);
 
@@ -53,6 +53,6 @@ interface HomeView extends MvpView {
 
     void onLikeCountClicked(Post post);
 
-    void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap);
+    void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap, Long postId);
 
 }

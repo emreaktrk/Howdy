@@ -6,6 +6,7 @@ public final class PostEvent {
 
     public final NewPost newPost;
 
+
     public PostEvent(NewPost post) {
         newPost = post;
     }

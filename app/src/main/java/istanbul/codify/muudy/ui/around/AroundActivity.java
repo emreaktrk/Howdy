@@ -18,6 +18,7 @@ import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.helper.BlurBuilder;
 import istanbul.codify.muudy.model.AroundUsers;
+import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.users.UsersActivity;
@@ -30,11 +31,13 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
 
     private AroundPresenter mPresenter = new AroundPresenter();
 
-    public static void start(@NonNull ArrayList<AroundUsers> around, Bitmap bitmap) {
+    public static void start(@NonNull ArrayList<AroundUsers> around, Bitmap bitmap, Long id) {
         Context context = Utils.getApp().getApplicationContext();
 
         Intent starter = new Intent(context, AroundActivity.class);
         starter.putExtra(around.getClass().getSimpleName(), around);
+        starter.putExtra(id.getClass().getSimpleName(),id);
+
      //   starter.putExtra("BitmapImage",bitmap);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -57,6 +60,7 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
 
         mPresenter.attachView(this, this);
 
+        Long postId = getSerializable(Long.class);
 
         byte[] byteArray = getIntent().getByteArrayExtra("bitmapImage");
         Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
@@ -65,7 +69,7 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
         }
         List<AroundUsers> around = (ArrayList<AroundUsers>) getSerializable(ArrayList.class);
         if (around != null) {
-            mPresenter.bind(around);
+            mPresenter.getPostDetail(postId,around);
         }
     }
 
@@ -76,6 +80,16 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
         super.onDestroy();
 
         mPresenter.detachView();
+    }
+
+    @Override
+    public void onPostLoaded(List<AroundUsers> around, Post post) {
+        mPresenter.bind(around,post);
+    }
+
+    @Override
+    public void onPostLoadedError(List<AroundUsers> around) {
+        mPresenter.bind(around,null);
     }
 
     @Override

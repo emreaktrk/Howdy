@@ -104,6 +104,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     String selectedSeason = "";
 
     private Boolean isMediaSelected = false;
+    public NewPost newPost;
     @Override
     public void attachView(ComposeView view, View root) {
         super.attachView(view, root);
@@ -686,24 +687,31 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                                 dialog.dismiss();
                                                 Logcat.v("New post created with id " + response.data.id);
 
-                                                if (event.shareFacebook){
-                                                    try {
-                                                        DESedeEncryption deSedeEncryption = new DESedeEncryption();
-                                                        String decrytedId = deSedeEncryption.encrypt(response.data.id + "");
-                                                        String link = "http://muudyapp.com/share/post.aspx?id="+decrytedId;
+                                                try {
+                                                    DESedeEncryption deSedeEncryption = new DESedeEncryption();
+                                                    String decrytedId = deSedeEncryption.encrypt(response.data.id + "");
+                                                    String link = "http://muudyapp.com/share/post.aspx?id="+decrytedId;
 
+
+
+
+                                                    if (event.shareFacebook){
 
                                                         mView.onFacebookShare(response.data, event.shareTwitter,link);
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
+
+                                                    }else {
+
+                                                        if (event.shareTwitter) {
+
+                                                            mView.onTwitterShare(response.data, link);
+                                                        }else{
+                                                            mView.onLoaded(response.data);
+                                                        }
                                                     }
-
-
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
                                                 }
 
-                                                if (event.shareTwitter){
-
-                                                }
 
                                                // mView.onLoaded(response.data);
                                             }
@@ -718,8 +726,16 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                 .addOnFailureListener(Logcat::e);
     }
 
-    void facebookShareCompleted(NewPost newPostResponse, boolean isTwitterSelected, boolean isSuccess){
-        mView.onLoaded(newPostResponse);
+    void facebookShareCompleted(NewPost newPostResponse, boolean isTwitterSelected, boolean isSuccess, String link){
+        if (isTwitterSelected){
+            mView.onTwitterShare(newPostResponse,link);
+        }else {
+            mView.onLoaded(newPostResponse);
+        }
+    }
+
+    void twitterShareCompleted(NewPost newPost){
+        mView.onLoaded(newPost);
     }
 
     private Activity getSelectedActivity() {

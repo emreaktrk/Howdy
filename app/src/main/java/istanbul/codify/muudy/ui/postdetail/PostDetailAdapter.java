@@ -285,7 +285,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mAvatarSubject;
     }
 
-        class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {
+    class NoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, LikeButton.OnLikeClickListener {
 
             public static final int TYPE = 279;
 

@@ -123,7 +123,7 @@ public class ChooseSeasonDialog extends MuudyDialog implements ChooseSeasonDialo
 
         if(selectedSeason != null && selectedEpisode != null){
             SeasonSelectionEvent event = new SeasonSelectionEvent();
-            event.selectedSeasonAndEpisode = "sezon " + selectedSeason + " - bölüm " + selectedEpisode;
+            event.selectedSeasonAndEpisode = "S" + selectedSeason + "-B" + selectedEpisode;
 
             isShared = true;
                     EventBus

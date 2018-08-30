@@ -68,7 +68,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         mPresenter.attachView(this, view);
 
         if (mPresenter.mWall != null){
-            mPresenter.bind(mPresenter.mWall,null);
+            mPresenter.bind(mPresenter.mWall,null,null);
         }
         Dexter
                 .withActivity(getActivity())
@@ -142,18 +142,18 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onLoaded(Wall wall) {
-        mPresenter.bind(wall,null);
+        mPresenter.bind(wall,null,null);
     }
 
     @Override
-    public void onLoaded(Wall wall, ArrayList<AroundUsers> aroundUsers) {
-        mPresenter.bind(wall,aroundUsers);
+    public void onLoaded(Wall wall, ArrayList<AroundUsers> aroundUsers, Long postId) {
+        mPresenter.bind(wall,aroundUsers,postId);
         //mPresenter.takeBlurredImage(aroundUsers);
     }
 
     @Override
-    public void onPostsLoaded(ArrayList<AroundUsers> aroundUsers) {
-        mPresenter.takeBlurredImage(aroundUsers);
+    public void onPostsLoaded(ArrayList<AroundUsers> aroundUsers, Long postId) {
+        mPresenter.takeBlurredImage(aroundUsers, postId);
     }
 
     @Override
@@ -302,9 +302,9 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     }
 
     @Override
-    public void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap) {
+    public void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap, Long postId) {
 
-        AroundActivity.start(arounds, bitmap);
+        AroundActivity.start(arounds, bitmap,postId);
 
     }
 
@@ -312,9 +312,9 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     public void onPostEvent(PostEvent event) {
         mPresenter.getWall(getContext(), null,null,false);
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
-        if (!around.isEmpty()) {
-            mPresenter.takeBlurredImage(around);
-        }
+        //if (!around.isEmpty()) {
+            mPresenter.takeBlurredImage(around, event.newPost.id);
+        //}
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

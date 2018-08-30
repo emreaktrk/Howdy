@@ -9,7 +9,7 @@ public interface MainView extends MvpView {
 
     void onHomeClicked(boolean reselect);
 
-    void openHome(boolean reselect, ArrayList<AroundUsers> around);
+    void openHome(boolean reselect, ArrayList<AroundUsers> around, Long postId);
 
     void onStatisticClicked(boolean reselect);
 

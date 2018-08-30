@@ -100,7 +100,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
         if (around.isEmpty()) {
 
         }
-        mPresenter.openHomeFragment(around);
+        mPresenter.openHomeFragment(around,event.newPost.id);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -133,12 +133,13 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     }
 
     @Override
-    public void openHome(boolean reselect, ArrayList<AroundUsers> around) {
+    public void openHome(boolean reselect, ArrayList<AroundUsers> around, Long postId) {
 
         if (!reselect) {
             HomeFragment fragment = new HomeFragment();
             Bundle arguments = new Bundle();
             arguments.putSerializable(around.getClass().getSimpleName(), around);
+            arguments.putSerializable(postId.getClass().getSimpleName(),postId);
             fragment.setArguments(arguments);
 
 

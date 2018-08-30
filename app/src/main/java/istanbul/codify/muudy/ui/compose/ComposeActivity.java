@@ -21,6 +21,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.MuudyActivity;
@@ -34,6 +35,7 @@ import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.event.PostEvent;
 import istanbul.codify.muudy.model.event.SeasonSelectionEvent;
 import istanbul.codify.muudy.model.event.ShareEvent;
+import istanbul.codify.muudy.model.event.TwitterShareEvent;
 import istanbul.codify.muudy.ui.compose.dialog.ChooseSeasonDialog;
 import istanbul.codify.muudy.ui.compose.dialog.ComposeDialog;
 import istanbul.codify.muudy.ui.media.MediaBottomSheet;
@@ -43,6 +45,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.net.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +55,7 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
     private final ComposePresenter mPresenter = new ComposePresenter();
     private static final int PICK_IMAGE_FROM_GALLERY_ACTIVITY_REQUEST_CODE = 333;
-
+    public static final int TWEET_COMPOSER_REQUEST_CODE = 14141;
     public static void start() {
         Context context = Utils.getApp().getApplicationContext();
 
@@ -290,18 +294,18 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
-                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,true);
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,true, link);
 
             }
 
             @Override
             public void onCancel() {
-                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false);
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false, link);
             }
 
             @Override
             public void onError(FacebookException error) {
-                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false);
+                mPresenter.facebookShareCompleted(newPostResponse,isTwitterSelected,false, link);
             }
         });
 
@@ -315,6 +319,22 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
             shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
         }
 
+
+    }
+
+    @Override
+    public void onTwitterShare(NewPost newPostResponse, String link) {
+        try {
+            URL url = new URL(link);
+            Intent intent = new TweetComposer.Builder(this)
+                    .url(url)
+                    .createIntent();
+            startActivityForResult(intent,TWEET_COMPOSER_REQUEST_CODE);
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -358,6 +378,10 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
         if (requestCode == PICK_IMAGE_FROM_GALLERY_ACTIVITY_REQUEST_CODE) {
             Uri photo = data.getData();
             mPresenter.bindGalleryPhoto(photo);
+        }
+
+        if (requestCode == TWEET_COMPOSER_REQUEST_CODE) {
+            mPresenter.twitterShareCompleted(mPresenter.newPost);
         }
 
         callbackManager.onActivityResult(requestCode, resultCode, data);

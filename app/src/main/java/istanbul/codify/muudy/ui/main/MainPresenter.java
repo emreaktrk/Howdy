@@ -97,8 +97,8 @@ final class MainPresenter extends BasePresenter<MainView> {
         findViewById(R.id.navigation_notification_dot, AppCompatImageView.class).setVisibility(View.GONE);
     }
 
-    void openHomeFragment(ArrayList<AroundUsers> around){
-        mView.openHome(findViewById(R.id.navigation_home).isSelected(),around);
+    void openHomeFragment(ArrayList<AroundUsers> around, Long postId){
+        mView.openHome(findViewById(R.id.navigation_home).isSelected(),around,postId);
     }
 
     void takeBlurredImage(ArrayList<AroundUsers> arounds){
