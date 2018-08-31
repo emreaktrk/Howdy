@@ -1,6 +1,8 @@
 package istanbul.codify.muudy.model;
 
-public final class RegisterForm {
+import java.io.Serializable;
+
+public final class RegisterForm implements Serializable{
 
     public CharSequence mFullname;
     public Gender mGender;

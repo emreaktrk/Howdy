@@ -24,7 +24,7 @@ interface ComposeView extends MvpView {
 
     void onLoaded(ArrayList<Category> filtered);
 
-    void onLoaded(String sentence,Bitmap bitmap);
+    void onLoaded(String sentence,Bitmap bitmap, Bitmap selectedImage);
 
     void onLoaded(NewPost post);
 

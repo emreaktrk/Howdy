@@ -1,5 +1,6 @@
 package istanbul.codify.muudy.ui.around;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
@@ -22,6 +23,7 @@ import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.exception.ImplementationMissingException;
 import istanbul.codify.muudy.helper.utils.InflaterUtils;
 import istanbul.codify.muudy.model.AroundUsers;
+import istanbul.codify.muudy.model.Badge;
 import istanbul.codify.muudy.model.Comment;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.PostMediaType;
@@ -43,10 +45,16 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private List<AroundUsers> mList;
 
     private Post mPost;
+    public ArrayList<Badge> mBadges = new ArrayList<>();
 
     AroundAdapter(List<AroundUsers> list,Post post) {
         mList = list == null ? new ArrayList<>() : list;
         mPost = post;
+        if (post != null) {
+            if (post .rozetler != null) {
+                mBadges = post.rozetler;
+            }
+        }
     }
 
     @NonNull
@@ -70,6 +78,8 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             case AroundAdapter.AroundUserHolder.TYPE:
                 return new AroundAdapter.AroundUserHolder(InflaterUtils.cell(R.layout.cell_around, parent));
+            case AroundAdapter.BadgeHolder.TYPE:
+                return new AroundAdapter.BadgeHolder(InflaterUtils.cell(R.layout.cell_badge, parent));
             default:
                 return null;
 
@@ -149,20 +159,47 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             }
 
+        }else if (mHolder instanceof BadgeHolder) {
+            BadgeHolder holder = (BadgeHolder) mHolder;
+            Badge badge = mBadges.get(position - 1);
+
+            holder.mText.setTextColor(Color.parseColor("#ffffff"));
+            holder.mText.setText(badge.r_text);
+            Picasso
+                    .with(holder.mImage.getContext())
+                    .load(BuildConfig.URL + badge.r_img)
+                    .into(holder.mImage);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size() + (mPost != null ? 1 : 0);
+        int postCount = 0;
+        if (mPost!= null) {
+            postCount = 1;
+        }
+        int badgeCount = 0;
+        if (postCount == 1){
+            badgeCount  = mBadges.size();
+        }
+        return mList.size() + postCount + badgeCount;
 
     }
 
     private int getItemPostion(int position){
         if(mPost != null){
-            return position - 1;
+
+            return position - mBadges.size() - 1;
         }else{
             return position;
+        }
+    }
+
+    private boolean isAroundCell(int position){
+        if(position - mBadges.size() - 1 >= 0){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -176,7 +213,16 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 return AroundUserHolder.TYPE;
             }
         }else{
-            return AroundUserHolder.TYPE;
+            if (mPost != null){
+                if (isAroundCell(position)){
+                    return AroundUserHolder.TYPE;
+                }else{
+                    return BadgeHolder.TYPE;
+                }
+            }else{
+                return AroundUserHolder.TYPE;
+            }
+
         }
 
     }
@@ -228,6 +274,22 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+
+    class BadgeHolder extends RecyclerView.ViewHolder {
+
+        private static final int TYPE = 277;
+
+        private AppCompatImageView mImage;
+        private AppCompatTextView mText;
+
+        public BadgeHolder(View itemView) {
+            super(itemView);
+
+            mImage = itemView.findViewById(R.id.badge_image);
+            mText = itemView.findViewById(R.id.badge_text);
+
+        }
+    }
 
     class NoneHolder extends RecyclerView.ViewHolder {
 

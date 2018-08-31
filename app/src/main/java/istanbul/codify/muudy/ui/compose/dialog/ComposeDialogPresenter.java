@@ -81,8 +81,12 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
 
     void addBlurredBackground(Bitmap bitmap){
         findViewById(R.id.compose_dialog_background, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
+
     }
 
+    void setSelectedImage(Bitmap bitmap){
+        findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
+    }
     void changeFacebookImage(){
         isFacebookSelected = !isFacebookSelected;
         if (isFacebookSelected){

@@ -155,9 +155,9 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
     }
 
     @Override
-    public void onLoaded(String sentence, Bitmap bitmap) {
+    public void onLoaded(String sentence, Bitmap bitmap, Bitmap selectedImage) {
         ComposeDialog
-                .newInstance(sentence,bitmap)
+                .newInstance(sentence,bitmap,selectedImage)
                 .show(getSupportFragmentManager(), null);
     }
 

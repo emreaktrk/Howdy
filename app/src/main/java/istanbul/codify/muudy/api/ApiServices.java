@@ -190,6 +190,9 @@ public interface ApiServices {
     @POST("getrecomennedplaces")
     Call<GetRecommendedPlacesResponse> getRecommendedPlaces(@Body GetRecommendedPlacesRequest request);
 
+    @POST("checkusername")
+    Single<CheckUsernameResponse> getRecommendedPlaces(@Body CheckUsernameRequest request);
+
     @POST("deleteMessages")
     Single<DeleteUserMessagesResponse> deleteUserMessages(@Body DeleteUserMessagesRequest request);
 

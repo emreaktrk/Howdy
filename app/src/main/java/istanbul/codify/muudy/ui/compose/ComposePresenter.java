@@ -102,6 +102,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     public Uri mPhoto;
     public Uri mVideo;
     String selectedSeason = "";
+    Bitmap selectedBitmap;
 
     private Boolean isMediaSelected = false;
     public NewPost newPost;
@@ -506,6 +507,10 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                 .centerCrop()
                 .into(findViewById(R.id.compose_picture, AppCompatImageButton.class));
 
+
+        String filePath = file.getPath();
+        selectedBitmap = BitmapFactory.decodeFile(filePath);
+
         //findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(BitmapFactory.decodeFile(photo.getPath()));
 
         findViewById(R.id.compose_cancel).setVisibility(View.VISIBLE);
@@ -522,7 +527,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         Bitmap videoBitmap;
         try {
             videoBitmap = ThumbnailUtils.createVideoThumbnail(video.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
-
+            selectedBitmap = videoBitmap;
             //findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageBitmap(videoBitmap);
 
             View picture = findViewById(R.id.compose_picture);
@@ -589,7 +594,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
     void cancel() {
         mPhoto = null;
         mVideo = null;
-
+        selectedBitmap = null;
         findViewById(R.id.compose_picture, AppCompatImageButton.class).setImageResource(R.drawable.ic_image_add);
         findViewById(R.id.compose_cancel).setVisibility(View.GONE);
 
@@ -614,6 +619,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         request.token = AccountUtils.tokenLegacy(getContext());
         request.extraStringForSeries = selectedSeason;
 
+
         mDisposables.add(
                 ApiManager
                         .getInstance()
@@ -625,7 +631,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                 View content = findViewById(R.id.compose_main_container);
 
                                 Bitmap bitmap = BlurBuilder.blur(content);
-                                mView.onLoaded(response.data, bitmap);
+                                mView.onLoaded(response.data, bitmap, selectedBitmap);
                             }
 
                             @Override

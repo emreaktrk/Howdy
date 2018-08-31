@@ -25,13 +25,20 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
 
     private ComposeDialogPresenter mPresenter = new ComposeDialogPresenter();
 
-    public static ComposeDialog newInstance(String sentence, Bitmap bitmap) {
+    public static ComposeDialog newInstance(String sentence, Bitmap bitmap, @Nullable Bitmap selectedImage) {
         Bundle args = new Bundle();
         args.putSerializable(String.class.getSimpleName(), sentence);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         args.putByteArray("bitmapImage",byteArray);
+
+        if (selectedImage != null) {
+            ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, stream2);
+            byte[] byteArray2 = stream2.toByteArray();
+            args.putByteArray("selectedBitmapImage", byteArray2);
+        }
         ComposeDialog fragment = new ComposeDialog();
         fragment.setArguments(args);
         return fragment;
@@ -56,6 +63,14 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
             Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             if (bmp != null) {
                 mPresenter.addBlurredBackground(bmp);
+            }
+        }
+
+        byte[] byteArray2 = getArguments().getByteArray("selectedBitmapImage");
+        if(byteArray2 != null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray2, 0, byteArray2.length);
+            if (bmp != null) {
+                mPresenter.setSelectedImage(bmp);
             }
         }
     }
