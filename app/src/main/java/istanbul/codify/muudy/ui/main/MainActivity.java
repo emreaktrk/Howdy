@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
 import istanbul.codify.muudy.EventSupport;
@@ -86,6 +88,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
             }
 
         }
+
     }
 
     @Override
@@ -188,6 +191,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
                     .replace(R.id.home_frame, profileFragment)
                     .addToBackStack(null)
                     .commit();
+
         }
     }
 

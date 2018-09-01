@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.api.ApiManager;
 import istanbul.codify.muudy.api.pojo.ServiceConsumer;
+import istanbul.codify.muudy.api.pojo.request.CheckEmailRequest;
 import istanbul.codify.muudy.api.pojo.request.CheckUsernameRequest;
 import istanbul.codify.muudy.api.pojo.request.RegisterRequest;
 import istanbul.codify.muudy.api.pojo.response.ApiError;
@@ -62,8 +63,9 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                             form.mPasswordConfirm = findViewById(R.id.register_password_confirm, TextInputEditText.class).getText();
 
                             Logcat.v("Register clicked");
-                            register(form);
+                            checkEmail(form);
                         }));
+
     }
 
     private boolean checkFields() {
@@ -132,7 +134,7 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
         mDisposables.add(
                 ApiManager
                         .getInstance()
-                        .getRecommendedPlaces(request)
+                        .checkUsername(request)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new ServiceConsumer<CheckUsernameResponse>() {
                             @Override
@@ -151,6 +153,37 @@ final class RegisterPresenter extends BasePresenter<RegisterView> {
                                 Logcat.e(error);
                                 form.mUsername = username+"1413";
                                 mView.onRegisterClicked(form);
+                                mView.onError(error);
+                            }
+                        }));
+    }
+
+    public void checkEmail(RegisterForm form){
+        CheckEmailRequest request = new CheckEmailRequest();
+        request.email = form.mEmail.mValue.toString();
+
+        mDisposables.add(
+                ApiManager
+                        .getInstance()
+                        .checkEmail(request)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ServiceConsumer<CheckUsernameResponse>() {
+                            @Override
+                            protected void success(CheckUsernameResponse response) {
+                                if (response.data.isAlreadyUsed) {
+                                    showAlert("Girdiğiniz email adresi kullanımda");
+
+                                }else{
+                                    register(form);
+                                }
+
+
+
+                            }
+
+                            @Override
+                            protected void error(ApiError error) {
+                                Logcat.e(error);
                                 mView.onError(error);
                             }
                         }));
