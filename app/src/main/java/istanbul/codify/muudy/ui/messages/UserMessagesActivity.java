@@ -51,8 +51,6 @@ public final class UserMessagesActivity extends MuudyActivity implements UserMes
 
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();

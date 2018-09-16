@@ -115,7 +115,7 @@
             android:theme="@style/MainTheme" />
         <activity
             android:name=".ui.userphotos.UserPhotosActivity"
-            android:theme="@style/MediaTheme" />
+            android:theme="@style/MainTheme" />
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:theme="@style/SettingsTheme" />

@@ -212,7 +212,7 @@ final class SettingsPresenter extends BasePresenter<SettingsView> {
                                     protected void error(ApiError error) {
                                         Logcat.e(error);
 
-                                        mView.onError(error);
+                                       // mView.onError(error);
                                     }
                                 })
                 );

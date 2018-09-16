@@ -312,9 +312,9 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     public void onPostEvent(PostEvent event) {
         mPresenter.getWall(getContext(), null,null,false);
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
-        //if (!around.isEmpty()) {
+        if (!around.isEmpty()) {
             mPresenter.takeBlurredImage(around, event.newPost.id);
-        //}
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
