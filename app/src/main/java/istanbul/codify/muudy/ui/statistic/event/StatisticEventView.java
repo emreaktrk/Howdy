@@ -10,7 +10,7 @@ import java.util.List;
 
 interface StatisticEventView extends MvpView {
 
-    void onLoaded(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats);
+    void onLoaded(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats,@Nullable int postCount);
 
     void onError(ApiError error);
 

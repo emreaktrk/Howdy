@@ -70,6 +70,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         if (mPresenter.mWall != null){
             mPresenter.bind(mPresenter.mWall,null,null);
         }
+
         Dexter
                 .withActivity(getActivity())
                 .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)

@@ -39,8 +39,8 @@ public final class StatisticEventFragment extends MuudyFragment implements Stati
     }
 
     @Override
-    public void onLoaded(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats) {
-        mPresenter.bind(activities, stats);
+    public void onLoaded(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats, @Nullable int postCount) {
+        mPresenter.bind(activities, stats, postCount);
     }
 
     @Override

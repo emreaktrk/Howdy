@@ -166,9 +166,12 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
         PostEvent event = new PostEvent(post);
 
+
         EventBus
                 .getDefault()
                 .post(event);
+
+
         finish();
 
     }

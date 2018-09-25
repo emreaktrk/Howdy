@@ -29,13 +29,17 @@ import java.util.List;
 final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<ActivityStat> mList;
+    private List<ActivityStat> mListDetail;
     private List<ActivityStat> mFiltered;
     private PublishSubject<ActivityStat> mPublish = PublishSubject.create();
     private PublishSubject<View> mClicks = PublishSubject.create();
+    int mPostcount = 0;
 
-    ActivityStatsAdapter(@Nullable List<ActivityStat> list) {
+    ActivityStatsAdapter(@Nullable List<ActivityStat> list,@Nullable List<ActivityStat> listDetail, int postCount) {
         mList = list == null ? new ArrayList<>() : list;
         mFiltered = new ArrayList<>(mList);
+        mListDetail = listDetail == null ? new ArrayList<>() : listDetail;
+        mPostcount  = postCount;
     }
 
     @Override
@@ -58,16 +62,15 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ChartHolder chart = (ChartHolder) holder;
 
             List<PieEntry> entries = new ArrayList<>();
-            int postCount = 0;
             for (ActivityStat stat : mFiltered) {
-                postCount += stat.postCount;
+
                 entries.add(new PieEntry(stat.percent, stat.post_emoji_word));
             }
 
-            chart.mTextView.setText(postCount + " Paylaşım");
+            chart.mTextView.setText(mPostcount  + " Paylaşım");
 
             PieDataSet set = new PieDataSet(entries, "");
-            set.setColors(ColorTemplate.PASTEL_COLORS);
+            set.setColors(CHARTS_COLORS);
             set.setSliceSpace(2);
             set.setValueTextSize(0f);
 
@@ -88,7 +91,7 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (holder instanceof StatsHolder) {
             StatsHolder stats = (StatsHolder) holder;
 
-            ActivityStat stat = mFiltered.get(position - 1);
+            ActivityStat stat = mListDetail.get(position - 1);
 
             Picasso
                     .with(holder.itemView.getContext())
@@ -101,7 +104,7 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return mFiltered.size() + 1;
+        return mListDetail.size() + 1;
     }
 
     PublishSubject<ActivityStat> itemClicks() {
@@ -150,7 +153,7 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
-            ActivityStat stat = mFiltered.get(getAdapterPosition() - 1);
+            ActivityStat stat = mListDetail.get(getAdapterPosition() - 1);
             mPublish.onNext(stat);
         }
     }
@@ -178,4 +181,11 @@ final class ActivityStatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mClicks.onNext(view);
         }
     }
+
+    public static final int[] CHARTS_COLORS = {
+            Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
+            Color.rgb(191, 134, 134), Color.rgb(179, 48, 80), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0),
+            Color.rgb(106, 150, 31), Color.rgb(179, 100, 53)
+    };
+
 }

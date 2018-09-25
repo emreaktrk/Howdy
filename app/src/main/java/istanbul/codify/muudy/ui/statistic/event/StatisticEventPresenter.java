@@ -18,6 +18,7 @@ import istanbul.codify.muudy.model.ActivityStat;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.compose.ActivityAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
@@ -38,7 +39,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                         .subscribe(new ServiceConsumer<GetActivitiesResponse>() {
                             @Override
                             protected void success(GetActivitiesResponse response) {
-                                mView.onLoaded(response.data, null);
+                                mView.onLoaded(response.data, null,0);
                             }
 
                             @Override
@@ -50,7 +51,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                         }));
     }
 
-    void bind(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats) {
+    void bind(@Nullable List<Activity> activities, @Nullable List<ActivityStat> stats, @Nullable int postCount) {
         if (activities != null) {
             ActivityAdapter activityAdapter = new ActivityAdapter(activities, null);
             mDisposables.add(
@@ -68,7 +69,15 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
         }
 
         if (stats != null) {
-            ActivityStatsAdapter wordAdapter = new ActivityStatsAdapter(stats);
+            List<ActivityStat> statsDetail = new ArrayList<>();
+            for (int i = 0; i <stats.size() ; i++) {
+                if (i + 1 == stats.size() && stats.size() == 6){
+                    statsDetail.addAll(stats.get(i).otherEmojis);
+                }else{
+                    statsDetail.add(stats.get(i));
+                }
+            }
+            ActivityStatsAdapter wordAdapter = new ActivityStatsAdapter(stats,statsDetail,postCount);
             mDisposables.add(
                     wordAdapter
                             .itemClicks()
@@ -121,7 +130,7 @@ final class StatisticEventPresenter extends BasePresenter<StatisticEventView> {
                         .subscribe(new ServiceConsumer<GetActivityStatsResponse>() {
                             @Override
                             protected void success(GetActivityStatsResponse response) {
-                                mView.onLoaded(null, response.data);
+                                mView.onLoaded(null, response.data.emojiRows,response.data.postCount);
                             }
 
                             @Override
