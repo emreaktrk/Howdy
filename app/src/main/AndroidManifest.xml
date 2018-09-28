@@ -36,7 +36,8 @@
 
         <activity
             android:name=".ui.splash.SplashActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,98 +55,129 @@
                     android:pathPattern="/share" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity" />
-        <activity android:name=".ui.createuser.CreateUserActivity" />
+        <activity android:name=".ui.auth.AuthActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.createuser.CreateUserActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.compose.ComposeActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.word.WordActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.search.UserSearchActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.messages.UserMessagesActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.chat.ChatActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.postdetail.PostDetailActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.posts.PostsActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.profileedit.ProfileEditActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.response.ResponseActivity"
-            android:theme="@style/ResponseTheme" />
+            android:theme="@style/ResponseTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.facebookfriends.FacebookFriendsActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.forgotpassword.ForgotPasswordActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.changepassword.ChangePasswordActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.video.VideoActivity"
-            android:theme="@style/MediaTheme" />
+            android:theme="@style/MediaTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.photo.PhotoActivity"
-            android:theme="@style/MediaTheme" />
+            android:theme="@style/MediaTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.mention.MentionActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.places.PlacesActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.around.AroundActivity"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/TransparentTheme"/>
         <activity
             android:name=".ui.userprofile.UserProfileActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.userphotos.UserPhotosActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:theme="@style/SettingsTheme" />
+            android:theme="@style/SettingsTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.web.WebActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.feedback.FeedbackActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.socialmedia.SocialMediaActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.notificationsettings.NotificationSettingsActivity"
-            android:theme="@style/SettingsTheme" />
+            android:theme="@style/SettingsTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.users.UsersActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.followrequests.FollowRequestActivity"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity"
-            android:theme="@style/MaterialCamera.CaptureActivity" />
+            android:theme="@style/MaterialCamera.CaptureActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.afollestad.materialcamera.CaptureActivity2"
-            android:theme="@style/MaterialCamera.CaptureActivity" />
+            android:theme="@style/MaterialCamera.CaptureActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.weeklytopuser.WeeklyTopUsersActivity"
-            android:theme="@style/TransparentTheme" />
+            android:theme="@style/TransparentTheme"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".account.AccountService"

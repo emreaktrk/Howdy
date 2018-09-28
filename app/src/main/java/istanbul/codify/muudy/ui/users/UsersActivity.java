@@ -60,6 +60,16 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
         ActivityUtils.startActivity(starter);
     }
 
+    public static void start(@NonNull ArrayList<User> users, boolean isAround) {
+        Context context = Utils.getApp().getApplicationContext();
+
+        Intent starter = new Intent(context, UsersActivity.class);
+        starter.putExtra(String.class.getSimpleName(), UsersScreenMode.AROUND);
+        starter.putExtra(ArrayList.class.getSimpleName(), users);
+        ActivityUtils.startActivity(starter);
+    }
+
+
     public static void start(@NonNull @UsersScreenMode String mode) {
         Context context = Utils.getApp().getApplicationContext();
 
@@ -121,6 +131,10 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
                 case UsersScreenMode.USERS:
                     ArrayList<User> users = getSerializable(ArrayList.class);
                     mPresenter.bind(users);
+                    return;
+                case UsersScreenMode.AROUND:
+                    ArrayList<User> mUsers = getSerializable(ArrayList.class);
+                    mPresenter.bind(mUsers);
                     return;
                 case UsersScreenMode.LIKERS:
                     Long postId = getSerializable(Long.class);

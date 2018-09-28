@@ -52,6 +52,16 @@ public final class User implements Selectable, Serializable {
     }
 
     @Override
+    public String emoji() {
+        return null;
+    }
+
+    @Override
+    public long topCategoryId() {
+        return 0;
+    }
+
+    @Override
     public String text() {
         return "@" + username;
     }

@@ -2,6 +2,8 @@ package istanbul.codify.muudy.ui.compose;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.annotation.Nullable;
+
 import istanbul.codify.muudy.api.pojo.response.ApiError;
 import istanbul.codify.muudy.model.Activity;
 import istanbul.codify.muudy.model.Category;
@@ -24,7 +26,7 @@ interface ComposeView extends MvpView {
 
     void onLoaded(ArrayList<Category> filtered);
 
-    void onLoaded(String sentence,Bitmap bitmap, Bitmap selectedImage);
+    void onLoaded(String sentence, Bitmap bitmap, Bitmap selectedImage, @Nullable String emoji);
 
     void onLoaded(NewPost post);
 

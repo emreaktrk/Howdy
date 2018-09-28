@@ -99,7 +99,7 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                     if (result == null) {
                         Location location = new Location("default");
                         location.setLatitude(40.991955);
-                        location.setLatitude(28.712913);
+                        location.setLongitude(28.712913);
                         return location;
                     }
 

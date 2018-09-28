@@ -122,13 +122,12 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             WordToSpan wordToSpan = new WordToSpan();
             wordToSpan.setColorMENTION(mHolder.itemView.getContext().getResources().getColor(R.color.blue));
-
+            wordToSpan.setColorCUSTOM(mHolder.itemView.getContext().getResources().getColor(R.color.black));
             wordToSpan.setLink(post.post_text,none.mMessage, post.username);
 
             wordToSpan.setClickListener(new WordToSpan.ClickListener() {
                 @Override
                 public void onClick(String type, String text) {
-                    Toast.makeText(none.itemView.getContext(),text,Toast.LENGTH_LONG).show();
                     if(type.equals("mention")){
 
                         String username = text.substring(1);

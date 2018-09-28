@@ -18,4 +18,5 @@ public @interface UsersScreenMode {
     String USERS = "Takip Ettikleri";
     String LIKERS = "Beğenenler";
     String FACEBOOK = "Facebook Kişilerim";
+    String AROUND= "Çevrendekiler";
 }

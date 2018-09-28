@@ -21,6 +21,16 @@ public final class Word implements Selectable, Serializable {
     }
 
     @Override
+    public String emoji() {
+        return words_emoji_url;
+    }
+
+    @Override
+    public long topCategoryId() {
+        return words_top_category_id;
+    }
+
+    @Override
     public String text() {
         return words_word;
     }

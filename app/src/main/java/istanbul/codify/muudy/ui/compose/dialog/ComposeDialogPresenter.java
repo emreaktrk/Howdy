@@ -2,13 +2,17 @@ package istanbul.codify.muudy.ui.compose.dialog;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.squareup.picasso.Picasso;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.PostVisibility;
@@ -85,7 +89,27 @@ final class ComposeDialogPresenter extends BasePresenter<ComposeDialogView> {
     }
 
     void setSelectedImage(Bitmap bitmap){
-        findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(),bitmap));
+        if (bitmap != null) {
+            findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setVisibility(View.VISIBLE);
+            findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setBackgroundDrawable(new BitmapDrawable(getContext().getResources(), bitmap));
+        }else{
+            findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setVisibility(View.GONE);
+        }
+    }
+
+    void setEmoji(@Nullable String emoji){
+        if (emoji != null && emoji != ""){
+            findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setVisibility(View.VISIBLE);
+            Picasso
+                    .with(getContext())
+                    .load(BuildConfig.URL + emoji)
+                    .into(findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class));
+        }else{
+            findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setVisibility(View.GONE);
+        }
+    }
+    void hideSelectedImageImageView(){
+        findViewById(R.id.compose_dialog_selected_image, AppCompatImageView.class).setVisibility(View.GONE);
     }
     void changeFacebookImage(){
         isFacebookSelected = !isFacebookSelected;

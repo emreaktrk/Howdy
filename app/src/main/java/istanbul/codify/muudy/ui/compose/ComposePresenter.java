@@ -620,6 +620,28 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         request.extraStringForSeries = selectedSeason;
 
 
+        boolean hasEmotion = false;
+        String selectedEmoji = "";
+        for (int i = 0; i < mSelecteds.size(); i++) {
+
+            if (mSelecteds.get(i).topCategoryId() == 1) {
+                hasEmotion = true;
+                selectedEmoji = mSelecteds.get(i).emoji();
+                break;
+            }
+
+        }
+
+        if (!hasEmotion) {
+            for (int i = 0; i < mSelecteds.size(); i++) {
+                if (mSelecteds.get(i).topCategoryId() != 1) {
+                    selectedEmoji = mSelecteds.get(i).emoji();
+                    break;
+                }
+            }
+        }
+
+        String finalSelectedEmoji = selectedEmoji;
         mDisposables.add(
                 ApiManager
                         .getInstance()
@@ -631,7 +653,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                 View content = findViewById(R.id.compose_main_container);
 
                                 Bitmap bitmap = BlurBuilder.blur(content);
-                                mView.onLoaded(response.data, bitmap, selectedBitmap);
+                                mView.onLoaded(response.data, bitmap, selectedBitmap, finalSelectedEmoji);
                             }
 
                             @Override

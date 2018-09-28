@@ -28,6 +28,7 @@ import istanbul.codify.muudy.model.User;
 import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
+import istanbul.codify.muudy.utils.AndroidUtils;
 import istanbul.codify.muudy.view.FollowButton;
 
 import java.util.ArrayList;
@@ -60,6 +61,9 @@ public final class RecommendedUsersAdapter extends RecyclerView.Adapter<Recommen
                 .placeholder(R.drawable.ic_avatar)
                 .into(holder.mImage);
 
+
+        holder.mImage.setBorderWidth((int) AndroidUtils.convertDpToPixel(1, holder.mImage.getContext()));
+        holder.mImage.setBorderColor(holder.mImage.getContext().getResources().getColor(R.color.black));
         holder.mFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

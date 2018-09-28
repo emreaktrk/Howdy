@@ -15,8 +15,12 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import istanbul.codify.muudy.model.Mention;
 
 public class WordToSpan {
     private int colorTAG = -16776961;
@@ -36,6 +40,7 @@ public class WordToSpan {
     private boolean underlineCUSTOM = false;
     private WordToSpan.ClickListener clickListener;
 
+    ArrayList<MentionIndex> mentionIndices = new ArrayList<>();
     public WordToSpan() {
     }
 
@@ -116,6 +121,7 @@ public class WordToSpan {
             ws.setSpan(new WordToSpan.myClickableSpan(this.colorTAG, this.underlineTAG, "tag"), st, en, 33);
         }
 
+
         Matcher matcherMENTION = Pattern.compile("(^|\\s+)@(\\w+)").matcher(txt);
 
 
@@ -124,6 +130,32 @@ public class WordToSpan {
             int en = st + matcherMENTION.group(0).length();
             ws.setSpan(new WordToSpan.myClickableSpan(this.colorMENTION, this.underlineMENTION, "mention"), st, en, 33);
             ws.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), st, en, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            //mention dışındaki yazıya tıklanma vermek için
+            mentionIndices.add(new MentionIndex(st,en));
+        }
+
+        //mention dışındaki yazıya tıklanma vermek için
+        if (mentionIndices.size() > 0) {
+            for (int i = 0; i < mentionIndices.size(); i++) {
+                MentionIndex mentionIndex = mentionIndices.get(i);
+                if (i == 0 && mentionIndex.start > 0) {
+                    ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), 0, mentionIndex.start - 1, 33);
+                }
+                if (i > 0) {
+                    MentionIndex mentionIndex2 = mentionIndices.get(i - 1);
+                    ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), mentionIndex2.end, mentionIndex.start - 1, 33);
+
+                }
+
+                if (mentionIndices.size() == i + 1) {
+                    ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), mentionIndex.end, txt.length() - 1, 33);
+                }
+
+
+            }
+        }else{
+            ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), 0, txt.length() - 1, 33);
         }
 
         Matcher matcherURL = Pattern.compile("(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]").matcher(txt);
@@ -159,9 +191,10 @@ public class WordToSpan {
             while(matcherCUSTOM.find()) {
                 int st = matcherCUSTOM.start();
                 int en = st + matcherCUSTOM.group(0).length();
-                ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), st, en, 33);
+                ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), 0, txt.length() - 1, 33);
             }
         }
+      //  ws.setSpan(new WordToSpan.myClickableSpan(this.colorCUSTOM, this.underlineCUSTOM, "custom"), 0, txt.length() - 1, 33);
 
         TextView tv = (TextView)textView;
         tv.setText(ws);
@@ -230,5 +263,14 @@ public class WordToSpan {
 
     public interface ClickListener {
         void onClick(String var1, String var2);
+    }
+}
+ class MentionIndex {
+
+    public int start;
+    public int end;
+    MentionIndex(int start, int end){
+        this.start = start;
+        this.end = end;
     }
 }

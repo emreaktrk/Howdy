@@ -100,8 +100,9 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
+        mPresenter.openHomeFragment(around,event.newPost.id);
         if (!around.isEmpty()) {
-            mPresenter.openHomeFragment(around,event.newPost.id);
+
         }
 
     }

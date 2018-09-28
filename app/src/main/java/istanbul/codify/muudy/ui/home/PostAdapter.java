@@ -31,6 +31,7 @@ import istanbul.codify.muudy.exception.ImplementationMissingException;
 import istanbul.codify.muudy.helper.utils.InflaterUtils;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
+import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
 import istanbul.codify.muudy.ui.users.UsersActivity;
 import istanbul.codify.muudy.utils.WordToSpan;
@@ -144,6 +145,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             WordToSpan wordToSpan = new WordToSpan();
             wordToSpan.setColorMENTION(holder.itemView.getContext().getResources().getColor(R.color.blue));
+            wordToSpan.setColorCUSTOM(holder.itemView.getContext().getResources().getColor(R.color.black));
 
             wordToSpan.setLink(post.post_text,none.mMessage, post.username);
 
@@ -156,6 +158,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         String username = text.substring(1);
                         UserProfileActivity.start(username);
 
+                    }else{
+                        PostDetailActivity.start(post.idpost);
                     }
                 }
             });

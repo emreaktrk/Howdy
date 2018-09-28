@@ -13,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.squareup.picasso.Picasso;
+
+import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.MuudyDialog;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.PostVisibility;
@@ -25,7 +28,7 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
 
     private ComposeDialogPresenter mPresenter = new ComposeDialogPresenter();
 
-    public static ComposeDialog newInstance(String sentence, Bitmap bitmap, @Nullable Bitmap selectedImage) {
+    public static ComposeDialog newInstance(String sentence, Bitmap bitmap, @Nullable Bitmap selectedImage, @Nullable String emoji) {
         Bundle args = new Bundle();
         args.putSerializable(String.class.getSimpleName(), sentence);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -38,6 +41,10 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
             selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, stream2);
             byte[] byteArray2 = stream2.toByteArray();
             args.putByteArray("selectedBitmapImage", byteArray2);
+        }else{
+            if (emoji != null){
+                args.putSerializable("emoji", emoji);
+            }
         }
         ComposeDialog fragment = new ComposeDialog();
         fragment.setArguments(args);
@@ -56,6 +63,7 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
         mPresenter.attachView(this, view);
 
         String sentence = getSerializable(String.class);
+        String emoji = getArguments().getString("emoji");
         mPresenter.bind(sentence);
 
         byte[] byteArray = getArguments().getByteArray("bitmapImage");
@@ -73,6 +81,13 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
                 mPresenter.setSelectedImage(bmp);
             }
         }
+
+        if (emoji != null && emoji != ""){
+            mPresenter.setEmoji(emoji);
+        }else{
+            mPresenter.hideSelectedImageImageView();
+        }
+
     }
 
     @NonNull

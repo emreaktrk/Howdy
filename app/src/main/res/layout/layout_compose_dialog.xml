@@ -46,10 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
+            app:layout_constraintEnd_toStartOf="@+id/compose_dialog_selected_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/compose_title"
-            tools:text="egesert, keyifli hissediyor" />
+            tools:text="egesert, keyifli hissediyor." />
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/compose_dialog_selected_image"
@@ -59,6 +59,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
+
             app:layout_constraintBottom_toTopOf="@+id/temp_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/compose_title" />

@@ -6,5 +6,9 @@ public interface Selectable {
 
     long id();
 
+    String emoji();
+
+    long topCategoryId();
+
     String text();
 }
