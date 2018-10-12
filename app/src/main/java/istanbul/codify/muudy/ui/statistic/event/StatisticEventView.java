@@ -20,4 +20,6 @@ interface StatisticEventView extends MvpView {
 
     void onActivityStatSelected(ActivityStat stat);
 
+    void onRefresh();
+
 }

@@ -30,8 +30,11 @@ public final class StatisticMapFragment extends MuudyFragment implements Statist
 
         mPresenter.attachView(this, view);
         mPresenter
+                .map().isAttachedToWindow();//sadas
+        mPresenter
                 .map()
                 .onCreate(savedInstanceState);
+
     }
 
     @Override

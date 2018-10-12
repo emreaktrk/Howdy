@@ -9,6 +9,7 @@ public final class Place implements Selectable, Serializable {
     public double place_lat;
     public double place_lng;
     public int userDistance;
+    public String emoji;
 
     @Override
     public long id() {
@@ -17,7 +18,7 @@ public final class Place implements Selectable, Serializable {
 
     @Override
     public String emoji() {
-        return null;
+        return emoji;
     }
 
     @Override

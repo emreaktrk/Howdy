@@ -1,30 +1,19 @@
 package istanbul.codify.muudy.ui.home;
 
-import android.graphics.Color;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
-import com.binaryfork.spanny.Spanny;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.subjects.PublishSubject;
-import istanbul.codify.muudy.BuildConfig;
+
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.account.AccountUtils;
 import istanbul.codify.muudy.exception.ImplementationMissingException;
@@ -33,7 +22,7 @@ import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.model.zipper.Like;
 import istanbul.codify.muudy.ui.postdetail.PostDetailActivity;
 import istanbul.codify.muudy.ui.userprofile.UserProfileActivity;
-import istanbul.codify.muudy.ui.users.UsersActivity;
+import istanbul.codify.muudy.utils.PicassoHelper;
 import istanbul.codify.muudy.utils.WordToSpan;
 import istanbul.codify.muudy.view.LikeButton;
 
@@ -107,40 +96,14 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             none.mLike.setText(post.post_likecount + "");
             none.mDate.setText(post.humanDate);
             none.mComment.setText(post.post_commentcount + "");
-            Picasso
+            new PicassoHelper(none.mImage.getContext(),none.mImage,post.imgpath1);
+           /* Picasso
                     .with(holder.itemView.getContext())
                     .load(BuildConfig.URL + post.imgpath1)
                     .placeholder(R.drawable.ic_avatar)
                     .into(none.mImage);
+*/
 
-/*
-            Picasso.with(holder.itemView.getContext())
-                    .load(BuildConfig.URL + post.imgpath1)
-                    .networkPolicy(NetworkPolicy.OFFLINE)
-                    .into(none.mImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError() {
-                            //Try again online if cache failed
-                            Picasso.with(holder.itemView.getContext())
-                                    .load(BuildConfig.URL + post.imgpath1)
-                                    .into(none.mImage, new Callback() {
-                                        @Override
-                                        public void onSuccess() {
-
-                                        }
-
-                                        @Override
-                                        public void onError() {
-                                            Log.v("Picasso","Could not fetch image");
-                                        }
-                                    });
-                        }
-                    });*/
 
 
             WordToSpan wordToSpan = new WordToSpan();
@@ -193,19 +156,22 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             if (holder instanceof MediaHolder) {
                 MediaHolder media = (MediaHolder) holder;
-                Picasso
+                new PicassoHelper(holder.itemView.getContext(),media.mMedia,post.post_mediapath);
+             /*   Picasso
                         .with(holder.itemView.getContext())
                         .load(BuildConfig.URL + post.post_mediapath)
                         .centerCrop()
                         .resize(180, 180)
-                        .into(media.mMedia);
+                        .into(media.mMedia);*/
             } else {
                 if (post.post_emoji != null) {
                     none.mEmotion.setVisibility(View.VISIBLE);
+                    new PicassoHelper(holder.itemView.getContext(),none.mEmotion,post.post_emoji);
+                    /*
                     Picasso
                             .with(holder.itemView.getContext())
                             .load(BuildConfig.URL + post.post_emoji)
-                            .into(none.mEmotion);
+                            .into(none.mEmotion);*/
                 } else {
                     none.mEmotion.setVisibility(View.GONE);
                 }
@@ -230,6 +196,8 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mMore = null;
         }
     }
+
+
 
     public More getMore() {
         return mMore;
@@ -349,7 +317,7 @@ public final class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
-        private CircleImageView mEmotion;
+        private AppCompatImageView mEmotion;
         private LikeButton mLike;
         private AppCompatTextView mComment;
         private AppCompatTextView mDate;

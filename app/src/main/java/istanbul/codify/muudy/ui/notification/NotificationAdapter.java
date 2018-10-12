@@ -16,6 +16,7 @@ import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.FollowRequest;
 import istanbul.codify.muudy.model.Notification;
+import istanbul.codify.muudy.utils.PicassoHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,11 +78,14 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
             holder.mText.setText(request.msg);
             holder.mDate.setText(request.humanDate);
+            new PicassoHelper(holder.mImage.getContext(),holder.mImage,request.user.imgpath1);
+            /*
             Picasso
                     .with(holder.itemView.getContext())
                     .load(request.user == null ? null : BuildConfig.URL + request.user.imgpath1)
                     .placeholder(R.mipmap.ic_launcher_round)
                     .into(holder.mImage);
+                    */
 
             holder.accept.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,11 +111,13 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
             holder.mText.setText(notification.notification_msg);
             holder.mDate.setText(notification.humanDate);
-            Picasso
+            //new PicassoHelper(holder.mImage.getContext(),holder.mImage,notification.fromUser.imgpath1);
+            PicassoHelper.setImageWithPlaceHolder(holder.mImage,notification.fromUser == null ? null : notification.fromUser.imgpath1);
+           /* Picasso
                     .with(holder.itemView.getContext())
                     .load(notification.fromUser == null ? null : BuildConfig.URL + notification.fromUser.imgpath1)
                     .placeholder(R.mipmap.ic_launcher_round)
-                    .into(holder.mImage);
+                    .into(holder.mImage);*/
         }
     }
 

@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -36,6 +37,7 @@ import istanbul.codify.muudy.model.More;
 import istanbul.codify.muudy.model.Post;
 import istanbul.codify.muudy.model.Wall;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+import istanbul.codify.muudy.utils.SharedPrefs;
 
 import java.util.ArrayList;
 
@@ -92,11 +94,15 @@ final class HomePresenter extends BasePresenter<HomeView> {
                 .getLastLocation()
                 .continueWith(task -> {
                     Location result = task.getResult();
-                    if (result == null || BuildConfig.DEBUG) {
+                    if (result == null) {
+
                         Location location = new Location("default");
-                        location.setLatitude(40.991955);
-                        location.setLongitude(28.712913);
+                        location.setLatitude(SharedPrefs.getLatitude(getContext()));
+                        location.setLongitude(SharedPrefs.getLongitude(getContext()));
                         return location;
+                    }else{
+                        SharedPrefs.setLatitude(result.getLatitude()+"",getContext());
+                        SharedPrefs.setLongitude(result.getLongitude()+"",getContext());
                     }
 
                     return result;
@@ -122,6 +128,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                     .subscribe(new ServiceConsumer<GetWallResponse>() {
                                         @Override
                                         protected void success(GetWallResponse response) {
+                                            mWall = response.data;
                                             if (more == null) {
 
                                                 if (aroundUsers != null && !aroundUsers.isEmpty()){
@@ -165,7 +172,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     void bind(Wall wall, @Nullable ArrayList<AroundUsers> aroundUsers, @Nullable Long postId) {
-        mWall = wall;
+
 
             emotion = new EmotionAdapter(wall.nearEmotions);
             findViewById(R.id.home_emotion_recycler, RecyclerView.class).setAdapter(emotion);
@@ -182,9 +189,17 @@ final class HomePresenter extends BasePresenter<HomeView> {
 
         findViewById(R.id.home_emotion_recycler, RecyclerView.class).setVisibility((wall.nearEmotions == null || wall.nearEmotions.isEmpty()) ? View.GONE : View.VISIBLE);
 
+        findViewById(R.id.home_emotion_recycler, RecyclerView.class).setItemAnimator(null);
 
             post = new PostAdapter(wall.posts, wall.recomendedUsers);
             findViewById(R.id.home_post_recycler, RecyclerView.class).setAdapter(post);
+
+     /*
+
+        RecyclerView.ItemAnimator animator = findViewById(R.id.home_post_recycler, RecyclerView.class).getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }*/
 
         mDisposables.add(
                 post

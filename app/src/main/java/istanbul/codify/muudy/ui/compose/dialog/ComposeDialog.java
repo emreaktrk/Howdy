@@ -80,13 +80,15 @@ public final class ComposeDialog extends MuudyDialog implements ComposeDialogVie
             if (bmp != null) {
                 mPresenter.setSelectedImage(bmp);
             }
+        }else{
+            if (emoji != null && emoji != ""){
+                mPresenter.setEmoji(emoji);
+            }else{
+                mPresenter.hideSelectedImageImageView();
+            }
+
         }
 
-        if (emoji != null && emoji != ""){
-            mPresenter.setEmoji(emoji);
-        }else{
-            mPresenter.hideSelectedImageImageView();
-        }
 
     }
 

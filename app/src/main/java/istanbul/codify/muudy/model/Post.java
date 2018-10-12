@@ -50,6 +50,8 @@ public final class Post implements Serializable {
     public String words_emoji_url;
     public ArrayList<Badge> rozetler;
     public String humanDate;
+    public String extraStringForSeries;
+
 
 
     @Override

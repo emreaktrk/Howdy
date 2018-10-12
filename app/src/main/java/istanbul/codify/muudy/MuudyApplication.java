@@ -1,6 +1,7 @@
 package istanbul.codify.muudy;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
 import com.crashlytics.android.answers.Answers;
@@ -14,6 +15,8 @@ import com.squareup.picasso.Picasso;
 
 
 public final class MuudyApplication extends Application {
+
+    private static Context context;
 
     @Override
     public void onCreate() {
@@ -34,5 +37,9 @@ public final class MuudyApplication extends Application {
         built.setIndicatorsEnabled(false);
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
+    }
+
+    public static Context getAppContext() {
+        return MuudyApplication.context;
     }
 }

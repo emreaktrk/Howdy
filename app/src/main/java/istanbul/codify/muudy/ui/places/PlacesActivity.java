@@ -22,10 +22,12 @@ public final class PlacesActivity extends MuudyActivity implements PlacesView {
 
     private PlacesPresenter mPresenter = new PlacesPresenter();
 
-    public static void start(@ResultTo int to) {
+    String emoji;
+
+    public static void start(@ResultTo int to,String emoji) {
         AppCompatActivity activity = (AppCompatActivity) ActivityUtils.getTopActivity();
         Intent starter = new Intent(activity, PlacesActivity.class);
-
+        starter.putExtra(emoji.getClass().getSimpleName(),emoji);
         switch (to) {
             case ResultTo.ACTIVITY:
                 activity.startActivityForResult(starter, REQUEST_CODE);
@@ -49,6 +51,8 @@ public final class PlacesActivity extends MuudyActivity implements PlacesView {
         super.onCreate(savedInstanceState);
 
         mPresenter.attachView(this, this);
+
+        emoji = getSerializable(String.class);
         mPresenter.getPlaces(null);
     }
 
@@ -76,6 +80,7 @@ public final class PlacesActivity extends MuudyActivity implements PlacesView {
 
     @Override
     public void onPlaceClicked(Place place) {
+        place.emoji = emoji;
         setResult(RESULT_OK, place);
         onBackPressed();
     }

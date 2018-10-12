@@ -619,8 +619,8 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
         request.token = AccountUtils.tokenLegacy(getContext());
         request.extraStringForSeries = selectedSeason;
 
-
         boolean hasEmotion = false;
+        boolean hasOtherSituation = false;
         String selectedEmoji = "";
         for (int i = 0; i < mSelecteds.size(); i++) {
 
@@ -634,11 +634,25 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
 
         if (!hasEmotion) {
             for (int i = 0; i < mSelecteds.size(); i++) {
-                if (mSelecteds.get(i).topCategoryId() != 1) {
+
+                if (mSelecteds.get(i).topCategoryId() != 1 && mSelecteds.get(i).topCategoryId() != Activity.ID) {
                     selectedEmoji = mSelecteds.get(i).emoji();
+                    hasOtherSituation = true;
                     break;
                 }
             }
+
+            if (!hasOtherSituation){
+                for (int i = 0; i < mSelecteds.size(); i++) {
+
+                    if (mSelecteds.get(i).topCategoryId() == Activity.ID) {
+                        selectedEmoji = mSelecteds.get(i).emoji();
+                        break;
+                    }
+                }
+            }
+
+
         }
 
         String finalSelectedEmoji = selectedEmoji;

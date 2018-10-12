@@ -69,7 +69,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.home_frame, mPool.get(HomeFragment.class))
+                .replace(R.id.home_frame, homeFragment)
                 .commit();
 
         mPresenter.attachView(this, this);

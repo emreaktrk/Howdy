@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 import istanbul.codify.muudy.BuildConfig;
 import istanbul.codify.muudy.R;
 import istanbul.codify.muudy.model.Post;
+import istanbul.codify.muudy.utils.PicassoHelper;
 import istanbul.codify.muudy.view.StarView;
 
 import java.util.ArrayList;
@@ -35,12 +36,14 @@ public final class StarAdapter extends RecyclerView.Adapter<StarAdapter.Holder> 
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Post game = mList.get(position);
 
-        holder.mText.setText(game.words_word);
+        holder.mText.setText(game.words_word + " " +game.extraStringForSeries);
         holder.mStar.setPoint(game.post_given_point);
-        Picasso
+        PicassoHelper.setImage(holder.mImage,game.words_emoji_url);
+        /*Picasso
                 .with(holder.mImage.getContext())
                 .load(BuildConfig.URL + game.words_emoji_url)
                 .into(holder.mImage);
+                */
     }
 
     @Override

@@ -52,6 +52,21 @@ public final class ProfileFragment extends NavigationFragment implements Profile
 
         mPresenter.attachView(this, this);
 
+        if (mPresenter.mUser != null){
+            mPresenter.bind(mPresenter.mUser);
+        }
+
+
+            if (mPresenter.selectedIndex == 0 && mPresenter.posts != null) {
+                mPresenter.bindPosts(mPresenter.posts);
+            }else if (mPresenter.selectedIndex == 1 && mPresenter.userTops != null){
+                mPresenter.bindUserTops(mPresenter.userTops);
+            }else if (mPresenter.stars!= null){
+                mPresenter.bindStars(mPresenter.stars);
+            }
+
+            mPresenter.setSelected(mPresenter.selectedIndex);
+
         AccountUtils.sync(getContext());
     }
 

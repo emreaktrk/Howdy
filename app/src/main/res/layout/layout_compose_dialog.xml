@@ -58,8 +58,8 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
-
+            android:scaleType="fitCenter"
+            tools:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@+id/temp_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/compose_title" />

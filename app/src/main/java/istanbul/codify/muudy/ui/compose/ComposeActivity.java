@@ -204,7 +204,7 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
     @Override
     public void onCategoryClicked(Category category) {
         if (category.isLocation()) {
-            PlacesActivity.start(ResultTo.ACTIVITY);
+            PlacesActivity.start(ResultTo.ACTIVITY,category.words_top_category_icon);
         } else {
             WordActivity.start(ResultTo.ACTIVITY, category);
         }

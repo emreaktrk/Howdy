@@ -74,7 +74,6 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

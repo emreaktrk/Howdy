@@ -53,6 +53,7 @@ public final class StatisticFragment extends NavigationFragment implements Stati
                             .create());
             return adapter;
        }else{
+            adapter.notifyDataSetChanged();
             return adapter;
         }
     }

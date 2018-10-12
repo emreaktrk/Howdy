@@ -290,7 +290,7 @@ public class PostDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             private AppCompatTextView mMessage;
             private CircleImageView mImage;
-            private CircleImageView mEmotion;
+            private AppCompatImageView mEmotion;
             private LikeButton mLike;
             private AppCompatTextView mComment;
             private AppCompatTextView mDate;

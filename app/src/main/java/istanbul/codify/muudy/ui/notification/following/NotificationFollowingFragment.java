@@ -28,6 +28,9 @@ public final class NotificationFollowingFragment extends MuudyFragment implement
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, this);
+        if(mPresenter.notifications != null){
+            mPresenter.bind(mPresenter.notifications);
+        }
         mPresenter.getNotifications();
     }
 

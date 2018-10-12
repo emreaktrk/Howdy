@@ -176,8 +176,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.weeklytopuser.WeeklyTopUsersActivity"
-            android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/TransparentTheme"/>
 
         <service
             android:name=".account.AccountService"

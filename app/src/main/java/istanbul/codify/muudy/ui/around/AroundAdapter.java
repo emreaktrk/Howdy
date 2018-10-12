@@ -94,6 +94,11 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             AroundUsers around = mList.get(getItemPostion(position));
             AroundAdapter.AroundUserHolder holder= (AroundAdapter.AroundUserHolder) mHolder;
             holder.mTitle.setText(around.title);
+            if (around.users.size() == 0){
+                holder.mMore.setVisibility(View.GONE);
+            }else{
+                holder.mMore.setVisibility(View.VISIBLE);
+            }
             for (int i = 0; i < holder.mContainer.getChildCount(); i++) {
                 AvatarView avatar = (AvatarView) holder.mContainer.getChildAt(i);
                 if (around.users.size() <= i) {
@@ -296,7 +301,7 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         private AppCompatTextView mMessage;
         private CircleImageView mImage;
-        private CircleImageView mEmotion;
+        private AppCompatImageView mEmotion;
         private LikeButton mLike;
         private AppCompatTextView mComment;
         private AppCompatTextView mDate;

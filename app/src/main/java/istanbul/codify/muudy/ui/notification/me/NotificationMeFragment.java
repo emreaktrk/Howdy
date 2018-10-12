@@ -32,6 +32,9 @@ public final class NotificationMeFragment extends MuudyFragment implements Notif
         super.onResume();
 
         mPresenter.attachView(this, this);
+        if (mPresenter.notifications != null){
+            mPresenter.bind(mPresenter.notifications,mPresenter.requests);
+        }
         mPresenter.getNotifications();
     }
 

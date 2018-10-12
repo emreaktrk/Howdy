@@ -28,6 +28,8 @@ import java.util.List;
 
 final class  NotificationMePresenter extends BasePresenter<NotificationMeView> {
 
+    List<Notification> notifications;
+    List<FollowRequest> requests;
     void getNotifications() {
         GetNotificationsMeRequest request = new GetNotificationsMeRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
@@ -41,6 +43,8 @@ final class  NotificationMePresenter extends BasePresenter<NotificationMeView> {
                             @Override
                             protected void success(GetNotificationsMeResponse response) {
                                 findViewById(R.id.notification_refresh, SwipeRefreshLayout.class).setRefreshing(false);
+                                notifications = response.data.userNotifications;
+                                requests = response.data.followRequests;
                                 mView.onLoaded(response.data.userNotifications, response.data.followRequests);
                             }
 
@@ -105,7 +109,7 @@ final class  NotificationMePresenter extends BasePresenter<NotificationMeView> {
                         }));
 
 
-        
+        findViewById(R.id.notification_me_notification_recycler, RecyclerView.class).setItemAnimator(null);
 
         findViewById(R.id.notification_me_notification_recycler, RecyclerView.class).setAdapter(adapter);
     }

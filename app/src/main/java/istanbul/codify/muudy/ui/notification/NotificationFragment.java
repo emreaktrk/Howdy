@@ -19,6 +19,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 public final class NotificationFragment extends NavigationFragment implements NotificationView {
 
     private NotificationPresenter mPresenter = new NotificationPresenter();
+    FragmentPagerItemAdapter adapter;
 
     @Override
     protected int getLayoutResId() {
@@ -50,12 +51,18 @@ public final class NotificationFragment extends NavigationFragment implements No
 
     @Override
     public FragmentPagerItemAdapter create() {
-        return new FragmentPagerItemAdapter(
-                getChildFragmentManager(),
-                FragmentPagerItems
-                        .with(getContext())
-                        .add("Sen", NotificationMeFragment.class)
-                        .add("Takip Edilen", NotificationFollowingFragment.class)
-                        .create());
+        if (adapter == null) {
+            adapter = new FragmentPagerItemAdapter(
+                    getChildFragmentManager(),
+                    FragmentPagerItems
+                            .with(getContext())
+                            .add("Sen", NotificationMeFragment.class)
+                            .add("Takip Edilen", NotificationFollowingFragment.class)
+                            .create());
+            return adapter;
+
+        }else{
+            return adapter;
+        }
     }
 }

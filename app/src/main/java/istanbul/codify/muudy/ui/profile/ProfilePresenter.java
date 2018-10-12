@@ -27,6 +27,7 @@ import istanbul.codify.muudy.model.User;
 import istanbul.codify.muudy.model.UserTop;
 import istanbul.codify.muudy.ui.base.BasePresenter;
 import istanbul.codify.muudy.ui.home.PostAdapter;
+import istanbul.codify.muudy.utils.PicassoHelper;
 import istanbul.codify.muudy.view.NumberView;
 
 import java.util.ArrayList;
@@ -36,13 +37,17 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
     User mUser;
     RecyclerViewHelper mRecyclerHelper;
-    private int selectedIndex = 0;
-
+    int selectedIndex = 0;
+    List<Post> posts;
+    List<Post> stars;
+    ArrayList<UserTop> userTops;
     @Override
     public void attachView(ProfileView view, View root) {
         super.attachView(view, root);
 
         findViewById(R.id.profile_coordinator).setVisibility(View.INVISIBLE);
+        findViewById(R.id.profile_recycler, RecyclerView.class).setItemAnimator(null);
+
         mDisposables.add(
                 RxView
                         .clicks(findViewById(R.id.profile_settings))
@@ -246,12 +251,14 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         NumberView following = findViewById(R.id.profile_number_following, NumberView.class);
         following.setText("Takip Edilen");
         following.setValue(user.followercount);
-
+        PicassoHelper.setImageWithPlaceHolder(findViewById(R.id.profile_picture, CircleImageView.class),user.imgpath1,R.drawable.ic_avatar);
+        /*
         Picasso
                 .with(getContext())
                 .load(BuildConfig.URL + user.imgpath1)
                 .placeholder(R.drawable.ic_avatar)
                 .into(findViewById(R.id.profile_picture, CircleImageView.class));
+                */
     }
 
     void refresh() {
@@ -264,14 +271,16 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
             if (selectedIndex == 2) {
                 categoryId = Category.GAME;
             } else if (selectedIndex == 3) {
-                categoryId = Category.GAME;
+                categoryId = Category.SERIES;
             } else if (selectedIndex == 4) {
-                categoryId = Category.GAME;
+                categoryId = Category.FILM;
             } else if (selectedIndex == 5) {
-                categoryId = Category.GAME;
+                categoryId = Category.BOOK;
             }
             stars(categoryId);
         }
+
+
     }
 
     void posts() {
@@ -289,6 +298,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserProfileResponse>() {
                             @Override
                             protected void success(GetUserProfileResponse response) {
+                                posts = response.data.postlist;
                                 mView.onLoaded(response.data.postlist, selectedIndex);
                                 findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
@@ -408,6 +418,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserPostsResponse>() {
                             @Override
                             protected void success(GetUserPostsResponse response) {
+                                stars = response.data;
                                 mView.onLoaded(response.data, selectedIndex);
                                 findViewById(R.id.profile_refresh, SwipeRefreshLayout.class).setRefreshing(false);
                             }
@@ -489,7 +500,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
         return -1;
     }
 
-    private void setSelected(int position) {
+    void setSelected(int position) {
         LinearLayoutCompat tabs = findViewById(R.id.profile_tabs, LinearLayoutCompat.class);
         for (int i = 0; i < tabs.getChildCount(); i++) {
             View child = tabs.getChildAt(i);
@@ -584,6 +595,7 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
                         .subscribe(new ServiceConsumer<GetUserWeeklyTopResponse>() {
                             @Override
                             protected void success(GetUserWeeklyTopResponse response) {
+                                userTops = response.data;
                                 mView.onLoadedUserTops(response.data);
                             }
 

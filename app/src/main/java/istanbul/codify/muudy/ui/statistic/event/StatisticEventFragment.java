@@ -28,7 +28,12 @@ public final class StatisticEventFragment extends MuudyFragment implements Stati
         super.onViewCreated(view, savedInstanceState);
 
         mPresenter.attachView(this, view);
-        mPresenter.getActivities();
+        if (mPresenter.mActivities != null){
+            mPresenter.bind(mPresenter.mActivities,mPresenter.mStats,mPresenter.mPostCount,true);
+        }else{
+            mPresenter.getActivities();
+        }
+
     }
 
     @Override
@@ -65,5 +70,11 @@ public final class StatisticEventFragment extends MuudyFragment implements Stati
         if (activity != null) {
             PostsActivity.start(activity, stat.post_emoji_word);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        mPresenter.bind(mPresenter.mActivity);
+        mPresenter.getStats(mPresenter.mActivity);
     }
 }

@@ -31,6 +31,8 @@ import istanbul.codify.muudy.api.pojo.response.FollowResponse;
 import istanbul.codify.muudy.logcat.Logcat;
 import istanbul.codify.muudy.model.*;
 import istanbul.codify.muudy.ui.base.BasePresenter;
+import istanbul.codify.muudy.utils.SharedPrefs;
+
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -98,8 +100,8 @@ final class UsersPresenter extends BasePresenter<UsersView> {
                     Location result = task.getResult();
                     if (result == null) {
                         Location location = new Location("default");
-                        location.setLatitude(40.991955);
-                        location.setLongitude(28.712913);
+                        location.setLatitude(SharedPrefs.getLatitude(getContext()));
+                        location.setLongitude(SharedPrefs.getLongitude(getContext()));
                         return location;
                     }
 

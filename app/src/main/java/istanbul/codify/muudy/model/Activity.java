@@ -8,6 +8,7 @@ public final class Activity implements Selectable, Serializable {
     public long idactivities;
     public String activities_title;
     public String activities_icon_url;
+    public static int ID = 9999;
 
     @Override
     public long id() {
@@ -16,12 +17,12 @@ public final class Activity implements Selectable, Serializable {
 
     @Override
     public String emoji() {
-        return null;
+        return activities_icon_url;
     }
 
     @Override
     public long topCategoryId() {
-        return 0;
+        return ID;
     }
 
     @Override

@@ -35,6 +35,8 @@ final class StatisticMapPresenter extends BasePresenter<StatisticMapView> {
         super.attachView(view, root);
 
         map().getMapAsync(map -> mView.onReady(map));
+
+
     }
 
     void bind(GoogleMap map) {

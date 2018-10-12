@@ -17,6 +17,8 @@ import java.util.List;
 
 final class NotificationFollowingPresenter extends BasePresenter<NotificationFollowingView> {
 
+    List<NotificationFollowing> notifications;
+
     void getNotifications() {
         GetNotificationsFollowingRequest request = new GetNotificationsFollowingRequest();
         request.token = AccountUtils.tokenLegacy(getContext());
@@ -29,6 +31,7 @@ final class NotificationFollowingPresenter extends BasePresenter<NotificationFol
                         .subscribe(new ServiceConsumer<GetNotificationsFollowingResponse>() {
                             @Override
                             protected void success(GetNotificationsFollowingResponse response) {
+                                notifications = response.data;
                                 mView.onLoaded(response.data);
                             }
 
