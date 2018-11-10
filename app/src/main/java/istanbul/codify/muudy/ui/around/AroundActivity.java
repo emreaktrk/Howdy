@@ -43,7 +43,8 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         starter.putExtra("bitmapImage",byteArray);
-        ActivityUtils.startActivity(starter);
+        ActivityUtils.startActivity(starter,android.R.anim.fade_in,android.R.anim.fade_out);
+
     }
 
 
@@ -104,5 +105,12 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
     @Override
     public void onCloseClicked() {
         finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

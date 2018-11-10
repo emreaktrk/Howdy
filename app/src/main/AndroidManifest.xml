@@ -117,7 +117,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.photo.PhotoActivity"
-            android:theme="@style/MediaTheme"
+            android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.mention.MentionActivity"

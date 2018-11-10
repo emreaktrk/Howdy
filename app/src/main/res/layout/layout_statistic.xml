@@ -38,6 +38,7 @@
             app:stl_distributeEvenly="true"
             app:stl_dividerThickness="0dp"
             app:stl_indicatorColor="@color/blue"
+        android:visibility="gone"
             app:stl_indicatorInterpolation="linear"
             app:stl_indicatorThickness="3dp"
             app:stl_overlineThickness="0dp"

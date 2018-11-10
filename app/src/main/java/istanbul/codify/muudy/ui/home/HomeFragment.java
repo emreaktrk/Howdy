@@ -206,6 +206,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onImageClicked(Post post) {
+
         PhotoActivity.start(post);
     }
 

@@ -45,6 +45,7 @@ public class AvatarView extends LinearLayoutCompat {
 
         mImage = findViewById(R.id.avatar_view_image);
         mName = findViewById(R.id.avatar_view_name);
+
     }
 
     public void setName(CharSequence name) {

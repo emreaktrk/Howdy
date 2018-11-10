@@ -49,7 +49,7 @@ public final class StatisticFragment extends NavigationFragment implements Stati
                     FragmentPagerItems
                             .with(getContext())
                             .add("Etkinlik", StatisticEventFragment.class)
-                            .add("Harita", StatisticMapFragment.class)
+                            /*.add("Harita", StatisticMapFragment.class)*/
                             .create());
             return adapter;
        }else{

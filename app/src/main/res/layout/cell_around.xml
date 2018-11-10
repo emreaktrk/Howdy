@@ -5,16 +5,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_around"
         tools:context=".ui.around.AroundActivity">
 
     <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/around_title"
                 style="@style/Text.Normal"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -22,20 +25,14 @@
                 android:layout_marginEnd="16dp"
                 tools:text="Çevrende 5 kişi acı içinde hissediyor"/>
 
-        <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/around_more"
-                style="@style/Text.Normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_marginEnd="16dp"
-                android:text="Daha Fazla"/>
+
     </android.support.v7.widget.LinearLayoutCompat>
 
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/white"
+            android:background="@color/grey2"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"/>
@@ -43,7 +40,8 @@
     <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/around_container"
             android:layout_width="match_parent"
-            android:layout_height="96dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:gravity="left">
 
         <istanbul.codify.muudy.view.AvatarView
@@ -71,4 +69,20 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
     </android.support.v7.widget.LinearLayoutCompat>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/around_more"
+        style="@style/Text.Normal"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:layout_marginBottom="8dp"
+        android:text="Daha fazla..."/>
+    </RelativeLayout>
 </android.support.v7.widget.LinearLayoutCompat>
