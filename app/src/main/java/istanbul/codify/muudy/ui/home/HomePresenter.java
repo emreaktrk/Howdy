@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout;
@@ -415,7 +416,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(new ServiceConsumer<SayHiResponse>() {
                             @Override
                             protected void success(SayHiResponse response) {
-
+                                Toast.makeText(getContext(), "Muudy başarıyla gönderildi", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

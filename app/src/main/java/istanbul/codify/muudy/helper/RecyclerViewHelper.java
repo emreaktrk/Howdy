@@ -169,6 +169,10 @@ public class RecyclerViewHelper {
             public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                 Logcat.d("----+2 farklı"+actionState);
+
+                if (!swipeRefreshLayout.isEnabled()){
+                    swipeRefreshLayout.setEnabled(true);
+                }
             }
 
             @Override
@@ -177,7 +181,6 @@ public class RecyclerViewHelper {
 
                 if(actionState == ItemTouchHelper.ACTION_STATE_DRAG){
                     swipeRefreshLayout.setEnabled(false);
-
                     Logcat.d("----+ ACTION_STATE_DRAG");
                 }else if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
                     Logcat.d("----+ ACTION_STATE_SWIPE");
@@ -193,6 +196,7 @@ public class RecyclerViewHelper {
                     swipeRefreshLayout.setEnabled(true);
                 }else{
                     Logcat.d("----+ farklı"+actionState);
+                    swipeRefreshLayout.setEnabled(true);
                 }
 
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {

@@ -38,9 +38,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/choose_season_s_text"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="4dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="S: "
+            app:layout_constraintEnd_toStartOf="@+id/temp_layout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/temp_layout2" />
+
+        <RelativeLayout
+            android:id="@+id/temp_layout2"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_alignEnd="@+id/choose_season_s_text"
+            android:background="@drawable/spinner_border"
+            app:layout_constraintStart_toEndOf="@+id/choose_season_s_text"
+            app:layout_constraintTop_toBottomOf="@+id/choose_season_title">
+
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/choose_season_dialog_season_spinner"
+                style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@color/white" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_down" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/choose_season_b_text"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:text="B: "
+            app:layout_goneMarginStart="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/temp_layout"
+            app:layout_constraintStart_toEndOf="@+id/temp_layout2"
+            app:layout_constraintTop_toTopOf="@+id/temp_layout2" />
         <RelativeLayout
             android:id="@+id/temp_layout"
-            android:layout_width="125dp"
+            android:layout_width="120dp"
             android:layout_height="36dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
@@ -65,32 +120,7 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/temp_layout2"
-            android:layout_width="125dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/spinner_border"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/choose_season_title">
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/choose_season_dialog_season_spinner"
-                style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:backgroundTint="@color/white" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_down" />
-
-        </RelativeLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/choose_season_dialog_share"

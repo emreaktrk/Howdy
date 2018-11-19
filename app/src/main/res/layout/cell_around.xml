@@ -36,7 +36,17 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"/>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/around_cell_sad_smiley"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=":("
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textSize="32sp"/>
     <android.support.v7.widget.LinearLayoutCompat
             android:id="@+id/around_container"
             android:layout_width="match_parent"
@@ -69,6 +79,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
     </android.support.v7.widget.LinearLayoutCompat>
+</RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

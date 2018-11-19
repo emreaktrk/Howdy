@@ -40,12 +40,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -291,7 +289,8 @@
             android:value="AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="5904c506754968c812b0e2926d9738e52b071f76" />
+            android:value="9e358cc7e1322e5a222e0caea600cf0b6a7fa858"
+            />
 
 
     </application>

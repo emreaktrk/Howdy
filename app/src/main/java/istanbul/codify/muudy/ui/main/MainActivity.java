@@ -11,6 +11,9 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 import istanbul.codify.muudy.EventSupport;
 import istanbul.codify.muudy.MuudyActivity;
 import istanbul.codify.muudy.R;
@@ -66,7 +69,7 @@ public final class MainActivity extends MuudyActivity implements MainView, Navig
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //Fabric.with(this, new Crashlytics());
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.home_frame, homeFragment)

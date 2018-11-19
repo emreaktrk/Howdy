@@ -95,8 +95,10 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             AroundAdapter.AroundUserHolder holder= (AroundAdapter.AroundUserHolder) mHolder;
             holder.mTitle.setText(around.title);
             if (around.users.size() == 0){
+                holder.sadSmiley.setVisibility(View.VISIBLE);
                 holder.mMore.setVisibility(View.GONE);
             }else{
+                holder.sadSmiley.setVisibility(View.GONE);
                 holder.mMore.setVisibility(View.VISIBLE);
             }
             for (int i = 0; i < holder.mContainer.getChildCount(); i++) {
@@ -246,6 +248,7 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private LinearLayoutCompat mContainer;
         private AppCompatTextView mTitle;
         private AppCompatTextView mMore;
+        private AppCompatTextView sadSmiley;
 
         AroundUserHolder(View itemView) {
             super(itemView);
@@ -253,6 +256,7 @@ final class AroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             mTitle = itemView.findViewById(R.id.around_title);
             mMore = itemView.findViewById(R.id.around_more);
             mContainer = itemView.findViewById(R.id.around_container);
+            sadSmiley = itemView.findViewById(R.id.around_cell_sad_smiley);
 
             mMore.setOnClickListener(this);
             for (int i = 0; i < mContainer.getChildCount(); i++) {
