@@ -245,11 +245,12 @@ final class ProfilePresenter extends BasePresenter<ProfileView> {
 
         NumberView followed = findViewById(R.id.profile_number_followed, NumberView.class);
         followed.setText("Takip Eden");
-        followed.setValue(user.followedcount);
+        followed.setValue(user.followercount);
 
         NumberView following = findViewById(R.id.profile_number_following, NumberView.class);
         following.setText("Takip Edilen");
-        following.setValue(user.followercount);
+        following.setValue(user.followedcount);
+
         PicassoHelper.setImageWithPlaceHolder(findViewById(R.id.profile_picture, CircleImageView.class),user.imgpath1,R.drawable.ic_avatar);
         /*
         Picasso

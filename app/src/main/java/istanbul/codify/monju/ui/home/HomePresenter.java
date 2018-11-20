@@ -412,7 +412,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(new ServiceConsumer<SayHiResponse>() {
                             @Override
                             protected void success(SayHiResponse response) {
-                                Toast.makeText(getContext(), "Muudy başarıyla gönderildi", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Muudy de başarıyla yollandı!", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

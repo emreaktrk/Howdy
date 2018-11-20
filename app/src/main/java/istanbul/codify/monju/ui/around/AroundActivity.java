@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.Utils;
@@ -31,7 +32,10 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
 
         Intent starter = new Intent(context, AroundActivity.class);
         starter.putExtra(around.getClass().getSimpleName(), around);
-        starter.putExtra(id.getClass().getSimpleName(),id);
+
+            //starter.putExtra(id.getClass().getSimpleName(), id);
+
+        starter.putExtra(Long.class.getSimpleName(), id);
 
      //   starter.putExtra("BitmapImage",bitmap);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

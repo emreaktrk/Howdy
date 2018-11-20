@@ -92,8 +92,6 @@ public final class ComposeActivity extends MuudyActivity implements ComposeView,
 
         mPresenter.attachView(this, this);
 
-
-
         Word word = getSerializable(Word.class);
         if (word != null){
             mPresenter.addSelected(word);

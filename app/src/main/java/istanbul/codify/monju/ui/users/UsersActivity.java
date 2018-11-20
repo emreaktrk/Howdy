@@ -111,13 +111,13 @@ public final class UsersActivity extends MuudyActivity implements UsersView {
             switch (mode) {
                 case UsersScreenMode.FOLLOWER:
                     if (user != null) {
-                        mPresenter.getFollowedUsers(user);
+                        mPresenter.getFollowers(user);
                     }
 
                     return;
                 case UsersScreenMode.FOLLOWING:
                     if (user != null) {
-                        mPresenter.getFollowers(user);
+                        mPresenter.getFollowedUsers(user);
                     }
 
                     return;

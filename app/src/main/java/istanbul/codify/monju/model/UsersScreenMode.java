@@ -12,8 +12,8 @@ import android.support.annotation.StringDef;
 })
 public @interface UsersScreenMode {
     String AROUND_WITH_EMOTION = "Etrafındakiler";
-    String FOLLOWER = "Takip Edilenler";
-    String FOLLOWING = "Takipçiler";
+    String FOLLOWER = "Takipçiler";
+    String FOLLOWING = "Takip Edilenler";
     String CONTACTS = "Kişilerim";
     String USERS = "Takip Ettikleri";
     String LIKERS = "Beğenenler";
