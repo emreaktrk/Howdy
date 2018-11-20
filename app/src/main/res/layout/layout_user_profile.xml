@@ -108,21 +108,21 @@
                                 android:orientation="horizontal"
                                 tools:context=".ui.main.MainActivity">
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/user_profile_number_posts"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"/>
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/user_profile_number_following"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"/>
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/user_profile_number_followed"
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
@@ -138,7 +138,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="8dp">
 
-                            <istanbul.codify.muudy.view.FollowButton
+                            <istanbul.codify.monju.view.FollowButton
                                     android:id="@+id/user_profile_follow"
                                     style="@style/Button.Blue"
                                     android:layout_width="wrap_content"

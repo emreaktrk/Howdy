@@ -10,7 +10,7 @@
               android:gravity="center"
               android:background="@drawable/marker_popup_bg_shape"
               android:layout_height="wrap_content"
-              tools:context="istanbul.codify.muudy.ui.MarkerCustomPopup.MarkerCustomPopupFragmentDialog">
+              tools:context="istanbul.codify.monju.ui.MarkerCustomPopup.MarkerCustomPopupFragmentDialog">
 
 
     <android.support.v7.widget.AppCompatImageView

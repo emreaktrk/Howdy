@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@id/mention_username"
             tools:text="@sample/user.json/data/namesurname"/>
 
-    <istanbul.codify.muudy.view.MentionButton
+    <istanbul.codify.monju.view.MentionButton
             android:id="@+id/mention_button"
             style="@style/Button.Blue"
             android:layout_width="wrap_content"

@@ -54,27 +54,27 @@
             android:paddingBottom="16dp"
             android:gravity="left">
 
-        <istanbul.codify.muudy.view.AvatarView
+        <istanbul.codify.monju.view.AvatarView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
-        <istanbul.codify.muudy.view.AvatarView
+        <istanbul.codify.monju.view.AvatarView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
-        <istanbul.codify.muudy.view.AvatarView
+        <istanbul.codify.monju.view.AvatarView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
-        <istanbul.codify.muudy.view.AvatarView
+        <istanbul.codify.monju.view.AvatarView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
-        <istanbul.codify.muudy.view.AvatarView
+        <istanbul.codify.monju.view.AvatarView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>

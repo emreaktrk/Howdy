@@ -68,7 +68,7 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/post_like"/>
 
-        <istanbul.codify.muudy.view.LikeButton
+        <istanbul.codify.monju.view.LikeButton
                 android:id="@+id/post_like"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"

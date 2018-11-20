@@ -23,7 +23,7 @@
             android:padding="16dp"
             tools:text="@sample/game.json/data/name"/>
 
-    <istanbul.codify.muudy.view.StarView
+    <istanbul.codify.monju.view.StarView
             android:id="@+id/star_star"
             android:layout_width="48dp"
             android:layout_height="48dp"/>

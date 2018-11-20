@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="istanbul.codify.muudy">
+    package="istanbul.codify.monju">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
-        android:name=".MuudyApplication"
+        android:name="istanbul.codify.monju.MuudyApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,7 +35,7 @@
             android:resource="@string/asset_statements" />
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="istanbul.codify.monju.ui.splash.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -53,115 +53,115 @@
                     android:pathPattern="/share" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.AuthActivity"
+        <activity android:name="istanbul.codify.monju.ui.auth.AuthActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.createuser.CreateUserActivity"
+        <activity android:name="istanbul.codify.monju.ui.createuser.CreateUserActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="istanbul.codify.monju.ui.main.MainActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.compose.ComposeActivity"
+            android:name="istanbul.codify.monju.ui.compose.ComposeActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.word.WordActivity"
+            android:name="istanbul.codify.monju.ui.word.WordActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.search.UserSearchActivity"
+            android:name="istanbul.codify.monju.ui.search.UserSearchActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.messages.UserMessagesActivity"
+            android:name="istanbul.codify.monju.ui.messages.UserMessagesActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.chat.ChatActivity"
+            android:name="istanbul.codify.monju.ui.chat.ChatActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.postdetail.PostDetailActivity"
+            android:name="istanbul.codify.monju.ui.postdetail.PostDetailActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.posts.PostsActivity"
+            android:name="istanbul.codify.monju.ui.posts.PostsActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.profileedit.ProfileEditActivity"
+            android:name="istanbul.codify.monju.ui.profileedit.ProfileEditActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.response.ResponseActivity"
+            android:name="istanbul.codify.monju.ui.response.ResponseActivity"
             android:theme="@style/ResponseTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.facebookfriends.FacebookFriendsActivity"
+            android:name="istanbul.codify.monju.ui.facebookfriends.FacebookFriendsActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.forgotpassword.ForgotPasswordActivity"
+            android:name="istanbul.codify.monju.ui.forgotpassword.ForgotPasswordActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.changepassword.ChangePasswordActivity"
+            android:name="istanbul.codify.monju.ui.changepassword.ChangePasswordActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.video.VideoActivity"
+            android:name="istanbul.codify.monju.ui.video.VideoActivity"
             android:theme="@style/MediaTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.photo.PhotoActivity"
+            android:name="istanbul.codify.monju.ui.photo.PhotoActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.mention.MentionActivity"
+            android:name="istanbul.codify.monju.ui.mention.MentionActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.places.PlacesActivity"
+            android:name="istanbul.codify.monju.ui.places.PlacesActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.around.AroundActivity"
+            android:name="istanbul.codify.monju.ui.around.AroundActivity"
             android:theme="@style/TransparentTheme"/>
         <activity
-            android:name=".ui.userprofile.UserProfileActivity"
+            android:name="istanbul.codify.monju.ui.userprofile.UserProfileActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.userphotos.UserPhotosActivity"
+            android:name="istanbul.codify.monju.ui.userphotos.UserPhotosActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name="istanbul.codify.monju.ui.settings.SettingsActivity"
             android:theme="@style/SettingsTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.web.WebActivity"
+            android:name="istanbul.codify.monju.ui.web.WebActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.feedback.FeedbackActivity"
+            android:name="istanbul.codify.monju.ui.feedback.FeedbackActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.socialmedia.SocialMediaActivity"
+            android:name="istanbul.codify.monju.ui.socialmedia.SocialMediaActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.notificationsettings.NotificationSettingsActivity"
+            android:name="istanbul.codify.monju.ui.notificationsettings.NotificationSettingsActivity"
             android:theme="@style/SettingsTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.users.UsersActivity"
+            android:name="istanbul.codify.monju.ui.users.UsersActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.followrequests.FollowRequestActivity"
+            android:name="istanbul.codify.monju.ui.followrequests.FollowRequestActivity"
             android:theme="@style/MainTheme"
             android:screenOrientation="portrait"/>
         <activity
@@ -173,11 +173,11 @@
             android:theme="@style/MaterialCamera.CaptureActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.weeklytopuser.WeeklyTopUsersActivity"
+            android:name="istanbul.codify.monju.ui.weeklytopuser.WeeklyTopUsersActivity"
             android:theme="@style/TransparentTheme"/>
 
         <service
-            android:name=".account.AccountService"
+            android:name="istanbul.codify.monju.account.AccountService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -188,7 +188,7 @@
                 android:resource="@xml/authenticator" />
         </service>
         <service
-            android:name=".account.sync.profile.ProfileSyncService"
+            android:name="istanbul.codify.monju.account.sync.profile.ProfileSyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -200,14 +200,14 @@
         </service>
 
         <provider
-            android:name=".account.sync.profile.ProfileProvider"
-            android:authorities="istanbul.codify.muudy.profile"
+            android:name="istanbul.codify.monju.account.sync.profile.ProfileProvider"
+            android:authorities="istanbul.codify.monju.profile"
             android:exported="false"
             android:label="Profile"
             android:syncable="true" />
 
         <service
-            android:name=".account.sync.location.LocationSyncService"
+            android:name="istanbul.codify.monju.account.sync.location.LocationSyncService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
@@ -219,8 +219,8 @@
         </service>
 
         <provider
-            android:name=".account.sync.location.LocationProvider"
-            android:authorities="istanbul.codify.muudy.location"
+            android:name="istanbul.codify.monju.account.sync.location.LocationProvider"
+            android:authorities="istanbul.codify.monju.location"
             android:exported="false"
             android:label="Location"
             android:syncable="true" />
@@ -250,10 +250,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".deeplink.action.ShareAction" />
+        <receiver android:name="istanbul.codify.monju.deeplink.action.ShareAction" />
 
         <receiver
-            android:name=".ui.compose.TwitterShareResultReceiver"
+            android:name="istanbul.codify.monju.ui.compose.TwitterShareResultReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.twitter.sdk.android.tweetcomposer.UPLOAD_SUCCESS"/>
@@ -263,19 +263,19 @@
         </receiver>
 
         <service
-            android:name=".fcm.FCMRegisterService"
+            android:name="istanbul.codify.monju.fcm.FCMRegisterService"
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.FCMListenerService">
+        <service android:name="istanbul.codify.monju.fcm.FCMListenerService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service
-            android:name=".fcm.UpdatePushService"
+            android:name="istanbul.codify.monju.fcm.UpdatePushService"
             android:enabled="true" />
 
         <meta-data
@@ -287,12 +287,12 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4" />
+
+
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="9e358cc7e1322e5a222e0caea600cf0b6a7fa858"
-            />
-
-
+            android:value="9e358cc7e1322e5a222e0caea600cf0b6a7fa858" />
     </application>
 
 </manifest>

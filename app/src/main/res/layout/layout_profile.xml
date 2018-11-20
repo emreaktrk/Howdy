@@ -108,14 +108,14 @@
                                 android:orientation="horizontal"
                                 tools:context=".ui.main.MainActivity">
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/profile_number_posts"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"/>
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/profile_number_followed"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                                     android:focusable="true"
                                     android:gravity="center"/>
 
-                            <istanbul.codify.muudy.view.NumberView
+                            <istanbul.codify.monju.view.NumberView
                                     android:id="@+id/profile_number_following"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"

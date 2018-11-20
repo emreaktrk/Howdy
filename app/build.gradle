@@ -1,17 +1,28 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'io.fabric'
+
+
 
 android {
     buildToolsVersion '28.0.0 rc1'
     compileSdkVersion 27
     defaultConfig {
-        applicationId "istanbul.codify.muudy"
+        applicationId 'istanbul.codify.monju'
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
@@ -49,10 +60,9 @@ android {
     buildTypes {
         debug {
             debuggable true
-            ext.enableCrashlytics = false
+
             signingConfig signingConfigs.debug
 
-            applicationIdSuffix ".test"
         }
         release {
             debuggable false
@@ -70,16 +80,10 @@ android {
         resolutionStrategy.force 'com.android.support:animated-vector-drawable:27.1.1'
         resolutionStrategy.force 'com.android.support:customtabs:27.1.1'
     }
-}
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
+    productFlavors {
     }
+}
 
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
-    }
-}
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
@@ -125,10 +129,11 @@ dependencies {
     implementation('com.twitter.sdk.android:twitter:3.3.0@aar') {
         transitive = true
     }
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true;
     }
 
+    
 }
 
 apply plugin: 'com.google.gms.google-services'
