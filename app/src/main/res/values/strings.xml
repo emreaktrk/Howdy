@@ -1,13 +1,13 @@
 <resources>
-    <string name="facebook_app_id" translatable="false">227999104431873</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb227999104431873</string>
+    <string name="facebook_app_id" translatable="false">1828199103973478</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1828199103973478</string>
 
-    <string name="app_name">Muudy</string>
+    <string name="app_name">Monju</string>
 
     <string name="compose_retry">Tekrar</string>
     <string name="compose_ok">Tamam</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://muudyapp.com\",\n  }\n}]</string>
+    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://monjuapp.com\",\n  }\n}]</string>
 </resources>

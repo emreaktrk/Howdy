@@ -16,6 +16,7 @@ import istanbul.codify.monju.logcat.Logcat;
 import istanbul.codify.monju.model.NotificationSettings;
 import istanbul.codify.monju.model.User;
 import istanbul.codify.monju.ui.base.BasePresenter;
+import istanbul.codify.monju.utils.SharedPrefs;
 
 import java.util.concurrent.TimeUnit;
 
@@ -82,12 +83,27 @@ final class NotificationSettingsPresenter extends BasePresenter<NotificationSett
                             settings.onTag = findViewById(R.id.notification_settings_tag, SwitchCompat.class).isChecked() ? 1 : 0;
                             view.onSettingsChanged(settings);
                         }));
+
+        mDisposables.add(
+                RxCompoundButton
+                        .checkedChanges(findViewById(R.id.notification_settings_location))
+                        .skipInitialValue()
+                        .skip(1, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(enabled -> {
+                            Logcat.v("Tag notification changed");
+
+                            SharedPrefs.setPlaceRecommendationNotificationPermission(findViewById(R.id.notification_settings_location, SwitchCompat.class).isChecked(),getContext());
+
+                        }));
     }
 
     void bind(User me) {
         findViewById(R.id.notification_settings_follow, SwitchCompat.class).setChecked(me.push_on_follow == 1);
         findViewById(R.id.notification_settings_like, SwitchCompat.class).setChecked(me.push_on_like == 1);
         findViewById(R.id.notification_settings_tag, SwitchCompat.class).setChecked(me.push_on_tag == 1);
+        findViewById(R.id.notification_settings_location, SwitchCompat.class).setChecked(SharedPrefs.getPlaceRecommendationPermissionStatus(getContext()));
+
     }
 
     void update(NotificationSettings settings) {

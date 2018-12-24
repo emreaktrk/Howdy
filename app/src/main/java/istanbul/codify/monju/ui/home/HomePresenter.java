@@ -23,6 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 import istanbul.codify.monju.R;
 import istanbul.codify.monju.account.AccountUtils;
 import istanbul.codify.monju.api.ApiManager;
+import istanbul.codify.monju.api.pojo.ServiceCallback;
 import istanbul.codify.monju.api.pojo.ServiceConsumer;
 import istanbul.codify.monju.api.pojo.request.*;
 import istanbul.codify.monju.api.pojo.response.*;
@@ -37,6 +38,7 @@ import istanbul.codify.monju.ui.base.BasePresenter;
 import istanbul.codify.monju.utils.SharedPrefs;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 final class HomePresenter extends BasePresenter<HomeView> {
 
@@ -102,6 +104,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         SharedPrefs.setLongitude(result.getLongitude()+"",getContext());
                     }
 
+
                     return result;
                 })
                 .addOnSuccessListener(location -> {
@@ -152,6 +155,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                 })
                 .addOnFailureListener(Logcat::e);
     }
+
 
     void showNewMessageDot(boolean show) {
         findViewById(R.id.home_has_message_dot).setVisibility(show ? View.VISIBLE : View.GONE);
@@ -412,7 +416,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                         .subscribe(new ServiceConsumer<SayHiResponse>() {
                             @Override
                             protected void success(SayHiResponse response) {
-                                Toast.makeText(getContext(), "Muudy de başarıyla yollandı!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Monju! başarıyla yollandı!", Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

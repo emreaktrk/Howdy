@@ -73,4 +73,19 @@
             android:checked="false"
             tools:checked="true"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:background="@color/white"
+        android:id="@+id/notification_settings_location"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yer bildirimi önerileri bildirimi gönder"
+        android:checked="true"
+        tools:checked="true"/>
+
 </android.support.v7.widget.LinearLayoutCompat>

@@ -178,8 +178,8 @@ public final class PostsActivity extends MuudyActivity implements PostsView {
     public void onMuudyClicked(Post post) {
         new AlertDialog
                 .Builder(this)
-                .setMessage("Muudy demek istiyor musunuz?")
-                .setPositiveButton("Muudy De!", (dialogInterface, which) -> {
+                .setMessage("Monju! demek istiyor musunuz?")
+                .setPositiveButton("Monju!", (dialogInterface, which) -> {
                     mPresenter.sayHi(post.iduser);
 
                     Analytics

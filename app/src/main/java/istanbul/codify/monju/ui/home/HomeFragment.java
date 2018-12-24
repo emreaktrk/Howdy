@@ -264,8 +264,8 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
         if (getContext() != null) {
             new AlertDialog
                     .Builder(getContext())
-                    .setMessage("Muudy demek istiyor musunuz?")
-                    .setPositiveButton("Muudy De!", (dialogInterface, which) -> {
+                    .setMessage("Monju! demek istiyor musunuz?")
+                    .setPositiveButton("Monju!", (dialogInterface, which) -> {
                         mPresenter.sayHi(post.iduser);
 
                         Analytics

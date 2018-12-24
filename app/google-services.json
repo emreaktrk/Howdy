@@ -8,9 +8,60 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231087551966:android:15d0703d3f927a73",
+        "mobilesdk_app_id": "1:231087551966:android:1bd8ab21216d909b",
         "android_client_info": {
           "package_name": "istanbul.codify.monju"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231087551966-kbbj4rfkko74h9v2djn2h7ui9cevfrq2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "istanbul.codify.monju",
+            "certificate_hash": "289d288ed0cc000cf0670e1e336e25753b44e3f6"
+          }
+        },
+        {
+          "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "231087551966-ufh681h1nkomai3a86becuc3o51kutl8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "istanbul.codify.muudy"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231087551966:android:15d0703d3f927a73",
+        "android_client_info": {
+          "package_name": "istanbul.codify.muudy"
         }
       },
       "oauth_client": [
@@ -18,7 +69,7 @@
           "client_id": "231087551966-h02igous9jtiu4fb3es42q7ttflnp9g5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "istanbul.codify.monju",
+            "package_name": "istanbul.codify.muudy",
             "certificate_hash": "120b8f5ab184813570c91f4e940cc3705cd4fc75"
           }
         },
@@ -42,50 +93,13 @@
             {
               "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:231087551966:android:6ba69fc67155f5c5",
-        "android_client_info": {
-          "package_name": "istanbul.codify.monju"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "231087551966-ca51gk8ilhqg590pcng4d75t3vnmmt0t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "istanbul.codify.monju",
-            "certificate_hash": "5c0996b4fe80482ac438dcba3e5d9df3c2eace52"
-          }
-        },
-        {
-          "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCgPhm7KKkkPJuv3wj42_gXEJwGNajpJo4"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "231087551966-08pju6j68rauiavd515nvddq7a8nukrs.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "231087551966-ufh681h1nkomai3a86becuc3o51kutl8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "istanbul.codify.muudy"
+              }
             }
           ]
         },

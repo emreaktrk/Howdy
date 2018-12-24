@@ -46,15 +46,15 @@ android {
     signingConfigs {
         debug {
             storeFile file("keystore/keystore_debug")
-            keyAlias 'muudy'
-            keyPassword '123456'
-            storePassword '123456'
+            keyAlias 'asd'
+            keyPassword '15051612'
+            storePassword '15051612'
         }
         release {
             storeFile file("keystore/keystore_release")
-            keyAlias 'muudy'
-            keyPassword '123456'
-            storePassword '123456'
+            keyAlias 'asd'
+            keyPassword '15051612'
+            storePassword '15051612'
         }
     }
     buildTypes {

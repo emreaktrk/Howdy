@@ -6,8 +6,12 @@ package istanbul.codify.monju.utils;
 
         import android.content.Context;
         import android.content.SharedPreferences;
+        import android.location.Location;
         import android.preference.PreferenceManager;
+        import android.support.annotation.Nullable;
         import android.util.Log;
+
+        import com.facebook.share.Share;
 
         import java.util.HashSet;
         import java.util.Set;
@@ -19,6 +23,68 @@ public class SharedPrefs {
 
     private static String APP_TAG = "MUUDY_SHARED";
 
+    public static void setPlaceRecommendationNotificationPermission(Boolean permission,Context context){
+        SharedPrefs.setValue("place_recommendation_permission",permission,context);
+    }
+
+    public static Boolean getPlaceRecommendationPermissionStatus(Context context){
+        Boolean status = SharedPrefs.getValueBooleanDefaultTrue("place_recommendation_permission",context);
+        return status;
+    }
+
+
+    public static void setLastTimeLocationSent(long time, Context context){
+        SharedPrefs.setValue("last_time_location_sent",time+"",context);
+    }
+
+    public static long getLastTimeLocationSent(Context context){
+
+        String lastTimeLocationSent = SharedPrefs.getValueString("last_time_location_sent",context);
+
+        if(lastTimeLocationSent.equals("")){
+            return 0;
+        }else{
+            return Long.parseLong(lastTimeLocationSent);
+
+        }
+
+    }
+
+    public static void setLocation(Location loc, Context context){
+        SharedPrefs.setValue("location_lat",loc.getLatitude()+"",context);
+        SharedPrefs.setValue("location_long",loc.getLongitude()+"",context);
+        SharedPrefs.setValue("location_prov",loc.getProvider(),context);
+
+    }
+
+    @Nullable
+    public static Location getLocation(Context context){
+
+        String lat = SharedPrefs.getValueString("location_lat",context);
+        String lon = SharedPrefs.getValueString("location_long",context);
+        String prov = SharedPrefs.getValueString("location_prov",context);
+
+
+        Double mLat = 40.991955;
+        Double mLon = 28.712913;
+        if(lat.equals("")){
+
+        }else{
+            mLat = Double.parseDouble(lat);
+            if(lon.equals("")){
+
+            }else{
+                mLon = Double.parseDouble(lon);
+                Location loc = new Location(prov);
+                loc.setLatitude(mLat);
+                loc.setLongitude(mLon);
+                return loc;
+            }
+        }
+
+        return null;
+    }
+
     public static void setLatitude(String lat,Context context){
         SharedPrefs.setValue("mLatitude",lat,context);
     }
@@ -29,10 +95,13 @@ public class SharedPrefs {
 
 
         Double mLat = 40.991955;
+
         if(lat.equals("")){
 
         }else{
             mLat = Double.parseDouble(lat);
+
+
         }
 
         return mLat;
@@ -71,9 +140,9 @@ public class SharedPrefs {
         }
     }
 
-    public static void setValue(String key, Boolean value) {
+    public static void setValue(String key, Boolean value,Context context) {
         try {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MuudyApplication.getAppContext());
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(key, value);
             editor.apply();
@@ -117,10 +186,19 @@ public class SharedPrefs {
         return value;
     }
 
-    public static Boolean getValueBoolean(String key) {
-        SharedPreferences mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(MuudyApplication.getAppContext());
+    public static Boolean getValueBoolean(String key,Context context) {
+        SharedPreferences mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit();
         Boolean value = mSharedPrefs.getBoolean(key, false);
+        mPrefsEditor.apply();
+        //Log.d(APP_TAG, "PreferencesDao - Boolean getValueBoolean(String keyParam) - Got Key/Value : " + key + "/" + value);
+        return value;
+    }
+
+    public static Boolean getValueBooleanDefaultTrue(String key,Context context) {
+        SharedPreferences mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit();
+        Boolean value = mSharedPrefs.getBoolean(key, true);
         mPrefsEditor.apply();
         //Log.d(APP_TAG, "PreferencesDao - Boolean getValueBoolean(String keyParam) - Got Key/Value : " + key + "/" + value);
         return value;

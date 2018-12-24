@@ -15,5 +15,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="64dp"
-            app:srcCompat="@drawable/ic_howdy_reverse"/>
+            app:srcCompat="@drawable/ic_monju_logo"/>
 </FrameLayout>
