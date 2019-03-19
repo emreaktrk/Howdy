@@ -724,7 +724,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                                 try {
                                                     DESedeEncryption deSedeEncryption = new DESedeEncryption();
                                                     String decrytedId = deSedeEncryption.encrypt(response.data.id + "");
-                                                    String link = "http://muudyapp.com/share/post.aspx?id="+decrytedId;
+                                                    String link = "http://monjuapp.com/share/post.aspx?id="+decrytedId;
 
 
 

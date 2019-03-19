@@ -20,7 +20,7 @@ public final class ApiManager {
 
             mServices = new Retrofit
                     .Builder()
-                    .baseUrl("http://188.166.97.94:3017/api/")
+                    .baseUrl("http://134.209.95.226:3017/api/")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                     .addConverterFactory(
                             GsonConverterFactory

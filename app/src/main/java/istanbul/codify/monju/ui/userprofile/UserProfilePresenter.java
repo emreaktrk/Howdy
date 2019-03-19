@@ -934,7 +934,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                         .subscribe(new ServiceConsumer<BanUserResponse>() {
                             @Override
                             protected void success(BanUserResponse response) {
-                                if (response.data.r == Result.OK) {
+                                if (response.data.equals("ok")) {
                                     mUser.isbanned = isBlocked ? 1 : 0;
                                 }
                             }
@@ -1027,8 +1027,5 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                             }
                         }));
     }
-
-
-
 
 }

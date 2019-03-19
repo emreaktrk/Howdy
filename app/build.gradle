@@ -29,8 +29,8 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        buildConfigField "String", "API_URL", '"http://188.166.97.94:3017/api/"'
-        buildConfigField "String", "URL", '"http://188.166.97.94:3017/"'
+        buildConfigField "String", "API_URL", '"http://134.209.95.226:3017/api/"'
+        buildConfigField "String", "URL", '"http://134.209.95.226:3017/"'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -40,6 +40,7 @@ android {
         preDexLibraries true
         javaMaxHeapSize "12g"
     }
+
     aaptOptions {
         cruncherEnabled = false
     }

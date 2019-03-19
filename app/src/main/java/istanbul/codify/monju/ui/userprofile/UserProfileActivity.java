@@ -134,7 +134,7 @@ public final class UserProfileActivity extends MuudyActivity implements UserProf
 
     @Override
     public void onMuudySent() {
-        ToastUtils.showShort("Muudy de başarıyla yollandı!");
+        ToastUtils.showShort("Monjuladınız!");
 
         Analytics
                 .getInstance()

@@ -15,6 +15,7 @@ import io.reactivex.subjects.PublishSubject;
 import istanbul.codify.monju.R;
 import istanbul.codify.monju.model.FollowRequest;
 import istanbul.codify.monju.model.Notification;
+import istanbul.codify.monju.model.NotificationActionType;
 import istanbul.codify.monju.utils.PicassoHelper;
 
 import java.util.ArrayList;
@@ -110,13 +111,20 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
 
             holder.mText.setText(notification.notification_msg);
             holder.mDate.setText(notification.humanDate);
-            //new PicassoHelper(holder.mImage.getContext(),holder.mImage,notification.fromUser.imgpath1);
-            PicassoHelper.setImageWithPlaceHolder(holder.mImage,notification.fromUser == null ? null : notification.fromUser.imgpath1);
-           /* Picasso
-                    .with(holder.itemView.getContext())
-                    .load(notification.fromUser == null ? null : BuildConfig.URL + notification.fromUser.imgpath1)
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .into(holder.mImage);*/
+
+
+            if (notification.notification_actiontype == NotificationActionType.ACTIVITY_REMINDER ||
+                    notification.notification_actiontype == NotificationActionType.PLACE_RECOMMADITION||
+                    notification.notification_actiontype == NotificationActionType.NONE ||
+                    notification.notification_actiontype == NotificationActionType.WEEK_TOP_USERS||
+                    notification.notification_actiontype == NotificationActionType.GIVE_VOTE||
+                    notification.notification_actiontype == NotificationActionType.GENERAL_ANNOUNCE||
+                    notification.notification_actiontype == NotificationActionType.PLACE_RECOMMADITION){
+                PicassoHelper.setImageWithPlaceHolder(holder.mImage, notification.fromUser == null ? null : notification.fromUser.imgpath1);
+            }else {
+                new PicassoHelper(holder.mImage.getContext(),holder.mImage,notification.fromUser.imgpath1);
+            }
+
         }
     }
 

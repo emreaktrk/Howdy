@@ -27,9 +27,10 @@
                 android:src="@drawable/button_search"/>
 
         <android.support.v7.widget.AppCompatImageView
-                android:layout_width="72dp"
+                android:layout_width="100dp"
                 android:layout_height="56dp"
                 android:layout_gravity="center"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_howdy_reverse"/>
 
         <android.support.v7.widget.AppCompatImageButton

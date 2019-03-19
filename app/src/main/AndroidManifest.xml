@@ -49,7 +49,7 @@
 
                 <data
                     android:scheme="http"
-                    android:host="muudyapp.com"
+                    android:host="monjuapp.com"
                     android:pathPattern="/share" />
             </intent-filter>
         </activity>

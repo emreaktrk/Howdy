@@ -38,6 +38,7 @@ public final class MuudyApplication extends Application {
         built.setIndicatorsEnabled(false);
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
+
     }
 
     public static Context getAppContext() {

@@ -83,7 +83,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
     }
 
     @SuppressLint({"MissingPermission"})
-    void getWall(Context context, @Nullable More more, @Nullable ArrayList<AroundUsers> aroundUsers, @Nullable Boolean isRefreshing) {
+    void getWall(Context context, @Nullable More more, @Nullable ArrayList<AroundUsers> aroundUsers, @Nullable Boolean isRefreshing,@Nullable Long postId) {
         if(isRefreshing == null){
             isRefreshing = false;
         }
@@ -132,7 +132,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
                                             if (more == null) {
 
                                                 if (aroundUsers != null && !aroundUsers.isEmpty()){
-                                                    mView.onLoaded(response.data,aroundUsers,null);
+                                                    mView.onLoaded(response.data,aroundUsers,postId);
                                                 }else {
                                                     mView.onLoaded(response.data);
                                                 }
@@ -165,7 +165,7 @@ final class HomePresenter extends BasePresenter<HomeView> {
         return findViewById(R.id.home_has_message_dot).getVisibility() == View.VISIBLE;
     }
 
-    void takeBlurredImage(ArrayList<AroundUsers> arounds, Long postId){
+    void takeBlurredImage(ArrayList<AroundUsers> arounds, long postId){
         View content = findViewById(R.id.home_refresh).getRootView();
 
         Bitmap bitmap = BlurBuilder.blur(content);

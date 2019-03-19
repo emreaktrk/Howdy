@@ -76,8 +76,8 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         if (report.areAllPermissionsGranted()) {
                             ArrayList<AroundUsers> around = (ArrayList<AroundUsers>)getSerializable(ArrayList.class);
-
-                            mPresenter.getWall(getContext(), null,around,false);
+                            Long postId = getSerializable(Long.class);
+                            mPresenter.getWall(getContext(), null,around,false,postId);
                         }
                     }
 
@@ -287,12 +287,12 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Override
     public void onRefresh() {
-        mPresenter.getWall(getContext(), null,null,true);
+        mPresenter.getWall(getContext(), null,null,true,null);
     }
 
     @Override
     public void onMorePage(More more) {
-        mPresenter.getWall(getContext(), more,null,false);
+        mPresenter.getWall(getContext(), more,null,false,null);
     }
 
     @Override
@@ -301,7 +301,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
     }
 
     @Override
-    public void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap, Long postId) {
+    public void onBlurredImageTaken(ArrayList<AroundUsers> arounds, Bitmap bitmap, long postId) {
 
         AroundActivity.start(arounds, bitmap,postId);
 
@@ -309,7 +309,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPostEvent(PostEvent event) {
-        mPresenter.getWall(getContext(), null,null,false);
+        mPresenter.getWall(getContext(), null,null,false,event.newPost.id);
         ArrayList<AroundUsers> around = event.newPost.aroundUsers;
         if (!around.isEmpty()) {
             mPresenter.takeBlurredImage(around, event.newPost.id);
@@ -333,7 +333,7 @@ public final class HomeFragment extends NavigationFragment implements HomeView, 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDeleteEvent(DeleteEvent event) {
-        mPresenter.getWall(getContext(), null,null,true);
+        mPresenter.getWall(getContext(), null,null,true,null);
     }
 
     @Override

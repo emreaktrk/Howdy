@@ -50,6 +50,7 @@ public class PicassoHelper {
     }
 
     public PicassoHelper(Context context, CircleImageView imageView, String path){
+
         Picasso.with(context)
                 .load(BuildConfig.URL + path)
                 .networkPolicy(NetworkPolicy.OFFLINE)

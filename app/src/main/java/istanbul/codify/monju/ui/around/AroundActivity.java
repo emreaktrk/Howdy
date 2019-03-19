@@ -27,13 +27,13 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
 
     private AroundPresenter mPresenter = new AroundPresenter();
 
-    public static void start(@NonNull ArrayList<AroundUsers> around, Bitmap bitmap, Long id) {
+    public static void start(@NonNull ArrayList<AroundUsers> around, Bitmap bitmap, long id) {
         Context context = Utils.getApp().getApplicationContext();
 
         Intent starter = new Intent(context, AroundActivity.class);
         starter.putExtra(around.getClass().getSimpleName(), around);
 
-            //starter.putExtra(id.getClass().getSimpleName(), id);
+           // starter.putExtra(id.getClass().getSimpleName(), id);
 
         starter.putExtra(Long.class.getSimpleName(), id);
 
@@ -68,7 +68,7 @@ public final class AroundActivity extends MuudyActivity implements AroundView {
             mPresenter.addBlurredBackground(bmp);
         }
         List<AroundUsers> around = (ArrayList<AroundUsers>) getSerializable(ArrayList.class);
-        if (around != null) {
+        if (around != null && postId != null) {
             mPresenter.getPostDetail(postId,around);
         }
     }
