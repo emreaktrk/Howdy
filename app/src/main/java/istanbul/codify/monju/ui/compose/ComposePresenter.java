@@ -703,6 +703,7 @@ final class ComposePresenter extends BasePresenter<ComposeView> {
                                             request.coordinates = Coordinate.from(location);
                                             request.mediaType = getMediaType();
                                             request.mediaData = getMediaData();
+                                            request.extraStringForSeries = selectedSeason;
 
                                             VideoResult video = getVideoResult();
                                             if (video != null) {

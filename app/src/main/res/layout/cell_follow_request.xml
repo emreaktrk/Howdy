@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/follow_request_decline"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="12dp"
             app:srcCompat="@drawable/accept"
             />
     <android.support.v7.widget.AppCompatImageView

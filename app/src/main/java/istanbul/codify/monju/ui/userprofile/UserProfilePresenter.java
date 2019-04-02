@@ -962,7 +962,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                             .subscribe(new ServiceConsumer<SaveSendNotificationOnPostResponse>() {
                                 @Override
                                 protected void success(SaveSendNotificationOnPostResponse response) {
-                                    if (response.data.r == Result.OK) {
+                                    if (response.data.equals("ok")) {
                                         // TODO Change push settings on user
                                     }
                                 }
@@ -987,7 +987,7 @@ final class UserProfilePresenter extends BasePresenter<UserProfileView> {
                             .subscribe(new ServiceConsumer<DeleteSendNotificationOnPostResponse>() {
                                 @Override
                                 protected void success(DeleteSendNotificationOnPostResponse response) {
-                                    if (response.data.r == Result.OK) {
+                                    if (response.data.equals("ok")) {
                                         // TODO Change push settings on user
                                     }
                                 }

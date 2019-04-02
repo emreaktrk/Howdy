@@ -95,7 +95,7 @@ final class WordPresenter extends BasePresenter<WordView> {
                 adapter
                         .suggestClicks()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .filter(o -> findViewById(R.id.word_search, AppCompatEditText.class) == null)
+                       // .filter(o -> findViewById(R.id.word_search, AppCompatEditText.class) == null)
                         .subscribe(o -> {
                             Logcat.v("Suggest clicked");
 

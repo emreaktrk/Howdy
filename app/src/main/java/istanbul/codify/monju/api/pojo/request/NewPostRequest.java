@@ -21,6 +21,7 @@ public final class NewPostRequest {
     public PostMediaType mediaType;
     public String videoThumbnailPath;
     public String videoUploadedPath;
+    public String extraStringForSeries;
 
     public NewPostRequest() {
         words = new ArrayList<>();

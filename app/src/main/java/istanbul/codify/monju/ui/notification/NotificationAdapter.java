@@ -79,13 +79,7 @@ public final class NotificationAdapter extends RecyclerView.Adapter<RecyclerView
             holder.mText.setText(request.msg);
             holder.mDate.setText(request.humanDate);
             new PicassoHelper(holder.mImage.getContext(),holder.mImage,request.user.imgpath1);
-            /*
-            Picasso
-                    .with(holder.itemView.getContext())
-                    .load(request.user == null ? null : BuildConfig.URL + request.user.imgpath1)
-                    .placeholder(R.mipmap.ic_launcher_round)
-                    .into(holder.mImage);
-                    */
+
 
             holder.accept.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -447,7 +447,7 @@ public class RecyclerViewHelper {
                 }
 
                 if (position >= postDetail.post.rozetler.size() + 1){
-                    if (postDetail.comments.get(position - postDetail.post.rozetler.size() - 1).commenterUser.iduser == AccountUtils.me(context).iduser) {
+                    if (postDetail.comments.get(position - postDetail.post.rozetler.size() - 1).commenterUser.iduser == AccountUtils.me(context).iduser ) {
                         swipeFlags = ItemTouchHelper.LEFT;
                     }else{
                         swipeFlags = 0;

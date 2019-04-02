@@ -202,4 +202,7 @@ public interface ApiServices {
     @POST("seelikers")
     Single<SeeLikersResponse> seeLikers(@Body SeeLikersRequest request);
 
+    @POST("checkSendNotificationOnPost")
+    Single<NotificationOnPostResponse> checkNotificationOnPost(@Body SaveSendNotificationOnPostRequest request);
+
 }
